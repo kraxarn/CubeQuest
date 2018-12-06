@@ -10,20 +10,20 @@ namespace CubeQuest
 {
 	public static class AccountManager
 	{
-		private static GoogleApiClient googleClient;
+		private static GoogleApiClient _googleClient;
 
-		private static MainActivity mainActivity;
+		private static MainActivity _mainActivity;
 
-	    public static bool IsConnected => googleClient.IsConnected;
+	    public static bool IsConnected => _googleClient.IsConnected;
 
 	    public static void Create(MainActivity activity)
 	    {
-	        mainActivity = activity;
+	        _mainActivity = activity;
 
 	        var signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultGamesSignIn)
 	            .Build();
 
-	        googleClient = new GoogleApiClient.Builder(activity)
+	        _googleClient = new GoogleApiClient.Builder(activity)
 	            .EnableAutoManage(activity, new ConnectionFailedListener())
 	            .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
 	            .Build();
@@ -33,7 +33,7 @@ namespace CubeQuest
 		/// Get intent used to sign in with Google
 		/// </summary>
 		public static Intent GetSignInIntent() => 
-			Auth.GoogleSignInApi.GetSignInIntent(googleClient);
+			Auth.GoogleSignInApi.GetSignInIntent(_googleClient);
 
 		/// <summary>
 		/// Handle Intent result
@@ -50,7 +50,7 @@ namespace CubeQuest
 			// Show game if successful
 			// TODO
 
-			new AlertDialog.Builder(mainActivity)
+			new AlertDialog.Builder(_mainActivity)
 				.SetTitle(result.IsSuccess ? "Signed in" : "Sign in error")
 				.SetMessage(result.IsSuccess ? 
 					"You are now signed in, good for you" : 
@@ -73,6 +73,6 @@ namespace CubeQuest
         {
         }
 
-        public IntPtr Handle { get; }
+        public IntPtr Handle => IntPtr.Zero;
     }
 }
