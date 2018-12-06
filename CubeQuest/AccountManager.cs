@@ -8,48 +8,44 @@ using AlertDialog = Android.Support.V7.App.AlertDialog;
 
 namespace CubeQuest
 {
-	public class AccountManager : Java.Lang.Object, GoogleApiClient.IOnConnectionFailedListener
+	public static class AccountManager
 	{
-		private readonly GoogleApiClient googleClient;
+		private static GoogleApiClient googleClient;
 
-		private readonly MainActivity mainActivity;
+		private static MainActivity mainActivity;
 
-		public AccountManager(MainActivity activity)
-		{
-			mainActivity = activity;
-            
-			var signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultGamesSignIn)
-				.Build();
+	    public static bool IsConnected => googleClient.IsConnected;
 
-			googleClient = new GoogleApiClient.Builder(activity)
-				.EnableAutoManage(activity, this)
-				.AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
-				.Build();
-		}
+	    public static void Create(MainActivity activity)
+	    {
+	        mainActivity = activity;
 
-		public void OnConnectionFailed(ConnectionResult result)
-		{
-			// TODO
-			throw new NotImplementedException();
-		}
+	        var signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultGamesSignIn)
+	            .Build();
+
+	        googleClient = new GoogleApiClient.Builder(activity)
+	            .EnableAutoManage(activity, new ConnectionFailedListener())
+	            .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
+	            .Build();
+	    }
 
 		/// <summary>
 		/// Get intent used to sign in with Google
 		/// </summary>
-		public Intent GetSignInIntent() => 
+		public static Intent GetSignInIntent() => 
 			Auth.GoogleSignInApi.GetSignInIntent(googleClient);
 
 		/// <summary>
 		/// Handle Intent result
 		/// (called from OnActivityResult)
 		/// </summary>
-		public void HandleResult(Intent data)
+		public static void HandleResult(Intent data)
 		{
 			// Result from intent GoogleSignInApi.GetSignInIntent()
 			HandleSignInResult(Auth.GoogleSignInApi.GetSignInResultFromIntent(data));
 		}
 
-		private void HandleSignInResult(GoogleSignInResult result)
+		private static void HandleSignInResult(GoogleSignInResult result)
 		{
 			// Show game if successful
 			// TODO
@@ -63,4 +59,20 @@ namespace CubeQuest
 				.Show();
 		}
 	}
+
+    public class ConnectionFailedListener : GoogleApiClient.IOnConnectionFailedListener
+    {
+        public delegate void ConnectionFailedEvent(ConnectionResult result);
+
+        public event ConnectionFailedEvent ConnectionFailed;
+
+        public void OnConnectionFailed(ConnectionResult result) => 
+            ConnectionFailed?.Invoke(result);
+
+        public void Dispose()
+        {
+        }
+
+        public IntPtr Handle { get; }
+    }
 }

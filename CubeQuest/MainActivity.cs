@@ -9,8 +9,6 @@ namespace CubeQuest
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
-        private AccountManager signInManager;
-
         private const int RcSignIn = 9001;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -19,7 +17,7 @@ namespace CubeQuest
             SetContentView(Resource.Layout.activity_main);
 
             // Google signin
-            signInManager = new AccountManager(this);
+            AccountManager.Create(this);
 
 			// Sign in button
 	        var signInButton = FindViewById<SignInButton>(Resource.Id.button_sign_in);
@@ -28,7 +26,7 @@ namespace CubeQuest
 
             signInButton.Click += (sender, args) =>
             {
-                var intent = signInManager.GetSignInIntent();
+                var intent = AccountManager.GetSignInIntent();
                 StartActivityForResult(intent, RcSignIn);
             };
         }
@@ -38,7 +36,7 @@ namespace CubeQuest
             base.OnActivityResult(requestCode, resultCode, data);
 
             if (requestCode == RcSignIn)
-                signInManager.HandleResult(data);
+                AccountManager.HandleResult(data);
         }
     }
 }
