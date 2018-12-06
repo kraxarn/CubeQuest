@@ -60,7 +60,7 @@ namespace CubeQuest
 		}
 	}
 
-    public class ConnectionFailedListener : GoogleApiClient.IOnConnectionFailedListener
+    public class ConnectionFailedListener : Java.Lang.Object, GoogleApiClient.IOnConnectionFailedListener
     {
         public delegate void ConnectionFailedEvent(ConnectionResult result);
 
