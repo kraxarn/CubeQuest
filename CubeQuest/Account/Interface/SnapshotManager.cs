@@ -17,9 +17,6 @@ namespace CubeQuest.Account.Interface
             _googleClient = client;
         }
 
-        // TODO: Make Write/Load properties/property
-        // TODO: SnapshotMetadata or string?
-
         private static async Task<ISnapshot> GetSnapshot()
         {
             const int policy = Snapshots.ResolutionPolicyMostRecentlyModified;
