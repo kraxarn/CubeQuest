@@ -62,7 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account\AccountManager.cs" />
-    <Compile Include="Account\Enum\EEquipmentType.cs" />
     <Compile Include="Account\Interface\ICompanion.cs" />
     <Compile Include="Account\Companions\CompanionExample.cs" />
     <Compile Include="Account\Interface\ISpell.cs" />
