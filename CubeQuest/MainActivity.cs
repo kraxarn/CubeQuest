@@ -3,6 +3,7 @@ using Android.Content;
 using Android.Gms.Common;
 using Android.OS;
 using Android.Support.V7.App;
+using CubeQuest.Account;
 
 namespace CubeQuest
 {

@@ -61,7 +61,17 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountManager.cs" />
+    <Compile Include="Account\AccountManager.cs" />
+    <Compile Include="Account\Enum\EEquipmentType.cs" />
+    <Compile Include="Account\Interface\ICompanion.cs" />
+    <Compile Include="Account\Companions\CompanionExample.cs" />
+    <Compile Include="Account\Interface\ISpell.cs" />
+    <Compile Include="Account\Interface\IStats.cs" />
+    <Compile Include="Account\Interface\IWeapon.cs" />
+    <Compile Include="Account\Interface\SnapshotManager.cs" />
+    <Compile Include="Account\SnapshotCoordinator.cs" />
+    <Compile Include="Account\User.cs" />
+    <Compile Include="Account\Weapons\WeaponSword.cs" />
     <Compile Include="GameActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -87,8 +97,14 @@
     <AndroidResource Include="Resources\mipmap-anydpi-v26\ic_launcher_round.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="fastJSON">
+      <Version>2.2.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2.1" />
     <PackageReference Include="Xamarin.GooglePlayServices.Auth">
+      <Version>60.1142.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.GooglePlayServices.Drive">
       <Version>60.1142.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Games">
