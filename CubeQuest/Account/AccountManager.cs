@@ -68,22 +68,6 @@ namespace CubeQuest.Account
 	        BitmapFactory.DecodeResource(_mainActivity.Resources, Resource.Mipmap.ic_launcher_round);
     }
 
-    /*
-    internal class SnapshotResultHandler : ResultTransform
-    {
-        public delegate ISnapshotContents SnapshotContentEvent(ISnapshotContents contents);
-
-        public event SnapshotContentEvent OnSnapshotContent;
-
-        // I have no idea how this works tbh
-        public override PendingResult OnSuccess(Object result)
-        {
-            OnSnapshotContent?.Invoke(((ISnapshot) result).SnapshotContents);
-            return default(PendingResult);
-        }
-    }
-    */
-
     public class ConnectionFailedListener : Java.Lang.Object, GoogleApiClient.IOnConnectionFailedListener
     {
         public delegate void ConnectionFailedEvent(ConnectionResult result);

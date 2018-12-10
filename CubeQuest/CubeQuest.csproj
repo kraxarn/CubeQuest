@@ -69,7 +69,6 @@
     <Compile Include="Account\Interface\IStats.cs" />
     <Compile Include="Account\Interface\IWeapon.cs" />
     <Compile Include="Account\Interface\SnapshotManager.cs" />
-    <Compile Include="Account\SnapshotCoordinator.cs" />
     <Compile Include="Account\User.cs" />
     <Compile Include="Account\Weapons\WeaponSword.cs" />
     <Compile Include="GameActivity.cs" />
