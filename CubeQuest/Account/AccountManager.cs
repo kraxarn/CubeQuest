@@ -4,15 +4,29 @@ using Android.Gms.Auth.Api.SignIn;
 using Android.Gms.Common;
 using Android.Gms.Common.Apis;
 using Android.Gms.Drive;
+using Android.Gms.Games;
 using Android.Graphics;
 using System;
-using Android.Gms.Games;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
 
 namespace CubeQuest.Account
 {
     public static class AccountManager
-	{
+    {
+        public delegate void SuccessEvent(Statuses status);
+
+        /// <summary>
+        /// Login was successful
+        /// </summary>
+        public static event SuccessEvent OnSuccess;
+
+        public delegate void FailureEvent(Statuses status);
+
+        /// <summary>
+        /// Login failed or canceled
+        /// </summary>
+        public static event FailureEvent OnFailure;
+
 		private static GoogleApiClient _googleClient;
 
 		private static MainActivity _mainActivity;
@@ -58,8 +72,10 @@ namespace CubeQuest.Account
 
 		private static void HandleSignInResult(GoogleSignInResult result)
 		{
-			// Show game if successful
-			// TODO
+            if (result.IsSuccess)
+                OnSuccess?.Invoke(result.Status);
+            else if (!result.IsSuccess)
+                OnFailure?.Invoke(result.Status);
 
 			new AlertDialog.Builder(_mainActivity)
 				.SetTitle(result.IsSuccess ? "Signed in" : "Sign in error")
