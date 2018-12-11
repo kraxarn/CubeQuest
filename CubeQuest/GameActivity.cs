@@ -53,29 +53,42 @@ namespace CubeQuest
 
         public void OnMapReady(GoogleMap map)
         {
+            // Set local maps
             googleMap = map;
 
+            // Disable scrolling
             googleMap.UiSettings.ScrollGesturesEnabled = false;
 
+            // Sample icons
             var icon = BitmapDescriptorFactory.FromAsset("enemy/snake.png");
             var spookyNoodleIcon = BitmapDescriptorFactory.FromAsset("enemy/snake2.png");
             
+            // Get last known location or 0,0 if not known
+            // TODO: If not known, show loading dialog
             var location = userLocation == null ? new LatLng(0, 0) : LocationManager.ToLatLng(userLocation);
             
+            // Test position for test enemy
             var testPosition = new LatLng(location.Latitude + 0.005, location.Longitude + 0.005);
 
+            // Create player marker
             SetUpMarker(location, AccountManager.Name, icon);
 
+            // Create test marker
             SetUpMarker(testPosition, "Spooky Noodle", spookyNoodleIcon);
 
+            // Target player with initial zoom
             var position = CameraPosition.InvokeBuilder()
                 .Target(location)
                 .Zoom(32f)
                 .Build();
 
+            // Move camera to player
             googleMap.MoveCamera(CameraUpdateFactory.NewCameraPosition(position));
         }
         
+        /// <summary>
+        /// Creates a marker at the specified position
+        /// </summary>
         private void SetUpMarker(LatLng latLng, string title, BitmapDescriptor icon) => 
             markers.Add(googleMap.AddMarker(new MarkerOptions()
                 .SetPosition(latLng)
@@ -86,10 +99,12 @@ namespace CubeQuest
         {
             base.OnStart();
 
+            // Request permissions on start
+            // TODO: The app will try to access the position while asking for permissions, making it crash
             if (CheckSelfPermission(Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
                 RequestPermissions(new[]
                 {
-                    Manifest.Permission.AccessCoarseLocation, Manifest.Permission.AccessFineLocation
+                    Manifest.Permission.AccessFineLocation
                 }, 0);
         }
     }
