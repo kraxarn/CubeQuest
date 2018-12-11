@@ -6,6 +6,7 @@ using Android.Gms.Common.Apis;
 using Android.Gms.Drive;
 using Android.Graphics;
 using System;
+using Android.Gms.Games;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
 
 namespace CubeQuest.Account
@@ -18,6 +19,12 @@ namespace CubeQuest.Account
 
 	    public static bool IsConnected => _googleClient.IsConnected;
 
+        /// <summary>
+        /// Google Play display name
+        /// </summary>
+	    public static string Name => 
+	        GamesClass.Players.GetCurrentPlayer(_googleClient).DisplayName;
+
 	    public static void Create(MainActivity activity)
 	    {
 	        _mainActivity = activity;
@@ -29,6 +36,7 @@ namespace CubeQuest.Account
 	        _googleClient = new GoogleApiClient.Builder(activity)
 	            .EnableAutoManage(activity, new ConnectionFailedListener())
 	            .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
+	            .AddApi(GamesClass.API)
 	            .Build();
 	    }
 
