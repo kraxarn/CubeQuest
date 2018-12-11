@@ -6,8 +6,6 @@ using Android.Gms.Common.Apis;
 using Android.Gms.Drive;
 using Android.Gms.Games;
 using Android.Graphics;
-using System;
-using AlertDialog = Android.Support.V7.App.AlertDialog;
 
 namespace CubeQuest.Account
 {
@@ -76,14 +74,6 @@ namespace CubeQuest.Account
                 OnSuccess?.Invoke(result.Status);
             else if (!result.IsSuccess)
                 OnFailure?.Invoke(result.Status);
-
-			new AlertDialog.Builder(_mainActivity)
-				.SetTitle(result.IsSuccess ? "Signed in" : "Sign in error")
-				.SetMessage(result.IsSuccess ? 
-					"You are now signed in, good for you" : 
-					"Couldn't sign you in for some reason")
-				.SetPositiveButton("uh", (EventHandler<DialogClickEventArgs>)null)
-				.Show();
 		}
 
 	    public static Bitmap SaveIcon =>
