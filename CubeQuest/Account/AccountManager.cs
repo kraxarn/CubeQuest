@@ -29,8 +29,6 @@ namespace CubeQuest.Account
 	        _googleClient = new GoogleApiClient.Builder(activity)
 	            .EnableAutoManage(activity, new ConnectionFailedListener())
 	            .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
-	            //.AddApi(DriveClass.API)
-	            //.AddScope(DriveClass.ScopeAppfolder)
 	            .Build();
 	    }
 
