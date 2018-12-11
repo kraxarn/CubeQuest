@@ -57,7 +57,5 @@ namespace CubeQuest
         /// </summary>
         public static LatLng ToLatLng(Location location) => 
             new LatLng(location.Latitude, location.Longitude);
-
-
     }
 }
