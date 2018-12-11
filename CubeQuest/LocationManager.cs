@@ -10,21 +10,28 @@ namespace CubeQuest
     {
         public delegate void LocationUpdateEvent(Location location);
 
+        /// <summary>
+        /// Location was updated
+        /// </summary>
         public event LocationUpdateEvent OnLocationUpdate;
 
+        /// <summary>
+        /// Universal location provider
+        /// </summary>
         private readonly FusedLocationProviderClient client;
 
         public LocationManager(Context context)
         {
+            // Create client from context
             client = LocationServices.GetFusedLocationProviderClient(context);
 
+            // Create location request and set some options
             var locationRequest = new LocationRequest();
             locationRequest.SetPriority(LocationRequest.PriorityHighAccuracy);
             locationRequest.SetInterval(1000);
 
+            // Receives all location updates
             var locationCallback = new LocationCallback();
-
-            // Function that receives all the location updates
             locationCallback.LocationResult += (sender, args) =>
             {
                 if (args.Result == null)
@@ -34,11 +41,13 @@ namespace CubeQuest
                     OnLocationUpdate?.Invoke(location);
             };
 
+            // Start receiving location updates
             client.RequestLocationUpdatesAsync(locationRequest, locationCallback);
         }
 
         /// <summary>
         /// Gets the user's last known location
+        /// (very likely to return null at first)
         /// </summary>
         public async Task<Location> GetLastKnownLocation() => 
             await client.GetLastLocationAsync();
