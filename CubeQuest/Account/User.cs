@@ -36,11 +36,33 @@ namespace CubeQuest.Account
         /// </summary>
         private uint level;
 
+        /// <summary>
+        /// User's current health
+        /// </summary>
+        private int health;
+
+        /// <summary>
+        /// User's maximum health
+        /// TODO
+        /// </summary>
+        private int maxHealth
+        {
+            get
+            {
+                var h = 10 + (int) level * 2;
+
+                foreach (var companion in equippedCompanions)
+                    h += companion.Health;
+
+                return h;
+            }
+        }
+
         public User()
         {
             companions = new List<ICompanion>();
             equippedCompanions = new List<ICompanion>(3);
-            level = 0;
+            level = 1;
         }
 
         /// <summary>
