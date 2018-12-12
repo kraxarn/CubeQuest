@@ -3361,7 +3361,7 @@ namespace CubeQuest
 		{
 			
 			// aapt resource value: 0x7f070000
-			public const int google_map_them_default = 2131165184;
+			public const int map_theme_dark = 2131165184;
 			
 			static Raw()
 			{

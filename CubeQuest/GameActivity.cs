@@ -69,10 +69,10 @@ namespace CubeQuest
             googleMap.UiSettings.ScrollGesturesEnabled = false;
             googleMap.UiSettings.ZoomGesturesEnabled = false;
             googleMap.UiSettings.ZoomControlsEnabled = true;
-            googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(
-                this, Resource.Raw.google_map_them_default));
-            
 
+            // Set custom theme to map
+            googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, Resource.Raw.map_theme_dark));
+            
             // Sample icons
             var icon = BitmapDescriptorFactory.FromAsset("enemy/snake.png");
             var spookyNoodleIcon = BitmapDescriptorFactory.FromAsset("enemy/snake2.png");
