@@ -39,6 +39,9 @@ namespace CubeQuest.Account
 
 	    public static void Create(MainActivity activity)
 	    {
+            if (_googleClient != null)
+                return;
+
 	        _mainActivity = activity;
 
 	        var signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultGamesSignIn)

@@ -40,14 +40,21 @@ namespace CubeQuest
             // Get map and listen when it's ready
             var mapFragment = (SupportMapFragment) SupportFragmentManager.FindFragmentById(Resource.Id.map);
             mapFragment.GetMapAsync(this);
-            
+
+            LatLng testPosition = new LatLng(59.619281, 16.548741);
+            LatLng test2Poistion = new LatLng(59.619280, 16.548740);
+
+            double resultDistance = LocationManager.GetDistance(testPosition, test2Poistion);
+
+            var did = resultDistance;
+
             locationManager.OnLocationUpdate += location =>
                 {
                     // TODO: Check speed etc. here
                     // TODO: Show a loading dialog until we get the first position
 
                     Log.Info("POSITION", location.ToString());
-
+                    
                     markers.First().Position = LocationManager.ToLatLng(location);
                     googleMap.MoveCamera(CameraUpdateFactory.NewLatLng(LocationManager.ToLatLng(location)));
                 };
@@ -62,6 +69,9 @@ namespace CubeQuest
             googleMap.UiSettings.ScrollGesturesEnabled = false;
             googleMap.UiSettings.ZoomGesturesEnabled = false;
             googleMap.UiSettings.ZoomControlsEnabled = true;
+            googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(
+                this, Resource.Raw.google_map_them_default));
+            
 
             // Sample icons
             var icon = BitmapDescriptorFactory.FromAsset("enemy/snake.png");
@@ -79,6 +89,8 @@ namespace CubeQuest
 
             // Create test marker
             SetUpMarker(testPosition, "Spooky Noodle", spookyNoodleIcon);
+
+
 
             // Target player with initial zoom
             var position = CameraPosition.InvokeBuilder()
