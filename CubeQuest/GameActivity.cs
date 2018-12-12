@@ -55,8 +55,8 @@ namespace CubeQuest
 
                     Log.Info("POSITION", location.ToString());
                     
-                    markers.First().Position = LocationManager.ToLatLng(location);
-                    googleMap.MoveCamera(CameraUpdateFactory.NewLatLng(LocationManager.ToLatLng(location)));
+                    //markers.First().Position = LocationManager.ToLatLng(location);
+                    //googleMap.MoveCamera(CameraUpdateFactory.NewLatLng(LocationManager.ToLatLng(location)));
                 };
         }
 
@@ -68,6 +68,7 @@ namespace CubeQuest
             // Disable scrolling
             googleMap.UiSettings.ScrollGesturesEnabled = false;
             googleMap.UiSettings.ZoomGesturesEnabled = false;
+            googleMap.MyLocationEnabled = true;
 
             // Set custom theme to map
             //googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, Resource.Raw.map_theme_dark));
@@ -84,7 +85,7 @@ namespace CubeQuest
             var testPosition = new LatLng(location.Latitude + 0.005, location.Longitude + 0.005);
 
             // Create player marker
-            AddMarker(location, AccountManager.Name, icon);
+            //AddMarker(location, AccountManager.Name, icon);
 
             // Create test marker
             AddMarker(testPosition, "Spooky Noodle", spookyNoodleIcon);
