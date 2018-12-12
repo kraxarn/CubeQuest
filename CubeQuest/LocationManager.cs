@@ -20,10 +20,15 @@ namespace CubeQuest
         /// </summary>
         private readonly FusedLocationProviderClient client;
 
+        private Android.Locations.LocationManager locationManager;
+
         public LocationManager(Context context)
         {
             // Create client from context
             client = LocationServices.GetFusedLocationProviderClient(context);
+
+            // Create Android location manager
+            locationManager = context.GetSystemService(Context.LocationService) as Android.Locations.LocationManager;
 
             // Create location request and set some options
             var locationRequest = new LocationRequest();
@@ -57,5 +62,8 @@ namespace CubeQuest
         /// </summary>
         public static LatLng ToLatLng(Location location) => 
             new LatLng(location.Latitude, location.Longitude);
+
+        public bool IsLocationServicesEnabled => 
+            locationManager.IsProviderEnabled(Android.Locations.LocationManager.GpsProvider);
     }
 }

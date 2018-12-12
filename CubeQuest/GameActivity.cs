@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Android;
+﻿using Android;
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
@@ -10,6 +9,9 @@ using Android.OS;
 using Android.Support.V7.App;
 using Android.Util;
 using CubeQuest.Account;
+using System.Collections.Generic;
+using System.Linq;
+using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest
 {
@@ -58,6 +60,8 @@ namespace CubeQuest
 
             // Disable scrolling
             googleMap.UiSettings.ScrollGesturesEnabled = false;
+            googleMap.UiSettings.ZoomGesturesEnabled = false;
+            googleMap.UiSettings.ZoomControlsEnabled = true;
 
             // Sample icons
             var icon = BitmapDescriptorFactory.FromAsset("enemy/snake.png");
@@ -98,6 +102,17 @@ namespace CubeQuest
         protected override void OnStart()
         {
             base.OnStart();
+
+            // Check if GPS is enabled
+            if (!locationManager.IsLocationServicesEnabled)
+            {
+                // TODO: Show fullscreen until user enabled location
+                new AlertDialog.Builder(this)
+                    .SetTitle("Location Required")
+                    .SetMessage("GPS is required to get your location, but it's disabled")
+                    .SetPositiveButton("Enable It", (sender, args) => StartActivity(new Intent(Android.Provider.Settings.ActionLocationSourceSettings)))
+                    .Show();
+            }
 
             // Request permissions on start
             // TODO: The app will try to access the position while asking for permissions, making it crash
