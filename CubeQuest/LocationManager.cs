@@ -20,7 +20,7 @@ namespace CubeQuest
         /// </summary>
         private readonly FusedLocationProviderClient client;
 
-        private Android.Locations.LocationManager locationManager;
+        private readonly Android.Locations.LocationManager locationManager;
 
         public LocationManager(Context context)
         {
