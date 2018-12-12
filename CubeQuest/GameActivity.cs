@@ -68,10 +68,9 @@ namespace CubeQuest
             // Disable scrolling
             googleMap.UiSettings.ScrollGesturesEnabled = false;
             googleMap.UiSettings.ZoomGesturesEnabled = false;
-            googleMap.UiSettings.ZoomControlsEnabled = true;
 
             // Set custom theme to map
-            googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, Resource.Raw.map_theme_dark));
+            //googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, Resource.Raw.map_theme_dark));
             
             // Sample icons
             var icon = BitmapDescriptorFactory.FromAsset("enemy/snake.png");
@@ -85,12 +84,10 @@ namespace CubeQuest
             var testPosition = new LatLng(location.Latitude + 0.005, location.Longitude + 0.005);
 
             // Create player marker
-            SetUpMarker(location, AccountManager.Name, icon);
+            AddMarker(location, AccountManager.Name, icon);
 
             // Create test marker
-            SetUpMarker(testPosition, "Spooky Noodle", spookyNoodleIcon);
-
-
+            AddMarker(testPosition, "Spooky Noodle", spookyNoodleIcon);
 
             // Target player with initial zoom
             var position = CameraPosition.InvokeBuilder()
@@ -105,7 +102,7 @@ namespace CubeQuest
         /// <summary>
         /// Creates a marker at the specified position
         /// </summary>
-        private void SetUpMarker(LatLng latLng, string title, BitmapDescriptor icon) => 
+        private void AddMarker(LatLng latLng, string title, BitmapDescriptor icon) => 
             markers.Add(googleMap.AddMarker(new MarkerOptions()
                 .SetPosition(latLng)
                 .SetTitle(title)
