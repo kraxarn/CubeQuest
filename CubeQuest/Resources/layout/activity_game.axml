@@ -59,7 +59,8 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:padding="16dp"
-		android:background="@color/colorPrimary">
+		android:background="@color/colorPrimary"
+		android:visibility="invisible">
 
 		<!-- Name title (h4) -->
 		<TextView
@@ -130,6 +131,7 @@
 			android:padding="6dp"
 			android:layout_marginTop="16dp"
 			android:background="@color/colorPrimaryDark">
+
 			<GridLayout
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
