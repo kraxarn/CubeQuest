@@ -263,3 +263,6 @@ __pycache__/
 # Ignore our secrets
 Keystore/
 secrets.xml
+
+# Ignore Mac temp files
+.DS_Store
