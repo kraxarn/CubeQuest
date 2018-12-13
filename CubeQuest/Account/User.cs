@@ -37,6 +37,11 @@ namespace CubeQuest.Account
         private uint level;
 
         /// <summary>
+        /// Damage reduction from attacks
+        /// </summary>
+        private int armor;
+
+        /// <summary>
         /// User's current health
         /// </summary>
         private int health;
@@ -45,7 +50,7 @@ namespace CubeQuest.Account
         /// User's maximum health
         /// TODO
         /// </summary>
-        private int maxHealth
+        private int MaxHealth
         {
             get
             {
