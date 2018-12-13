@@ -6,11 +6,14 @@ using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Locations;
 using Android.OS;
+using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Util;
-using CubeQuest.Account;
+using Android.Widget;
 using System.Collections.Generic;
-using System.Linq;
+using Android.Views;
+using CubeQuest.Account;
+using Java.Lang;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest
@@ -58,6 +61,25 @@ namespace CubeQuest
                     //markers.First().Position = LocationManager.ToLatLng(location);
                     //googleMap.MoveCamera(CameraUpdateFactory.NewLatLng(LocationManager.ToLatLng(location)));
                 };
+
+            // Show profile when clicking on button
+            var fab = FindViewById<FloatingActionButton>(Resource.Id.fabUser);
+            fab.Click += (sender, args) =>
+            {
+                var view = FindViewById<LinearLayout>(Resource.Id.layoutProfile);
+
+                var centerX = fab.Left + fab.Width  / 2;
+                var centerY = fab.Top  + fab.Height / 2;
+
+                var radius = (float) Math.Hypot(centerX, centerY);
+
+                var animator = ViewAnimationUtils.CreateCircularReveal(view, centerX, centerY, 0f, radius);
+                view.Visibility = ViewStates.Visible;
+                animator.Start();
+            };
+
+            // Set up profile view
+            FindViewById<TextView>(Resource.Id.textProfileName).Text = AccountManager.Name;
         }
 
         public void OnMapReady(GoogleMap map)
@@ -114,7 +136,7 @@ namespace CubeQuest
             base.OnStart();
 
             // Check if GPS is enabled
-            if (!locationManager.IsLocationServicesEnabled)
+            if (!locationManager?.IsLocationServicesEnabled ?? true)
             {
                 // TODO: Show fullscreen until user enabled location
                 new AlertDialog.Builder(this)
