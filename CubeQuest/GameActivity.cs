@@ -9,11 +9,11 @@ using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Util;
-using Android.Widget;
-using System.Collections.Generic;
 using Android.Views;
+using Android.Widget;
 using CubeQuest.Account;
 using Java.Lang;
+using System.Collections.Generic;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest
@@ -55,6 +55,7 @@ namespace CubeQuest
                 {
                     // TODO: Check speed etc. here
                     // TODO: Show a loading dialog until we get the first position
+                    // TODO: Follow new marker
 
                     Log.Info("POSITION", location.ToString());
                     
@@ -62,51 +63,9 @@ namespace CubeQuest
                     //googleMap.MoveCamera(CameraUpdateFactory.NewLatLng(LocationManager.ToLatLng(location)));
                 };
 
-            var fabUser = FindViewById<FloatingActionButton>(Resource.Id.fabUser);
-            var fabMap  = FindViewById<FloatingActionButton>(Resource.Id.fabGame);
-
             // Show profile when clicking on button
-            fabUser.Click += (sender, args) =>
-            {
-                // Hide profile button
-                fabUser.Hide();
-
-                // Show map button
-                fabMap.Show();
-
-                var view = FindViewById<LinearLayout>(Resource.Id.layoutProfile);
-
-                var centerX = fabUser.Left + fabUser.Width  / 2;
-                var centerY = fabUser.Top  + fabUser.Height / 2;
-
-                var radius = (float) Math.Hypot(centerX, centerY);
-
-                var animator = ViewAnimationUtils.CreateCircularReveal(view, centerX, centerY, 0f, radius);
-                view.Visibility = ViewStates.Visible;
-                animator.Start();
-            };
-
-            fabMap.Click += (sender, args) =>
-            {
-                // Hide map button
-                fabMap.Hide();
-
-                // Show profile button
-                fabUser.Show();
-
-                var centerX = fabMap.Left + fabUser.Width / 2;
-                var centerY = fabMap.Top + fabUser.Height / 2;
-
-                var radius = (float) Math.Hypot(centerX, centerY);
-
-                var view = FindViewById<LinearLayout>(Resource.Id.layoutProfile);
-                
-                var animator = ViewAnimationUtils.CreateCircularReveal(view, centerX, centerY, radius, 0f);
-
-                animator.AnimationEnd += (o, eventArgs) => view.Visibility = ViewStates.Invisible;
-
-                animator.Start();
-            };
+            FindViewById<FloatingActionButton>(Resource.Id.fabUser).Click  += (sender, args) => ToggleProfile(true);
+            FindViewById<FloatingActionButton>(Resource.Id.fabGame).Click  += (sender, args) => ToggleProfile(false);
 
             // Set up profile view
             FindViewById<TextView>(Resource.Id.textProfileName).Text = AccountManager.Name;
@@ -183,6 +142,47 @@ namespace CubeQuest
                 {
                     Manifest.Permission.AccessFineLocation
                 }, 0);
+        }
+
+        private void ToggleProfile(bool enabled)
+        {
+            // FABs
+            var fabUser = FindViewById<FloatingActionButton>(Resource.Id.fabUser);
+            var fabMap  = FindViewById<FloatingActionButton>(Resource.Id.fabGame);
+
+            // Show or hide buttons
+            if (enabled)
+            {
+                // Show map, hide user
+                fabUser.Hide();
+                fabMap.Show();
+            }
+            else
+            {
+                // Hide map, show user
+                fabMap.Hide();
+                fabUser.Show();
+            }
+
+            // Profile view
+            var view = FindViewById<LinearLayout>(Resource.Id.layoutProfile);
+
+            // Starting/ending point
+            var centerX = fabUser.Left + fabUser.Width / 2;
+            var centerY = fabUser.Top  + fabUser.Height / 2;
+
+            // Button radius
+            var radius = (float) Math.Hypot(centerX, centerY);
+
+            var animator = ViewAnimationUtils.CreateCircularReveal(view, centerX, centerY, enabled ? 0f : radius, enabled ? radius : 0f);
+
+            // Hide or show view
+            if (enabled)
+                view.Visibility = ViewStates.Visible;
+            else
+                animator.AnimationEnd += (o, eventArgs) => view.Visibility = ViewStates.Invisible;
+
+            animator.Start();
         }
     }
 }
