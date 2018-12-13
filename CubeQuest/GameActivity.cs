@@ -9,12 +9,11 @@ using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Util;
-using Android.Widget;
-using System.Collections.Generic;
-using Android.Animation;
 using Android.Views;
+using Android.Widget;
 using CubeQuest.Account;
 using Java.Lang;
+using System.Collections.Generic;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest
@@ -44,13 +43,6 @@ namespace CubeQuest
             // Get map and listen when it's ready
             var mapFragment = (SupportMapFragment) SupportFragmentManager.FindFragmentById(Resource.Id.map);
             mapFragment.GetMapAsync(this);
-
-            LatLng testPosition = new LatLng(59.619281, 16.548741);
-            LatLng test2Poistion = new LatLng(59.619280, 16.548740);
-
-            double resultDistance = LocationManager.GetDistance(testPosition, test2Poistion);
-
-            var did = resultDistance;
 
             locationManager.OnLocationUpdate += location =>
                 {
@@ -86,7 +78,6 @@ namespace CubeQuest
             //googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, Resource.Raw.map_theme_dark));
             
             // Sample icons
-            var icon = BitmapDescriptorFactory.FromAsset("enemy/snake.png");
             var spookyNoodleIcon = BitmapDescriptorFactory.FromAsset("enemy/snake2.png");
             
             // Get last known location or 0,0 if not known
