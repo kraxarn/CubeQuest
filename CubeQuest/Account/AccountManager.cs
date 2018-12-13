@@ -60,8 +60,18 @@ namespace CubeQuest.Account
         /// Tries to sign in silently, ignores <see cref="OnSuccess"/> and <see cref="OnFailure"/>
         /// </summary>
         /// <returns>If sign in was successful or not</returns>
-        public static async Task<bool> SilentSignInAsync() => 
-            (await Auth.GoogleSignInApi.SilentSignIn(_googleClient)).Status.IsSuccess;
+        public static async Task<bool> SilentSignInAsync()
+        {
+            // If google client hasn't connected yet, wait
+            if (!IsConnected)
+                _googleClient.Connect();
+                
+            // TODO: Temporary solution
+            if (!IsConnected)
+                return false;
+
+            return (await Auth.GoogleSignInApi.SilentSignIn(_googleClient)).Status.IsSuccess;
+        }
 
         /// <summary>
 		/// Get intent used to sign in with Google
