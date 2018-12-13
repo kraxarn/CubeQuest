@@ -1,3 +1,5 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    
+    <dimen name="inventory_btn_size">48dp</dimen>
 </resources>
