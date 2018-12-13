@@ -9,11 +9,12 @@ using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Util;
-using Android.Views;
 using Android.Widget;
+using System.Collections.Generic;
+using Android.Animation;
+using Android.Views;
 using CubeQuest.Account;
 using Java.Lang;
-using System.Collections.Generic;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest
@@ -183,6 +184,13 @@ namespace CubeQuest
                 animator.AnimationEnd += (o, eventArgs) => view.Visibility = ViewStates.Invisible;
 
             animator.Start();
+        }
+
+        public override void OnBackPressed()
+        {
+            // If on profile, go back to map, otherwise, ignore
+            if (FindViewById<LinearLayout>(Resource.Id.layoutProfile).Visibility == ViewStates.Visible)
+                ToggleProfile(false);
         }
     }
 }
