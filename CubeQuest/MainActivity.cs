@@ -12,7 +12,7 @@ namespace CubeQuest
     {
         private const int RcSignIn = 9001;
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
@@ -28,8 +28,11 @@ namespace CubeQuest
 			signInButton.SetColorScheme(SignInButton.ColorDark);
 			signInButton.SetSize(SignInButton.SizeWide);
 
+            // Try to sign in silently
+            if (await AccountManager.SilentSignInAsync())
+                StartActivity(typeof(GameActivity));
+
             // Start signin intent when clicking on 'sign in'
-            // TODO: Try to sign in silently
             signInButton.Click += (sender, args) => StartActivityForResult(AccountManager.GetSignInIntent(), RcSignIn);
         }
 

@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿using System.Threading.Tasks;
+using Android.Content;
 using Android.Gms.Auth.Api;
 using Android.Gms.Auth.Api.SignIn;
 using Android.Gms.Common;
@@ -55,7 +56,14 @@ namespace CubeQuest.Account
 	            .Build();
 	    }
 
-		/// <summary>
+        /// <summary>
+        /// Tries to sign in silently, ignores <see cref="OnSuccess"/> and <see cref="OnFailure"/>
+        /// </summary>
+        /// <returns>If sign in was successful or not</returns>
+        public static async Task<bool> SilentSignInAsync() => 
+            (await Auth.GoogleSignInApi.SilentSignIn(_googleClient)).Status.IsSuccess;
+
+        /// <summary>
 		/// Get intent used to sign in with Google
 		/// </summary>
 		public static Intent GetSignInIntent() => 
