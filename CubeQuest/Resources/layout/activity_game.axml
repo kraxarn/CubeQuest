@@ -273,4 +273,14 @@
 
 	</LinearLayout>
 
+	<!-- Map FAB -->
+	<android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_map"
+        android:layout_margin="16dp"
+		android:visibility="invisible"/>
+
 </android.support.design.widget.CoordinatorLayout>

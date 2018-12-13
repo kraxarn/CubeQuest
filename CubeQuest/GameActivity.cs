@@ -62,19 +62,49 @@ namespace CubeQuest
                     //googleMap.MoveCamera(CameraUpdateFactory.NewLatLng(LocationManager.ToLatLng(location)));
                 };
 
+            var fabUser = FindViewById<FloatingActionButton>(Resource.Id.fabUser);
+            var fabMap  = FindViewById<FloatingActionButton>(Resource.Id.fabGame);
+
             // Show profile when clicking on button
-            var fab = FindViewById<FloatingActionButton>(Resource.Id.fabUser);
-            fab.Click += (sender, args) =>
+            fabUser.Click += (sender, args) =>
             {
+                // Hide profile button
+                fabUser.Hide();
+
+                // Show map button
+                fabMap.Show();
+
                 var view = FindViewById<LinearLayout>(Resource.Id.layoutProfile);
 
-                var centerX = fab.Left + fab.Width  / 2;
-                var centerY = fab.Top  + fab.Height / 2;
+                var centerX = fabUser.Left + fabUser.Width  / 2;
+                var centerY = fabUser.Top  + fabUser.Height / 2;
 
                 var radius = (float) Math.Hypot(centerX, centerY);
 
                 var animator = ViewAnimationUtils.CreateCircularReveal(view, centerX, centerY, 0f, radius);
                 view.Visibility = ViewStates.Visible;
+                animator.Start();
+            };
+
+            fabMap.Click += (sender, args) =>
+            {
+                // Hide map button
+                fabMap.Hide();
+
+                // Show profile button
+                fabUser.Show();
+
+                var centerX = fabMap.Left + fabUser.Width / 2;
+                var centerY = fabMap.Top + fabUser.Height / 2;
+
+                var radius = (float) Math.Hypot(centerX, centerY);
+
+                var view = FindViewById<LinearLayout>(Resource.Id.layoutProfile);
+                
+                var animator = ViewAnimationUtils.CreateCircularReveal(view, centerX, centerY, radius, 0f);
+
+                animator.AnimationEnd += (o, eventArgs) => view.Visibility = ViewStates.Invisible;
+
                 animator.Start();
             };
 
