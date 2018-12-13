@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+	<!-- Map view -->
 	<fragment
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -15,6 +16,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"/>
 
+	<!-- Health bar -->
 	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -39,6 +41,7 @@
 
 	</FrameLayout>
 
+	<!-- User FAB -->
 	<android.support.design.widget.FloatingActionButton
         android:id="@+id/fabUser"
         android:layout_width="wrap_content"
@@ -46,5 +49,226 @@
         android:layout_gravity="end|bottom"
         android:src="@drawable/ic_user"
         android:layout_margin="16dp"/>
+
+	<!-- Profile view -->
+	<LinearLayout 
+		android:id="@+id/layoutProfile"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:padding="16dp"
+		android:background="@color/colorPrimary">
+
+		<!-- Name title (h4) -->
+		<TextView
+			android:id="@+id/textProfileName"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="34sp"
+			android:textAlignment="center"
+			android:text="(name)"/>
+
+		<!-- Table layout for stats -->
+		<TableLayout
+			android:layout_marginTop="16dp"
+			android:layout_gravity="center_horizontal"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+
+			<TableRow
+				android:gravity="center_vertical">
+
+				<!-- HP -->
+				<ImageView
+					android:layout_marginEnd="8dp"
+					android:src="@drawable/ic_hp"/>
+				<TextView
+					android:textSize="20sp"
+					android:text="0 / 0"/>
+
+				<!-- Damage -->
+				<ImageView
+					android:layout_marginStart="32dp"
+					android:layout_marginEnd="8dp"
+					android:src="@drawable/ic_sword"/>
+				<TextView
+					android:textSize="20sp"
+					android:text="0"/>
+
+			</TableRow>
+
+			<TableRow
+				android:layout_marginTop="8dp"
+				android:gravity="center_vertical">
+
+				<!-- Level -->
+				<ImageView
+					android:src="@drawable/ic_level"/>
+				<TextView
+					android:textSize="20sp"
+					android:text="1"/>
+
+				<!-- Armor -->
+				<ImageView
+					android:layout_marginStart="32dp"
+					android:layout_marginEnd="8dp"
+					android:src="@drawable/ic_shield"/>
+				<TextView
+					android:textSize="20sp"
+					android:text="0"/>
+
+			</TableRow>
+
+		</TableLayout>
+
+		<!-- Equipment layout -->
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="6dp"
+			android:layout_marginTop="16dp"
+			android:background="@color/colorPrimaryDark">
+			<GridLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:rowCount="3"
+				android:columnCount="4">
+
+				<!-- Primary weapon -->
+				<ImageButton
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="8dp"
+					android:background="?android:selectableItemBackground"
+					android:src="@drawable/ic_sword"/>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:layout_margin="8dp"
+					android:text="primary"/>
+
+				<!-- Companion 1 -->
+				<ImageButton
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="8dp"
+					android:background="?android:selectableItemBackground"
+					android:src="@drawable/ic_companion"/>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:layout_margin="8dp"
+					android:text="cube1"/>
+
+				<!-- Secondary weapon -->
+				<ImageButton
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="8dp"
+					android:background="?android:selectableItemBackground"
+					android:src="@drawable/ic_shield"/>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:layout_margin="8dp"
+					android:text="secondary"/>
+
+				<!-- Companion 2 -->
+				<ImageButton
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="8dp"
+					android:background="?android:selectableItemBackground"
+					android:src="@drawable/ic_companion"/>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="8dp"
+					android:text="cube2"/>
+
+				<!-- Spell -->
+				<ImageButton
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="8dp"
+					android:background="?android:selectableItemBackground"
+					android:src="@drawable/ic_spell"/>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="8dp"
+					android:text="spell"/>
+
+				<!-- Companion 3 -->
+				<ImageButton
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="8dp"
+					android:background="?android:selectableItemBackground"
+					android:src="@drawable/ic_companion"/>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_margin="8dp"
+					android:text="cube3"/>
+
+			</GridLayout>
+		</FrameLayout>
+
+		<!-- Buttons -->
+		<LinearLayout
+			android:layout_marginTop="16dp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center_horizontal">
+
+			<ImageButton
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="?android:selectableItemBackground"
+				android:padding="8dp"
+				android:src="@drawable/ic_trophy"/>
+
+			<ImageButton
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="16dp"
+				android:padding="8dp"
+				android:background="?android:selectableItemBackground"
+				android:src="@drawable/ic_numbered_list"/>
+
+			<ImageButton
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="16dp"
+				android:padding="8dp"
+				android:background="?android:selectableItemBackground"
+				android:src="@drawable/ic_briefcase"/>
+
+			<ImageButton
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="16dp"
+				android:padding="8dp"
+				android:background="?android:selectableItemBackground"
+				android:src="@drawable/ic_companion"/>
+
+			<ImageButton
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="16dp"
+				android:padding="8dp"
+				android:background="?android:selectableItemBackground"
+				android:src="@drawable/ic_settings"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
