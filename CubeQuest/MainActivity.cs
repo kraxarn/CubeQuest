@@ -65,14 +65,19 @@ namespace CubeQuest
                 return;
             }
 
-            // Google signin
-            AccountManager.Create(this);
-
             // Start signin intent when clicking on 'sign in'
             signInButton.Click += (sender, args) =>
             {
                 StartActivityForResult(AccountManager.GetSignInIntent(), RcSignIn);
             };
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            // Google signin
+            AccountManager.Create(this);
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
