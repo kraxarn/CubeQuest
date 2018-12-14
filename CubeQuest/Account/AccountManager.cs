@@ -1,13 +1,17 @@
-﻿using Android.Content;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Android.Content;
 using Android.Gms.Auth.Api;
 using Android.Gms.Auth.Api.SignIn;
 using Android.Gms.Common;
 using Android.Gms.Common.Apis;
 using Android.Gms.Drive;
 using Android.Gms.Games;
+using Android.Gms.Games.Achievement;
 using Android.Graphics;
 using Android.OS;
 using Android.Support.V7.App;
+using Android.Views;
 
 namespace CubeQuest.Account
 {
@@ -113,6 +117,18 @@ namespace CubeQuest.Account
 
         public static Intent AchievementsIntent => 
             GamesClass.Achievements.GetAchievementsIntent(_googleClient);
+
+        public static void UnlockAchievement(string id) => 
+            GamesClass.Achievements.Unlock(_googleClient, id);
+
+        public static void IncrementAchievement(string id, int steps) =>
+            GamesClass.Achievements.Increment(_googleClient, id, steps);
+
+        public static async Task<IEnumerable<IAchievement>> GetAchievementsAsync() => 
+            (await GamesClass.Achievements.LoadAsync(_googleClient, true)).Achievements;
+
+        public static void SetViewForPopups(View view) => 
+            GamesClass.SetViewForPopups(_googleClient, view);
     }
 
     public class ConnectionListener : Java.Lang.Object, GoogleApiClient.IOnConnectionFailedListener, GoogleApiClient.IConnectionCallbacks
