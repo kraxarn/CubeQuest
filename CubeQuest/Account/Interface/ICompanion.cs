@@ -1,6 +1,6 @@
 ﻿namespace CubeQuest.Account.Interface
 {
-    public interface ICompanion : IStats
+    public interface ICompanion : IItem
     {
         /// <summary>
         /// Trigger before the battle

@@ -72,7 +72,7 @@
     <Compile Include="Account\Interface\ICompanion.cs" />
     <Compile Include="Account\Companions\CompanionExample.cs" />
     <Compile Include="Account\Interface\ISpell.cs" />
-    <Compile Include="Account\Interface\IStats.cs" />
+    <Compile Include="Account\Interface\IItem.cs" />
     <Compile Include="Account\Interface\IWeapon.cs" />
     <Compile Include="Account\Interface\SnapshotManager.cs" />
     <Compile Include="Account\User.cs" />
