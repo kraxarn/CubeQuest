@@ -1,4 +1,5 @@
-﻿using Android;
+﻿using System;
+using Android;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -12,7 +13,6 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
-using Java.Lang;
 using System.Collections.Generic;
 using AlertDialog = Android.App.AlertDialog;
 
@@ -169,7 +169,7 @@ namespace CubeQuest
             var centerY = fabUser.Top  + fabUser.Height / 2;
 
             // Button radius
-            var radius = (float) Math.Hypot(centerX, centerY);
+            var radius = (float) Math.Sqrt(centerX * centerX + centerY * centerY);
 
             var animator = ViewAnimationUtils.CreateCircularReveal(profileView, centerX, centerY, enabled ? 0f : radius, enabled ? radius : 0f);
 
