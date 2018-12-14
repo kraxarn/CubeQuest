@@ -29,6 +29,8 @@ namespace CubeQuest
 
         private List<Marker> markers;
 
+        private View profileView;
+
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -61,7 +63,13 @@ namespace CubeQuest
             FindViewById<FloatingActionButton>(Resource.Id.fabGame).Click  += (sender, args) => ToggleProfile(false);
 
             // Set up profile view
-            FindViewById<TextView>(Resource.Id.textProfileName).Text = AccountManager.Name;
+            profileView = FindViewById<ViewStub>(Resource.Id.stub_profile).Inflate();
+
+            // Hide it in code to be able to see it when designing in xml
+            profileView.Visibility = ViewStates.Invisible;
+
+            // Set values on profile
+            profileView.FindViewById<TextView>(Resource.Id.textProfileName).Text = AccountManager.Name;
         }
 
         public void OnMapReady(GoogleMap map)
@@ -156,9 +164,6 @@ namespace CubeQuest
                 fabUser.Show();
             }
 
-            // Profile view
-            var view = FindViewById<LinearLayout>(Resource.Id.layoutProfile);
-
             // Starting/ending point
             var centerX = fabUser.Left + fabUser.Width / 2;
             var centerY = fabUser.Top  + fabUser.Height / 2;
@@ -166,13 +171,13 @@ namespace CubeQuest
             // Button radius
             var radius = (float) Math.Hypot(centerX, centerY);
 
-            var animator = ViewAnimationUtils.CreateCircularReveal(view, centerX, centerY, enabled ? 0f : radius, enabled ? radius : 0f);
+            var animator = ViewAnimationUtils.CreateCircularReveal(profileView, centerX, centerY, enabled ? 0f : radius, enabled ? radius : 0f);
 
             // Hide or show view
             if (enabled)
-                view.Visibility = ViewStates.Visible;
+                profileView.Visibility = ViewStates.Visible;
             else
-                animator.AnimationEnd += (o, eventArgs) => view.Visibility = ViewStates.Invisible;
+                animator.AnimationEnd += (o, eventArgs) => profileView.Visibility = ViewStates.Invisible;
 
             animator.Start();
         }
