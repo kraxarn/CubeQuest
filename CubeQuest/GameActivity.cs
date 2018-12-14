@@ -191,7 +191,7 @@ namespace CubeQuest
         public override void OnBackPressed()
         {
             // If on profile, go back to map, otherwise, ignore
-            if (FindViewById<LinearLayout>(Resource.Id.layoutProfile).Visibility == ViewStates.Visible)
+            if (profileView.Visibility == ViewStates.Visible)
                 ToggleProfile(false);
         }
     }
