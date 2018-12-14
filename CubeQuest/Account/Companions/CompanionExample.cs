@@ -8,6 +8,8 @@ namespace CubeQuest.Account.Companions
         public int Armor  => 0;
         public int Attack => 0;
 
+        public string Icon => "companion/example";
+
         public string Name => "Example Companion";
         public string Info => "Does nothing, for testing only";
 
