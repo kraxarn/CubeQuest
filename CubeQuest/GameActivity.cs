@@ -1,5 +1,4 @@
-﻿using System;
-using Android;
+﻿using Android;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -13,6 +12,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
+using System;
 using System.Collections.Generic;
 using AlertDialog = Android.App.AlertDialog;
 
@@ -30,6 +30,8 @@ namespace CubeQuest
         private List<Marker> markers;
 
         private View profileView;
+
+        private const int RcAchievementUi = 9003;
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
@@ -70,8 +72,12 @@ namespace CubeQuest
 
             // Set values on profile
             profileView.FindViewById<TextView>(Resource.Id.textProfileName).Text = AccountManager.Name;
-        }
 
+            // Set button actions
+            profileView.FindViewById<ImageButton>(Resource.Id.button_achievements).Click += (sender, args) => 
+                StartActivityForResult(AccountManager.AchievementsIntent, RcAchievementUi);
+        }
+        
         public void OnMapReady(GoogleMap map)
         {
             // Set local maps
