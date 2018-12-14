@@ -3,9 +3,13 @@
     /// <summary>
     /// For anything that provides the base stats, name and icon
     /// </summary>
-    // TODO: Icon
     public interface IStats
     {
+        /// <summary>
+        /// Name with relative path of the icon without extension
+        /// </summary>
+        string Icon { get; }
+
         /// <summary>
         /// Name/species of the companion
         /// </summary>
