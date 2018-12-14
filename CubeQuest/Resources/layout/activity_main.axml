@@ -24,6 +24,24 @@
 		android:textSize="34sp"
 		android:text="Cube Quest"/>
 
+	<TextView
+		android:id="@+id/text_internet_error"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:textColor="#B00020"
+		android:text="No internet connection\nCheck your connection and try again"
+		android:textAlignment="center"
+		android:lines="2"
+		android:visibility="gone"/>
+
+	<Button
+		android:id="@+id/button_retry_internet"
+		android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:text="Try Again"
+		android:visibility="gone"/>
+
 	<ProgressBar
 		android:id="@+id/progress_bar_connecting"
 		style="@android:style/Widget.Material.ProgressBar"

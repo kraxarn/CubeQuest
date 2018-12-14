@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.Gms.Common;
+using Android.Net;
 using Android.OS;
 using Android.Support.V7.App;
 using Android.Views;
@@ -19,19 +20,53 @@ namespace CubeQuest
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
 
+            // Sign in button
+            var signInButton = FindViewById<SignInButton>(Resource.Id.button_sign_in);
+            signInButton.SetColorScheme(SignInButton.ColorDark);
+            signInButton.SetSize(SignInButton.SizeWide);
+
             // If successful, launch game
             AccountManager.OnSuccess += status => StartActivity(typeof(GameActivity));
 
             // Show login button and notice if it failed
             AccountManager.OnFailure += status => ToggleConnecting(false);
 
+            if (!IsConnected)
+            {
+                // Elements
+                var textInternetError     = FindViewById<TextView>(Resource.Id.text_internet_error);
+                var progressBarConnecting = FindViewById<ProgressBar>(Resource.Id.progress_bar_connecting);
+                var buttonRetryInternet   = FindViewById<Button>(Resource.Id.button_retry_internet);
+
+                void ShowConnectionError(bool show)
+                {
+                    textInternetError.Visibility     = show ? ViewStates.Visible : ViewStates.Gone;
+                    buttonRetryInternet.Visibility   = show ? ViewStates.Visible : ViewStates.Gone;
+                    progressBarConnecting.Visibility = show ? ViewStates.Gone    : ViewStates.Visible;
+                }
+
+                // Show/hide elements
+                ShowConnectionError(true);
+
+                // Try again if button was pressed
+                buttonRetryInternet.Click += (sender, args) =>
+                {
+                    // Hide error and show progress bar again
+                    ShowConnectionError(false);
+
+                    // If connected, try to sign in again
+                    if (IsConnected)
+                        AccountManager.Create(this);
+                    else
+                        ShowConnectionError(true);
+                };
+
+                // Don't continue with the code
+                return;
+            }
+
             // Google signin
             AccountManager.Create(this);
-
-            // Sign in button
-            var signInButton = FindViewById<SignInButton>(Resource.Id.button_sign_in);
-            signInButton.SetColorScheme(SignInButton.ColorDark);
-            signInButton.SetSize(SignInButton.SizeWide);
 
             // Start signin intent when clicking on 'sign in'
             signInButton.Click += (sender, args) =>
@@ -53,6 +88,12 @@ namespace CubeQuest
                 AccountManager.HandleResult(data);
             }
         }
+
+        /// <summary>
+        /// If the device is connected to the network
+        /// </summary>
+        private bool IsConnected => 
+            (GetSystemService(ConnectivityService) as ConnectivityManager)?.ActiveNetworkInfo?.IsConnected ?? false;
 
         private void ToggleConnecting(bool enabled)
         {
