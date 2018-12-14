@@ -7,6 +7,7 @@ using Android.Gms.Drive;
 using Android.Gms.Games;
 using Android.Graphics;
 using Android.OS;
+using Android.Support.V7.App;
 
 namespace CubeQuest.Account
 {
@@ -28,7 +29,7 @@ namespace CubeQuest.Account
 
 		private static GoogleApiClient _googleClient;
 
-		private static MainActivity _mainActivity;
+		private static Context _context;
 
 	    public static bool IsConnected => _googleClient.IsConnected;
 
@@ -42,7 +43,7 @@ namespace CubeQuest.Account
         /// Creates account manager and attempts to sign in silently (triggers <see cref="OnSuccess"/> or <see cref="OnFailure"/>
         /// </summary>
         /// <param name="activity"></param>
-	    public static void Create(MainActivity activity)
+	    public static void Create(AppCompatActivity activity)
 	    {
             // Ignore if it has already been created
             if (_googleClient != null)
@@ -52,7 +53,7 @@ namespace CubeQuest.Account
             var connectionListener = new ConnectionListener();
 
             // Save main activity for context and stuffs
-	        _mainActivity = activity;
+	        _context = activity;
 
             // Setup sign in options
 	        var signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultGamesSignIn)
@@ -106,7 +107,7 @@ namespace CubeQuest.Account
 		}
 
 	    public static Bitmap SaveIcon =>
-	        BitmapFactory.DecodeResource(_mainActivity.Resources, Resource.Mipmap.ic_launcher_round);
+	        BitmapFactory.DecodeResource(_context.Resources, Resource.Mipmap.ic_launcher_round);
 
         public static Intent AchievementsIntent => 
             GamesClass.Achievements.GetAchievementsIntent(_googleClient);
