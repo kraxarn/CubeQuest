@@ -107,6 +107,9 @@ namespace CubeQuest.Account
 
 	    public static Bitmap SaveIcon =>
 	        BitmapFactory.DecodeResource(_mainActivity.Resources, Resource.Mipmap.ic_launcher_round);
+
+        public static Intent AchievementsIntent => 
+            GamesClass.Achievements.GetAchievementsIntent(_googleClient);
     }
 
     public class ConnectionListener : Java.Lang.Object, GoogleApiClient.IOnConnectionFailedListener, GoogleApiClient.IConnectionCallbacks
