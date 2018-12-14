@@ -62,10 +62,12 @@ namespace CubeQuest.Account
 
             // Create google client
 	        _googleClient = new GoogleApiClient.Builder(activity)
-	            .EnableAutoManage(activity, connectionListener)
+	            .AddConnectionCallbacks(connectionListener)
 	            .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
 	            .AddApi(GamesClass.API)
 	            .Build();
+
+            _googleClient.Connect(GoogleApiClient.SignInModeOptional);
 
             // Wait until we connected and attempt to sign in silently when we do
 	        connectionListener.Connected += async hint =>
