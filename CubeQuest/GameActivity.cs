@@ -59,6 +59,10 @@ namespace CubeQuest
                     Log.Info("POSITION", $"Long={location.Longitude} Lat={location.Latitude} Speed={location.Speed}");
 
                     textDebugLocation.Text = $"Accuracy: {location.Accuracy}%\nSpeed:    {location.Speed} m/s";
+
+                    // If map hasn't loaded yet, ignore player marker
+                    if (!markers.Any())
+                        return;
                     
                     markers.First().Position = location.ToLatLng();
                     googleMap.AnimateCamera(CameraUpdateFactory.NewLatLng(location.ToLatLng()));
