@@ -62,6 +62,9 @@ namespace CubeQuest
 
                     textDebugLocation.Text = $"Accuracy: {location.Accuracy}%\nSpeed:    {location.Speed} m/s";
 
+                    // Update user location
+                    userLocation = location;
+
                     // If map hasn't loaded yet, ignore player marker
                     if (!markers.Any())
                         return;
