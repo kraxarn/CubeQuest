@@ -2,8 +2,10 @@
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
+using Android.Content.Res;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
+using Android.Graphics;
 using Android.Locations;
 using Android.OS;
 using Android.Support.Design.Widget;
@@ -13,10 +15,6 @@ using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Android.Content.Res;
-using Android.Graphics;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest
@@ -29,8 +27,11 @@ namespace CubeQuest
         private GoogleMap googleMap;
 
         private LocationManager locationManager;
-
-        private List<Marker> markers;
+        
+        /// <summary>
+        /// Marker used to represent the player
+        /// </summary>
+        private Marker playerMarker;
 
         private View profileView;
 
@@ -40,8 +41,6 @@ namespace CubeQuest
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_game);
-
-            markers = new List<Marker>();
 
             // Get last known location
             locationManager = new LocationManager(this);
@@ -66,10 +65,10 @@ namespace CubeQuest
                     userLocation = location;
 
                     // If map hasn't loaded yet, ignore player marker
-                    if (!markers.Any())
+                    if (playerMarker == null)
                         return;
                     
-                    markers.First().Position = location.ToLatLng();
+                    playerMarker.Position = location.ToLatLng();
                     googleMap.AnimateCamera(CameraUpdateFactory.NewLatLng(location.ToLatLng()));
                 };
 
@@ -119,9 +118,9 @@ namespace CubeQuest
             var testPosition = new LatLng(location.Latitude + 0.005, location.Longitude + 0.005);
 
             // Create player marker
-            AddMarker(location, AccountManager.Name, BitmapDescriptorFactory.FromAsset("player/0.webp"));
-            markers.First().ZIndex = 10f;
-            markers.First().Tag = "player";
+            playerMarker = AddMarker(location, AccountManager.Name, BitmapDescriptorFactory.FromAsset("player/0.webp"));
+            playerMarker.ZIndex = 10f;
+            playerMarker.Tag = "player";
 
             // Create test marker
             AddMarker(testPosition, "Spooky Noodle", spookyNoodleIcon);
@@ -160,12 +159,12 @@ namespace CubeQuest
         /// <summary>
         /// Creates a marker at the specified position
         /// </summary>
-        private void AddMarker(LatLng latLng, string title, BitmapDescriptor icon) => 
-            markers.Add(googleMap.AddMarker(new MarkerOptions()
+        private Marker AddMarker(LatLng latLng, string title, BitmapDescriptor icon) =>
+            googleMap.AddMarker(new MarkerOptions()
                 .SetPosition(latLng)
                 .SetTitle(title)
                 .Anchor(0.5f, 0.5f)
-                .SetIcon(icon)));
+                .SetIcon(icon));
 
         protected override void OnStart()
         {
