@@ -77,7 +77,8 @@ namespace CubeQuest
             base.OnStart();
 
             // Google signin
-            AccountManager.Create(this);
+            if (IsConnected)
+                AccountManager.Create(this);
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
