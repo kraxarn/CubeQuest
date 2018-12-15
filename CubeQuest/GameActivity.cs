@@ -57,7 +57,7 @@ namespace CubeQuest
                     Log.Info("POSITION", $"Long={location.Longitude} Lat={location.Latitude} Speed={location.Speed}");
                     
                     markers.First().Position = LocationManager.ToLatLng(location);
-                    googleMap.MoveCamera(CameraUpdateFactory.NewLatLng(LocationManager.ToLatLng(location)));
+                    googleMap.AnimateCamera(CameraUpdateFactory.NewLatLng(LocationManager.ToLatLng(location)));
                 };
 
             // Show profile when clicking on button
