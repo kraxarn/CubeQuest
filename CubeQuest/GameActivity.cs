@@ -49,15 +49,19 @@ namespace CubeQuest
             var mapFragment = (SupportMapFragment) SupportFragmentManager.FindFragmentById(Resource.Id.map);
             mapFragment.GetMapAsync(this);
 
+            var textDebugLocation = FindViewById<TextView>(Resource.Id.text_debug_location);
+
             locationManager.OnLocationUpdate += location =>
                 {
                     // TODO: Check speed etc. here
                     // TODO: Show a loading dialog until we get the first position
 
                     Log.Info("POSITION", $"Long={location.Longitude} Lat={location.Latitude} Speed={location.Speed}");
+
+                    textDebugLocation.Text = $"Accuracy: {location.Accuracy}%\nSpeed:    {location.Speed} m/s";
                     
-                    markers.First().Position = LocationManager.ToLatLng(location);
-                    googleMap.AnimateCamera(CameraUpdateFactory.NewLatLng(LocationManager.ToLatLng(location)));
+                    markers.First().Position = location.ToLatLng();
+                    googleMap.AnimateCamera(CameraUpdateFactory.NewLatLng(location.ToLatLng()));
                 };
 
             // Show profile when clicking on button
@@ -76,6 +80,11 @@ namespace CubeQuest
             // Set button actions
             profileView.FindViewById<ImageButton>(Resource.Id.button_achievements).Click += (sender, args) => 
                 StartActivityForResult(AccountManager.AchievementsIntent, RcAchievementUi);
+
+            // Setup debug mode
+            FindViewById<Button>(Resource.Id.button_debug_enemy).Click += (sender, args) =>
+                AddMarker(userLocation.ToLatLng(), "Enemy",
+                    BitmapDescriptorFactory.FromAsset("enemy/snake2.png"));
         }
         
         public void OnMapReady(GoogleMap map)
@@ -95,7 +104,7 @@ namespace CubeQuest
             
             // Get last known location or 0,0 if not known
             // TODO: If not known, show loading dialog
-            var location = userLocation == null ? new LatLng(0, 0) : LocationManager.ToLatLng(userLocation);
+            var location = userLocation == null ? new LatLng(0, 0) : userLocation.ToLatLng();
             
             // Test position for test enemy
             var testPosition = new LatLng(location.Latitude + 0.005, location.Longitude + 0.005);

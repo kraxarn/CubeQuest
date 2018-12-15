@@ -41,6 +41,32 @@
 
 	</FrameLayout>
 
+	<!-- Debug stuff -->
+	<LinearLayout
+		android:id="@+id/layout_debug_tools"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"
+		android:paddingHorizontal="16dp"
+		android:paddingBottom="42dp"
+		android:orientation="vertical">
+
+		<Button
+			android:id="@+id/button_debug_enemy"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:fontFamily="monospace"
+			style="@android:style/Widget.Material.Button.Borderless"
+			android:text="Spawn enemy"/>
+
+		<TextView
+			android:id="@+id/text_debug_location"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:fontFamily="monospace"/>
+
+	</LinearLayout>
+
 	<!-- User FAB -->
 	<android.support.design.widget.FloatingActionButton
         android:id="@+id/fabUser"
