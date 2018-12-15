@@ -62,8 +62,11 @@ namespace CubeQuest
             locationManager.IsProviderEnabled(Android.Locations.LocationManager.GpsProvider);
 
         private static double DegreesToRadians(double degrees) => degrees * Math.PI / 180;
-
-        // TODO: Not sure how accurate this is
+        
+        /// <summary>
+        /// Get the distance between two points in meter
+        /// </summary>
+        /// <returns>Distance in meters</returns>
         public static double GetDistance(LatLng c1, LatLng c2)
         {
             /*
