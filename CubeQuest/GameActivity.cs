@@ -107,23 +107,14 @@ namespace CubeQuest
             // Set custom theme to map
             googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, Resource.Raw.map_theme_dark));
             
-            // Sample icons
-            var spookyNoodleIcon = BitmapDescriptorFactory.FromAsset("enemy/snake2.png");
-            
             // Get last known location or 0,0 if not known
             // TODO: If not known, show loading dialog
             var location = userLocation == null ? new LatLng(0, 0) : userLocation.ToLatLng();
-            
-            // Test position for test enemy
-            var testPosition = new LatLng(location.Latitude + 0.005, location.Longitude + 0.005);
 
             // Create player marker
             playerMarker = AddMarker(location, AccountManager.Name, BitmapDescriptorFactory.FromAsset("player/0.webp"));
             playerMarker.ZIndex = 10f;
             playerMarker.Tag = "player";
-
-            // Create test marker
-            AddMarker(testPosition, "Spooky Noodle", spookyNoodleIcon);
 
             // Target player with initial zoom
             var position = CameraPosition.InvokeBuilder()
