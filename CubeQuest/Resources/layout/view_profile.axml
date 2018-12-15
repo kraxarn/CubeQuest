@@ -181,6 +181,7 @@
 		android:gravity="center_horizontal">
 
 		<ImageButton
+			android:id="@+id/button_achievements"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:background="?android:selectableItemBackground"
@@ -212,6 +213,7 @@
 			android:src="@drawable/ic_companion"/>
 
 		<ImageButton
+			android:id="@+id/button_settings"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="16dp"
