@@ -2,7 +2,6 @@
 using Android.Content.Res;
 using Android.Media;
 using Java.IO;
-using Console = System.Console;
 
 namespace CubeQuest
 {
