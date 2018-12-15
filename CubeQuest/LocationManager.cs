@@ -58,12 +58,6 @@ namespace CubeQuest
         public async Task<Location> GetLastKnownLocation() => 
             await client.GetLastLocationAsync();
 
-        /// <summary>
-        /// Converts a <see cref="Location"/> to a <see cref="LatLng"/>
-        /// </summary>
-        public static LatLng ToLatLng(Location location) => 
-            new LatLng(location.Latitude, location.Longitude);
-
         public bool IsLocationServicesEnabled => 
             locationManager.IsProviderEnabled(Android.Locations.LocationManager.GpsProvider);
 
@@ -91,5 +85,14 @@ namespace CubeQuest
             // Earth's radius is 6371 km, unless it's flat
             return 6371e3 * c;
         }
+    }
+
+    public static class LocationManagerExtensions
+    {
+        /// <summary>
+        /// Converts a <see cref="Location"/> to a <see cref="LatLng"/>
+        /// </summary>
+        public static LatLng ToLatLng(this Location location) =>
+            new LatLng(location.Latitude, location.Longitude);
     }
 }
