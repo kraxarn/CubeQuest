@@ -92,7 +92,7 @@ namespace CubeQuest
             // Setup debug mode
             FindViewById<Button>(Resource.Id.button_debug_enemy).Click += (sender, args) =>
                 AddMarker(userLocation.ToLatLng(), "Enemy",
-                    BitmapDescriptorFactory.FromAsset("enemy/snake2.png"));
+                    BitmapDescriptorFactory.FromAsset("enemy/snake2.webp"));
         }
         
         public void OnMapReady(GoogleMap map)

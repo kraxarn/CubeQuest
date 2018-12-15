@@ -89,6 +89,8 @@
     <AndroidAsset Include="Assets\companion\example.webp" />
     <AndroidAsset Include="Assets\weapon\basic.webp" />
     <AndroidAsset Include="Assets\player\0.webp" />
+    <AndroidAsset Include="Assets\enemy\snake.webp" />
+    <AndroidAsset Include="Assets\enemy\snake2.webp" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">
       <SubType>Designer</SubType>
@@ -175,12 +177,6 @@
     <AndroidResource Include="Resources\layout\activity_game.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\enemy\snake.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\enemy\snake2.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_heart.xml" />
