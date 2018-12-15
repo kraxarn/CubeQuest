@@ -14,6 +14,7 @@ using Android.Widget;
 using CubeQuest.Account;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest
@@ -52,12 +53,11 @@ namespace CubeQuest
                 {
                     // TODO: Check speed etc. here
                     // TODO: Show a loading dialog until we get the first position
-                    // TODO: Follow new marker
 
-                    Log.Info("POSITION", location.ToString());
+                    Log.Info("POSITION", $"Long={location.Longitude} Lat={location.Latitude} Speed={location.Speed}");
                     
-                    //markers.First().Position = LocationManager.ToLatLng(location);
-                    //googleMap.MoveCamera(CameraUpdateFactory.NewLatLng(LocationManager.ToLatLng(location)));
+                    markers.First().Position = LocationManager.ToLatLng(location);
+                    googleMap.MoveCamera(CameraUpdateFactory.NewLatLng(LocationManager.ToLatLng(location)));
                 };
 
             // Show profile when clicking on button
@@ -86,7 +86,6 @@ namespace CubeQuest
             // Disable scrolling
             googleMap.UiSettings.ScrollGesturesEnabled = false;
             googleMap.UiSettings.ZoomGesturesEnabled = false;
-            googleMap.MyLocationEnabled = true;
 
             // Set custom theme to map
             //googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, Resource.Raw.map_theme_dark));
@@ -102,7 +101,8 @@ namespace CubeQuest
             var testPosition = new LatLng(location.Latitude + 0.005, location.Longitude + 0.005);
 
             // Create player marker
-            //AddMarker(location, AccountManager.Name, icon);
+            AddMarker(location, AccountManager.Name, BitmapDescriptorFactory.FromAsset("player/0.webp"));
+            markers.First().ZIndex = 10f;
 
             // Create test marker
             AddMarker(testPosition, "Spooky Noodle", spookyNoodleIcon);
@@ -124,6 +124,7 @@ namespace CubeQuest
             markers.Add(googleMap.AddMarker(new MarkerOptions()
                 .SetPosition(latLng)
                 .SetTitle(title)
+                .Anchor(0.5f, 0.5f)
                 .SetIcon(icon)));
 
         protected override void OnStart()
