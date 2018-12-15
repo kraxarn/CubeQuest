@@ -20,7 +20,7 @@ using AlertDialog = Android.App.AlertDialog;
 namespace CubeQuest
 {
     [Activity(Label = "GameActivity", Theme = "@style/AppTheme.NoActionBar")]
-    public class GameActivity : AppCompatActivity, IOnMapReadyCallback
+    public class GameActivity : AppCompatActivity, IOnMapReadyCallback, GoogleMap.IOnMarkerClickListener
     {
         private Location userLocation;
 
@@ -124,8 +124,23 @@ namespace CubeQuest
 
             // Move camera to player
             googleMap.MoveCamera(CameraUpdateFactory.NewCameraPosition(position));
+
+            googleMap.SetOnMarkerClickListener(this);
         }
-        
+
+        public bool OnMarkerClick(Marker marker)
+        {
+            // Assume player is the only marker with z-index 10 and ignore it
+            if (Math.Abs(marker.ZIndex - 10) < 1)
+                return true;
+
+            // TODO: Temporary message
+            var distance = LocationManager.GetDistance(userLocation.ToLatLng(), marker.Position);
+
+            Snackbar.Make(FindViewById<CoordinatorLayout>(Resource.Id.layout_game), $"Walk closer to interact ({distance} meters)", Snackbar.LengthLong).Show();
+            return true;
+        }
+
         /// <summary>
         /// Creates a marker at the specified position
         /// </summary>
