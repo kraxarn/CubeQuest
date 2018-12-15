@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account\AccountManager.cs" />
+    <Compile Include="Account\Achievement.cs" />
     <Compile Include="Account\Interface\ICompanion.cs" />
     <Compile Include="Account\Companions\CompanionExample.cs" />
     <Compile Include="Account\Interface\ISpell.cs" />
@@ -80,12 +81,14 @@
     <Compile Include="GameActivity.cs" />
     <Compile Include="LocationManager.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="MusicManager.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\companion\example.webp" />
     <AndroidAsset Include="Assets\weapon\basic.webp" />
+    <AndroidAsset Include="Assets\player\0.webp" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">
       <SubType>Designer</SubType>
@@ -222,6 +225,9 @@
     <AndroidResource Include="Resources\layout\view_profile.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\music\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

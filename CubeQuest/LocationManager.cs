@@ -1,8 +1,8 @@
-﻿using System;
-using Android.Content;
+﻿using Android.Content;
 using Android.Gms.Location;
 using Android.Gms.Maps.Model;
 using Android.Locations;
+using System;
 using System.Threading.Tasks;
 
 namespace CubeQuest
