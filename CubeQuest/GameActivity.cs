@@ -15,6 +15,8 @@ using CubeQuest.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Android.Content.Res;
+using Android.Graphics;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest
@@ -23,7 +25,7 @@ namespace CubeQuest
     public class GameActivity : AppCompatActivity, IOnMapReadyCallback, GoogleMap.IOnMarkerClickListener
     {
         private Location userLocation;
-
+        
         private GoogleMap googleMap;
 
         private LocationManager locationManager;
@@ -116,6 +118,7 @@ namespace CubeQuest
             // Create player marker
             AddMarker(location, AccountManager.Name, BitmapDescriptorFactory.FromAsset("player/0.webp"));
             markers.First().ZIndex = 10f;
+            markers.First().Tag = "player";
 
             // Create test marker
             AddMarker(testPosition, "Spooky Noodle", spookyNoodleIcon);
@@ -134,14 +137,20 @@ namespace CubeQuest
 
         public bool OnMarkerClick(Marker marker)
         {
-            // Assume player is the only marker with z-index 10 and ignore it
-            if (Math.Abs(marker.ZIndex - 10) < 1)
+            // Ignore player
+            if (marker.Tag?.ToString() == "player")
                 return true;
 
             // TODO: Temporary message
             var distance = LocationManager.GetDistance(userLocation.ToLatLng(), marker.Position);
+            
+            Snackbar.Make(FindViewById<CoordinatorLayout>(Resource.Id.layout_game), $"Level 5 Danger Noodle ({distance} meters away)", Snackbar.LengthLong)
+                .SetActionTextColor(ColorStateList.ValueOf(Color.ParseColor("#e53935")))
+                .SetAction("Fight", view =>
+                {
+                })
+                .Show();
 
-            Snackbar.Make(FindViewById<CoordinatorLayout>(Resource.Id.layout_game), $"Walk closer to interact ({distance} meters)", Snackbar.LengthLong).Show();
             return true;
         }
 
