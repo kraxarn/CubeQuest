@@ -131,6 +131,9 @@ namespace CubeQuest
         {
             base.OnStart();
 
+            // Set view for game popups
+            AccountManager.SetViewForPopups(FindViewById(Android.Resource.Id.Content));
+
             // Check if GPS is enabled
             if (!locationManager?.IsLocationServicesEnabled ?? true)
             {
