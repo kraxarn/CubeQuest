@@ -145,7 +145,10 @@ namespace CubeQuest
             var distance = (int) (LocationManager.GetDistance(userLocation.ToLatLng(), marker.Position) + 0.5);
             
             // TODO: Sometimes it works and sometimes not?
-            Snackbar.Make(FindViewById<CoordinatorLayout>(Resource.Id.layout_game), $"Level 5 Danger Noodle ({distance} {(distance == 1 ? "meter" : "meters")} away)", Snackbar.LengthLong)
+            var layout = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
+            var text = $"Level 5 Danger Noodle ({distance} {(distance == 1 ? "meter" : "meters")} away)";
+
+            Snackbar.Make(layout, text, Snackbar.LengthLong)
                 .SetActionTextColor(ColorStateList.ValueOf(Color.ParseColor("#e53935")))
                 .SetAction("Fight", view => StartBattle())
                 .Show();
