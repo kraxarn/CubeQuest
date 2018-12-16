@@ -34,21 +34,7 @@ namespace CubeQuest
 
             SetAnimation(context, view.FindViewById<ImageButton>(enemies[0]));
 
-            /*
-            var image = view.FindViewById<ImageView>(Resource.Id.image_battle_enemy0);
-
-            var anim = new ImageAnimator(image, new []
-            {
-                BitmapFactory.DecodeStream(assets.Open("animations/selected/0.webp")),
-                BitmapFactory.DecodeStream(assets.Open("animations/selected/1.webp"))
-            }, 400);
-
-            view.FindViewById<Button>(Resource.Id.button_battle_run).Click += (sender, args) =>
-            {
-                anim.Stop();
-                End?.Invoke();
-            };
-            */
+            view.FindViewById<Button>(Resource.Id.button_battle_run).Click += (sender, args) => End?.Invoke();
         }
 
         private void SetAnimation(Context context, ImageButton button)
