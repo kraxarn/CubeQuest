@@ -82,9 +82,11 @@
     <Compile Include="Account\Weapons\WeaponSword.cs" />
     <Compile Include="Battle.cs" />
     <Compile Include="GameActivity.cs" />
+    <Compile Include="ImageAnimator.cs" />
     <Compile Include="LocationManager.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MusicManager.cs" />
+    <Compile Include="BitmapAnimator.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -94,6 +96,8 @@
     <AndroidAsset Include="Assets\player\0.webp" />
     <AndroidAsset Include="Assets\enemy\snake.webp" />
     <AndroidAsset Include="Assets\enemy\snake2.webp" />
+    <AndroidAsset Include="Assets\animations\selected\0.webp" />
+    <AndroidAsset Include="Assets\animations\selected\1.webp" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">
       <SubType>Designer</SubType>
@@ -235,6 +239,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_run.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\anim\cycle.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\anim\shake.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
