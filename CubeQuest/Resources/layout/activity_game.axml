@@ -84,6 +84,13 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"/>
 
+	<ViewStub
+		android:id="@+id/stub_battle"
+		android:inflatedId="@+id/stub_battle_tree"
+		android:layout="@layout/view_battle"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
+
 	<!-- Map FAB -->
 	<android.support.design.widget.FloatingActionButton
         android:id="@+id/fabGame"

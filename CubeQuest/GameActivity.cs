@@ -2,10 +2,8 @@
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
-using Android.Content.Res;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
-using Android.Graphics;
 using Android.Locations;
 using Android.OS;
 using Android.Support.Design.Widget;
@@ -14,6 +12,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
+using CubeQuest.Account.Enemies;
 using System;
 using AlertDialog = Android.App.AlertDialog;
 
@@ -34,6 +33,8 @@ namespace CubeQuest
         private Marker playerMarker;
 
         private View profileView;
+
+        private View battleView;
 
         private const int RcAchievementUi = 9003;
 
@@ -89,9 +90,13 @@ namespace CubeQuest
             profileView.FindViewById<ImageButton>(Resource.Id.button_achievements).Click += (sender, args) => 
                 StartActivityForResult(AccountManager.AchievementsIntent, RcAchievementUi);
 
+            // Inflate battle view
+            battleView = FindViewById<ViewStub>(Resource.Id.stub_battle).Inflate();
+            battleView.Visibility = ViewStates.Invisible;
+
             // Setup debug mode
             FindViewById<Button>(Resource.Id.button_debug_enemy).Click += (sender, args) =>
-                AddMarker(userLocation.ToLatLng(), "Enemy",
+                AddMarker(new LatLng(userLocation.Latitude + 0.0001, userLocation.Longitude + 0.0001), "Enemy",
                     BitmapDescriptorFactory.FromAsset("enemy/snake2.webp"));
         }
         
@@ -137,12 +142,14 @@ namespace CubeQuest
             // TODO: Temporary message
             var distance = (int) (LocationManager.GetDistance(userLocation.ToLatLng(), marker.Position) + 0.5);
             
+            /*
             Snackbar.Make(FindViewById<CoordinatorLayout>(Resource.Id.layout_game), $"Level 5 Danger Noodle ({distance} {(distance == 1 ? "meter" : "meters")} away)", Snackbar.LengthLong)
                 .SetActionTextColor(ColorStateList.ValueOf(Color.ParseColor("#e53935")))
-                .SetAction("Fight", view =>
-                {
-                })
+                .SetAction("Fight", view => StartBattle())
                 .Show();
+            */
+
+            StartBattle();
 
             return true;
         }
@@ -219,6 +226,32 @@ namespace CubeQuest
             else
                 animator.AnimationEnd += (o, eventArgs) => profileView.Visibility = ViewStates.Invisible;
 
+            animator.Start();
+        }
+
+        private void StartBattle()
+        {
+            FindViewById<FloatingActionButton>(Resource.Id.fabUser).Hide();
+
+            var mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
+
+            var battle = new Battle(battleView, Assets, new EnemySnake());
+
+            var centerX = mainView.Width  / 2;
+            var centerY = mainView.Height / 2;
+
+            var radius = (float) Math.Sqrt(centerX * centerX + centerY * centerY);
+
+            var animator = ViewAnimationUtils.CreateCircularReveal(battleView, centerX, centerY, 0f, radius);
+
+            battle.End += () =>
+            {
+                var animator2 = ViewAnimationUtils.CreateCircularReveal(battleView, centerX, centerY, radius, 0f);
+                animator2.AnimationEnd += (o, eventArgs) => battleView.Visibility = ViewStates.Invisible;
+                animator2.Start();
+            };
+
+            battleView.Visibility = ViewStates.Visible;
             animator.Start();
         }
 

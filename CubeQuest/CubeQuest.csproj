@@ -70,6 +70,8 @@
   <ItemGroup>
     <Compile Include="Account\AccountManager.cs" />
     <Compile Include="Account\Achievement.cs" />
+    <Compile Include="Account\Enemies\EnemySnake.cs" />
+    <Compile Include="Account\Interface\IEnemy.cs" />
     <Compile Include="Account\Interface\ICompanion.cs" />
     <Compile Include="Account\Companions\CompanionExample.cs" />
     <Compile Include="Account\Interface\ISpell.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="Account\Interface\SnapshotManager.cs" />
     <Compile Include="Account\User.cs" />
     <Compile Include="Account\Weapons\WeaponSword.cs" />
+    <Compile Include="Battle.cs" />
     <Compile Include="GameActivity.cs" />
     <Compile Include="LocationManager.cs" />
     <Compile Include="MainActivity.cs" />
@@ -224,6 +227,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\music\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\view_battle.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_run.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
