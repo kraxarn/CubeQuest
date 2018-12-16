@@ -230,7 +230,8 @@ namespace CubeQuest
 
         private void StartBattle()
         {
-            FindViewById<FloatingActionButton>(Resource.Id.fabUser).Hide();
+            var fabUser = FindViewById<FloatingActionButton>(Resource.Id.fabUser);
+            fabUser.Hide();
 
             var mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
 
@@ -248,6 +249,7 @@ namespace CubeQuest
                 var animator2 = ViewAnimationUtils.CreateCircularReveal(battleView, centerX, centerY, radius, 0f);
                 animator2.AnimationEnd += (o, eventArgs) => battleView.Visibility = ViewStates.Invisible;
                 animator2.Start();
+                fabUser.Show();
             };
 
             battleView.Visibility = ViewStates.Visible;
