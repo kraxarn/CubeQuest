@@ -1,6 +1,8 @@
-﻿using Android.Content.Res;
+﻿using Android.Content;
+using Android.Content.Res;
 using Android.Graphics;
 using Android.Views;
+using Android.Views.Animations;
 using Android.Widget;
 using CubeQuest.Account.Interface;
 
@@ -12,7 +14,9 @@ namespace CubeQuest
 
         public event EndEvent End;
 
-        public Battle(View view, AssetManager assets, IItem item)
+        private Android.Resource.Animation animateShake;
+
+        public Battle(Context context, View view, AssetManager assets, IItem item)
         {
             var enemy = BitmapFactory.DecodeStream(assets.Open($"enemy/{item.Icon}.webp"));
 
@@ -28,7 +32,33 @@ namespace CubeQuest
             foreach (var e in enemies)
                 view.FindViewById<ImageButton>(e).SetImageBitmap(enemy);
 
-            view.FindViewById<Button>(Resource.Id.button_battle_run).Click += (sender, args) => End?.Invoke();
+            SetAnimation(context, view.FindViewById<ImageButton>(enemies[0]));
+
+            /*
+            var image = view.FindViewById<ImageView>(Resource.Id.image_battle_enemy0);
+
+            var anim = new ImageAnimator(image, new []
+            {
+                BitmapFactory.DecodeStream(assets.Open("animations/selected/0.webp")),
+                BitmapFactory.DecodeStream(assets.Open("animations/selected/1.webp"))
+            }, 400);
+
+            view.FindViewById<Button>(Resource.Id.button_battle_run).Click += (sender, args) =>
+            {
+                anim.Stop();
+                End?.Invoke();
+            };
+            */
+        }
+
+        private void SetAnimation(Context context, ImageButton button)
+        {
+            var animShake = AnimationUtils.LoadAnimation(context, Resource.Animation.shake);
+
+            button.Click += (sender, args) =>
+            {
+                button.StartAnimation(animShake);
+            };
         }
     }
 }
