@@ -238,7 +238,7 @@ namespace CubeQuest
 
             var mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
 
-            var battle = new Battle(battleView, Assets, new EnemySnake());
+            var battle = new Battle(this, battleView, Assets, new EnemySnake());
 
             var centerX = mainView.Width  / 2;
             var centerY = mainView.Height / 2;
