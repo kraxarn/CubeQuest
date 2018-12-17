@@ -21,7 +21,8 @@
 		<ImageButton
 			android:id="@+id/button_battle_enemy0"
 			android:src="@drawable/ic_sword"
-			style="@android:style/Widget.Material.Button.Borderless"
+			android:background="@android:color/transparent"
+			android:layout_margin="8dp"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"/>
@@ -29,7 +30,8 @@
 		<ImageButton
 			android:id="@+id/button_battle_enemy1"
 			android:src="@drawable/ic_sword"
-			style="@android:style/Widget.Material.Button.Borderless"
+			android:background="@android:color/transparent"
+			android:layout_margin="8dp"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"/>
@@ -37,7 +39,8 @@
 		<ImageButton
 			android:id="@+id/button_battle_enemy2"
 			android:src="@drawable/ic_sword"
-			style="@android:style/Widget.Material.Button.Borderless"
+			android:background="@android:color/transparent"
+			android:layout_margin="8dp"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"/>
@@ -54,7 +57,8 @@
 		<ImageButton
 			android:id="@+id/button_battle_enemy3"
 			android:src="@drawable/ic_sword"
-			style="@android:style/Widget.Material.Button.Borderless"
+			android:background="@android:color/transparent"
+			android:layout_margin="8dp"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"/>
@@ -62,7 +66,8 @@
 		<ImageButton
 			android:id="@+id/button_battle_enemy4"
 			android:src="@drawable/ic_sword"
-			style="@android:style/Widget.Material.Button.Borderless"
+			android:background="@android:color/transparent"
+			android:layout_margin="8dp"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"/>
