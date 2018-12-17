@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.Gms.Auth.Api;
@@ -6,12 +7,17 @@ using Android.Gms.Auth.Api.SignIn;
 using Android.Gms.Common;
 using Android.Gms.Common.Apis;
 using Android.Gms.Drive;
+using Android.Gms.Fitness;
+using Android.Gms.Fitness.Data;
+using Android.Gms.Fitness.Request;
+using Android.Gms.Fitness.Result;
 using Android.Gms.Games;
 using Android.Gms.Games.Achievement;
 using Android.Graphics;
 using Android.OS;
 using Android.Support.V7.App;
 using Android.Views;
+using Java.Util.Concurrent;
 
 namespace CubeQuest.Account
 {
@@ -62,6 +68,7 @@ namespace CubeQuest.Account
             // Setup sign in options
 	        var signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultGamesSignIn)
 	            .RequestScopes(DriveClass.ScopeAppfolder)
+	            .RequestScopes(FitnessClass.ScopeActivityRead)
 	            .Build();
 
             // Create google client
@@ -129,6 +136,16 @@ namespace CubeQuest.Account
 
         public static void SetViewForPopups(View view) => 
             GamesClass.SetViewForPopups(_googleClient, view);
+
+        public static async void GetNumSteps(long start, long end)
+        {
+            var readRequest = new DataReadRequest.Builder()
+                .Aggregate(DataType.TypeStepCountDelta, DataType.AggregateStepCountDelta)
+                .SetTimeRange(start, end, TimeUnit.Milliseconds)
+                .Build();
+
+            var history = await FitnessClass.HistoryApi.ReadData(_googleClient, readRequest) as DataReadResult;
+        }
     }
 
     public class ConnectionListener : Java.Lang.Object, GoogleApiClient.IOnConnectionFailedListener, GoogleApiClient.IConnectionCallbacks

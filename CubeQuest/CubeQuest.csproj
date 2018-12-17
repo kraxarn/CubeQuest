@@ -133,6 +133,9 @@
     <PackageReference Include="Xamarin.GooglePlayServices.Drive">
       <Version>60.1142.1</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.GooglePlayServices.Fitness">
+      <Version>60.1142.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Games">
       <Version>60.1142.1</Version>
     </PackageReference>
