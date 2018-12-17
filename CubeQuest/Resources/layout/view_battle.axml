@@ -17,6 +17,7 @@
         android:orientation="horizontal">
 
         <ProgressBar
+			android:id="@+id/battle_health_enemy0"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_weight="1"
@@ -26,10 +27,11 @@
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:progressTint="#d32f2f"
             android:progressBackgroundTint="#bdbdbd"
-            android:progress="50"
+            android:progress="100"
             android:layout_gravity="center_vertical"/>
 
         <ProgressBar
+			android:id="@+id/battle_health_enemy1"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_weight="1"
@@ -39,10 +41,11 @@
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:progressTint="#d32f2f"
             android:progressBackgroundTint="#bdbdbd"
-            android:progress="50"
+            android:progress="100"
             android:layout_gravity="center_vertical"/>
 
         <ProgressBar
+			android:id="@+id/battle_health_enemy2"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_weight="1"
@@ -52,7 +55,7 @@
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:progressTint="#d32f2f"
             android:progressBackgroundTint="#bdbdbd"
-            android:progress="50"
+            android:progress="100"
             android:layout_gravity="center_vertical"/>
 
     </LinearLayout>
@@ -65,6 +68,7 @@
         android:orientation="horizontal">
 
         <ProgressBar
+			android:id="@+id/battle_health_enemy3"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_weight="2"
@@ -74,10 +78,11 @@
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:progressTint="#d32f2f"
             android:progressBackgroundTint="#bdbdbd"
-            android:progress="50"
+            android:progress="100"
             android:layout_gravity="center_vertical"/>
 
         <ProgressBar
+			android:id="@+id/battle_health_enemy4"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_weight="2"
@@ -87,7 +92,7 @@
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:progressTint="#d32f2f"
             android:progressBackgroundTint="#bdbdbd"
-            android:progress="50"
+            android:progress="100"
             android:layout_gravity="center_vertical"/>
 
     </LinearLayout>

@@ -28,7 +28,7 @@ namespace CubeQuest
         private GoogleMap googleMap;
 
         private LocationManager locationManager;
-        
+
         /// <summary>
         /// Marker used to represent the player
         /// </summary>
@@ -45,9 +45,9 @@ namespace CubeQuest
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_game);
 
-            var health = AccountManager.User.CurrentHealth;
+            var health = AccountManager.CurrentUser.CurrentHealth;
 
-            this.FindViewById<ProgressBar>(Resource.Id.progress_battle_health).Progress = health;
+            this.FindViewById<ProgressBar>(Resource.Id.barHealth).Progress = health;
 
             // Get last known location
             locationManager = new LocationManager(this);
@@ -244,6 +244,11 @@ namespace CubeQuest
 
             var mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
 
+
+            // Sets the health on the progressbar 
+            mainView.FindViewById<ProgressBar>(Resource.Id.progress_battle_health).Progress =
+                AccountManager.CurrentUser.CurrentHealth;
+;
             var battle = new Battle(this, battleView, Assets, new EnemySnake());
 
             var centerX = mainView.Width  / 2;
