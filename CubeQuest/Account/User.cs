@@ -44,7 +44,13 @@ namespace CubeQuest.Account
         /// <summary>
         /// User's current health
         /// </summary>
-        public int CurrentHealth;
+        public int Health;
+
+        /// <summary>
+        /// Current health in percentage
+        /// </summary>
+        public int HealthPercentage => 
+            MaxHealth / Health * 100;
 
         /// <summary>
         /// User's maximum health
@@ -68,7 +74,7 @@ namespace CubeQuest.Account
             companions = new List<ICompanion>();
             equippedCompanions = new List<ICompanion>(3);
             level = 1;
-            CurrentHealth = MaxHealth;
+            Health = MaxHealth;
         }
 
         /// <summary>
