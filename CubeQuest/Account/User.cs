@@ -44,17 +44,17 @@ namespace CubeQuest.Account
         /// <summary>
         /// User's current health
         /// </summary>
-        private int health;
+        public int CurrentHealth;
 
         /// <summary>
         /// User's maximum health
         /// TODO
         /// </summary>
-        private int MaxHealth
+        public int MaxHealth
         {
             get
             {
-                var h = 10 + (int) level * 2;
+                var h = 100 + (int) level * 5;
 
                 foreach (var companion in equippedCompanions)
                     h += companion.Health;
