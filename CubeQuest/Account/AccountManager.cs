@@ -46,7 +46,7 @@ namespace CubeQuest.Account
         /// <summary>
         /// Current user signed in
         /// </summary>
-        public static User User { get; private set; }
+        public static User CurrentUser { get; private set; }
 
         /// <summary>
         /// Google Play display name
@@ -88,7 +88,7 @@ namespace CubeQuest.Account
             // Wait until we connected and attempt to sign in silently when we do
 	        connectionListener.Connected += async hint =>
 	        {
-                User = new User();
+                CurrentUser = new User();
 
 	            var silentSignIn = await Auth.GoogleSignInApi.SilentSignIn(_googleClient);
 
