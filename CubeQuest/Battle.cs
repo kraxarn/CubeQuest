@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿using Android.Animation;
+using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
 using Android.Views;
@@ -16,12 +17,26 @@ namespace CubeQuest
 
         private Android.Resource.Animation animateShake;
 
+        private int selectedIndex;
+
         private ImageView[] images;
+
+        private ProgressBar[] enemyHealthBars;
 
         public Battle(Context context, View view, AssetManager assets, IItem item)
         {
             var enemy = BitmapFactory.DecodeStream(assets.Open($"enemy/{item.Icon}.webp"));
-            
+
+            var progressBar = new[]
+            {
+                Resource.Id.battle_health_enemy0,
+                Resource.Id.battle_health_enemy1,
+                Resource.Id.battle_health_enemy2,
+                Resource.Id.battle_health_enemy3,
+                Resource.Id.battle_health_enemy4,
+
+            };
+
             var enemies = new[]
             {
                 Resource.Id.button_battle_enemy0,
@@ -40,10 +55,21 @@ namespace CubeQuest
                 view.FindViewById<ImageButton>(enemies[4])
             };
 
+            enemyHealthBars = new[]
+            {
+                view.FindViewById<ProgressBar>(progressBar[0]),
+                view.FindViewById<ProgressBar>(progressBar[1]),
+                view.FindViewById<ProgressBar>(progressBar[2]),
+                view.FindViewById<ProgressBar>(progressBar[3]),
+                view.FindViewById<ProgressBar>(progressBar[4]),
+            };
+
             foreach (var e in enemies)
                 view.FindViewById<ImageButton>(e).SetImageBitmap(enemy);
 
-            SetAnimation(context, imageButtons[0]);
+            SetShakeAnimation(context, imageButtons[0]);
+
+            SetFlashingAnimation(context, enemyHealthBars);
 
             images = new[]
             {
@@ -92,12 +118,18 @@ namespace CubeQuest
         private void SetHighlightedEnemy(int index)
         {
             foreach (var image in images)
+            {
                 image.Visibility = ViewStates.Invisible;
+            }
 
             images[index].Visibility = ViewStates.Visible;
+
+            selectedIndex = index;
         }
 
-        private void SetAnimation(Context context, ImageButton button)
+
+
+        private void SetShakeAnimation(Context context, ImageButton button)
         {
             var animShake = AnimationUtils.LoadAnimation(context, Resource.Animation.shake);
 
@@ -105,6 +137,15 @@ namespace CubeQuest
             {
                 button.StartAnimation(animShake);
             };
+        }
+
+        private void SetFlashingAnimation(Context context, ProgressBar[] progressbar)
+        {
+            var animFlash = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
+
+            progressbar[0].StartAnimation(animFlash);
+
+            
         }
     }
 }
