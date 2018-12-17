@@ -68,6 +68,7 @@ namespace CubeQuest.Account
             companions = new List<ICompanion>();
             equippedCompanions = new List<ICompanion>(3);
             level = 1;
+            CurrentHealth = MaxHealth;
         }
 
         /// <summary>
