@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.constraint.ConstraintLayout
 	android:id="@+id/layout_battle_main"
 	xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,6 +9,7 @@
 	android:padding="16dp"
 	android:orientation="vertical"
 	android:background="@color/colorPrimary">
+	
 	
 	<!-- Top row of enemies -->
 	<LinearLayout
@@ -48,7 +49,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:layout_below="@id/layout_enemy_top">
+		app:layout_constraintTop_toBottomOf="@+id/layout_enemy_top">
 		
 		<ImageButton
 			android:id="@+id/button_battle_enemy3"
@@ -103,7 +104,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:layout_below="@id/layout_enemy_top">
+		app:layout_constraintTop_toBottomOf="@+id/layout_enemy_top">
 		
 		<ImageView
 			android:id="@+id/image_battle_enemy3"
@@ -125,7 +126,7 @@
 		android:id="@+id/layout_battle_actions"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true"
+		app:layout_constraintBottom_toBottomOf="parent"
 		android:rowCount="3"
 		android:columnCount="2">
 
@@ -163,7 +164,7 @@
 	<!-- Health bar -->
 	<ProgressBar
 		android:id="@+id/progress_battle_health"
-		android:layout_above="@id/layout_battle_actions"
+		app:layout_constraintBottom_toTopOf="@id/layout_battle_actions"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:layout_marginHorizontal="4dp"
@@ -175,7 +176,7 @@
 		android:layout_gravity="center_vertical"/>
 
 	<LinearLayout
-		android:layout_above="@id/progress_battle_health"
+		app:layout_constraintBottom_toTopOf="@id/progress_battle_health"
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:orientation="horizontal"
@@ -201,4 +202,4 @@
 
 	</LinearLayout>
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

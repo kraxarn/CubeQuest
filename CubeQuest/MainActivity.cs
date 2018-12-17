@@ -15,6 +15,8 @@ namespace CubeQuest
     {
         private const int RcSignIn = 9001;
 
+
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
