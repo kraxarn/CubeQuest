@@ -45,6 +45,10 @@ namespace CubeQuest
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_game);
 
+            var health = AccountManager.User.CurrentHealth;
+
+            this.FindViewById<ProgressBar>(Resource.Id.progress_battle_health).Progress = health;
+
             // Get last known location
             locationManager = new LocationManager(this);
             userLocation    = await locationManager.GetLastKnownLocation();
