@@ -45,7 +45,7 @@ namespace CubeQuest
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_game);
 
-            var health = AccountManager.CurrentUser.CurrentHealth;
+            var health = AccountManager.CurrentUser.Health;
 
             this.FindViewById<ProgressBar>(Resource.Id.barHealth).Progress = health;
 
@@ -247,7 +247,7 @@ namespace CubeQuest
 
             // Sets the health on the progressbar 
             mainView.FindViewById<ProgressBar>(Resource.Id.progress_battle_health).Progress =
-                AccountManager.CurrentUser.CurrentHealth;
+                AccountManager.CurrentUser.Health;
 ;
             var battle = new Battle(this, battleView, Assets, new EnemySnake());
 
