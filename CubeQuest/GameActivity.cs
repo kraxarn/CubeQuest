@@ -126,8 +126,11 @@ namespace CubeQuest
             googleMap = map;
 
             // Disable scrolling
-            googleMap.UiSettings.ScrollGesturesEnabled = false;
-            googleMap.UiSettings.ZoomGesturesEnabled = false;
+            if (MainActivity.DebugMode)
+            {
+	            googleMap.UiSettings.ScrollGesturesEnabled = false;
+	            googleMap.UiSettings.ZoomGesturesEnabled   = false;
+            }
 
             // Set custom theme to map
             googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, Resource.Raw.map_theme_dark));
