@@ -29,9 +29,15 @@ namespace CubeQuest
 
             // If successful, launch game
             AccountManager.OnSuccess += status =>
-	            StartActivity(new Intent(this, typeof(GameActivity)),
-		            ActivityOptions.MakeCustomAnimation(this, Android.Resource.Animation.FadeIn,
-			            Android.Resource.Animation.FadeOut).ToBundle());
+            {
+				if (CheckSelfPermission(Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
+					RequestPermissions(new[]
+					{
+						Manifest.Permission.AccessFineLocation
+					}, 0);
+				else
+					OpenGameActivity();
+            };
 
             // Show login button and notice if it failed
             AccountManager.OnFailure += status => ToggleConnecting(false);
@@ -76,6 +82,25 @@ namespace CubeQuest
                 StartActivityForResult(AccountManager.GetSignInIntent(), RcSignIn);
             };
         }
+
+		public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+		{
+			base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
+			if (grantResults[0] == Permission.Granted)
+				OpenGameActivity();
+			else
+			{
+				// TODO: Show some type of error
+			}
+		}
+
+		private void OpenGameActivity()
+        {
+	        StartActivity(new Intent(this, typeof(GameActivity)),
+		        ActivityOptions.MakeCustomAnimation(this, Android.Resource.Animation.FadeIn,
+			        Android.Resource.Animation.FadeOut).ToBundle());
+		}
 
         protected override void OnStart()
         {
