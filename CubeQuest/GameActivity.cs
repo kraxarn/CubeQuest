@@ -38,6 +38,8 @@ namespace CubeQuest
 
         private View battleView;
 
+        private View mainView;
+
         private const int RcAchievementUi = 9003;
 
         protected override async void OnCreate(Bundle savedInstanceState)
@@ -45,7 +47,11 @@ namespace CubeQuest
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_game);
 
-            var health = AccountManager.CurrentUser.Health;
+            // Get main view
+            mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
+            mainView.Visibility = ViewStates.Invisible;
+
+			var health = AccountManager.CurrentUser.Health;
 
             this.FindViewById<ProgressBar>(Resource.Id.barHealth).Progress = health;
 
@@ -107,7 +113,13 @@ namespace CubeQuest
 
             FindViewById<Button>(Resource.Id.button_debug_battle).Click += (sender, args) => StartBattle();
         }
-        
+
+        public override void OnEnterAnimationComplete()
+        {
+	        base.OnEnterAnimationComplete();
+			StartEnterAnimation();
+        }
+
         public void OnMapReady(GoogleMap map)
         {
             // Set local maps
@@ -237,13 +249,23 @@ namespace CubeQuest
             animator.Start();
         }
 
+        private void StartEnterAnimation()
+        {
+	        var centerX = mainView.Width / 2;
+	        var centerY = mainView.Height / 2;
+
+	        var radius = (float) Math.Sqrt(centerX * centerX + centerY * centerY);
+
+	        var animator = ViewAnimationUtils.CreateCircularReveal(mainView, centerX, centerY, 0f, radius);
+
+	        mainView.Visibility = ViewStates.Visible;
+	        animator.Start();
+		}
+
         private void StartBattle()
         {
             var fabUser = FindViewById<FloatingActionButton>(Resource.Id.fabUser);
             fabUser.Hide();
-
-            var mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
-
 
             // Sets the health on the progressbar 
             mainView.FindViewById<ProgressBar>(Resource.Id.progress_battle_health).Progress =

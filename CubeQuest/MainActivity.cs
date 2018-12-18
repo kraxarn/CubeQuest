@@ -14,9 +14,7 @@ namespace CubeQuest
     public class MainActivity : AppCompatActivity
     {
         private const int RcSignIn = 9001;
-
-
-
+		
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -28,7 +26,10 @@ namespace CubeQuest
             signInButton.SetSize(SignInButton.SizeWide);
 
             // If successful, launch game
-            AccountManager.OnSuccess += status => StartActivity(typeof(GameActivity));
+            AccountManager.OnSuccess += status =>
+	            StartActivity(new Intent(this, typeof(GameActivity)),
+		            ActivityOptions.MakeCustomAnimation(this, Android.Resource.Animation.FadeIn,
+			            Android.Resource.Animation.FadeOut).ToBundle());
 
             // Show login button and notice if it failed
             AccountManager.OnFailure += status => ToggleConnecting(false);
