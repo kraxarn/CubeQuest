@@ -83,7 +83,19 @@ namespace CubeQuest
             };
         }
 
-        private void OpenGameActivity()
+		public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+		{
+			base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
+			if (grantResults[0] == Permission.Granted)
+				OpenGameActivity();
+			else
+			{
+				// TODO: Show some type of error
+			}
+		}
+
+		private void OpenGameActivity()
         {
 	        StartActivity(new Intent(this, typeof(GameActivity)),
 		        ActivityOptions.MakeCustomAnimation(this, Android.Resource.Animation.FadeIn,
