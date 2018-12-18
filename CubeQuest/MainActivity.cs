@@ -1,5 +1,7 @@
-﻿using Android.App;
+﻿using Android;
+using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Gms.Common;
 using Android.Net;
 using Android.OS;
@@ -27,9 +29,15 @@ namespace CubeQuest
 
             // If successful, launch game
             AccountManager.OnSuccess += status =>
-	            StartActivity(new Intent(this, typeof(GameActivity)),
-		            ActivityOptions.MakeCustomAnimation(this, Android.Resource.Animation.FadeIn,
-			            Android.Resource.Animation.FadeOut).ToBundle());
+            {
+				if (CheckSelfPermission(Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
+					RequestPermissions(new[]
+					{
+						Manifest.Permission.AccessFineLocation
+					}, 0);
+				else
+					OpenGameActivity();
+            };
 
             // Show login button and notice if it failed
             AccountManager.OnFailure += status => ToggleConnecting(false);
@@ -74,6 +82,13 @@ namespace CubeQuest
                 StartActivityForResult(AccountManager.GetSignInIntent(), RcSignIn);
             };
         }
+
+        private void OpenGameActivity()
+        {
+	        StartActivity(new Intent(this, typeof(GameActivity)),
+		        ActivityOptions.MakeCustomAnimation(this, Android.Resource.Animation.FadeIn,
+			        Android.Resource.Animation.FadeOut).ToBundle());
+		}
 
         protected override void OnStart()
         {

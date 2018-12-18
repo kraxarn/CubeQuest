@@ -200,14 +200,6 @@ namespace CubeQuest
                     .SetPositiveButton("Enable It", (sender, args) => StartActivity(new Intent(Android.Provider.Settings.ActionLocationSourceSettings)))
                     .Show();
             }
-
-            // Request permissions on start
-            // TODO: The app will try to access the position while asking for permissions, making it crash
-            if (CheckSelfPermission(Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
-                RequestPermissions(new[]
-                {
-                    Manifest.Permission.AccessFineLocation
-                }, 0);
         }
 
         private void ToggleProfile(bool enabled)
