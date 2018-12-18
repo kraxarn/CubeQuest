@@ -1,9 +1,9 @@
-﻿using Android;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
-using Android.Content.PM;
+using Android.Content.Res;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
+using Android.Graphics;
 using Android.Locations;
 using Android.OS;
 using Android.Support.Design.Widget;
@@ -14,13 +14,11 @@ using Android.Widget;
 using CubeQuest.Account;
 using CubeQuest.Account.Enemies;
 using System;
-using Android.Content.Res;
-using Android.Graphics;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest
 {
-    [Activity(Label = "GameActivity", Theme = "@style/AppTheme.NoActionBar")]
+	[Activity(Label = "GameActivity", Theme = "@style/AppTheme.NoActionBar")]
     public class GameActivity : AppCompatActivity, IOnMapReadyCallback, GoogleMap.IOnMarkerClickListener
     {
         private Location userLocation;
@@ -53,7 +51,7 @@ namespace CubeQuest
 
 			var health = AccountManager.CurrentUser.Health;
 
-            this.FindViewById<ProgressBar>(Resource.Id.barHealth).Progress = health;
+            FindViewById<ProgressBar>(Resource.Id.barHealth).Progress = health;
 
             // Get last known location
             locationManager = new LocationManager(this);
@@ -126,7 +124,7 @@ namespace CubeQuest
             googleMap = map;
 
             // Disable scrolling
-            if (MainActivity.DebugMode)
+            if (!MainActivity.DebugMode)
             {
 	            googleMap.UiSettings.ScrollGesturesEnabled = false;
 	            googleMap.UiSettings.ZoomGesturesEnabled   = false;
