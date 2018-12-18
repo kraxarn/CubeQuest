@@ -3,6 +3,7 @@ using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
 using Android.Views;
+using Android.Views.Accessibility;
 using Android.Views.Animations;
 using Android.Widget;
 using CubeQuest.Account.Interface;
@@ -57,11 +58,11 @@ namespace CubeQuest
 
             enemyHealthBars = new[]
             {
-                view.FindViewById<ProgressBar>(progressBar[0]),
-                view.FindViewById<ProgressBar>(progressBar[1]),
-                view.FindViewById<ProgressBar>(progressBar[2]),
-                view.FindViewById<ProgressBar>(progressBar[3]),
-                view.FindViewById<ProgressBar>(progressBar[4]),
+                view.FindViewById<ProgressBar>(Resource.Id.battle_health_enemy0),
+                view.FindViewById<ProgressBar>(Resource.Id.battle_health_enemy1),
+                view.FindViewById<ProgressBar>(Resource.Id.battle_health_enemy2),
+                view.FindViewById<ProgressBar>(Resource.Id.battle_health_enemy3),
+                view.FindViewById<ProgressBar>(Resource.Id.battle_health_enemy4),
             };
 
             foreach (var e in enemies)
@@ -69,7 +70,7 @@ namespace CubeQuest
 
             SetShakeAnimation(context, imageButtons[0]);
 
-            SetFlashingAnimation(context, enemyHealthBars);
+            
 
             images = new[]
             {
@@ -80,11 +81,8 @@ namespace CubeQuest
                 view.FindViewById<ImageView>(Resource.Id.image_battle_enemy4)
             };
 
-            foreach (var image in images)
-                image.Visibility = ViewStates.Invisible;
-
-            images[0].Visibility = ViewStates.Visible;
-
+            InitAnimations(context);
+            
             var frames = new[]
             {
                 BitmapFactory.DecodeStream(assets.Open("animations/selected/0.webp")),
@@ -113,6 +111,13 @@ namespace CubeQuest
             imageButtons[2].Click += (sender, args) => SetHighlightedEnemy(2);
             imageButtons[3].Click += (sender, args) => SetHighlightedEnemy(3);
             imageButtons[4].Click += (sender, args) => SetHighlightedEnemy(4);
+
+            imageButtons[0].Click += (sender, args) => SetFlashingAnimation(context,0);
+            imageButtons[1].Click += (sender, args) => SetFlashingAnimation(context,1);
+            imageButtons[2].Click += (sender, args) => SetFlashingAnimation(context,2);
+            imageButtons[3].Click += (sender, args) => SetFlashingAnimation(context,3);
+            imageButtons[4].Click += (sender, args) => SetFlashingAnimation(context,4);
+
         }
 
         private void SetHighlightedEnemy(int index)
@@ -139,13 +144,33 @@ namespace CubeQuest
             };
         }
 
-        private void SetFlashingAnimation(Context context, ProgressBar[] progressbar)
+        private void SetFlashingAnimation(Context context, int index)
         {
             var animFlash = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
 
-            progressbar[0].StartAnimation(animFlash);
+            foreach (var enemy in enemyHealthBars)
+            {
+                enemy.ClearAnimation();
+            }
 
-            
+            enemyHealthBars[index].StartAnimation(animFlash);
+        }
+
+        private void InitAnimations(Context context)
+        {
+
+            var animFlash = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
+            foreach (var image in images)
+                image.Visibility = ViewStates.Invisible;
+
+            images[0].Visibility = ViewStates.Visible;
+
+            foreach (var enemy in enemyHealthBars)
+            {
+                enemy.ClearAnimation();
+            }
+
+            enemyHealthBars[0].StartAnimation(animFlash);
         }
     }
 }
