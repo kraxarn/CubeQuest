@@ -140,6 +140,9 @@ namespace CubeQuest
             FindViewById<TextView>(Resource.Id.text_login_notice).Visibility  = enabled ? ViewStates.Gone : ViewStates.Visible;
         }
 
+		/// <summary>
+		/// If the app is running in debug configuration
+		/// </summary>
         public static bool DebugMode
         {
 	        get
