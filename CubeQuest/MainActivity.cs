@@ -1,5 +1,7 @@
-﻿using Android.App;
+﻿using Android;
+using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Gms.Common;
 using Android.Net;
 using Android.OS;
@@ -79,6 +81,8 @@ namespace CubeQuest
         {
             base.OnStart();
 
+            CheckPermissions();
+
             // Google signin
             if (IsConnected)
                 AccountManager.Create(this);
@@ -110,6 +114,15 @@ namespace CubeQuest
 
             FindViewById<SignInButton>(Resource.Id.button_sign_in).Visibility = enabled ? ViewStates.Gone : ViewStates.Visible;
             FindViewById<TextView>(Resource.Id.text_login_notice).Visibility  = enabled ? ViewStates.Gone : ViewStates.Visible;
+        }
+
+        private void CheckPermissions()
+        {
+            if (CheckSelfPermission(Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
+                RequestPermissions(new[]
+                {
+                    Manifest.Permission.AccessFineLocation
+                }, 0);
         }
     }
 }

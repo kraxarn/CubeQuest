@@ -130,7 +130,7 @@ namespace CubeQuest
             googleMap.UiSettings.ZoomGesturesEnabled = false;
 
             // Set custom theme to map
-            googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, Resource.Raw.map_theme_dark));
+            //googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, Resource.Raw.map_theme_dark));
             
             // Get last known location or 0,0 if not known
             // TODO: If not known, show loading dialog
