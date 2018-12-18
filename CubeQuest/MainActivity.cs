@@ -92,6 +92,7 @@ namespace CubeQuest
 			else
 			{
 				// TODO: Show some type of error
+				Toast.MakeText(this, "Permission request denied", ToastLength.Long);
 			}
 		}
 
@@ -138,5 +139,17 @@ namespace CubeQuest
             FindViewById<SignInButton>(Resource.Id.button_sign_in).Visibility = enabled ? ViewStates.Gone : ViewStates.Visible;
             FindViewById<TextView>(Resource.Id.text_login_notice).Visibility  = enabled ? ViewStates.Gone : ViewStates.Visible;
         }
+
+        public static bool DebugMode
+        {
+	        get
+	        {
+				#if DEBUG
+					return true;
+				#else
+					return false;
+				#endif
+	        }
+		}
     }
 }
