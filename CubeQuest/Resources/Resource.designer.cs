@@ -3814,113 +3814,113 @@ namespace CubeQuest
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f090011
+			public const int abc_action_bar_home_description = 2131296273;
+			
 			// aapt resource value: 0x7f090012
-			public const int abc_action_bar_home_description = 2131296274;
+			public const int abc_action_bar_up_description = 2131296274;
 			
 			// aapt resource value: 0x7f090013
-			public const int abc_action_bar_up_description = 2131296275;
+			public const int abc_action_menu_overflow_description = 2131296275;
 			
 			// aapt resource value: 0x7f090014
-			public const int abc_action_menu_overflow_description = 2131296276;
+			public const int abc_action_mode_done = 2131296276;
 			
 			// aapt resource value: 0x7f090015
-			public const int abc_action_mode_done = 2131296277;
+			public const int abc_activity_chooser_view_see_all = 2131296277;
 			
 			// aapt resource value: 0x7f090016
-			public const int abc_activity_chooser_view_see_all = 2131296278;
+			public const int abc_activitychooserview_choose_application = 2131296278;
 			
 			// aapt resource value: 0x7f090017
-			public const int abc_activitychooserview_choose_application = 2131296279;
+			public const int abc_capital_off = 2131296279;
 			
 			// aapt resource value: 0x7f090018
-			public const int abc_capital_off = 2131296280;
+			public const int abc_capital_on = 2131296280;
 			
-			// aapt resource value: 0x7f090019
-			public const int abc_capital_on = 2131296281;
+			// aapt resource value: 0x7f090023
+			public const int abc_font_family_body_1_material = 2131296291;
 			
 			// aapt resource value: 0x7f090024
-			public const int abc_font_family_body_1_material = 2131296292;
+			public const int abc_font_family_body_2_material = 2131296292;
 			
 			// aapt resource value: 0x7f090025
-			public const int abc_font_family_body_2_material = 2131296293;
+			public const int abc_font_family_button_material = 2131296293;
 			
 			// aapt resource value: 0x7f090026
-			public const int abc_font_family_button_material = 2131296294;
+			public const int abc_font_family_caption_material = 2131296294;
 			
 			// aapt resource value: 0x7f090027
-			public const int abc_font_family_caption_material = 2131296295;
+			public const int abc_font_family_display_1_material = 2131296295;
 			
 			// aapt resource value: 0x7f090028
-			public const int abc_font_family_display_1_material = 2131296296;
+			public const int abc_font_family_display_2_material = 2131296296;
 			
 			// aapt resource value: 0x7f090029
-			public const int abc_font_family_display_2_material = 2131296297;
+			public const int abc_font_family_display_3_material = 2131296297;
 			
 			// aapt resource value: 0x7f09002a
-			public const int abc_font_family_display_3_material = 2131296298;
+			public const int abc_font_family_display_4_material = 2131296298;
 			
 			// aapt resource value: 0x7f09002b
-			public const int abc_font_family_display_4_material = 2131296299;
+			public const int abc_font_family_headline_material = 2131296299;
 			
 			// aapt resource value: 0x7f09002c
-			public const int abc_font_family_headline_material = 2131296300;
+			public const int abc_font_family_menu_material = 2131296300;
 			
 			// aapt resource value: 0x7f09002d
-			public const int abc_font_family_menu_material = 2131296301;
+			public const int abc_font_family_subhead_material = 2131296301;
 			
 			// aapt resource value: 0x7f09002e
-			public const int abc_font_family_subhead_material = 2131296302;
+			public const int abc_font_family_title_material = 2131296302;
 			
-			// aapt resource value: 0x7f09002f
-			public const int abc_font_family_title_material = 2131296303;
+			// aapt resource value: 0x7f090019
+			public const int abc_search_hint = 2131296281;
 			
 			// aapt resource value: 0x7f09001a
-			public const int abc_search_hint = 2131296282;
+			public const int abc_searchview_description_clear = 2131296282;
 			
 			// aapt resource value: 0x7f09001b
-			public const int abc_searchview_description_clear = 2131296283;
+			public const int abc_searchview_description_query = 2131296283;
 			
 			// aapt resource value: 0x7f09001c
-			public const int abc_searchview_description_query = 2131296284;
+			public const int abc_searchview_description_search = 2131296284;
 			
 			// aapt resource value: 0x7f09001d
-			public const int abc_searchview_description_search = 2131296285;
+			public const int abc_searchview_description_submit = 2131296285;
 			
 			// aapt resource value: 0x7f09001e
-			public const int abc_searchview_description_submit = 2131296286;
+			public const int abc_searchview_description_voice = 2131296286;
 			
 			// aapt resource value: 0x7f09001f
-			public const int abc_searchview_description_voice = 2131296287;
+			public const int abc_shareactionprovider_share_with = 2131296287;
 			
 			// aapt resource value: 0x7f090020
-			public const int abc_shareactionprovider_share_with = 2131296288;
+			public const int abc_shareactionprovider_share_with_application = 2131296288;
 			
 			// aapt resource value: 0x7f090021
-			public const int abc_shareactionprovider_share_with_application = 2131296289;
+			public const int abc_toolbar_collapse_description = 2131296289;
 			
-			// aapt resource value: 0x7f090022
-			public const int abc_toolbar_collapse_description = 2131296290;
-			
-			// aapt resource value: 0x7f09003b
-			public const int achievement_cube_collector = 2131296315;
-			
-			// aapt resource value: 0x7f09003e
-			public const int action_settings = 2131296318;
-			
-			// aapt resource value: 0x7f090039
-			public const int app_id = 2131296313;
+			// aapt resource value: 0x7f09003a
+			public const int achievement_cube_collector = 2131296314;
 			
 			// aapt resource value: 0x7f09003d
-			public const int app_name = 2131296317;
+			public const int action_settings = 2131296317;
+			
+			// aapt resource value: 0x7f090038
+			public const int app_id = 2131296312;
+			
+			// aapt resource value: 0x7f09003c
+			public const int app_name = 2131296316;
+			
+			// aapt resource value: 0x7f09002f
+			public const int appbar_scrolling_view_behavior = 2131296303;
 			
 			// aapt resource value: 0x7f090030
-			public const int appbar_scrolling_view_behavior = 2131296304;
+			public const int bottom_sheet_behavior = 2131296304;
 			
 			// aapt resource value: 0x7f090031
-			public const int bottom_sheet_behavior = 2131296305;
-			
-			// aapt resource value: 0x7f090032
-			public const int character_counter_pattern = 2131296306;
+			public const int character_counter_pattern = 2131296305;
 			
 			// aapt resource value: 0x7f090001
 			public const int common_google_play_services_enable_button = 2131296257;
@@ -3941,70 +3941,67 @@ namespace CubeQuest
 			public const int common_google_play_services_install_title = 2131296262;
 			
 			// aapt resource value: 0x7f090007
-			public const int common_google_play_services_notification_channel_name = 2131296263;
-			
-			// aapt resource value: 0x7f090008
-			public const int common_google_play_services_notification_ticker = 2131296264;
+			public const int common_google_play_services_notification_ticker = 2131296263;
 			
 			// aapt resource value: 0x7f090000
 			public const int common_google_play_services_unknown_issue = 2131296256;
 			
+			// aapt resource value: 0x7f090008
+			public const int common_google_play_services_unsupported_text = 2131296264;
+			
 			// aapt resource value: 0x7f090009
-			public const int common_google_play_services_unsupported_text = 2131296265;
+			public const int common_google_play_services_update_button = 2131296265;
 			
 			// aapt resource value: 0x7f09000a
-			public const int common_google_play_services_update_button = 2131296266;
+			public const int common_google_play_services_update_text = 2131296266;
 			
 			// aapt resource value: 0x7f09000b
-			public const int common_google_play_services_update_text = 2131296267;
+			public const int common_google_play_services_update_title = 2131296267;
 			
 			// aapt resource value: 0x7f09000c
-			public const int common_google_play_services_update_title = 2131296268;
+			public const int common_google_play_services_updating_text = 2131296268;
 			
 			// aapt resource value: 0x7f09000d
-			public const int common_google_play_services_updating_text = 2131296269;
+			public const int common_google_play_services_wear_update_text = 2131296269;
 			
 			// aapt resource value: 0x7f09000e
-			public const int common_google_play_services_wear_update_text = 2131296270;
+			public const int common_open_on_phone = 2131296270;
 			
 			// aapt resource value: 0x7f09000f
-			public const int common_open_on_phone = 2131296271;
+			public const int common_signin_button_text = 2131296271;
 			
 			// aapt resource value: 0x7f090010
-			public const int common_signin_button_text = 2131296272;
+			public const int common_signin_button_text_long = 2131296272;
 			
-			// aapt resource value: 0x7f090011
-			public const int common_signin_button_text_long = 2131296273;
+			// aapt resource value: 0x7f09003b
+			public const int google_maps_key = 2131296315;
 			
-			// aapt resource value: 0x7f09003c
-			public const int google_maps_key = 2131296316;
+			// aapt resource value: 0x7f09003e
+			public const int login_notice = 2131296318;
 			
-			// aapt resource value: 0x7f09003f
-			public const int login_notice = 2131296319;
+			// aapt resource value: 0x7f090039
+			public const int package_name = 2131296313;
 			
-			// aapt resource value: 0x7f09003a
-			public const int package_name = 2131296314;
+			// aapt resource value: 0x7f090032
+			public const int password_toggle_content_description = 2131296306;
 			
 			// aapt resource value: 0x7f090033
-			public const int password_toggle_content_description = 2131296307;
+			public const int path_password_eye = 2131296307;
 			
 			// aapt resource value: 0x7f090034
-			public const int path_password_eye = 2131296308;
+			public const int path_password_eye_mask_strike_through = 2131296308;
 			
 			// aapt resource value: 0x7f090035
-			public const int path_password_eye_mask_strike_through = 2131296309;
+			public const int path_password_eye_mask_visible = 2131296309;
 			
 			// aapt resource value: 0x7f090036
-			public const int path_password_eye_mask_visible = 2131296310;
+			public const int path_password_strike_through = 2131296310;
+			
+			// aapt resource value: 0x7f090022
+			public const int search_menu_title = 2131296290;
 			
 			// aapt resource value: 0x7f090037
-			public const int path_password_strike_through = 2131296311;
-			
-			// aapt resource value: 0x7f090023
-			public const int search_menu_title = 2131296291;
-			
-			// aapt resource value: 0x7f090038
-			public const int status_bar_notification_info_overflow = 2131296312;
+			public const int status_bar_notification_info_overflow = 2131296311;
 			
 			static String()
 			{
