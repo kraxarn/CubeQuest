@@ -14,6 +14,7 @@ using Android.Widget;
 using CubeQuest.Account;
 using CubeQuest.Account.Enemies;
 using System;
+using System.Collections.Generic;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest
@@ -21,10 +22,19 @@ namespace CubeQuest
 	[Activity(Label = "GameActivity", Theme = "@style/AppTheme.NoActionBar")]
     public class GameActivity : AppCompatActivity, IOnMapReadyCallback, GoogleMap.IOnMarkerClickListener
     {
+		/// <summary>
+		/// Current location of the user
+		/// </summary>
         private Location userLocation;
         
+		/// <summary>
+		/// The main map
+		/// </summary>
         private GoogleMap googleMap;
 
+		/// <summary>
+		/// Manages and updates our location
+		/// </summary>
         private LocationManager locationManager;
 
         /// <summary>
@@ -32,18 +42,37 @@ namespace CubeQuest
         /// </summary>
         private Marker playerMarker;
 
+		/// <summary>
+		/// Main view for the profile
+		/// </summary>
         private View profileView;
 
+		/// <summary>
+		/// Main view for the battle ui
+		/// </summary>
         private View battleView;
 
+		/// <summary>
+		/// Main view with map
+		/// </summary>
         private View mainView;
 
+		/// <summary>
+		/// All markers except the player
+		/// </summary>
+        private Dictionary<LatLng, Marker> markers;
+
+		/// <summary>
+		/// Value returned from the achievements intent
+		/// </summary>
         private const int RcAchievementUi = 9003;
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_game);
+
+			markers = new Dictionary<LatLng, Marker>();
 
             // Get main view
             mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
@@ -138,9 +167,7 @@ namespace CubeQuest
             var location = userLocation == null ? new LatLng(0, 0) : userLocation.ToLatLng();
 
             // Create player marker
-            playerMarker = AddMarker(location, AccountManager.Name, BitmapDescriptorFactory.FromAsset("player/0.webp"));
-            playerMarker.ZIndex = 10f;
-            playerMarker.Tag = "player";
+            AddPlayer(location, 0);
 
             // Target player with initial zoom
             var position = CameraPosition.InvokeBuilder()
@@ -177,12 +204,35 @@ namespace CubeQuest
         /// <summary>
         /// Creates a marker at the specified position
         /// </summary>
-        private Marker AddMarker(LatLng latLng, string title, BitmapDescriptor icon) =>
-            googleMap.AddMarker(new MarkerOptions()
-                .SetPosition(latLng)
-                .SetTitle(title)
-                .Anchor(0.5f, 0.5f)
-                .SetIcon(icon));
+        private void AddMarker(LatLng latLng, string title, BitmapDescriptor icon)
+        {
+			// Check if marker was already added
+			// TODO: Don't know how slow this will be
+	        if (markers.ContainsKey(latLng))
+		        return;
+
+	        markers.Add(latLng, googleMap.AddMarker(new MarkerOptions()
+		        .SetPosition(latLng)
+		        .SetTitle(title)
+		        .Anchor(0.5f, 0.5f)
+		        .SetIcon(icon)));
+        }
+
+        /// <summary>
+		/// Sets up the player and adds it to <see cref="playerMarker"/>
+		/// </summary>
+        private void AddPlayer(LatLng position, int playerIcon)
+        {
+			var marker = googleMap.AddMarker(new MarkerOptions()
+				.SetPosition(position)
+				.SetTitle(AccountManager.Name)
+				.SetIcon(BitmapDescriptorFactory.FromAsset($"player/{playerIcon}.webp")));
+
+			marker.ZIndex = 10f;
+			marker.Tag = "player";
+
+			playerMarker = marker;
+        }
 
         protected override void OnStart()
         {
