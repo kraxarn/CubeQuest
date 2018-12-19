@@ -72,6 +72,7 @@
     <Compile Include="Account\AccountManager.cs" />
     <Compile Include="Account\Achievement.cs" />
     <Compile Include="Account\Enemies\EnemySnake.cs" />
+    <Compile Include="Account\GoogleConnectionListener.cs" />
     <Compile Include="Account\GoogleFitManager.cs" />
     <Compile Include="Account\Interface\IEnemy.cs" />
     <Compile Include="Account\Interface\ICompanion.cs" />

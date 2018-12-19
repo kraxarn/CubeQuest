@@ -1,19 +1,15 @@
 ﻿using Android.Content;
 using Android.Gms.Auth.Api;
 using Android.Gms.Auth.Api.SignIn;
-using Android.Gms.Common;
 using Android.Gms.Common.Apis;
 using Android.Gms.Drive;
 using Android.Gms.Fitness;
-using Android.Gms.Fitness.Data;
-using Android.Gms.Fitness.Request;
 using Android.Gms.Games;
 using Android.Gms.Games.Achievement;
 using Android.Graphics;
-using Android.OS;
 using Android.Support.V7.App;
+using Android.Util;
 using Android.Views;
-using Java.Util.Concurrent;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -38,7 +34,9 @@ namespace CubeQuest.Account
 
 		private static GoogleApiClient _googleClient;
 
-        private static GoogleApiClient _googleFitClient;
+        private static GoogleSignInOptions signInOptions;
+
+        public static GoogleFitManager Fitness { get; private set; }
 
 		private static Context _context;
 
@@ -72,7 +70,7 @@ namespace CubeQuest.Account
 	        _context = activity;
 
             // Setup sign in options
-	        var signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultGamesSignIn)
+	        signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultGamesSignIn)
 	            .RequestScopes(DriveClass.ScopeAppfolder)
 	            .RequestScopes(FitnessClass.ScopeActivityRead)
 	            .Build();
@@ -84,13 +82,7 @@ namespace CubeQuest.Account
 	            .AddApi(GamesClass.API)
 	            .Build();
 
-	        _googleFitClient = new GoogleApiClient.Builder(activity)
-	            .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
-	            .AddApi(FitnessClass.HISTORY_API)
-	            .Build();
-
             _googleClient.Connect(GoogleApiClient.SignInModeOptional);
-	        _googleFitClient.Connect(GoogleApiClient.SignInModeOptional);
 
             // Wait until we connected and attempt to sign in silently when we do
             connectionListener.Connected += async hint =>
@@ -98,8 +90,6 @@ namespace CubeQuest.Account
                 CurrentUser = new User();
 
 	            var silentSignIn = await Auth.GoogleSignInApi.SilentSignIn(_googleClient);
-
-	            await Auth.GoogleSignInApi.SilentSignIn(_googleFitClient);
 
 	            if (silentSignIn.Status.IsSuccess)
 	                OnSuccess?.Invoke(silentSignIn.Status);
@@ -109,7 +99,21 @@ namespace CubeQuest.Account
 
             // Register callback to our connection listener
             _googleClient.RegisterConnectionCallbacks(connectionListener);
-	    }
+
+            // Connect to Google Fit once successful
+            OnSuccess += status => ConnectFit();
+        }
+
+        /// <summary>
+        /// Connect and attempt sign in to Google Fit
+        /// </summary>
+        private static void ConnectFit()
+        {
+            Fitness = new GoogleFitManager(_context, signInOptions);
+
+            Fitness.Success += status => Log.Info("GOOGLE_FIT", "OK");
+            Fitness.Failure += status => Log.Info("GOOGLE_FIT", "ERR");
+        }
 
         /// <summary>
 		/// Get intent used to sign in with Google
@@ -152,30 +156,6 @@ namespace CubeQuest.Account
 
         public static void SetViewForPopups(View view) => 
             GamesClass.SetViewForPopups(_googleClient, view);
-
-        public static async void GetNumSteps(long start, long end)
-        {
-            var readRequest = new DataReadRequest.Builder()
-                .Aggregate(DataType.TypeStepCountDelta, DataType.AggregateStepCountDelta)
-                .BucketByTime(1, TimeUnit.Days)
-                .SetTimeRange(start, end, TimeUnit.Seconds)
-                .Build();
-
-            var history = await FitnessClass.HistoryApi.ReadDataAsync(_googleFitClient, readRequest);
-        }
-
-        public static void GetNumSteps(DateTime start, DateTime end) => 
-            GetNumSteps(start.ToTimestamp(), end.ToTimestamp());
-
-        public static async void SubscribeToSteps()
-        {
-            var result = await FitnessClass.RecordingApi.SubscribeAsync(_googleClient, DataType.TypeStepCountCumulative);
-        }
-
-        public static async void GetDailySteps()
-        {
-            var result = await FitnessClass.HistoryApi.ReadDailyTotalAsync(_googleClient, DataType.TypeStepCountDelta);
-        }
     }
 
     public static class DateTimeConverter

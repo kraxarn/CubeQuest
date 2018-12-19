@@ -110,6 +110,11 @@ namespace CubeQuest
                     BitmapDescriptorFactory.FromAsset("enemy/snake2.webp"));
 
             FindViewById<Button>(Resource.Id.button_debug_battle).Click += (sender, args) => StartBattle();
+
+            AccountManager.Fitness.Success += async status =>
+            {
+                var sets = await AccountManager.Fitness.GetNumSteps(new DateTime(2018, 12, 1), DateTime.UtcNow);
+            };
         }
 
         public override void OnEnterAnimationComplete()
