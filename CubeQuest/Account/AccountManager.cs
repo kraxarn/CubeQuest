@@ -66,7 +66,7 @@ namespace CubeQuest.Account
                 return;
 
             // Setup connection listener
-            var connectionListener = new ConnectionListener();
+            var connectionListener = new GoogleConnectionListener();
 
             // Save main activity for context and stuffs
 	        _context = activity;
@@ -175,27 +175,6 @@ namespace CubeQuest.Account
         public static async void GetDailySteps()
         {
             var result = await FitnessClass.HistoryApi.ReadDailyTotalAsync(_googleClient, DataType.TypeStepCountDelta);
-        }
-    }
-
-    public class ConnectionListener : Java.Lang.Object, GoogleApiClient.IOnConnectionFailedListener, GoogleApiClient.IConnectionCallbacks
-    {
-        public delegate void ConnectionFailedEvent(ConnectionResult result);
-
-        public event ConnectionFailedEvent ConnectionFailed;
-
-        public delegate void ConnectedEvent(Bundle connectionHint);
-
-        public event ConnectedEvent Connected;
-
-        public void OnConnectionFailed(ConnectionResult result) => 
-            ConnectionFailed?.Invoke(result);
-
-        public void OnConnected(Bundle connectionHint) => 
-            Connected?.Invoke(connectionHint);
-
-        public void OnConnectionSuspended(int cause)
-        {
         }
     }
 
