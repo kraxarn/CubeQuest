@@ -70,8 +70,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account\AccountManager.cs" />
+    <Compile Include="Account\AccountManagerBeta.cs" />
     <Compile Include="Account\Achievement.cs" />
     <Compile Include="Account\Enemies\EnemySnake.cs" />
+    <Compile Include="Account\GoogleFitManager.cs" />
     <Compile Include="Account\Interface\IEnemy.cs" />
     <Compile Include="Account\Interface\ICompanion.cs" />
     <Compile Include="Account\Companions\CompanionExample.cs" />
@@ -128,22 +130,22 @@
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2.1" />
     <PackageReference Include="Xamarin.GooglePlayServices.Auth">
-      <Version>60.1142.1</Version>
+      <Version>70.1501.0-preview2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Drive">
-      <Version>60.1142.1</Version>
+      <Version>70.1501.0-preview2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Fitness">
-      <Version>60.1142.1</Version>
+      <Version>70.1501.0-preview2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Games">
-      <Version>60.1142.1</Version>
+      <Version>70.1501.0-preview2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Location">
-      <Version>60.1142.1</Version>
+      <Version>70.1501.0-preview2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Maps">
-      <Version>60.1142.1</Version>
+      <Version>70.1501.0-preview2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
