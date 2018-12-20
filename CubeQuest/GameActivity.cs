@@ -258,16 +258,13 @@ namespace CubeQuest
             if (marker.Tag?.ToString() == "player")
                 return true;
 
-            // TODO: Temporary message
-            var distance = (int) (LocationManager.GetDistance(userLocation.ToLatLng(), marker.Position) + 0.5);
-            
-            // TODO: Sometimes it works and sometimes not?
-            var text = $"Level 5 Danger Noodle ({distance} {(distance == 1 ? "meter" : "meters")} away)";
+            /*
+             TODO: Check distance
+             To get distance in meters, use:
+             (int) (LocationManager.GetDistance(userLocation.ToLatLng(), marker.Position) + 0.5)
+            */
 
-            Snackbar.Make(mainView, text, Snackbar.LengthLong)
-                .SetActionTextColor(ColorStateList.ValueOf(Color.ParseColor("#e53935")))
-                .SetAction("Fight", view => StartBattle())
-                .Show();
+            StartBattle();
 
             return true;
         }
