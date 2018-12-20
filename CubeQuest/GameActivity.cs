@@ -151,6 +151,12 @@ namespace CubeQuest
 
             FindViewById<Button>(Resource.Id.button_debug_battle).Click += (sender, args) => StartBattle();
 
+            var battleInfo= BottomSheetBehavior.From(FindViewById<LinearLayout>(Resource.Id.layout_battle_info));
+            battleInfo.State = BottomSheetBehavior.StateHidden;
+
+            FindViewById<Button>(Resource.Id.button_debug_battle_info).Click += (sender, args) => 
+                battleInfo.State = BottomSheetBehavior.StateCollapsed;
+
             AccountManager.Fitness.Success += async status =>
             {
                 var sets = await AccountManager.Fitness.GetNumSteps(new DateTime(2018, 12, 1), DateTime.UtcNow);

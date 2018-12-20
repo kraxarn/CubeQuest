@@ -52,6 +52,14 @@
 		android:paddingBottom="42dp"
 		android:orientation="vertical">
 
+        <Button
+            android:id="@+id/button_debug_battle_info"
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:fontFamily="monospace"
+			style="@android:style/Widget.Material.Button.Borderless"
+			android:text="Battle info"/>
+
 		<Button
 			android:id="@+id/button_debug_battle"
 			android:layout_width="wrap_content"
@@ -108,5 +116,8 @@
         android:src="@drawable/ic_map"
         android:layout_margin="16dp"
 		android:visibility="invisible"/>
+
+    <!-- Battle info view -->
+    <include layout="@layout/view_battle_info"/>
 
 </android.support.design.widget.CoordinatorLayout>
