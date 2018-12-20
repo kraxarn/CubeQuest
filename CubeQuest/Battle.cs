@@ -54,6 +54,9 @@ namespace CubeQuest
 
         public Battle(Context context, View view, AssetManager assets, IItem item)
         {
+            // Start battle music
+            MusicManager.Play(MusicManager.EMusicTrack.Battle);
+
             // Set context
             this.context = context;
 

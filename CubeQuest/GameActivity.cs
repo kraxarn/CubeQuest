@@ -392,6 +392,8 @@ namespace CubeQuest
 
             battle.End += () =>
             {
+                MusicManager.Play(MusicManager.EMusicTrack.Map);
+
                 var animator2 = ViewAnimationUtils.CreateCircularReveal(battleView, centerX, centerY, radius, 0f);
                 animator2.AnimationEnd += (o, eventArgs) => battleView.Visibility = ViewStates.Invisible;
                 animator2.Start();
