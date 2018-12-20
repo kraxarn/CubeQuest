@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿using System;
+using Android.Content;
 using Android.Content.Res;
 using Android.Media;
 using Java.IO;
@@ -10,55 +11,56 @@ namespace CubeQuest
         public enum EMusicTrack
         {
             None,
-            Title,
-            Map
+            Map,
+            Dead,
+            Battle
         }
 
         /// <summary>
         /// Context for creating <see cref="MediaPlayer"/>
         /// </summary>
-        private static Context _context;
+        private static Context context;
 
         /// <summary>
         /// Currently playing track
         /// </summary>
-        private static EMusicTrack _playing;
+        private static EMusicTrack playing;
 
         /// <summary>
         /// Player used to play the music
         /// </summary>
-        private static MediaPlayer _player;
+        private static MediaPlayer player;
 
         /// <summary>
         /// Private volume used my the media player
         /// </summary>
-        private static float _volume;
+        private static float volume;
 
         /// <summary>
         /// Volume for current track and all future ones (0-1)
         /// </summary>
         public static float Volume
         {
-            get => _volume;
+            get => volume;
             set
             {
-                _volume = value;
-                _player.SetVolume(value, value);
+                volume = value;
+                player?.SetVolume(value, value);
             }
         }
 
-        public static void Create(Context context)
+        public static void Create(Context appContext)
         {
-            _context = context;
-            _playing = EMusicTrack.None;
-            _volume  = 1f;
+            context = appContext;
+            playing = EMusicTrack.None;
+            volume  = 1f;
         }
 
         private static bool TryLoadAsset(string path, out AssetFileDescriptor file)
         {
             try
             {
-                file = _context.Assets.OpenFd(path);
+                file = context.Assets.OpenFd(path);
                 return true;
             }
             catch (IOException)
@@ -71,27 +73,31 @@ namespace CubeQuest
         private static void CreateMediaPlayer(string track)
         {
             // If null or already playing, stop
-            if (_player?.IsPlaying ?? false)
+            if (player?.IsPlaying ?? false)
             {
-                _player.Release();
-                _player = null;
+                player.Release();
+                player = null;
             }
 
             // Create basic media player
-            _player = new MediaPlayer
+            player = new MediaPlayer
             {
                 Looping = true
             };
+
+            // Randomize map theme
+            if (track == "Map")
+                track += $"{new Random().Next(2)}";
 
             // Try loading the music file
             if (!TryLoadAsset($"music/{track.ToLower()}.opus", out var file))
                 return;
 
             // Set file, prepare and play
-            _player.SetDataSource(file);
-            _player.SetVolume(_volume, _volume);
-            _player.PrepareAsync();
-            _player.Prepared += (sender, args) => _player.Start();
+            player.SetDataSource(file);
+            player.SetVolume(volume, volume);
+            player.PrepareAsync();
+            player.Prepared += (sender, args) => player.Start();
         }
 
         /// <summary>
@@ -99,18 +105,18 @@ namespace CubeQuest
         /// </summary>
         public static void Play(EMusicTrack track)
         {
-            if (track == _playing)
+            if (track == playing)
                 return;
 
             if (track == EMusicTrack.None)
             {
-                _player.Stop();
+                player.Stop();
                 return;
             }
 
             CreateMediaPlayer(track.ToString());
 
-            _playing = track;
+            playing = track;
         }
 
         /// <summary>
@@ -121,11 +127,11 @@ namespace CubeQuest
         /// <summary>
         /// Pauses playback
         /// </summary>
-        public static void Pause() => _player.Pause();
+        public static void Pause() => player.Pause();
 
         /// <summary>
         /// Resumes playback from where it was paused
         /// </summary>
-        public static void Resume() =>  _player.Start();
+        public static void Resume() =>  player.Start();
     }
 }
