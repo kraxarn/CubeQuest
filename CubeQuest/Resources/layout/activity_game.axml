@@ -45,7 +45,7 @@
 	<!-- Debug stuff -->
 	<LinearLayout
 		android:id="@+id/layout_debug_tools"
-		android:layout_width="match_parent"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_gravity="bottom"
 		android:paddingHorizontal="16dp"
