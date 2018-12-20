@@ -151,12 +151,11 @@ namespace CubeQuest
 
             FindViewById<Button>(Resource.Id.button_debug_battle).Click += (sender, args) => StartBattle();
 
-<<<<<<< HEAD
             AccountManager.Fitness.Success += async status =>
             {
                 var sets = await AccountManager.Fitness.GetNumSteps(new DateTime(2018, 12, 1), DateTime.UtcNow);
             };
-=======
+
             //Set up itemPopupView, set up briefcase button 
             //and link itemPopupView to the briefcase button
             itemPopupView = LayoutInflater.Inflate(Resource.Layout.view_popup_layout, null);
@@ -211,7 +210,6 @@ namespace CubeQuest
                 }
             };
 
->>>>>>> 7e8c652... Added the popup recycler
         }
 
         public override void OnEnterAnimationComplete()
