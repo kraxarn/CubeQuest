@@ -1,4 +1,4 @@
-﻿using Android.App;
+using Android.App;
 using Android.Content;
 using Android.Content.Res;
 using Android.Gms.Maps;
@@ -8,11 +8,14 @@ using Android.Locations;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V7.App;
+using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
 using CubeQuest.Account.Enemies;
+using CubeQuest.Account.Interface;
+using CubeQuest.Account.Weapons;
 using System;
 using System.Collections.Generic;
 using AlertDialog = Android.App.AlertDialog;
@@ -62,9 +65,17 @@ namespace CubeQuest
 		/// </summary>
         private Dictionary<LatLng, Marker> markers;
 
-		/// <summary>
-		/// Value returned from the achievements intent
-		/// </summary>
+        private AlertDialog itemPopupDialog;
+        private AlertDialog.Builder popupDialogBuilder;
+
+        private View itemPopupView;
+
+        private RecyclerView popupRecycler;
+
+
+        /// <summary>
+        /// Value returned from the achievements intent
+        /// </summary>
         private const int RcAchievementUi = 9003;
 
         protected override async void OnCreate(Bundle savedInstanceState)
@@ -140,10 +151,67 @@ namespace CubeQuest
 
             FindViewById<Button>(Resource.Id.button_debug_battle).Click += (sender, args) => StartBattle();
 
+<<<<<<< HEAD
             AccountManager.Fitness.Success += async status =>
             {
                 var sets = await AccountManager.Fitness.GetNumSteps(new DateTime(2018, 12, 1), DateTime.UtcNow);
             };
+=======
+            //Set up itemPopupView, set up briefcase button 
+            //and link itemPopupView to the briefcase button
+            itemPopupView = LayoutInflater.Inflate(Resource.Layout.view_popup_layout, null);
+            popupRecycler = (RecyclerView)itemPopupView.FindViewById(Resource.Id.popup_recyclerview);
+
+            LinearLayoutManager popupllm = new LinearLayoutManager(itemPopupView.Context);
+            popupRecycler.SetLayoutManager(popupllm);
+
+            //Create a list of test items.
+            List<IItem> items = new List<IItem>();
+
+            items.Add(new WeaponSword());
+            items.Add(new WeaponSword());
+            items.Add(new WeaponSword());
+            items.Add(new WeaponSword());
+
+            ItemViewAdapter adapter = new ItemViewAdapter(items);
+
+            popupRecycler.SetAdapter(adapter);
+
+            ImageButton briefcaseButton = this.FindViewById<ImageButton>(Resource.Id.button_briefcase);
+            briefcaseButton.Click += (sender, e) => {
+                if (itemPopupDialog == null)
+                {
+                    popupDialogBuilder = new AlertDialog.Builder(this)
+                    .SetView(itemPopupView);
+                    popupDialogBuilder.SetPositiveButton("Apply",
+                    (object senderer, Android.Content.DialogClickEventArgs ee) =>
+                    {
+                        //Insert code that makes the users choice of item from the 
+                        //list become their selected equipment
+                    });
+
+
+
+                    popupDialogBuilder.SetNegativeButton("Cancel",
+                    (object senderer, Android.Content.DialogClickEventArgs ee) =>
+                    {
+                        //Insert code for closing dialog without any updates to chosen equipment
+                    });
+
+
+                    itemPopupDialog = popupDialogBuilder.Create();
+
+                    itemPopupDialog.Show();
+
+                }
+
+                else
+                {
+                    itemPopupDialog.Show();
+                }
+            };
+
+>>>>>>> 7e8c652... Added the popup recycler
         }
 
         public override void OnEnterAnimationComplete()
