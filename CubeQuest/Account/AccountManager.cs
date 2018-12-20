@@ -32,15 +32,15 @@ namespace CubeQuest.Account
         /// </summary>
         public static event FailureEvent OnFailure;
 
-		private static GoogleApiClient _googleClient;
+		private static GoogleApiClient googleClient;
 
         private static GoogleSignInOptions signInOptions;
 
         public static GoogleFitManager Fitness { get; private set; }
 
-		private static Context _context;
+		private static Context context;
 
-	    public static bool IsConnected => _googleClient.IsConnected;
+	    public static bool IsConnected => googleClient.IsConnected;
 
         /// <summary>
         /// Current user signed in
@@ -51,7 +51,7 @@ namespace CubeQuest.Account
         /// Google Play display name
         /// </summary>
 	    public static string Name => 
-	        GamesClass.Players.GetCurrentPlayer(_googleClient).DisplayName;
+	        GamesClass.Players.GetCurrentPlayer(googleClient).DisplayName;
 
         /// <summary>
         /// Creates account manager and attempts to sign in silently (triggers <see cref="OnSuccess"/> or <see cref="OnFailure"/>
@@ -60,14 +60,14 @@ namespace CubeQuest.Account
 	    public static void Create(AppCompatActivity activity)
 	    {
             // Ignore if it has already been created
-            if (_googleClient != null)
+            if (googleClient != null)
                 return;
 
             // Setup connection listener
             var connectionListener = new GoogleConnectionListener();
 
             // Save main activity for context and stuffs
-	        _context = activity;
+	        context = activity;
 
             // Setup sign in options
 	        signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultGamesSignIn)
@@ -76,20 +76,20 @@ namespace CubeQuest.Account
 	            .Build();
 
             // Create google client
-	        _googleClient = new GoogleApiClient.Builder(activity)
+	        googleClient = new GoogleApiClient.Builder(activity)
 	            .AddConnectionCallbacks(connectionListener)
 	            .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
 	            .AddApi(GamesClass.API)
 	            .Build();
 
-            _googleClient.Connect(GoogleApiClient.SignInModeOptional);
+            googleClient.Connect(GoogleApiClient.SignInModeOptional);
 
             // Wait until we connected and attempt to sign in silently when we do
             connectionListener.Connected += async hint =>
 	        {
                 CurrentUser = new User();
 
-	            var silentSignIn = await Auth.GoogleSignInApi.SilentSignIn(_googleClient);
+	            var silentSignIn = await Auth.GoogleSignInApi.SilentSignIn(googleClient);
 
 	            if (silentSignIn.Status.IsSuccess)
 	                OnSuccess?.Invoke(silentSignIn.Status);
@@ -98,7 +98,7 @@ namespace CubeQuest.Account
 	        };
 
             // Register callback to our connection listener
-            _googleClient.RegisterConnectionCallbacks(connectionListener);
+            googleClient.RegisterConnectionCallbacks(connectionListener);
 
             // Connect to Google Fit once successful
             OnSuccess += status => ConnectFit();
@@ -109,7 +109,7 @@ namespace CubeQuest.Account
         /// </summary>
         private static void ConnectFit()
         {
-            Fitness = new GoogleFitManager(_context, signInOptions);
+            Fitness = new GoogleFitManager(context, signInOptions);
 
             Fitness.Success += status => Log.Info("GOOGLE_FIT", "OK");
             Fitness.Failure += status => Log.Info("GOOGLE_FIT", "ERR");
@@ -119,7 +119,7 @@ namespace CubeQuest.Account
 		/// Get intent used to sign in with Google
 		/// </summary>
 		public static Intent GetSignInIntent() => 
-			Auth.GoogleSignInApi.GetSignInIntent(_googleClient);
+			Auth.GoogleSignInApi.GetSignInIntent(googleClient);
 
 		/// <summary>
 		/// Handle Intent result
@@ -140,22 +140,22 @@ namespace CubeQuest.Account
 		}
 
 	    public static Bitmap SaveIcon =>
-	        BitmapFactory.DecodeResource(_context.Resources, Resource.Mipmap.ic_launcher_round);
+	        BitmapFactory.DecodeResource(context.Resources, Resource.Mipmap.ic_launcher_round);
 
         public static Intent AchievementsIntent => 
-            GamesClass.Achievements.GetAchievementsIntent(_googleClient);
+            GamesClass.Achievements.GetAchievementsIntent(googleClient);
 
         public static void UnlockAchievement(string id) => 
-            GamesClass.Achievements.Unlock(_googleClient, id);
+            GamesClass.Achievements.Unlock(googleClient, id);
 
         public static void IncrementAchievement(string id, int steps) =>
-            GamesClass.Achievements.Increment(_googleClient, id, steps);
+            GamesClass.Achievements.Increment(googleClient, id, steps);
 
         public static async Task<IEnumerable<IAchievement>> GetAchievementsAsync() => 
-            (await GamesClass.Achievements.LoadAsync(_googleClient, true)).Achievements;
+            (await GamesClass.Achievements.LoadAsync(googleClient, true)).Achievements;
 
         public static void SetViewForPopups(View view) => 
-            GamesClass.SetViewForPopups(_googleClient, view);
+            GamesClass.SetViewForPopups(googleClient, view);
     }
 
     public static class DateTimeConverter
