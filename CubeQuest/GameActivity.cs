@@ -72,6 +72,7 @@ namespace CubeQuest
 
         private RecyclerView popupRecycler;
 
+        private BottomSheetBehavior battleInfo;
 
         /// <summary>
         /// Value returned from the achievements intent
@@ -151,11 +152,19 @@ namespace CubeQuest
 
             FindViewById<Button>(Resource.Id.button_debug_battle).Click += (sender, args) => StartBattle();
 
-            var battleInfo= BottomSheetBehavior.From(FindViewById<LinearLayout>(Resource.Id.layout_battle_info));
-            battleInfo.State = BottomSheetBehavior.StateHidden;
+            var battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
+			battleInfo         = BottomSheetBehavior.From(battleInfoView);
+            battleInfo.State   = BottomSheetBehavior.StateHidden;
 
-            FindViewById<Button>(Resource.Id.button_debug_battle_info).Click += (sender, args) => 
-                battleInfo.State = BottomSheetBehavior.StateCollapsed;
+            battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Click +=
+	            (sender, args) => StartBattle();
+
+            FindViewById<Button>(Resource.Id.button_debug_battle_info).Click += (sender, args) =>
+            {
+	            battleInfoView.FindViewById<ImageView>(Resource.Id.image_battle_info).SetImageBitmap(BitmapFactory.DecodeStream(Assets.Open("enemy/snake.webp")));
+
+	            battleInfo.State = BottomSheetBehavior.StateCollapsed;
+            };
 
             AccountManager.Fitness.Success += async status =>
             {
@@ -270,7 +279,7 @@ namespace CubeQuest
              (int) (LocationManager.GetDistance(userLocation.ToLatLng(), marker.Position) + 0.5)
             */
 
-            StartBattle();
+            battleInfo.State = BottomSheetBehavior.StateCollapsed;
 
             return true;
         }
@@ -380,6 +389,9 @@ namespace CubeQuest
 
         private void StartBattle()
         {
+			// Hide battle info
+			battleInfo.State = BottomSheetBehavior.StateHidden;
+
             var fabUser = FindViewById<FloatingActionButton>(Resource.Id.fabUser);
             fabUser.Hide();
 
