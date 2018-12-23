@@ -1,6 +1,5 @@
 using Android.App;
 using Android.Content;
-using Android.Content.Res;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Graphics;
@@ -66,7 +65,6 @@ namespace CubeQuest
         private Dictionary<LatLng, Marker> markers;
 
         private AlertDialog itemPopupDialog;
-        private AlertDialog.Builder popupDialogBuilder;
 
         private View itemPopupView;
 
@@ -176,55 +174,47 @@ namespace CubeQuest
             itemPopupView = LayoutInflater.Inflate(Resource.Layout.view_popup_layout, null);
             popupRecycler = (RecyclerView)itemPopupView.FindViewById(Resource.Id.popup_recyclerview);
 
-            LinearLayoutManager popupllm = new LinearLayoutManager(itemPopupView.Context);
-            popupRecycler.SetLayoutManager(popupllm);
+            var itemPopup = new LinearLayoutManager(itemPopupView.Context);
+            popupRecycler.SetLayoutManager(itemPopup);
 
             //Create a list of test items.
-            List<IItem> items = new List<IItem>();
+            var items = new List<IItem>
+            {
+	            new WeaponSword(),
+	            new WeaponSword(),
+	            new WeaponSword(),
+	            new WeaponSword()
+            };
 
-            items.Add(new WeaponSword());
-            items.Add(new WeaponSword());
-            items.Add(new WeaponSword());
-            items.Add(new WeaponSword());
-
-            ItemViewAdapter adapter = new ItemViewAdapter(items);
+            var adapter = new ItemViewAdapter(items);
 
             popupRecycler.SetAdapter(adapter);
 
-            ImageButton briefcaseButton = this.FindViewById<ImageButton>(Resource.Id.button_briefcase);
-            briefcaseButton.Click += (sender, e) => {
+            var briefcaseButton = FindViewById<ImageButton>(Resource.Id.button_briefcase);
+
+            briefcaseButton.Click += (sender, e) =>
+            {
                 if (itemPopupDialog == null)
                 {
-                    popupDialogBuilder = new AlertDialog.Builder(this)
-                    .SetView(itemPopupView);
-                    popupDialogBuilder.SetPositiveButton("Apply",
-                    (object senderer, Android.Content.DialogClickEventArgs ee) =>
-                    {
-                        //Insert code that makes the users choice of item from the 
-                        //list become their selected equipment
-                    });
-
-
-
-                    popupDialogBuilder.SetNegativeButton("Cancel",
-                    (object senderer, Android.Content.DialogClickEventArgs ee) =>
-                    {
-                        //Insert code for closing dialog without any updates to chosen equipment
-                    });
-
-
-                    itemPopupDialog = popupDialogBuilder.Create();
-
-                    itemPopupDialog.Show();
-
+					// TODO: Test this
+                    itemPopupDialog = new AlertDialog.Builder(this)
+	                    .SetView(itemPopupView)
+	                    .SetPositiveButton("Apply", (o, ee) =>
+	                    {
+							/*
+							 Insert code that makes the users choice of item from the
+							 list become their selected equipment
+							*/
+	                    })
+	                    .SetNegativeButton("Cancel", (o, ee) =>
+	                    {
+		                    //Insert code for closing dialog without any updates to chosen equipment
+		                })
+	                    .Create();
                 }
 
-                else
-                {
-                    itemPopupDialog.Show();
-                }
+                itemPopupDialog.Show();
             };
-
         }
 
         public override void OnEnterAnimationComplete()

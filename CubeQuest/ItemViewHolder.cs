@@ -1,28 +1,25 @@
-﻿using System;
-using Android.Support.V7.Widget;
+﻿using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 
 namespace CubeQuest
 {
-    public class ItemViewHolder : RecyclerView.ViewHolder
+	public class ItemViewHolder : RecyclerView.ViewHolder
     {
-        CardView itemCard;
+        private readonly CardView itemCard;
 
-        public TextView name;
-        public ImageView icon { get; set; }
+        public readonly TextView Name;
 
-        public TextView info { get; set; }
+        public ImageView Icon { get; }
+
+        public TextView Info { get; }
 
         public ItemViewHolder(View itemView) : base(itemView)
         {
-            itemCard = (CardView)itemView.FindViewById(Resource.Id.card_item_view);
-            name = (TextView)itemView.FindViewById(Resource.Id.item_name_text);
-            icon = (ImageView)itemView.FindViewById(Resource.Id.item_icon);
-
-            info = (TextView)itemView.FindViewById(Resource.Id.item_info);
-
-
+            itemCard = itemView.FindViewById<CardView>(Resource.Id.card_item_view);
+            Name     = itemView.FindViewById<TextView>(Resource.Id.item_name_text);
+            Icon     = itemView.FindViewById<ImageView>(Resource.Id.item_icon);
+            Info     = itemView.FindViewById<TextView>(Resource.Id.item_info);
         }
     }
 }
