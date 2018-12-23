@@ -196,7 +196,6 @@ namespace CubeQuest
             {
                 if (itemPopupDialog == null)
                 {
-					// TODO: Test this
                     itemPopupDialog = new AlertDialog.Builder(this)
 	                    .SetView(itemPopupView)
 	                    .SetPositiveButton("Apply", (o, ee) =>
