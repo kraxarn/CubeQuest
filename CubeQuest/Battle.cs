@@ -88,14 +88,27 @@ namespace CubeQuest
             SelectedEnemyIndex = 0;
             
             // Load 'selected enemy' frames
-            var frames = new[]
-            {
-                BitmapFactory.DecodeStream(assets.Open("animations/selected/0.webp")),
-                BitmapFactory.DecodeStream(assets.Open("animations/selected/1.webp"))
-            };
+            var selectedFrames = LoadAnimation(assets, "selected", 2);
+
+			// Load slash frames when attacking enemy
+            var slashFrames = LoadAnimation(assets, "slash", 5);
 
             // Load image animators
-            var anims = GetImageAnimators(frames);
+            var anims = GetImageAnimators(selectedFrames);
+
+			// When clicking 'attack'
+			view.FindViewById<Button>(Resource.Id.button_battle_attack).Click += (sender, args) =>
+			{
+				anims[SelectedEnemyIndex].New(slashFrames, 75);
+
+				void SwitchBack()
+				{
+					anims[SelectedEnemyIndex].New(selectedFrames, 400);
+					anims[SelectedEnemyIndex].Done -= SwitchBack;
+				}
+
+				anims[SelectedEnemyIndex].Done += SwitchBack;
+			};
 
             // When clicking 'run'
             view.FindViewById<Button>(Resource.Id.button_battle_run).Click += (sender, args) =>
@@ -222,7 +235,20 @@ namespace CubeQuest
             imageButtons[3].Click += (sender, args) => SelectedEnemyIndex = 3;
             imageButtons[4].Click += (sender, args) => SelectedEnemyIndex = 4;
         }
-    }
+
+        /// <summary>
+        /// Loads animation from assets folder
+        /// </summary>
+        private static Bitmap[] LoadAnimation(AssetManager assets, string name, int frames)
+        {
+	        var bitmaps = new Bitmap[frames];
+
+	        for (var i = 0; i < frames; i++)
+		        bitmaps[i] = BitmapFactory.DecodeStream(assets.Open($"animations/{name}/{i}.webp"));
+
+	        return bitmaps;
+        }
+	}
 
     public static class ExtensionMethods
     {

@@ -227,6 +227,7 @@
         android:columnCount="2">
 
         <Button
+            android:id="@+id/button_battle_attack"
             android:layout_columnWeight="1"
             android:drawableLeft="@drawable/ic_sword"
             android:backgroundTint="@color/colorPrimaryDark"
