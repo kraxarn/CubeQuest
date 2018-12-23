@@ -370,6 +370,8 @@ namespace CubeQuest
 
 	        var radius = (float) Math.Sqrt(centerX * centerX + centerY * centerY);
 
+			// TODO: If app is put in background, this crashes it
+			// TODO: This will restart when we change activity or resume app
 	        var animator = ViewAnimationUtils.CreateCircularReveal(mainView, centerX, centerY, 0f, radius);
 
 	        mainView.Visibility = ViewStates.Visible;
