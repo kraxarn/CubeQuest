@@ -17,6 +17,7 @@ using CubeQuest.Account.Interface;
 using CubeQuest.Account.Weapons;
 using System;
 using System.Collections.Generic;
+using Android.Gms.Location;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest
@@ -427,5 +428,20 @@ namespace CubeQuest
             if (profileView.Visibility == ViewStates.Visible)
                 ToggleProfile(false);
         }
+
+        protected override void OnPause()
+        {
+	        base.OnPause();
+
+			// Balanced power accuracy wi-fi and cell information to determine location and very rarely gps
+	        locationManager.LocationPriority = LocationRequest.PriorityBalancedPowerAccuracy;
+		}
+
+        protected override void OnResume()
+        {
+	        base.OnResume();
+
+	        locationManager.LocationPriority = LocationRequest.PriorityHighAccuracy;
+		}
     }
 }

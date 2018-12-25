@@ -23,6 +23,8 @@ namespace CubeQuest
 
         private readonly Android.Locations.LocationManager locationManager;
 
+        private readonly LocationRequest locationRequest;
+
         public LocationManager(Context context)
         {
             // Create client from context
@@ -32,7 +34,7 @@ namespace CubeQuest
             locationManager = context.GetSystemService(Context.LocationService) as Android.Locations.LocationManager;
 
             // Create location request and set some options
-            var locationRequest = new LocationRequest();
+            locationRequest = new LocationRequest();
             locationRequest.SetPriority(LocationRequest.PriorityHighAccuracy);
             locationRequest.SetInterval(1000);
 
@@ -49,6 +51,15 @@ namespace CubeQuest
 
             // Start receiving location updates
             client.RequestLocationUpdatesAsync(locationRequest, locationCallback);
+        }
+
+		/// <summary>
+		/// Accuracy for location (100/highest - 105/lowest)
+		/// </summary>
+        public int LocationPriority
+        {
+	        get => locationRequest.Priority;
+	        set => locationRequest.SetPriority(value);
         }
 
         /// <summary>
