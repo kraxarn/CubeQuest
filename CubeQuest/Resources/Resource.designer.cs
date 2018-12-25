@@ -2816,8 +2816,8 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0042
 			public const int SYM = 2131492930;
 			
-			// aapt resource value: 0x7f0c00d4
-			public const int action0 = 2131493076;
+			// aapt resource value: 0x7f0c00d5
+			public const int action0 = 2131493077;
 			
 			// aapt resource value: 0x7f0c0092
 			public const int action_bar = 2131493010;
@@ -2840,17 +2840,17 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0070
 			public const int action_bar_title = 2131492976;
 			
-			// aapt resource value: 0x7f0c00d1
-			public const int action_container = 2131493073;
+			// aapt resource value: 0x7f0c00d2
+			public const int action_container = 2131493074;
 			
 			// aapt resource value: 0x7f0c0093
 			public const int action_context_bar = 2131493011;
 			
-			// aapt resource value: 0x7f0c00d8
-			public const int action_divider = 2131493080;
+			// aapt resource value: 0x7f0c00d9
+			public const int action_divider = 2131493081;
 			
-			// aapt resource value: 0x7f0c00d2
-			public const int action_image = 2131493074;
+			// aapt resource value: 0x7f0c00d3
+			public const int action_image = 2131493075;
 			
 			// aapt resource value: 0x7f0c0003
 			public const int action_menu_divider = 2131492867;
@@ -2867,11 +2867,11 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0072
 			public const int action_mode_close_button = 2131492978;
 			
-			// aapt resource value: 0x7f0c00d3
-			public const int action_text = 2131493075;
+			// aapt resource value: 0x7f0c00d4
+			public const int action_text = 2131493076;
 			
-			// aapt resource value: 0x7f0c00e1
-			public const int actions = 2131493089;
+			// aapt resource value: 0x7f0c00e2
+			public const int actions = 2131493090;
 			
 			// aapt resource value: 0x7f0c0073
 			public const int activity_chooser_view_content = 2131492979;
@@ -2906,20 +2906,20 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0068
 			public const int barrier = 2131492968;
 			
-			// aapt resource value: 0x7f0c00e7
-			public const int battle_health_enemy0 = 2131493095;
-			
 			// aapt resource value: 0x7f0c00e8
-			public const int battle_health_enemy1 = 2131493096;
+			public const int battle_health_enemy0 = 2131493096;
 			
 			// aapt resource value: 0x7f0c00e9
-			public const int battle_health_enemy2 = 2131493097;
+			public const int battle_health_enemy1 = 2131493097;
 			
-			// aapt resource value: 0x7f0c00eb
-			public const int battle_health_enemy3 = 2131493099;
+			// aapt resource value: 0x7f0c00ea
+			public const int battle_health_enemy2 = 2131493098;
 			
 			// aapt resource value: 0x7f0c00ec
-			public const int battle_health_enemy4 = 2131493100;
+			public const int battle_health_enemy3 = 2131493100;
+			
+			// aapt resource value: 0x7f0c00ed
+			public const int battle_health_enemy4 = 2131493101;
 			
 			// aapt resource value: 0x7f0c003a
 			public const int beginning = 2131492922;
@@ -2930,74 +2930,77 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0048
 			public const int bottom = 2131492936;
 			
-			// aapt resource value: 0x7f0c00c3
-			public const int btn_row_1 = 2131493059;
+			// aapt resource value: 0x7f0c00c4
+			public const int btn_row_1 = 2131493060;
 			
-			// aapt resource value: 0x7f0c00c6
-			public const int btn_row_2 = 2131493062;
+			// aapt resource value: 0x7f0c00c7
+			public const int btn_row_2 = 2131493063;
 			
-			// aapt resource value: 0x7f0c00ca
-			public const int btn_row_3 = 2131493066;
+			// aapt resource value: 0x7f0c00cb
+			public const int btn_row_3 = 2131493067;
 			
-			// aapt resource value: 0x7f0c00cd
-			public const int btn_row_4 = 2131493069;
+			// aapt resource value: 0x7f0c00ce
+			public const int btn_row_4 = 2131493070;
 			
 			// aapt resource value: 0x7f0c0079
 			public const int buttonPanel = 2131492985;
 			
-			// aapt resource value: 0x7f0c0109
-			public const int button_achievements = 2131493129;
-			
-			// aapt resource value: 0x7f0c00fa
-			public const int button_battle_attack = 2131493114;
-			
-			// aapt resource value: 0x7f0c00ee
-			public const int button_battle_enemy0 = 2131493102;
-			
-			// aapt resource value: 0x7f0c00ef
-			public const int button_battle_enemy1 = 2131493103;
-			
-			// aapt resource value: 0x7f0c00f0
-			public const int button_battle_enemy2 = 2131493104;
-			
-			// aapt resource value: 0x7f0c00f1
-			public const int button_battle_enemy3 = 2131493105;
-			
-			// aapt resource value: 0x7f0c00f2
-			public const int button_battle_enemy4 = 2131493106;
-			
-			// aapt resource value: 0x7f0c00ff
-			public const int button_battle_info_fight = 2131493119;
+			// aapt resource value: 0x7f0c010a
+			public const int button_achievements = 2131493130;
 			
 			// aapt resource value: 0x7f0c00fb
-			public const int button_battle_run = 2131493115;
+			public const int button_battle_attack = 2131493115;
 			
-			// aapt resource value: 0x7f0c010a
-			public const int button_briefcase = 2131493130;
+			// aapt resource value: 0x7f0c00ef
+			public const int button_battle_enemy0 = 2131493103;
 			
-			// aapt resource value: 0x7f0c00a6
-			public const int button_debug_battle = 2131493030;
+			// aapt resource value: 0x7f0c00f0
+			public const int button_battle_enemy1 = 2131493104;
 			
-			// aapt resource value: 0x7f0c00a5
-			public const int button_debug_battle_info = 2131493029;
+			// aapt resource value: 0x7f0c00f1
+			public const int button_battle_enemy2 = 2131493105;
 			
-			// aapt resource value: 0x7f0c00a7
-			public const int button_debug_enemy = 2131493031;
+			// aapt resource value: 0x7f0c00f2
+			public const int button_battle_enemy3 = 2131493106;
 			
-			// aapt resource value: 0x7f0c00b0
-			public const int button_retry_internet = 2131493040;
-			
-			// aapt resource value: 0x7f0c010b
-			public const int button_settings = 2131493131;
-			
-			// aapt resource value: 0x7f0c00b2
-			public const int button_sign_in = 2131493042;
-			
-			// aapt resource value: 0x7f0c00d5
-			public const int cancel_action = 2131493077;
+			// aapt resource value: 0x7f0c00f3
+			public const int button_battle_enemy4 = 2131493107;
 			
 			// aapt resource value: 0x7f0c0100
-			public const int card_item_view = 2131493120;
+			public const int button_battle_info_fight = 2131493120;
+			
+			// aapt resource value: 0x7f0c00fc
+			public const int button_battle_run = 2131493116;
+			
+			// aapt resource value: 0x7f0c010b
+			public const int button_briefcase = 2131493131;
+			
+			// aapt resource value: 0x7f0c00a7
+			public const int button_debug_battle = 2131493031;
+			
+			// aapt resource value: 0x7f0c00a6
+			public const int button_debug_battle_info = 2131493030;
+			
+			// aapt resource value: 0x7f0c00a8
+			public const int button_debug_enemy = 2131493032;
+			
+			// aapt resource value: 0x7f0c00a5
+			public const int button_debug_fitness_subscribe = 2131493029;
+			
+			// aapt resource value: 0x7f0c00b1
+			public const int button_retry_internet = 2131493041;
+			
+			// aapt resource value: 0x7f0c010c
+			public const int button_settings = 2131493132;
+			
+			// aapt resource value: 0x7f0c00b3
+			public const int button_sign_in = 2131493043;
+			
+			// aapt resource value: 0x7f0c00d6
+			public const int cancel_action = 2131493078;
+			
+			// aapt resource value: 0x7f0c0101
+			public const int card_item_view = 2131493121;
 			
 			// aapt resource value: 0x7f0c004f
 			public const int center = 2131492943;
@@ -3014,8 +3017,8 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0089
 			public const int checkbox = 2131493001;
 			
-			// aapt resource value: 0x7f0c00dd
-			public const int chronometer = 2131493085;
+			// aapt resource value: 0x7f0c00de
+			public const int chronometer = 2131493086;
 			
 			// aapt resource value: 0x7f0c0058
 			public const int clip_horizontal = 2131492952;
@@ -3026,14 +3029,14 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0044
 			public const int collapseActionView = 2131492932;
 			
-			// aapt resource value: 0x7f0c00b6
-			public const int container = 2131493046;
+			// aapt resource value: 0x7f0c00b7
+			public const int container = 2131493047;
 			
 			// aapt resource value: 0x7f0c007c
 			public const int contentPanel = 2131492988;
 			
-			// aapt resource value: 0x7f0c00b7
-			public const int coordinator = 2131493047;
+			// aapt resource value: 0x7f0c00b8
+			public const int coordinator = 2131493048;
 			
 			// aapt resource value: 0x7f0c0083
 			public const int custom = 2131492995;
@@ -3050,20 +3053,20 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0076
 			public const int default_activity_button = 2131492982;
 			
-			// aapt resource value: 0x7f0c00b9
-			public const int design_bottom_sheet = 2131493049;
+			// aapt resource value: 0x7f0c00ba
+			public const int design_bottom_sheet = 2131493050;
+			
+			// aapt resource value: 0x7f0c00c1
+			public const int design_menu_item_action_area = 2131493057;
 			
 			// aapt resource value: 0x7f0c00c0
-			public const int design_menu_item_action_area = 2131493056;
+			public const int design_menu_item_action_area_stub = 2131493056;
 			
 			// aapt resource value: 0x7f0c00bf
-			public const int design_menu_item_action_area_stub = 2131493055;
+			public const int design_menu_item_text = 2131493055;
 			
 			// aapt resource value: 0x7f0c00be
-			public const int design_menu_item_text = 2131493054;
-			
-			// aapt resource value: 0x7f0c00bd
-			public const int design_navigation_view = 2131493053;
+			public const int design_navigation_view = 2131493054;
 			
 			// aapt resource value: 0x7f0c006a
 			public const int dimensions = 2131492970;
@@ -3080,8 +3083,8 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c003b
 			public const int end = 2131492923;
 			
-			// aapt resource value: 0x7f0c00e3
-			public const int end_padder = 2131493091;
+			// aapt resource value: 0x7f0c00e4
+			public const int end_padder = 2131493092;
 			
 			// aapt resource value: 0x7f0c004a
 			public const int enterAlways = 2131492938;
@@ -3098,11 +3101,11 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0088
 			public const int expanded_menu = 2131493000;
 			
-			// aapt resource value: 0x7f0c00ae
-			public const int fabGame = 2131493038;
+			// aapt resource value: 0x7f0c00af
+			public const int fabGame = 2131493039;
 			
-			// aapt resource value: 0x7f0c00a9
-			public const int fabUser = 2131493033;
+			// aapt resource value: 0x7f0c00aa
+			public const int fabUser = 2131493034;
 			
 			// aapt resource value: 0x7f0c005a
 			public const int fill = 2131492954;
@@ -3137,8 +3140,8 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0078
 			public const int icon = 2131492984;
 			
-			// aapt resource value: 0x7f0c00e2
-			public const int icon_group = 2131493090;
+			// aapt resource value: 0x7f0c00e3
+			public const int icon_group = 2131493091;
 			
 			// aapt resource value: 0x7f0c0024
 			public const int icon_only = 2131492900;
@@ -3149,56 +3152,56 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0075
 			public const int image = 2131492981;
 			
-			// aapt resource value: 0x7f0c00f4
-			public const int image_battle_enemy0 = 2131493108;
-			
 			// aapt resource value: 0x7f0c00f5
-			public const int image_battle_enemy1 = 2131493109;
+			public const int image_battle_enemy0 = 2131493109;
 			
 			// aapt resource value: 0x7f0c00f6
-			public const int image_battle_enemy2 = 2131493110;
+			public const int image_battle_enemy1 = 2131493110;
 			
 			// aapt resource value: 0x7f0c00f7
-			public const int image_battle_enemy3 = 2131493111;
+			public const int image_battle_enemy2 = 2131493111;
 			
 			// aapt resource value: 0x7f0c00f8
-			public const int image_battle_enemy4 = 2131493112;
+			public const int image_battle_enemy3 = 2131493112;
 			
-			// aapt resource value: 0x7f0c00fe
-			public const int image_battle_info = 2131493118;
+			// aapt resource value: 0x7f0c00f9
+			public const int image_battle_enemy4 = 2131493113;
 			
-			// aapt resource value: 0x7f0c00c4
-			public const int imgbut_101 = 2131493060;
+			// aapt resource value: 0x7f0c00ff
+			public const int image_battle_info = 2131493119;
 			
 			// aapt resource value: 0x7f0c00c5
-			public const int imgbut_102 = 2131493061;
+			public const int imgbut_101 = 2131493061;
 			
-			// aapt resource value: 0x7f0c00c7
-			public const int imgbut_201 = 2131493063;
+			// aapt resource value: 0x7f0c00c6
+			public const int imgbut_102 = 2131493062;
 			
 			// aapt resource value: 0x7f0c00c8
-			public const int imgbut_202 = 2131493064;
+			public const int imgbut_201 = 2131493064;
 			
 			// aapt resource value: 0x7f0c00c9
-			public const int imgbut_203 = 2131493065;
+			public const int imgbut_202 = 2131493065;
 			
-			// aapt resource value: 0x7f0c00cb
-			public const int imgbut_301 = 2131493067;
+			// aapt resource value: 0x7f0c00ca
+			public const int imgbut_203 = 2131493066;
 			
 			// aapt resource value: 0x7f0c00cc
-			public const int imgbut_302 = 2131493068;
+			public const int imgbut_301 = 2131493068;
 			
-			// aapt resource value: 0x7f0c00ce
-			public const int imgbut_401 = 2131493070;
+			// aapt resource value: 0x7f0c00cd
+			public const int imgbut_302 = 2131493069;
 			
 			// aapt resource value: 0x7f0c00cf
-			public const int imgbut_402 = 2131493071;
+			public const int imgbut_401 = 2131493071;
 			
 			// aapt resource value: 0x7f0c00d0
-			public const int imgbut_403 = 2131493072;
+			public const int imgbut_402 = 2131493072;
 			
-			// aapt resource value: 0x7f0c00de
-			public const int info = 2131493086;
+			// aapt resource value: 0x7f0c00d1
+			public const int imgbut_403 = 2131493073;
+			
+			// aapt resource value: 0x7f0c00df
+			public const int info = 2131493087;
 			
 			// aapt resource value: 0x7f0c0061
 			public const int invisible = 2131492961;
@@ -3206,41 +3209,41 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c006f
 			public const int italic = 2131492975;
 			
-			// aapt resource value: 0x7f0c0101
-			public const int item_icon = 2131493121;
+			// aapt resource value: 0x7f0c0102
+			public const int item_icon = 2131493122;
+			
+			// aapt resource value: 0x7f0c0104
+			public const int item_info = 2131493124;
 			
 			// aapt resource value: 0x7f0c0103
-			public const int item_info = 2131493123;
-			
-			// aapt resource value: 0x7f0c0102
-			public const int item_name_text = 2131493122;
+			public const int item_name_text = 2131493123;
 			
 			// aapt resource value: 0x7f0c0000
 			public const int item_touch_helper_previous_elevation = 2131492864;
 			
-			// aapt resource value: 0x7f0c00b5
-			public const int largeLabel = 2131493045;
+			// aapt resource value: 0x7f0c00b6
+			public const int largeLabel = 2131493046;
 			
-			// aapt resource value: 0x7f0c0107
-			public const int layoutProfile = 2131493127;
+			// aapt resource value: 0x7f0c0108
+			public const int layoutProfile = 2131493128;
 			
-			// aapt resource value: 0x7f0c00f9
-			public const int layout_battle_actions = 2131493113;
+			// aapt resource value: 0x7f0c00fa
+			public const int layout_battle_actions = 2131493114;
 			
-			// aapt resource value: 0x7f0c00fd
-			public const int layout_battle_info = 2131493117;
+			// aapt resource value: 0x7f0c00fe
+			public const int layout_battle_info = 2131493118;
 			
-			// aapt resource value: 0x7f0c00e5
-			public const int layout_battle_main = 2131493093;
+			// aapt resource value: 0x7f0c00e6
+			public const int layout_battle_main = 2131493094;
 			
 			// aapt resource value: 0x7f0c00a4
 			public const int layout_debug_tools = 2131493028;
 			
-			// aapt resource value: 0x7f0c00f3
-			public const int layout_enemy_image_top = 2131493107;
+			// aapt resource value: 0x7f0c00f4
+			public const int layout_enemy_image_top = 2131493108;
 			
-			// aapt resource value: 0x7f0c00ed
-			public const int layout_enemy_top = 2131493101;
+			// aapt resource value: 0x7f0c00ee
+			public const int layout_enemy_top = 2131493102;
 			
 			// aapt resource value: 0x7f0c00a1
 			public const int layout_game = 2131493025;
@@ -3266,14 +3269,14 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c00a2
 			public const int map = 2131493026;
 			
-			// aapt resource value: 0x7f0c010d
-			public const int masked = 2131493133;
+			// aapt resource value: 0x7f0c010e
+			public const int masked = 2131493134;
 			
-			// aapt resource value: 0x7f0c00d7
-			public const int media_actions = 2131493079;
+			// aapt resource value: 0x7f0c00d8
+			public const int media_actions = 2131493080;
 			
-			// aapt resource value: 0x7f0c00e4
-			public const int message = 2131493092;
+			// aapt resource value: 0x7f0c00e5
+			public const int message = 2131493093;
 			
 			// aapt resource value: 0x7f0c003c
 			public const int middle = 2131492924;
@@ -3284,8 +3287,8 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0033
 			public const int multiply = 2131492915;
 			
-			// aapt resource value: 0x7f0c00bc
-			public const int navigation_header_container = 2131493052;
+			// aapt resource value: 0x7f0c00bd
+			public const int navigation_header_container = 2131493053;
 			
 			// aapt resource value: 0x7f0c0046
 			public const int never = 2131492934;
@@ -3296,14 +3299,14 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c001f
 			public const int normal = 2131492895;
 			
-			// aapt resource value: 0x7f0c00e0
-			public const int notification_background = 2131493088;
+			// aapt resource value: 0x7f0c00e1
+			public const int notification_background = 2131493089;
+			
+			// aapt resource value: 0x7f0c00db
+			public const int notification_main_column = 2131493083;
 			
 			// aapt resource value: 0x7f0c00da
-			public const int notification_main_column = 2131493082;
-			
-			// aapt resource value: 0x7f0c00d9
-			public const int notification_main_column_container = 2131493081;
+			public const int notification_main_column_container = 2131493082;
 			
 			// aapt resource value: 0x7f0c0066
 			public const int packed = 2131492966;
@@ -3326,26 +3329,26 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0057
 			public const int pin = 2131492951;
 			
-			// aapt resource value: 0x7f0c0106
-			public const int popup_recyclerview = 2131493126;
-			
-			// aapt resource value: 0x7f0c0104
-			public const int popup_text = 2131493124;
+			// aapt resource value: 0x7f0c0107
+			public const int popup_recyclerview = 2131493127;
 			
 			// aapt resource value: 0x7f0c0105
-			public const int popup_text2 = 2131493125;
+			public const int popup_text = 2131493125;
 			
-			// aapt resource value: 0x7f0c00b1
-			public const int progress_bar_connecting = 2131493041;
+			// aapt resource value: 0x7f0c0106
+			public const int popup_text2 = 2131493126;
 			
-			// aapt resource value: 0x7f0c00fc
-			public const int progress_battle_health = 2131493116;
+			// aapt resource value: 0x7f0c00b2
+			public const int progress_bar_connecting = 2131493042;
 			
-			// aapt resource value: 0x7f0c00e6
-			public const int progress_battle_health_enemies_top = 2131493094;
+			// aapt resource value: 0x7f0c00fd
+			public const int progress_battle_health = 2131493117;
 			
-			// aapt resource value: 0x7f0c00ea
-			public const int progress_battle_health_enemies_top_bottom = 2131493098;
+			// aapt resource value: 0x7f0c00e7
+			public const int progress_battle_health_enemies_top = 2131493095;
+			
+			// aapt resource value: 0x7f0c00eb
+			public const int progress_battle_health_enemies_top_bottom = 2131493099;
 			
 			// aapt resource value: 0x7f0c0006
 			public const int progress_circular = 2131492870;
@@ -3359,11 +3362,11 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0054
 			public const int right = 2131492948;
 			
-			// aapt resource value: 0x7f0c00df
-			public const int right_icon = 2131493087;
+			// aapt resource value: 0x7f0c00e0
+			public const int right_icon = 2131493088;
 			
-			// aapt resource value: 0x7f0c00db
-			public const int right_side = 2131493083;
+			// aapt resource value: 0x7f0c00dc
+			public const int right_side = 2131493084;
 			
 			// aapt resource value: 0x7f0c0020
 			public const int satellite = 2131492896;
@@ -3440,14 +3443,14 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0030
 			public const int showTitle = 2131492912;
 			
-			// aapt resource value: 0x7f0c00b4
-			public const int smallLabel = 2131493044;
+			// aapt resource value: 0x7f0c00b5
+			public const int smallLabel = 2131493045;
+			
+			// aapt resource value: 0x7f0c00bc
+			public const int snackbar_action = 2131493052;
 			
 			// aapt resource value: 0x7f0c00bb
-			public const int snackbar_action = 2131493051;
-			
-			// aapt resource value: 0x7f0c00ba
-			public const int snackbar_text = 2131493050;
+			public const int snackbar_text = 2131493051;
 			
 			// aapt resource value: 0x7f0c004e
 			public const int snap = 2131492942;
@@ -3479,23 +3482,23 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0055
 			public const int start = 2131492949;
 			
-			// aapt resource value: 0x7f0c00c2
-			public const int stats_bar = 2131493058;
+			// aapt resource value: 0x7f0c00c3
+			public const int stats_bar = 2131493059;
 			
-			// aapt resource value: 0x7f0c00d6
-			public const int status_bar_latest_event_content = 2131493078;
-			
-			// aapt resource value: 0x7f0c00ac
-			public const int stub_battle = 2131493036;
+			// aapt resource value: 0x7f0c00d7
+			public const int status_bar_latest_event_content = 2131493079;
 			
 			// aapt resource value: 0x7f0c00ad
-			public const int stub_battle_tree = 2131493037;
+			public const int stub_battle = 2131493037;
 			
-			// aapt resource value: 0x7f0c00aa
-			public const int stub_profile = 2131493034;
+			// aapt resource value: 0x7f0c00ae
+			public const int stub_battle_tree = 2131493038;
 			
 			// aapt resource value: 0x7f0c00ab
-			public const int stub_profile_tree = 2131493035;
+			public const int stub_profile = 2131493035;
+			
+			// aapt resource value: 0x7f0c00ac
+			public const int stub_profile_tree = 2131493036;
 			
 			// aapt resource value: 0x7f0c008c
 			public const int submenuarrow = 2131493004;
@@ -3518,8 +3521,8 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c001b
 			public const int text2 = 2131492891;
 			
-			// aapt resource value: 0x7f0c0108
-			public const int textProfileName = 2131493128;
+			// aapt resource value: 0x7f0c0109
+			public const int textProfileName = 2131493129;
 			
 			// aapt resource value: 0x7f0c0080
 			public const int textSpacerNoButtons = 2131492992;
@@ -3527,17 +3530,17 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c007f
 			public const int textSpacerNoTitle = 2131492991;
 			
-			// aapt resource value: 0x7f0c00a8
-			public const int text_debug_location = 2131493032;
+			// aapt resource value: 0x7f0c00a9
+			public const int text_debug_location = 2131493033;
 			
-			// aapt resource value: 0x7f0c00c1
-			public const int text_input_password_toggle = 2131493057;
+			// aapt resource value: 0x7f0c00c2
+			public const int text_input_password_toggle = 2131493058;
 			
-			// aapt resource value: 0x7f0c00af
-			public const int text_internet_error = 2131493039;
+			// aapt resource value: 0x7f0c00b0
+			public const int text_internet_error = 2131493040;
 			
-			// aapt resource value: 0x7f0c00b3
-			public const int text_login_notice = 2131493043;
+			// aapt resource value: 0x7f0c00b4
+			public const int text_login_notice = 2131493044;
 			
 			// aapt resource value: 0x7f0c0014
 			public const int textinput_counter = 2131492884;
@@ -3545,8 +3548,8 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0015
 			public const int textinput_error = 2131492885;
 			
-			// aapt resource value: 0x7f0c00dc
-			public const int time = 2131493084;
+			// aapt resource value: 0x7f0c00dd
+			public const int time = 2131493085;
 			
 			// aapt resource value: 0x7f0c001c
 			public const int title = 2131492892;
@@ -3563,8 +3566,8 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0084
 			public const int topPanel = 2131492996;
 			
-			// aapt resource value: 0x7f0c00b8
-			public const int touch_outside = 2131493048;
+			// aapt resource value: 0x7f0c00b9
+			public const int touch_outside = 2131493049;
 			
 			// aapt resource value: 0x7f0c000f
 			public const int transition_current_scene = 2131492879;
@@ -3593,8 +3596,8 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0c0016
 			public const int view_offset_helper = 2131492886;
 			
-			// aapt resource value: 0x7f0c010c
-			public const int visible = 2131493132;
+			// aapt resource value: 0x7f0c010d
+			public const int visible = 2131493133;
 			
 			// aapt resource value: 0x7f0c0026
 			public const int wide = 2131492902;

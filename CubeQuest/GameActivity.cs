@@ -164,9 +164,17 @@ namespace CubeQuest
 	            battleInfo.State = BottomSheetBehavior.StateCollapsed;
             };
 
-            AccountManager.Fitness.Success += async status =>
+            FindViewById<Button>(Resource.Id.button_debug_fitness_subscribe).Click += async (sender, args) =>
             {
-                var sets = await AccountManager.Fitness.GetNumSteps(new DateTime(2018, 12, 1), DateTime.UtcNow);
+	            if (!AccountManager.Fitness.IsConnected)
+	            {
+		            Toast.MakeText(this, "Fitness not connected", ToastLength.Short).Show();
+		            return;
+	            }
+
+	            var status = await AccountManager.Fitness.Subscribe();
+
+	            Toast.MakeText(this, $"Subscribe {(status ? "successful" : "failed")}", ToastLength.Short).Show();
             };
 
             //Set up itemPopupView, set up briefcase button 
