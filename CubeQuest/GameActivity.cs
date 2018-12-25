@@ -94,7 +94,7 @@ namespace CubeQuest
 
             // Get last known location
             locationManager = new LocationManager(this);
-            userLocation    = await locationManager.GetLastKnownLocation();
+            userLocation    = await locationManager.GetLastKnownLocationAsync();
 
             // Get map and listen when it's ready
             var mapFragment = (SupportMapFragment) SupportFragmentManager.FindFragmentById(Resource.Id.map);

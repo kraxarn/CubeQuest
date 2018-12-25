@@ -55,7 +55,7 @@ namespace CubeQuest
         /// Gets the user's last known location
         /// (very likely to return null at first)
         /// </summary>
-        public async Task<Location> GetLastKnownLocation() => 
+        public async Task<Location> GetLastKnownLocationAsync() => 
             await client.GetLastLocationAsync();
 
         public bool IsLocationServicesEnabled => 
