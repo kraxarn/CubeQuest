@@ -207,8 +207,19 @@ namespace CubeQuest
 		/// <summary>
 		/// Check if specific package name is installed on the device
 		/// </summary>
-		private bool IsPackageInstalled(string packageName) => 
-			PackageManager.GetInstalledPackages(0).Any(p => p.PackageName == packageName);
+		private bool IsPackageInstalled(string packageName)
+		{
+			try
+			{
+				// TODO: We could check version here as well
+				PackageManager.GetPackageInfo(packageName, PackageInfoFlags.MetaData);
+				return true;
+			}
+			catch (PackageManager.NameNotFoundException)
+			{
+				return false;
+			}
+		}
 
 		/// <summary>
 		/// Opens the specified package in the Google Play store
