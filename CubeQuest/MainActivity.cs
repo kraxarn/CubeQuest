@@ -9,10 +9,13 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
+using System.Collections.Generic;
+using System.Linq;
+using Uri = Android.Net.Uri;
 
 namespace CubeQuest
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+	[Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
         private const int RcSignIn = 9001;
@@ -21,6 +24,30 @@ namespace CubeQuest
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
+			
+			// Check if Google Play Games is installed
+			if (!IsPackageInstalled("com.google.android.play.games"))
+			{
+				// Toggle error message and connecting spinner
+				ToggleVisibilities(new List<int>
+				{
+					Resource.Id.text_play_games_error,
+					Resource.Id.progress_bar_connecting
+				});
+
+				// Get button to install it
+				var playGamesButton = FindViewById<Button>(Resource.Id.button_install_play_games);
+
+				// Open the item in Google Play when clicking on it
+				playGamesButton.Click += (sender, args) => 
+					OpenPlayStorePackage("com.google.android.play.games");
+
+				// Show it
+				ToggleVisibility(playGamesButton);
+
+				// Don't execute the rest of the code
+				return;
+			}
 
             // Sign in button
             var signInButton = FindViewById<SignInButton>(Resource.Id.button_sign_in);
@@ -158,5 +185,37 @@ namespace CubeQuest
 				#endif
 	        }
 		}
+
+		/// <summary>
+		/// Toggles between <see cref="ViewStates.Visible"/> and <see cref="ViewStates.Gone"/>
+		/// </summary>
+		private static void ToggleVisibility(View view) => 
+			view.Visibility = view.Visibility == ViewStates.Visible ? ViewStates.Gone : ViewStates.Visible;
+		
+		/// <summary>
+		/// Toggles visibility by specified ID
+		/// </summary>
+		private void ToggleVisibility(int viewId) => 
+			ToggleVisibility(FindViewById(viewId));
+
+		/// <summary>
+		/// Toggle visibility on multiple items
+		/// </summary>
+		private void ToggleVisibilities(List<int> viewIds) => 
+			viewIds.ForEach(ToggleVisibility);
+
+		/// <summary>
+		/// Check if specific package name is installed on the device
+		/// </summary>
+		private bool IsPackageInstalled(string packageName) => 
+			PackageManager.GetInstalledPackages(0).Any(p => p.PackageName == packageName);
+
+		/// <summary>
+		/// Opens the specified package in the Google Play store
+		/// </summary>
+		private void OpenPlayStorePackage(string packageName) =>
+			StartActivity(new Intent(Intent.ActionView)
+				.SetData(Uri.Parse($"https://play.google.com/store/apps/details?id={packageName}"))
+				.SetPackage("com.android.vending"));
     }
 }

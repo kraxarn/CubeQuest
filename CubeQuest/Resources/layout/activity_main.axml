@@ -43,6 +43,25 @@
 		android:text="Try Again"
 		android:visibility="gone"/>
 
+    <!-- TODO: Reuse the same error text and button -->
+
+    <TextView
+		android:id="@+id/text_play_games_error"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:textColor="#B00020"
+		android:text="Google Play Games is not installed"
+		android:textAlignment="center"
+        android:visibility="gone"/>
+
+    <Button
+		android:id="@+id/button_install_play_games"
+		android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:text="Open In Play Store"
+        android:visibility="gone"/>
+
 	<ProgressBar
 		android:id="@+id/progress_bar_connecting"
 		style="@android:style/Widget.Material.ProgressBar"
