@@ -73,6 +73,11 @@ namespace CubeQuest
 
         private BottomSheetBehavior battleInfo;
 
+		/// <summary>
+		/// First time starting the activity
+		/// </summary>
+        private bool firstTime;
+
         /// <summary>
         /// Value returned from the achievements intent
         /// </summary>
@@ -82,6 +87,8 @@ namespace CubeQuest
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_game);
+
+            firstTime = true;
 
 			markers = new Dictionary<LatLng, Marker>();
 
@@ -374,7 +381,10 @@ namespace CubeQuest
 
         private void StartEnterAnimation()
         {
-	        var centerX = mainView.Width / 2;
+	        if (!firstTime)
+		        return;
+
+	        var centerX = mainView.Width  / 2;
 	        var centerY = mainView.Height / 2;
 
 	        var radius = (float) Math.Sqrt(centerX * centerX + centerY * centerY);
@@ -385,7 +395,9 @@ namespace CubeQuest
 
 	        mainView.Visibility = ViewStates.Visible;
 	        animator.Start();
-		}
+
+	        firstTime = false;
+        }
 
         private void StartBattle()
         {
