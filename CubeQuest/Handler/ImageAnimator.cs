@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Android.Graphics;
 using Android.Widget;
 
-namespace CubeQuest
+namespace CubeQuest.Handler
 {
     public class ImageAnimator
     {

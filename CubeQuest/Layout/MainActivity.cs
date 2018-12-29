@@ -10,6 +10,7 @@ using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
 using System.Collections.Generic;
+using CubeQuest.Handler;
 using Uri = Android.Net.Uri;
 
 namespace CubeQuest.Layout

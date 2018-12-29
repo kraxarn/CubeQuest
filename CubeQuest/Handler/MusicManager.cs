@@ -4,7 +4,7 @@ using Android.Content.Res;
 using Android.Media;
 using Java.IO;
 
-namespace CubeQuest
+namespace CubeQuest.Handler
 {
     public static class MusicManager
     {

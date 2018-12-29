@@ -18,6 +18,7 @@ using CubeQuest.Account.Weapons;
 using System;
 using System.Collections.Generic;
 using Android.Gms.Location;
+using CubeQuest.Handler;
 using CubeQuest.ListView.Item;
 using AlertDialog = Android.App.AlertDialog;
 
@@ -39,7 +40,7 @@ namespace CubeQuest.Layout
 		/// <summary>
 		/// Manages and updates our location
 		/// </summary>
-        private LocationManager locationManager;
+        private Handler.LocationManager locationManager;
 
         /// <summary>
         /// Marker used to represent the player
@@ -102,7 +103,7 @@ namespace CubeQuest.Layout
             FindViewById<ProgressBar>(Resource.Id.barHealth).Progress = health;
 
             // Get last known location
-            locationManager = new LocationManager(this);
+            locationManager = new Handler.LocationManager(this);
             userLocation    = await locationManager.GetLastKnownLocationAsync();
 
             // Get map and listen when it's ready

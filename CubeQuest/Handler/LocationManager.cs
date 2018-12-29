@@ -5,7 +5,7 @@ using Android.Locations;
 using System;
 using System.Threading.Tasks;
 
-namespace CubeQuest
+namespace CubeQuest.Handler
 {
     public class LocationManager
     {

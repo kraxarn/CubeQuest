@@ -7,6 +7,8 @@ using Android.Widget;
 using CubeQuest.Account.Interface;
 using System.Collections.Generic;
 using System.Linq;
+using CubeQuest.Handler;
+using CubeQuest.Layout;
 
 namespace CubeQuest
 {
