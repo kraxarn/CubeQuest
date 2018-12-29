@@ -445,14 +445,16 @@ namespace CubeQuest
 	        base.OnPause();
 
 			// Balanced power accuracy wi-fi and cell information to determine location and very rarely gps
-	        locationManager.LocationPriority = LocationRequest.PriorityBalancedPowerAccuracy;
+			if (locationManager != null)
+				locationManager.LocationPriority = LocationRequest.PriorityBalancedPowerAccuracy;
 		}
 
         protected override void OnResume()
         {
 	        base.OnResume();
 
-	        locationManager.LocationPriority = LocationRequest.PriorityHighAccuracy;
+	        if (locationManager != null)
+				locationManager.LocationPriority = LocationRequest.PriorityHighAccuracy;
 		}
     }
 }
