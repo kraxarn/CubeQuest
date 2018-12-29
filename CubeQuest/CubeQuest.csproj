@@ -94,9 +94,9 @@
     <Compile Include="MusicManager.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ItemViewAdapter.cs" />
-    <Compile Include="ItemViewHolder.cs" />
     <Compile Include="SettingsActivity.cs" />
+    <Compile Include="ListView\Item\ItemViewAdapter.cs" />
+    <Compile Include="ListView\Item\ItemViewHolder.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\companion\example.webp" />

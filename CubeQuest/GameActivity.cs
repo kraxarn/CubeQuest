@@ -18,6 +18,7 @@ using CubeQuest.Account.Weapons;
 using System;
 using System.Collections.Generic;
 using Android.Gms.Location;
+using CubeQuest.ListView.Item;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest

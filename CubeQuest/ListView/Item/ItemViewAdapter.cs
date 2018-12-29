@@ -1,9 +1,9 @@
-﻿using Android.Support.V7.Widget;
+﻿using System.Collections.Generic;
+using Android.Support.V7.Widget;
 using Android.Views;
 using CubeQuest.Account.Interface;
-using System.Collections.Generic;
 
-namespace CubeQuest
+namespace CubeQuest.ListView.Item
 {
 	public class ItemViewAdapter : RecyclerView.Adapter
     {
