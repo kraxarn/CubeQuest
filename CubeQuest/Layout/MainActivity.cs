@@ -12,7 +12,7 @@ using CubeQuest.Account;
 using System.Collections.Generic;
 using Uri = Android.Net.Uri;
 
-namespace CubeQuest
+namespace CubeQuest.Layout
 {
 	[Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AppCompatActivity

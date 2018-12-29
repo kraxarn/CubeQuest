@@ -21,7 +21,7 @@ using Android.Gms.Location;
 using CubeQuest.ListView.Item;
 using AlertDialog = Android.App.AlertDialog;
 
-namespace CubeQuest
+namespace CubeQuest.Layout
 {
 	[Activity(Label = "GameActivity", Theme = "@style/AppTheme.NoActionBar")]
     public class GameActivity : AppCompatActivity, IOnMapReadyCallback, GoogleMap.IOnMarkerClickListener

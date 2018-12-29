@@ -87,14 +87,14 @@
     <Compile Include="Account\User.cs" />
     <Compile Include="Account\Weapons\WeaponSword.cs" />
     <Compile Include="Battle.cs" />
-    <Compile Include="GameActivity.cs" />
     <Compile Include="ImageAnimator.cs" />
+    <Compile Include="Layout\GameActivity.cs" />
+    <Compile Include="Layout\MainActivity.cs" />
+    <Compile Include="Layout\SettingsActivity.cs" />
     <Compile Include="LocationManager.cs" />
-    <Compile Include="MainActivity.cs" />
     <Compile Include="MusicManager.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingsActivity.cs" />
     <Compile Include="ListView\Item\ItemViewAdapter.cs" />
     <Compile Include="ListView\Item\ItemViewHolder.cs" />
   </ItemGroup>

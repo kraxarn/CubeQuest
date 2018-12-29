@@ -3,7 +3,7 @@ using Android.OS;
 using Android.Support.V7.App;
 using Android.Support.V7.Preferences;
 
-namespace CubeQuest
+namespace CubeQuest.Layout
 {
 	[Activity(Label = "SettingsActivity", Theme = "@style/AppTheme.NoActionBar")]
 	public class SettingsActivity : AppCompatActivity
