@@ -147,6 +147,9 @@ namespace CubeQuest
             profileView.FindViewById<ImageButton>(Resource.Id.button_achievements).Click += (sender, args) => 
                 StartActivityForResult(AccountManager.AchievementsIntent, RcAchievementUi);
 
+            profileView.FindViewById<ImageButton>(Resource.Id.button_settings).Click += (sender, args) =>
+	            StartActivity(new Intent(this, typeof(SettingsActivity)));
+
             // Inflate battle view
             battleView = FindViewById<ViewStub>(Resource.Id.stub_battle).Inflate();
             battleView.Visibility = ViewStates.Invisible;
