@@ -5,8 +5,8 @@
 	<string name="login_notice">By logging in you agree that you\'re 13 years or older and that you agree with Google\'s privacy policy (which you probably already did by starting your device anyway).</string>
 
 	<string-array name="map_theme_entries">
-		<item>Light (default)</item>
-		<item>Dark</item>
+		<item>Day (default)</item>
+		<item>Night</item>
 		<item>Auto</item>
 	</string-array>
 
