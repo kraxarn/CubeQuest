@@ -45,12 +45,28 @@
 	<!-- Debug stuff -->
 	<LinearLayout
 		android:id="@+id/layout_debug_tools"
-		android:layout_width="match_parent"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_gravity="bottom"
 		android:paddingHorizontal="16dp"
 		android:paddingBottom="42dp"
 		android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button_debug_fitness_subscribe"
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:fontFamily="monospace"
+			style="@android:style/Widget.Material.Button.Borderless"
+			android:text="Subscribe"/>
+
+        <Button
+            android:id="@+id/button_debug_battle_info"
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:fontFamily="monospace"
+			style="@android:style/Widget.Material.Button.Borderless"
+			android:text="Battle info"/>
 
 		<Button
 			android:id="@+id/button_debug_battle"
@@ -108,5 +124,8 @@
         android:src="@drawable/ic_map"
         android:layout_margin="16dp"
 		android:visibility="invisible"/>
+
+    <!-- Battle info view -->
+    <include layout="@layout/view_battle_info"/>
 
 </android.support.design.widget.CoordinatorLayout>

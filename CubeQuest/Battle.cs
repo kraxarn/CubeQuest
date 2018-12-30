@@ -1,125 +1,172 @@
-﻿using System.Collections.Generic;
-using Android.Animation;
-using Android.Content;
+﻿using Android.Content;
 using Android.Content.Res;
-using Android.Gms.Games.MultiPlayer.RealTime;
 using Android.Graphics;
 using Android.Views;
-using Android.Views.Accessibility;
 using Android.Views.Animations;
 using Android.Widget;
 using CubeQuest.Account.Interface;
+using System.Collections.Generic;
+using System.Linq;
+using CubeQuest.Handler;
+using CubeQuest.Layout;
 
 namespace CubeQuest
 {
     public class Battle
     {
+        /// <summary>
+        /// Event for when battle ends, used by <see cref="End"/>
+        /// </summary>
         public delegate void EndEvent();
 
+        /// <summary>
+        /// When the battle ends
+        /// </summary>
         public event EndEvent End;
 
-        private Android.Resource.Animation animateShake;
+        /// <summary>
+        /// Current selected index, you probably want to use <see cref="SelectedEnemyIndex"/>
+        /// </summary>
+        private int selectedEnemyIndex;
+        
+        /// <summary>
+        /// Overlay used for animations for each enemy
+        /// </summary>
+        private readonly ImageView[] enemyOverlays;
 
-        private int selectedIndex;
+        /// <summary>
+        /// Health bar for each enemy
+        /// </summary>
+        private readonly ProgressBar[] enemyHealthBars;
 
-        private ImageView[] images;
+        /// <summary>
+        /// Context, probably <see cref="GameActivity"/>
+        /// </summary>
+        private readonly Context context;
 
-        private ProgressBar[] enemyHealthBars;
+        /// <summary>
+        /// Battle view
+        /// </summary>
+        private readonly View mainView;
+
+        /// <summary>
+        /// Animation used for flashing health bars
+        /// </summary>
+        private readonly Animation flashAnimation;
 
         public Battle(Context context, View view, AssetManager assets, IItem item)
         {
+            // Start battle music
+            MusicManager.Play(MusicManager.EMusicTrack.Battle);
 
-            var enemy = BitmapFactory.DecodeStream(assets.Open($"enemy/{item.Icon}.webp"));
+            // Set context
+            this.context = context;
 
-            var progressBar = GetEnemyProgressbarResourceArray();         
-            var enemies = GetEnemyButtonResourceArray();
-            var imageButtons = GetEnemyButtonsArray(view, enemies);
+            // Set view
+            mainView = view;
 
-            SetEnemyProgressbarArray(view, progressBar);
-            SetUpBitmapsForEnemies(view, enemies, enemy);
-            SetShakeAnimation(context, imageButtons[0]);
-            SetEnemyImageViewsArray(view);
+            // Flashing health bar animation
+            flashAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
 
-            InitAnimations(context);
+            // Load enemy sprite(s)
+            var enemySprite = BitmapFactory.DecodeStream(assets.Open($"enemy/{item.Icon}.webp"));
 
-            var frames = new[]
-            {
-                BitmapFactory.DecodeStream(assets.Open("animations/selected/0.webp")),
-                BitmapFactory.DecodeStream(assets.Open("animations/selected/1.webp"))
-            };
+            // Enemy image buttons
+            var enemyButtons = EnemyButtons.ToArray();
+            
+            // Enemy health bars
+            enemyHealthBars = EnemyHealthBars.ToArray();
 
-            var anims = GetImageAnimatorArray(frames);
+            // Set bitmaps of enemy buttons
+            enemyButtons.SetBitmaps(enemySprite);
 
+            // Start shake animation when pressing on the first enemy
+            CreateTestShakeAnimation(enemyButtons[0]);
+
+            // Enemy overlays
+            enemyOverlays = EnemyImages;
+
+            // Set first enemy as default selected
+            SelectedEnemyIndex = 0;
+            
+            // Load 'selected enemy' frames
+            var selectedFrames = LoadAnimation(assets, "selected", 2);
+
+			// Load slash frames when attacking enemy
+            var slashFrames = LoadAnimation(assets, "slash", 5);
+
+            // Load image animators
+            var anims = GetImageAnimators(selectedFrames);
+
+			// When clicking 'attack'
+			view.FindViewById<Button>(Resource.Id.button_battle_attack).Click += (sender, args) =>
+			{
+				anims[SelectedEnemyIndex].New(slashFrames, 75);
+
+				void SwitchBack()
+				{
+					anims[SelectedEnemyIndex].New(selectedFrames, 400);
+					anims[SelectedEnemyIndex].Done -= SwitchBack;
+				}
+
+				anims[SelectedEnemyIndex].Done += SwitchBack;
+			};
+
+            // When clicking 'run'
             view.FindViewById<Button>(Resource.Id.button_battle_run).Click += (sender, args) =>
             {
+                // Unload all animations
                 foreach (var anim in anims)
                     anim.Stop();
 
+                // Invoke end event
                 End?.Invoke();
             };
 
-            SetAnimationClickEvents(imageButtons, context);
-
-
-
+            // Create events when clicking on enemies
+            CreateEnemyEvents(enemyButtons);
         }
 
-        private void SetHighlightedEnemy(int index)
+        /// <summary>
+        /// Selected enemy
+        /// </summary>
+        private int SelectedEnemyIndex
         {
-            foreach (var image in images)
+            get => selectedEnemyIndex;
+
+            set
             {
-                image.Visibility = ViewStates.Invisible;
+                // Reset all overlay images
+                foreach (var image in enemyOverlays)
+                    image.Visibility = ViewStates.Invisible;
+
+                // Reset all health bar animations
+                foreach (var enemy in enemyHealthBars)
+                    enemy.ClearAnimation();
+
+                // Show correct overlay image
+                enemyOverlays[value].Visibility = ViewStates.Visible;
+
+                // Set correct health bar animation
+                enemyHealthBars[value].StartAnimation(flashAnimation);
+
+                selectedEnemyIndex = value;
             }
-
-            images[index].Visibility = ViewStates.Visible;
-
-            selectedIndex = index;
         }
 
+        /// <summary>
+        /// Sets a view to use the shake animation on press, for testing only
+        /// </summary>
+        /// <param name="view"></param>
+        private void CreateTestShakeAnimation(View view) => 
+            view.Click += (sender, args) => 
+                view.StartAnimation(AnimationUtils.LoadAnimation(context, Resource.Animation.shake));
 
-
-        private void SetShakeAnimation(Context context, ImageButton button)
-        {
-            var animShake = AnimationUtils.LoadAnimation(context, Resource.Animation.shake);
-
-            button.Click += (sender, args) =>
-            {
-                button.StartAnimation(animShake);
-            };
-        }
-
-        private void SetFlashingAnimation(Context context, int index)
-        {
-            var animFlash = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
-
-            foreach (var enemy in enemyHealthBars)
-            {
-                enemy.ClearAnimation();
-            }
-
-            enemyHealthBars[index].StartAnimation(animFlash);
-        }
-
-        private void InitAnimations(Context context)
-        {
-
-            var animFlash = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
-            foreach (var image in images)
-                image.Visibility = ViewStates.Invisible;
-
-            images[0].Visibility = ViewStates.Visible;
-
-            foreach (var enemy in enemyHealthBars)
-            {
-                enemy.ClearAnimation();
-            }
-
-            enemyHealthBars[0].StartAnimation(animFlash);
-        }
-
-        private int[] GetEnemyButtonResourceArray()
-        {
-            var enemies = new[]
+        /// <summary>
+        /// ID of all enemy buttons
+        /// </summary>
+        private static IEnumerable<int> EnemyButtonIds => 
+            new[]
             {
                 Resource.Id.button_battle_enemy0,
                 Resource.Id.button_battle_enemy1,
@@ -128,12 +175,17 @@ namespace CubeQuest
                 Resource.Id.button_battle_enemy4
             };
 
-            return enemies;
-        }
+        /// <summary>
+        /// All enemy image buttons
+        /// </summary>
+        private IEnumerable<ImageButton> EnemyButtons =>
+            EnemyButtonIds.Select(enemy => mainView.FindViewById<ImageButton>(enemy));
 
-        private int[] GetEnemyProgressbarResourceArray()
-        {
-            var progressBar = new[]
+        /// <summary>
+        /// ID of all enemy health bars
+        /// </summary>
+        private static IEnumerable<int> EnemyHealthBarIds =>
+            new[]
             {
                 Resource.Id.battle_health_enemy0,
                 Resource.Id.battle_health_enemy1,
@@ -143,118 +195,72 @@ namespace CubeQuest
 
             };
 
-            return progressBar;
-        }
-
-        private ImageButton[] GetEnemyButtonsArray(View view, IReadOnlyList<int> enemies)
+        /// <summary>
+        /// All enemy health bars
+        /// </summary>
+        private IEnumerable<ProgressBar> EnemyHealthBars =>
+            EnemyHealthBarIds.Select(enemy => mainView.FindViewById<ProgressBar>(enemy));
+        
+        /// <summary>
+        /// Get enemy image overlays from <see cref="mainView"/>
+        /// </summary>
+        private ImageView[] EnemyImages => new[]
         {
-            var imageButtons = new[]
+            mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy0),
+            mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy1),
+            mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy2),
+            mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy3),
+            mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy4)
+        };
+        
+        /// <summary>
+        /// Get image animators for each overlay image
+        /// </summary>
+        private ImageAnimator[] GetImageAnimators(IReadOnlyList<Bitmap> frames) =>
+            new[]
             {
-                view.FindViewById<ImageButton>(enemies[0]),
-                view.FindViewById<ImageButton>(enemies[1]),
-                view.FindViewById<ImageButton>(enemies[2]),
-                view.FindViewById<ImageButton>(enemies[3]),
-                view.FindViewById<ImageButton>(enemies[4])
+                new ImageAnimator(enemyOverlays[0], frames, 400),
+                new ImageAnimator(enemyOverlays[1], frames, 400),
+                new ImageAnimator(enemyOverlays[2], frames, 400),
+                new ImageAnimator(enemyOverlays[3], frames, 400),
+                new ImageAnimator(enemyOverlays[4], frames, 400)
             };
-
-            return imageButtons;
+        
+        /// <summary>
+        /// Set <see cref="SelectedEnemyIndex"/> depending on what enemy is pressed
+        /// </summary>
+        private void CreateEnemyEvents(IReadOnlyList<ImageButton> imageButtons)
+        {
+            imageButtons[0].Click += (sender, args) => SelectedEnemyIndex = 0;
+            imageButtons[1].Click += (sender, args) => SelectedEnemyIndex = 1;
+            imageButtons[2].Click += (sender, args) => SelectedEnemyIndex = 2;
+            imageButtons[3].Click += (sender, args) => SelectedEnemyIndex = 3;
+            imageButtons[4].Click += (sender, args) => SelectedEnemyIndex = 4;
         }
 
-        private void SetEnemyProgressbarArray(View view, IReadOnlyList<int> progressBar)
+        /// <summary>
+        /// Loads animation from assets folder
+        /// </summary>
+        private static Bitmap[] LoadAnimation(AssetManager assets, string name, int frames)
         {
-            enemyHealthBars = new[]
-            {
-                view.FindViewById<ProgressBar>(progressBar[0]),
-                view.FindViewById<ProgressBar>(progressBar[1]),
-                view.FindViewById<ProgressBar>(progressBar[2]),
-                view.FindViewById<ProgressBar>(progressBar[3]),
-                view.FindViewById<ProgressBar>(progressBar[4]),
-            };
+	        var bitmaps = new Bitmap[frames];
+
+	        for (var i = 0; i < frames; i++)
+		        bitmaps[i] = BitmapFactory.DecodeStream(assets.Open($"animations/{name}/{i}.webp"));
+
+	        return bitmaps;
         }
+	}
 
-        private void SetUpBitmapsForEnemies(View view, IReadOnlyList<int> enemies, Bitmap enemy)
+    public static class ExtensionMethods
+    {
+        /// <summary>
+        /// Set bitmaps for all specified image buttons
+        /// </summary>
+        public static void SetBitmaps(this IEnumerable<ImageButton> buttons, Bitmap bitmap)
         {
-            foreach (var e in enemies)
-                view.FindViewById<ImageButton>(e).SetImageBitmap(enemy);
-        }
-
-        private void SetEnemyImageViewsArray(View view)
-        {
-            images = new[]
-            {
-                view.FindViewById<ImageView>(Resource.Id.image_battle_enemy0),
-                view.FindViewById<ImageView>(Resource.Id.image_battle_enemy1),
-                view.FindViewById<ImageView>(Resource.Id.image_battle_enemy2),
-                view.FindViewById<ImageView>(Resource.Id.image_battle_enemy3),
-                view.FindViewById<ImageView>(Resource.Id.image_battle_enemy4)
-            };
-            
-        }
-
-        private ImageAnimator[] GetImageAnimatorArray(Bitmap[] frames)
-        {
-            var anims = new[]
-            {
-                new ImageAnimator(images[0], frames, 400),
-                new ImageAnimator(images[1], frames, 400),
-                new ImageAnimator(images[2], frames, 400),
-                new ImageAnimator(images[3], frames, 400),
-                new ImageAnimator(images[4], frames, 400)
-            };
-
-            return anims;
-        }
-
-        private void SetAnimationClickEvents(ImageButton[] imageButtons, Context context)
-        {
-            imageButtons[0].Click += (sender, args) => SetHighlightedEnemy(0);
-            imageButtons[1].Click += (sender, args) => SetHighlightedEnemy(1);
-            imageButtons[2].Click += (sender, args) => SetHighlightedEnemy(2);
-            imageButtons[3].Click += (sender, args) => SetHighlightedEnemy(3);
-            imageButtons[4].Click += (sender, args) => SetHighlightedEnemy(4);
-
-            imageButtons[0].Click += (sender, args) => SetFlashingAnimation(context, 0);
-            imageButtons[1].Click += (sender, args) => SetFlashingAnimation(context, 1);
-            imageButtons[2].Click += (sender, args) => SetFlashingAnimation(context, 2);
-            imageButtons[3].Click += (sender, args) => SetFlashingAnimation(context, 3);
-            imageButtons[4].Click += (sender, args) => SetFlashingAnimation(context, 4);
+            foreach (var button in buttons)
+                button.SetImageBitmap(bitmap);
         }
     }
 }
-
-
-//var progressBar = new[]
-//{
-//    Resource.Id.battle_health_enemy0,
-//    Resource.Id.battle_health_enemy1,
-//    Resource.Id.battle_health_enemy2,
-//    Resource.Id.battle_health_enemy3,
-//    Resource.Id.battle_health_enemy4,
-
-//};
-
-//var enemies = new[]
-//{
-//    Resource.Id.button_battle_enemy0,
-//    Resource.Id.button_battle_enemy1,
-//    Resource.Id.button_battle_enemy2,
-//    Resource.Id.button_battle_enemy3,
-//    Resource.Id.button_battle_enemy4
-//};
-
-//var imageButtons = new[]
-//{
-//    view.FindViewById<ImageButton>(enemies[0]),
-//    view.FindViewById<ImageButton>(enemies[1]),
-//    view.FindViewById<ImageButton>(enemies[2]),
-//    view.FindViewById<ImageButton>(enemies[3]),
-//    view.FindViewById<ImageButton>(enemies[4])
-//};
-//images = new[]
-//{
-//    view.FindViewById<ImageView>(Resource.Id.image_battle_enemy0),
-//    view.FindViewById<ImageView>(Resource.Id.image_battle_enemy1),
-//    view.FindViewById<ImageView>(Resource.Id.image_battle_enemy2),
-//    view.FindViewById<ImageView>(Resource.Id.image_battle_enemy3),
-//    view.FindViewById<ImageView>(Resource.Id.image_battle_enemy4)
-//};

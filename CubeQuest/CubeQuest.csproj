@@ -27,6 +27,7 @@
     <AndroidSigningKeyAlias>AndroidKey</AndroidSigningKeyAlias>
     <AndroidSigningStorePass>CubeQuest</AndroidSigningStorePass>
     <AndroidSigningKeyPass>CubeQuest</AndroidSigningKeyPass>
+    <AndroidSupportedAbis>armeabi-v7a;arm64-v8a</AndroidSupportedAbis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -39,11 +40,13 @@
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <AotAssemblies>false</AotAssemblies>
     <EnableLLVM>false</EnableLLVM>
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidSupportedAbis>armeabi-v7a;arm64-v8a</AndroidSupportedAbis>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AndroidHttpClientHandlerType>Android</AndroidHttpClientHandlerType>
+    <AndroidTlsProvider>Native TLS 1.2+</AndroidTlsProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>PdbOnly</DebugType>
@@ -72,6 +75,8 @@
     <Compile Include="Account\AccountManager.cs" />
     <Compile Include="Account\Achievement.cs" />
     <Compile Include="Account\Enemies\EnemySnake.cs" />
+    <Compile Include="Account\GoogleConnectionListener.cs" />
+    <Compile Include="Account\GoogleFitManager.cs" />
     <Compile Include="Account\Interface\IEnemy.cs" />
     <Compile Include="Account\Interface\ICompanion.cs" />
     <Compile Include="Account\Companions\CompanionExample.cs" />
@@ -82,14 +87,16 @@
     <Compile Include="Account\User.cs" />
     <Compile Include="Account\Weapons\WeaponSword.cs" />
     <Compile Include="Battle.cs" />
-    <Compile Include="GameActivity.cs" />
-    <Compile Include="ImageAnimator.cs" />
-    <Compile Include="LocationManager.cs" />
-    <Compile Include="MainActivity.cs" />
-    <Compile Include="MusicManager.cs" />
-    <Compile Include="BitmapAnimator.cs" />
+    <Compile Include="Handler\ImageAnimator.cs" />
+    <Compile Include="Handler\LocationManager.cs" />
+    <Compile Include="Handler\MusicManager.cs" />
+    <Compile Include="Layout\GameActivity.cs" />
+    <Compile Include="Layout\MainActivity.cs" />
+    <Compile Include="Layout\SettingsActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ListView\Item\ItemViewAdapter.cs" />
+    <Compile Include="ListView\Item\ItemViewHolder.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\companion\example.webp" />
@@ -99,6 +106,11 @@
     <AndroidAsset Include="Assets\enemy\snake2.webp" />
     <AndroidAsset Include="Assets\animations\selected\0.webp" />
     <AndroidAsset Include="Assets\animations\selected\1.webp" />
+    <AndroidAsset Include="Assets\animations\slash\0.webp" />
+    <AndroidAsset Include="Assets\animations\slash\1.webp" />
+    <AndroidAsset Include="Assets\animations\slash\2.webp" />
+    <AndroidAsset Include="Assets\animations\slash\3.webp" />
+    <AndroidAsset Include="Assets\animations\slash\4.webp" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">
       <SubType>Designer</SubType>
@@ -106,6 +118,9 @@
     <None Include="Assets\AboutAssets.txt" />
     <AndroidResource Include="Resources\raw\map_theme_dark.json" />
     <AndroidResource Include="Resources\layout\inventory_layout.axml" />
+    <AndroidResource Include="Resources\layout\view_item_card.axml" />
+    <AndroidResource Include="Resources\layout\view_popup_item.axml" />
+    <AndroidResource Include="Resources\layout\view_popup_layout.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_main.axml">
@@ -127,6 +142,12 @@
       <Version>1.1.2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Android.Support.v14.Preference">
+      <Version>27.0.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.v7.Preference">
+      <Version>27.0.2.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Auth">
       <Version>60.1142.1</Version>
     </PackageReference>
@@ -144,6 +165,9 @@
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Maps">
       <Version>60.1142.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.v7.CardView">
+      <Version>27.0.2.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -255,6 +279,21 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\anim\flash.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\bg_rounded_corners.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\view_battle_info.axml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\xml\preferences.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_music.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_music_note.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

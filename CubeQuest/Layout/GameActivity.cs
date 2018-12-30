@@ -1,6 +1,5 @@
-﻿using Android.App;
+using Android.App;
 using Android.Content;
-using Android.Content.Res;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Graphics;
@@ -8,16 +7,22 @@ using Android.Locations;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V7.App;
+using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
 using CubeQuest.Account.Enemies;
+using CubeQuest.Account.Interface;
+using CubeQuest.Account.Weapons;
 using System;
 using System.Collections.Generic;
+using Android.Gms.Location;
+using CubeQuest.Handler;
+using CubeQuest.ListView.Item;
 using AlertDialog = Android.App.AlertDialog;
 
-namespace CubeQuest
+namespace CubeQuest.Layout
 {
 	[Activity(Label = "GameActivity", Theme = "@style/AppTheme.NoActionBar")]
     public class GameActivity : AppCompatActivity, IOnMapReadyCallback, GoogleMap.IOnMarkerClickListener
@@ -35,7 +40,7 @@ namespace CubeQuest
 		/// <summary>
 		/// Manages and updates our location
 		/// </summary>
-        private LocationManager locationManager;
+        private Handler.LocationManager locationManager;
 
         /// <summary>
         /// Marker used to represent the player
@@ -62,15 +67,30 @@ namespace CubeQuest
 		/// </summary>
         private Dictionary<LatLng, Marker> markers;
 
+        private AlertDialog itemPopupDialog;
+
+        private View itemPopupView;
+
+        private RecyclerView popupRecycler;
+
+        private BottomSheetBehavior battleInfo;
+
 		/// <summary>
-		/// Value returned from the achievements intent
+		/// First time starting the activity
 		/// </summary>
+        private bool firstTime;
+
+        /// <summary>
+        /// Value returned from the achievements intent
+        /// </summary>
         private const int RcAchievementUi = 9003;
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_game);
+
+            firstTime = true;
 
 			markers = new Dictionary<LatLng, Marker>();
 
@@ -83,8 +103,8 @@ namespace CubeQuest
             FindViewById<ProgressBar>(Resource.Id.barHealth).Progress = health;
 
             // Get last known location
-            locationManager = new LocationManager(this);
-            userLocation    = await locationManager.GetLastKnownLocation();
+            locationManager = new Handler.LocationManager(this);
+            userLocation    = await locationManager.GetLastKnownLocationAsync();
 
             // Get map and listen when it's ready
             var mapFragment = (SupportMapFragment) SupportFragmentManager.FindFragmentById(Resource.Id.map);
@@ -129,6 +149,9 @@ namespace CubeQuest
             profileView.FindViewById<ImageButton>(Resource.Id.button_achievements).Click += (sender, args) => 
                 StartActivityForResult(AccountManager.AchievementsIntent, RcAchievementUi);
 
+            profileView.FindViewById<ImageButton>(Resource.Id.button_settings).Click += (sender, args) =>
+	            StartActivity(new Intent(this, typeof(SettingsActivity)));
+
             // Inflate battle view
             battleView = FindViewById<ViewStub>(Resource.Id.stub_battle).Inflate();
             battleView.Visibility = ViewStates.Invisible;
@@ -139,6 +162,79 @@ namespace CubeQuest
                     BitmapDescriptorFactory.FromAsset("enemy/snake2.webp"));
 
             FindViewById<Button>(Resource.Id.button_debug_battle).Click += (sender, args) => StartBattle();
+
+            var battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
+			battleInfo         = BottomSheetBehavior.From(battleInfoView);
+            battleInfo.State   = BottomSheetBehavior.StateHidden;
+
+            battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Click +=
+	            (sender, args) => StartBattle();
+
+            FindViewById<Button>(Resource.Id.button_debug_battle_info).Click += (sender, args) =>
+            {
+	            battleInfoView.FindViewById<ImageView>(Resource.Id.image_battle_info).SetImageBitmap(BitmapFactory.DecodeStream(Assets.Open("enemy/snake.webp")));
+
+	            battleInfo.State = BottomSheetBehavior.StateCollapsed;
+            };
+
+            FindViewById<Button>(Resource.Id.button_debug_fitness_subscribe).Click += async (sender, args) =>
+            {
+	            if (!AccountManager.Fitness.IsConnected)
+	            {
+		            Toast.MakeText(this, "Fitness not connected", ToastLength.Short).Show();
+		            return;
+	            }
+
+	            var status = await AccountManager.Fitness.Subscribe();
+
+	            Toast.MakeText(this, $"Subscribe {(status ? "successful" : "failed")}", ToastLength.Short).Show();
+            };
+
+            //Set up itemPopupView, set up briefcase button 
+            //and link itemPopupView to the briefcase button
+            itemPopupView = LayoutInflater.Inflate(Resource.Layout.view_popup_layout, null);
+            popupRecycler = (RecyclerView)itemPopupView.FindViewById(Resource.Id.popup_recyclerview);
+
+            var itemPopup = new LinearLayoutManager(itemPopupView.Context);
+            popupRecycler.SetLayoutManager(itemPopup);
+
+            //Create a list of test items.
+            var items = new List<IItem>
+            {
+	            new WeaponSword(),
+	            new WeaponSword(),
+	            new WeaponSword(),
+	            new WeaponSword()
+            };
+
+            var adapter = new ItemViewAdapter(items);
+
+            popupRecycler.SetAdapter(adapter);
+
+            var briefcaseButton = FindViewById<ImageButton>(Resource.Id.button_briefcase);
+
+            briefcaseButton.Click += (sender, e) =>
+            {
+                if (itemPopupDialog == null)
+                {
+                    itemPopupDialog = new AlertDialog.Builder(this)
+	                    .SetView(itemPopupView)
+	                    .SetPositiveButton("Apply", (o, ee) =>
+	                    {
+							/*
+							 Insert code that makes the users choice of item from the
+							 list become their selected equipment
+							*/
+	                    })
+	                    .SetNegativeButton("Cancel", (o, ee) =>
+	                    {
+		                    //Insert code for closing dialog without any updates to chosen equipment
+		                })
+	                    .Create();
+                }
+
+                itemPopupDialog.Show();
+            };
         }
 
         public override void OnEnterAnimationComplete()
@@ -160,7 +256,7 @@ namespace CubeQuest
             }
 
             // Set custom theme to map
-            //googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, Resource.Raw.map_theme_dark));
+            googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, Resource.Raw.map_theme_dark));
             
             // Get last known location or 0,0 if not known
             // TODO: If not known, show loading dialog
@@ -187,16 +283,13 @@ namespace CubeQuest
             if (marker.Tag?.ToString() == "player")
                 return true;
 
-            // TODO: Temporary message
-            var distance = (int) (LocationManager.GetDistance(userLocation.ToLatLng(), marker.Position) + 0.5);
-            
-            // TODO: Sometimes it works and sometimes not?
-            var text = $"Level 5 Danger Noodle ({distance} {(distance == 1 ? "meter" : "meters")} away)";
+            /*
+             TODO: Check distance
+             To get distance in meters, use:
+             (int) (LocationManager.GetDistance(userLocation.ToLatLng(), marker.Position) + 0.5)
+            */
 
-            Snackbar.Make(mainView, text, Snackbar.LengthLong)
-                .SetActionTextColor(ColorStateList.ValueOf(Color.ParseColor("#e53935")))
-                .SetAction("Fight", view => StartBattle())
-                .Show();
+            battleInfo.State = BottomSheetBehavior.StateCollapsed;
 
             return true;
         }
@@ -293,19 +386,28 @@ namespace CubeQuest
 
         private void StartEnterAnimation()
         {
-	        var centerX = mainView.Width / 2;
+	        if (!firstTime)
+		        return;
+
+	        var centerX = mainView.Width  / 2;
 	        var centerY = mainView.Height / 2;
 
 	        var radius = (float) Math.Sqrt(centerX * centerX + centerY * centerY);
 
+			// TODO: If app is put in background, this crashes it
 	        var animator = ViewAnimationUtils.CreateCircularReveal(mainView, centerX, centerY, 0f, radius);
 
 	        mainView.Visibility = ViewStates.Visible;
 	        animator.Start();
-		}
+
+	        firstTime = false;
+        }
 
         private void StartBattle()
         {
+			// Hide battle info
+			battleInfo.State = BottomSheetBehavior.StateHidden;
+
             var fabUser = FindViewById<FloatingActionButton>(Resource.Id.fabUser);
             fabUser.Hide();
 
@@ -324,6 +426,8 @@ namespace CubeQuest
 
             battle.End += () =>
             {
+                MusicManager.Play(MusicManager.EMusicTrack.Map);
+
                 var animator2 = ViewAnimationUtils.CreateCircularReveal(battleView, centerX, centerY, radius, 0f);
                 animator2.AnimationEnd += (o, eventArgs) => battleView.Visibility = ViewStates.Invisible;
                 animator2.Start();
@@ -340,5 +444,22 @@ namespace CubeQuest
             if (profileView.Visibility == ViewStates.Visible)
                 ToggleProfile(false);
         }
+
+        protected override void OnPause()
+        {
+	        base.OnPause();
+
+			// Balanced power accuracy wi-fi and cell information to determine location and very rarely gps
+			if (locationManager != null)
+				locationManager.LocationPriority = LocationRequest.PriorityBalancedPowerAccuracy;
+		}
+
+        protected override void OnResume()
+        {
+	        base.OnResume();
+
+	        if (locationManager != null)
+				locationManager.LocationPriority = LocationRequest.PriorityHighAccuracy;
+		}
     }
 }

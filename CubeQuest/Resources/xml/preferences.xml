@@ -1,0 +1,77 @@
+﻿<PreferenceScreen
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<PreferenceCategory
+		app:title="Appearance">
+
+		<ListPreference
+			app:key="map_theme"
+			app:title="Map Theme"
+			app:summary="Theme of the map, currently light"
+			app:entries="@array/map_theme_entries"
+			app:entryValues="@array/map_theme_values"/>
+
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		app:title="Battery Saver">
+
+		<SwitchPreferenceCompat
+			app:title="Black Map"
+			app:summary="Use black colors on the map"/>
+
+		<SwitchPreferenceCompat
+			app:title="Black App"
+			app:summary="Use black colors instead of brown in the app"/>
+
+		<SwitchPreferenceCompat
+			app:title="Background Updates"
+			app:summary="Update location in the background with lowered accuracy"/>
+
+		<ListPreference
+			app:key="location_accuracy"
+			app:title="Location Accuracy"
+			app:summary="Accuracy of the location tracking, currently high"
+			app:entries="@array/location_accuracy_entries"
+			app:entryValues="@array/location_accuracy_values"/>
+
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		app:title="Audio">
+
+		<SeekBarPreference
+			app:title="Music Volume"/>
+
+		<SeekBarPreference
+			app:title="Sound Effects Volume"/>
+
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		app:title="About">
+
+		<Preference
+			app:title="Credits"
+			app:summary="The developers who worked on it"/>
+
+		<Preference
+			app:title="Licenses"
+			app:summary="Open source licenses used to make the app"/>
+
+		<Preference
+			app:title="Version"
+			app:summary="v1.0-development"/>
+
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		app:title="Account">
+
+		<Preference
+			app:title="Log out"
+			app:summary="Log out and close the app"/>
+
+	</PreferenceCategory>
+
+</PreferenceScreen>

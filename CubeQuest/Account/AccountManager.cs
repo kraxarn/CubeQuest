@@ -1,19 +1,15 @@
 ﻿using Android.Content;
 using Android.Gms.Auth.Api;
 using Android.Gms.Auth.Api.SignIn;
-using Android.Gms.Common;
 using Android.Gms.Common.Apis;
 using Android.Gms.Drive;
 using Android.Gms.Fitness;
-using Android.Gms.Fitness.Data;
-using Android.Gms.Fitness.Request;
 using Android.Gms.Games;
 using Android.Gms.Games.Achievement;
 using Android.Graphics;
-using Android.OS;
 using Android.Support.V7.App;
+using Android.Util;
 using Android.Views;
-using Java.Util.Concurrent;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -36,13 +32,15 @@ namespace CubeQuest.Account
         /// </summary>
         public static event FailureEvent OnFailure;
 
-		private static GoogleApiClient _googleClient;
+		private static GoogleApiClient googleClient;
 
-        private static GoogleApiClient _googleFitClient;
+        private static GoogleSignInOptions signInOptions;
 
-		private static Context _context;
+        public static GoogleFitManager Fitness { get; private set; }
 
-	    public static bool IsConnected => _googleClient.IsConnected;
+		private static Context context;
+
+	    public static bool IsConnected => googleClient.IsConnected;
 
         /// <summary>
         /// Current user signed in
@@ -53,7 +51,7 @@ namespace CubeQuest.Account
         /// Google Play display name
         /// </summary>
 	    public static string Name => 
-	        GamesClass.Players.GetCurrentPlayer(_googleClient).DisplayName;
+	        GamesClass.Players.GetCurrentPlayer(googleClient).DisplayName;
 
         /// <summary>
         /// Creates account manager and attempts to sign in silently (triggers <see cref="OnSuccess"/> or <see cref="OnFailure"/>
@@ -62,44 +60,36 @@ namespace CubeQuest.Account
 	    public static void Create(AppCompatActivity activity)
 	    {
             // Ignore if it has already been created
-            if (_googleClient != null)
+            if (googleClient != null)
                 return;
 
             // Setup connection listener
-            var connectionListener = new ConnectionListener();
+            var connectionListener = new GoogleConnectionListener();
 
             // Save main activity for context and stuffs
-	        _context = activity;
+	        context = activity;
 
             // Setup sign in options
-	        var signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultGamesSignIn)
+	        signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultGamesSignIn)
 	            .RequestScopes(DriveClass.ScopeAppfolder)
 	            .RequestScopes(FitnessClass.ScopeActivityRead)
 	            .Build();
 
             // Create google client
-	        _googleClient = new GoogleApiClient.Builder(activity)
+	        googleClient = new GoogleApiClient.Builder(activity)
 	            .AddConnectionCallbacks(connectionListener)
 	            .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
 	            .AddApi(GamesClass.API)
 	            .Build();
 
-	        _googleFitClient = new GoogleApiClient.Builder(activity)
-	            .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
-	            .AddApi(FitnessClass.HISTORY_API)
-	            .Build();
-
-            _googleClient.Connect(GoogleApiClient.SignInModeOptional);
-	        _googleFitClient.Connect(GoogleApiClient.SignInModeOptional);
+            googleClient.Connect(GoogleApiClient.SignInModeOptional);
 
             // Wait until we connected and attempt to sign in silently when we do
             connectionListener.Connected += async hint =>
 	        {
                 CurrentUser = new User();
 
-	            var silentSignIn = await Auth.GoogleSignInApi.SilentSignIn(_googleClient);
-
-	            await Auth.GoogleSignInApi.SilentSignIn(_googleFitClient);
+	            var silentSignIn = await Auth.GoogleSignInApi.SilentSignIn(googleClient);
 
 	            if (silentSignIn.Status.IsSuccess)
 	                OnSuccess?.Invoke(silentSignIn.Status);
@@ -108,14 +98,28 @@ namespace CubeQuest.Account
 	        };
 
             // Register callback to our connection listener
-            _googleClient.RegisterConnectionCallbacks(connectionListener);
-	    }
+            googleClient.RegisterConnectionCallbacks(connectionListener);
+
+            // Connect to Google Fit once successful
+            OnSuccess += status => ConnectFit();
+        }
+
+        /// <summary>
+        /// Connect and attempt sign in to Google Fit
+        /// </summary>
+        private static void ConnectFit()
+        {
+            Fitness = new GoogleFitManager(context, signInOptions);
+
+            Fitness.Success += status => Log.Info("GOOGLE_FIT", "OK");
+            Fitness.Failure += status => Log.Info("GOOGLE_FIT", "ERR");
+        }
 
         /// <summary>
 		/// Get intent used to sign in with Google
 		/// </summary>
 		public static Intent GetSignInIntent() => 
-			Auth.GoogleSignInApi.GetSignInIntent(_googleClient);
+			Auth.GoogleSignInApi.GetSignInIntent(googleClient);
 
 		/// <summary>
 		/// Handle Intent result
@@ -136,67 +140,22 @@ namespace CubeQuest.Account
 		}
 
 	    public static Bitmap SaveIcon =>
-	        BitmapFactory.DecodeResource(_context.Resources, Resource.Mipmap.ic_launcher_round);
+	        BitmapFactory.DecodeResource(context.Resources, Resource.Mipmap.ic_launcher_round);
 
         public static Intent AchievementsIntent => 
-            GamesClass.Achievements.GetAchievementsIntent(_googleClient);
+            GamesClass.Achievements.GetAchievementsIntent(googleClient);
 
         public static void UnlockAchievement(string id) => 
-            GamesClass.Achievements.Unlock(_googleClient, id);
+            GamesClass.Achievements.Unlock(googleClient, id);
 
         public static void IncrementAchievement(string id, int steps) =>
-            GamesClass.Achievements.Increment(_googleClient, id, steps);
+            GamesClass.Achievements.Increment(googleClient, id, steps);
 
         public static async Task<IEnumerable<IAchievement>> GetAchievementsAsync() => 
-            (await GamesClass.Achievements.LoadAsync(_googleClient, true)).Achievements;
+            (await GamesClass.Achievements.LoadAsync(googleClient, true)).Achievements;
 
         public static void SetViewForPopups(View view) => 
-            GamesClass.SetViewForPopups(_googleClient, view);
-
-        public static async void GetNumSteps(long start, long end)
-        {
-            var readRequest = new DataReadRequest.Builder()
-                .Aggregate(DataType.TypeStepCountDelta, DataType.AggregateStepCountDelta)
-                .BucketByTime(1, TimeUnit.Days)
-                .SetTimeRange(start, end, TimeUnit.Seconds)
-                .Build();
-
-            var history = await FitnessClass.HistoryApi.ReadDataAsync(_googleFitClient, readRequest);
-        }
-
-        public static void GetNumSteps(DateTime start, DateTime end) => 
-            GetNumSteps(start.ToTimestamp(), end.ToTimestamp());
-
-        public static async void SubscribeToSteps()
-        {
-            var result = await FitnessClass.RecordingApi.SubscribeAsync(_googleClient, DataType.TypeStepCountCumulative);
-        }
-
-        public static async void GetDailySteps()
-        {
-            var result = await FitnessClass.HistoryApi.ReadDailyTotalAsync(_googleClient, DataType.TypeStepCountDelta);
-        }
-    }
-
-    public class ConnectionListener : Java.Lang.Object, GoogleApiClient.IOnConnectionFailedListener, GoogleApiClient.IConnectionCallbacks
-    {
-        public delegate void ConnectionFailedEvent(ConnectionResult result);
-
-        public event ConnectionFailedEvent ConnectionFailed;
-
-        public delegate void ConnectedEvent(Bundle connectionHint);
-
-        public event ConnectedEvent Connected;
-
-        public void OnConnectionFailed(ConnectionResult result) => 
-            ConnectionFailed?.Invoke(result);
-
-        public void OnConnected(Bundle connectionHint) => 
-            Connected?.Invoke(connectionHint);
-
-        public void OnConnectionSuspended(int cause)
-        {
-        }
+            GamesClass.SetViewForPopups(googleClient, view);
     }
 
     public static class DateTimeConverter
