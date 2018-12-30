@@ -17,14 +17,17 @@
 		app:title="Battery Saver">
 
 		<SwitchPreferenceCompat
+			app:key="black_map"
 			app:title="Black Map"
 			app:summary="Use black colors on the map"/>
 
 		<SwitchPreferenceCompat
+			app:key="black_app"
 			app:title="Black App"
 			app:summary="Use black colors instead of brown in the app"/>
 
 		<SwitchPreferenceCompat
+			app:key="background_updates"
 			app:title="Background Updates"
 			app:summary="Update location in the background with lowered accuracy"/>
 
@@ -41,9 +44,11 @@
 		app:title="Audio">
 
 		<SeekBarPreference
+			app:key="music_volume"
 			app:title="Music Volume"/>
 
 		<SeekBarPreference
+			app:key="sound_volume"
 			app:title="Sound Effects Volume"/>
 
 	</PreferenceCategory>
@@ -52,14 +57,17 @@
 		app:title="About">
 
 		<Preference
+			app:key="credits"
 			app:title="Credits"
 			app:summary="The developers who worked on it"/>
 
 		<Preference
+			app:key="licenses"
 			app:title="Licenses"
 			app:summary="Open source licenses used to make the app"/>
 
 		<Preference
+			app:key="version"
 			app:title="Version"
 			app:summary="v1.0-development"/>
 
@@ -69,6 +77,7 @@
 		app:title="Account">
 
 		<Preference
+			app:key="log_out"
 			app:title="Log out"
 			app:summary="Log out and close the app"/>
 
