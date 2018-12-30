@@ -31,12 +31,10 @@
 			app:title="Background Updates"
 			app:summary="Update location in the background with lowered accuracy"/>
 
-		<ListPreference
+		<SwitchPreferenceCompat
 			app:key="location_accuracy"
-			app:title="Location Accuracy"
-			app:summary="Accuracy of the location tracking, currently high"
-			app:entries="@array/location_accuracy_entries"
-			app:entryValues="@array/location_accuracy_values"/>
+			app:title="Lower location accuracy"
+			app:summary="Use WiFi and cell towers instead of GPS to get device location"/>
 
 	</PreferenceCategory>
 

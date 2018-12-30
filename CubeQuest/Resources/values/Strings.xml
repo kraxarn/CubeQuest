@@ -16,16 +16,4 @@
 		<item>auto</item>
 	</string-array>
 
-	<string-array name="location_accuracy_entries">
-		<item>High (default)</item>
-		<item>Medium</item>
-		<item>Low</item>
-	</string-array>
-
-	<string-array name="location_accuracy_values">
-		<item>high</item>
-		<item>medium</item>
-		<item>low</item>
-	</string-array>
-
 </resources>
