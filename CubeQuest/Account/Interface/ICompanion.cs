@@ -2,6 +2,11 @@
 {
     public interface ICompanion : IItem
     {
+		/// <summary>
+		/// Percentage evasion from 0.0-1.0
+		/// </summary>
+	    float Evasion { get; }
+
         /// <summary>
         /// Trigger before the battle
         /// </summary>

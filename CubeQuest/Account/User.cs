@@ -1,4 +1,5 @@
-﻿using CubeQuest.Account.Interface;
+﻿using System;
+using CubeQuest.Account.Interface;
 using fastJSON;
 using System.Collections.Generic;
 
@@ -69,7 +70,33 @@ namespace CubeQuest.Account
             }
         }
 
-        public User()
+		/// <summary>
+		/// Percentage evasion from companions
+		/// </summary>
+        private float Evasion
+		{
+	        get
+	        {
+		        var e = 0f;
+				
+				// TODO: We probably don't want evasion stacking like this
+				foreach (var companion in equippedCompanions)
+			        e += companion.Evasion;
+
+		        if (e > 1f)
+			        e = 1f;
+
+		        return e;
+	        }
+        }
+
+		/// <summary>
+		/// If the next attack should hit based on the current evasion
+		/// </summary>
+        private bool ShouldHit => 
+			new Random().NextDouble() <= Evasion;
+
+		public User()
         {
             companions = new List<ICompanion>();
             equippedCompanions = new List<ICompanion>(3);
@@ -89,11 +116,17 @@ namespace CubeQuest.Account
         public static User FromString(string json) => 
             JSON.ToObject<User>(json);
 
+		/// <summary>
+		/// Attack an enemy
+		/// </summary>
         public void Attack()
         {
             // TODO
         }
 
+		/// <summary>
+		/// Take damage from an enemy
+		/// </summary>
         public void Damage()
         {
             // TODO
