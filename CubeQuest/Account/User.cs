@@ -42,10 +42,25 @@ namespace CubeQuest.Account
         /// </summary>
         private int armor;
 
+        private int health;
+
         /// <summary>
         /// User's current health
         /// </summary>
-        public int Health;
+        public int Health
+        {
+	        get => health;
+
+	        set
+	        {
+		        health = value;
+
+		        if (health < 0)
+			        health = 0;
+				else if (health > MaxHealth)
+			        health = MaxHealth;
+	        }
+        }
 
         /// <summary>
         /// Current health in percentage
