@@ -74,7 +74,6 @@
     <Compile Include="Account\Achievement.cs" />
     <Compile Include="Account\Enemies\EnemySnake.cs" />
     <Compile Include="Account\GoogleConnectionListener.cs" />
-    <Compile Include="Account\GoogleFitManager.cs" />
     <Compile Include="Account\Interface\IEnemy.cs" />
     <Compile Include="Account\Interface\ICompanion.cs" />
     <Compile Include="Account\Companions\CompanionExample.cs" />
@@ -165,9 +164,6 @@
       <Version>60.1142.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Drive">
-      <Version>60.1142.1</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.GooglePlayServices.Fitness">
       <Version>60.1142.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Games">

@@ -177,19 +177,6 @@ namespace CubeQuest.Layout
 	            battleInfo.State = BottomSheetBehavior.StateCollapsed;
             };
 
-            FindViewById<Button>(Resource.Id.button_debug_fitness_subscribe).Click += async (sender, args) =>
-            {
-	            if (!AccountManager.Fitness.IsConnected)
-	            {
-		            Toast.MakeText(this, "Fitness not connected", ToastLength.Short).Show();
-		            return;
-	            }
-
-	            var status = await AccountManager.Fitness.Subscribe();
-
-	            Toast.MakeText(this, $"Subscribe {(status ? "successful" : "failed")}", ToastLength.Short).Show();
-            };
-
             FindViewById<Button>(Resource.Id.button_debug_canvas_test).Click += (sender, args) => 
 	            StartActivity(typeof(CanvasTestActivity));
 
