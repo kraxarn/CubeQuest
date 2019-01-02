@@ -2,7 +2,7 @@
 
 namespace CubeQuest.Account.Companions
 {
-    public class CompanionExample : ICompanion
+    public class Example : ICompanion
     {
         public int Health => 0;
         public int Armor  => 0;
