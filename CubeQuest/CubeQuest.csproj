@@ -87,9 +87,12 @@
     <Compile Include="Account\User.cs" />
     <Compile Include="Account\Weapons\WeaponSword.cs" />
     <Compile Include="Battle.cs" />
+    <Compile Include="BattleCanvas.cs" />
+    <Compile Include="BattleDrawable.cs" />
     <Compile Include="Handler\ImageAnimator.cs" />
     <Compile Include="Handler\LocationManager.cs" />
     <Compile Include="Handler\MusicManager.cs" />
+    <Compile Include="Layout\CanvasTestActivity.cs" />
     <Compile Include="Layout\GameActivity.cs" />
     <Compile Include="Layout\MainActivity.cs" />
     <Compile Include="Layout\SettingsActivity.cs" />
@@ -118,6 +121,7 @@
     <AndroidAsset Include="Assets\developer\kraxarn.webp" />
     <AndroidAsset Include="Assets\developer\tacmotor.webp" />
     <AndroidAsset Include="Assets\developer\timnnyman.webp" />
+    <AndroidAsset Include="Assets\animated\selected.webp" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">
       <SubType>Designer</SubType>
@@ -307,6 +311,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\view_dialog_credits.axml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_canvas_test.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

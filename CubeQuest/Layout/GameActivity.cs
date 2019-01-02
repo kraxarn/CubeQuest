@@ -190,6 +190,9 @@ namespace CubeQuest.Layout
 	            Toast.MakeText(this, $"Subscribe {(status ? "successful" : "failed")}", ToastLength.Short).Show();
             };
 
+            FindViewById<Button>(Resource.Id.button_debug_canvas_test).Click += (sender, args) => 
+	            StartActivity(typeof(CanvasTestActivity));
+
             //Set up itemPopupView, set up briefcase button 
             //and link itemPopupView to the briefcase button
             itemPopupView = LayoutInflater.Inflate(Resource.Layout.view_popup_layout, null);
@@ -414,7 +417,7 @@ namespace CubeQuest.Layout
             // Sets the health on the progressbar 
             mainView.FindViewById<ProgressBar>(Resource.Id.progress_battle_health).Progress =
                 AccountManager.CurrentUser.Health;
-;
+
             var battle = new Battle(this, battleView, Assets, new EnemySnake());
 
             var centerX = mainView.Width  / 2;
