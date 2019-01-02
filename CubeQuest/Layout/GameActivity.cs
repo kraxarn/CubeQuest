@@ -191,10 +191,10 @@ namespace CubeQuest.Layout
             //Create a list of test items.
             var items = new List<IItem>
             {
-	            new WeaponSword(),
-	            new WeaponSword(),
-	            new WeaponSword(),
-	            new WeaponSword()
+	            new Sword(),
+	            new Sword(),
+	            new Sword(),
+	            new Sword()
             };
 
             var adapter = new ItemViewAdapter(items);
