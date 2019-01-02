@@ -87,7 +87,6 @@
     <Compile Include="Account\User.cs" />
     <Compile Include="Account\Weapons\WeaponSword.cs" />
     <Compile Include="Battle.cs" />
-    <Compile Include="BattleCanvas.cs" />
     <Compile Include="BattleDrawable.cs" />
     <Compile Include="Handler\ImageAnimator.cs" />
     <Compile Include="Handler\LocationManager.cs" />
