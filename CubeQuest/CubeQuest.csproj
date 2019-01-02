@@ -94,7 +94,17 @@
     <Compile Include="Account\Interface\IWeapon.cs" />
     <Compile Include="Account\Interface\SnapshotManager.cs" />
     <Compile Include="Account\User.cs" />
-    <Compile Include="Account\Weapons\WeaponSword.cs" />
+    <Compile Include="Account\Weapons\Axe.cs" />
+    <Compile Include="Account\Weapons\BigSword.cs" />
+    <Compile Include="Account\Weapons\Bow.cs" />
+    <Compile Include="Account\Weapons\Staff.cs" />
+    <Compile Include="Account\Weapons\Club.cs" />
+    <Compile Include="Account\Weapons\Dagger.cs" />
+    <Compile Include="Account\Weapons\Hammer.cs" />
+    <Compile Include="Account\Weapons\LoveStaff.cs" />
+    <Compile Include="Account\Weapons\Mace.cs" />
+    <Compile Include="Account\Weapons\NinjaStar.cs" />
+    <Compile Include="Account\Weapons\Sword.cs" />
     <Compile Include="Battle.cs" />
     <Compile Include="BattleDrawable.cs" />
     <Compile Include="Handler\ImageAnimator.cs" />
@@ -114,7 +124,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\companion\example.webp" />
-    <AndroidAsset Include="Assets\weapon\basic.webp" />
     <AndroidAsset Include="Assets\player\0.webp" />
     <AndroidAsset Include="Assets\enemy\snake.webp" />
     <AndroidAsset Include="Assets\enemy\snake2.webp" />
@@ -142,6 +151,17 @@
     <AndroidAsset Include="Assets\companion\snake.webp" />
     <AndroidAsset Include="Assets\companion\walrus.webp" />
     <AndroidAsset Include="Assets\companion\wolf.webp" />
+    <AndroidAsset Include="Assets\weapon\axe.webp" />
+    <AndroidAsset Include="Assets\weapon\big_sword.webp" />
+    <AndroidAsset Include="Assets\weapon\bow.webp" />
+    <AndroidAsset Include="Assets\weapon\club.webp" />
+    <AndroidAsset Include="Assets\weapon\dagger.webp" />
+    <AndroidAsset Include="Assets\weapon\hammer.webp" />
+    <AndroidAsset Include="Assets\weapon\love_staff.webp" />
+    <AndroidAsset Include="Assets\weapon\mace.webp" />
+    <AndroidAsset Include="Assets\weapon\ninja_star.webp" />
+    <AndroidAsset Include="Assets\weapon\staff.webp" />
+    <AndroidAsset Include="Assets\weapon\sword.webp" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">
       <SubType>Designer</SubType>
