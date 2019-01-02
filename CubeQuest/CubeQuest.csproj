@@ -72,11 +72,23 @@
   <ItemGroup>
     <Compile Include="Account\AccountManager.cs" />
     <Compile Include="Account\Achievement.cs" />
+    <Compile Include="Account\Companions\Bear.cs" />
+    <Compile Include="Account\Companions\Buffalo.cs" />
+    <Compile Include="Account\Companions\Chick.cs" />
+    <Compile Include="Account\Companions\Wolf.cs" />
+    <Compile Include="Account\Companions\Walrus.cs" />
+    <Compile Include="Account\Companions\Snake.cs" />
+    <Compile Include="Account\Companions\Sloth.cs" />
+    <Compile Include="Account\Companions\Rabbit.cs" />
+    <Compile Include="Account\Companions\Penguin.cs" />
+    <Compile Include="Account\Companions\Parrot.cs" />
+    <Compile Include="Account\Companions\Owl.cs" />
+    <Compile Include="Account\Companions\Horse.cs" />
     <Compile Include="Account\Enemies\EnemySnake.cs" />
     <Compile Include="Account\GoogleConnectionListener.cs" />
     <Compile Include="Account\Interface\IEnemy.cs" />
     <Compile Include="Account\Interface\ICompanion.cs" />
-    <Compile Include="Account\Companions\CompanionExample.cs" />
+    <Compile Include="Account\Companions\Example.cs" />
     <Compile Include="Account\Interface\ISpell.cs" />
     <Compile Include="Account\Interface\IItem.cs" />
     <Compile Include="Account\Interface\IWeapon.cs" />
