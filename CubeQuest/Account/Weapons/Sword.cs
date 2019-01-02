@@ -2,9 +2,9 @@
 
 namespace CubeQuest.Account.Weapons
 {
-    public class WeaponSword : IWeapon
+    public class Sword : IWeapon
     {
-        public string Icon => "weapon/basic";
+        public string Icon => "sword";
 
         public string Name => "Sword";
         public string Info => "Basic sword";
