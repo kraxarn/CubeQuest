@@ -118,6 +118,18 @@
     <AndroidAsset Include="Assets\developer\tacmotor.webp" />
     <AndroidAsset Include="Assets\developer\timnnyman.webp" />
     <AndroidAsset Include="Assets\animated\selected.webp" />
+    <AndroidAsset Include="Assets\companion\bear.webp" />
+    <AndroidAsset Include="Assets\companion\buffalo.webp" />
+    <AndroidAsset Include="Assets\companion\chick.webp" />
+    <AndroidAsset Include="Assets\companion\horse.webp" />
+    <AndroidAsset Include="Assets\companion\owl.webp" />
+    <AndroidAsset Include="Assets\companion\parrot.webp" />
+    <AndroidAsset Include="Assets\companion\penguin.webp" />
+    <AndroidAsset Include="Assets\companion\rabbit.webp" />
+    <AndroidAsset Include="Assets\companion\sloth.webp" />
+    <AndroidAsset Include="Assets\companion\snake.webp" />
+    <AndroidAsset Include="Assets\companion\walrus.webp" />
+    <AndroidAsset Include="Assets\companion\wolf.webp" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">
       <SubType>Designer</SubType>
