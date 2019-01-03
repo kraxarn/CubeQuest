@@ -39,6 +39,8 @@ namespace CubeQuest
         /// </summary>
         private readonly ProgressBar[] enemyHealthBars;
 
+        private readonly ProgressBar playerHealthBar;
+
         /// <summary>
         /// Context, probably <see cref="GameActivity"/>
         /// </summary>
@@ -59,11 +61,18 @@ namespace CubeQuest
             // Start battle music
             MusicManager.Play(MusicManager.EMusicTrack.Battle);
 
+            BattleHandler.Battle = this;
+
             // Set context
             this.context = context;
 
             // Set view
             mainView = view;
+
+            // Companions
+            var companions = new List<ImageView>();
+
+            companions.Add(mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion0));
 
             // Flashing health bar animation
             flashAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
@@ -76,6 +85,8 @@ namespace CubeQuest
             
             // Enemy health bars
             enemyHealthBars = EnemyHealthBars.ToArray();
+
+            playerHealthBar = view.FindViewById<ProgressBar>(Resource.Id.progress_battle_health);
 
             // Set bitmaps of enemy buttons
             enemyButtons.SetBitmaps(enemySprite);
@@ -110,7 +121,12 @@ namespace CubeQuest
 				}
 
 				anims[SelectedEnemyIndex].Done += SwitchBack;
-			};
+
+                companions[0].StartAnimation(AnimationUtils.LoadAnimation(context, Resource.Animation.attack));
+                BattleHandler.PlayerAttack(5);
+                enemyButtons[selectedEnemyIndex]
+                    .StartAnimation(AnimationUtils.LoadAnimation(context, Resource.Animation.attack));
+            };
 
             // When clicking 'run'
             view.FindViewById<Button>(Resource.Id.button_battle_run).Click += (sender, args) =>
@@ -130,11 +146,11 @@ namespace CubeQuest
         /// <summary>
         /// Selected enemy
         /// </summary>
-        private int SelectedEnemyIndex
+        public int SelectedEnemyIndex
         {
             get => selectedEnemyIndex;
 
-            set
+            private set
             {
                 // Reset all overlay images
                 foreach (var image in enemyOverlays)
@@ -238,6 +254,8 @@ namespace CubeQuest
             imageButtons[4].Click += (sender, args) => SelectedEnemyIndex = 4;
         }
 
+
+
         /// <summary>
         /// Loads animation from assets folder
         /// </summary>
@@ -250,7 +268,45 @@ namespace CubeQuest
 
 	        return bitmaps;
         }
-	}
+
+        // FUNCTIONS FOR THE BATTLE HANDLER
+
+        public void EnemyLoseLife(int damage)
+        {
+            enemyHealthBars[selectedEnemyIndex].Progress -= damage;
+        }
+
+        public void PlayerLoseLife(int damage)
+        {
+            playerHealthBar.Progress -= damage;
+        }
+
+        public void AnimateAttackPlayer(ImageView player, Animation animation)
+        {
+            player.StartAnimation(animation);
+        }
+
+        public void AnimateAttackEnemy(ImageButton enemy, Animation animation)
+        {
+            enemy.StartAnimation(animation);
+        }
+
+        public static void AnimateTakingDamagePlayer(ImageView player, Animation animation)
+        {
+            player.StartAnimation(animation);
+        }
+
+        public static void AnimateTakingDamageEnemy(ImageButton enemy, Animation animation)
+        {
+            enemy.StartAnimation(animation);
+
+        }
+        
+
+
+
+
+    }
 
     public static class ExtensionMethods
     {
