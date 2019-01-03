@@ -141,7 +141,12 @@ namespace CubeQuest
 
             // Create events when clicking on enemies
             CreateEnemyEvents(enemyButtons);
-        }
+
+			// Replace cube placeholders with test images
+			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_1).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/bear.webp")));
+			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_2).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/buffalo.webp")));
+			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_3).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/chick.webp")));
+		}
 
         /// <summary>
         /// Selected enemy

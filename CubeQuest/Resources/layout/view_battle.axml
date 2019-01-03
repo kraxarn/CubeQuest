@@ -344,21 +344,21 @@
         android:paddingBottom="8dp">
 
         <ImageView
-            android:id="@+id/image_battle_companion0"
+            android:id="@+id/image_battle_companion_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/ic_companion"/>
 
         <ImageView
-            android:id="@+id/image_battle_companion1"
+            android:id="@+id/image_battle_companion_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/ic_companion"/>
 
         <ImageView
-            android:id="@+id/image_battle_companion2"
+            android:id="@+id/image_battle_companion_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

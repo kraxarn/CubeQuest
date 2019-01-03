@@ -61,14 +61,6 @@
 			android:text="Battle Canvas"/>
 
         <Button
-            android:id="@+id/button_debug_fitness_subscribe"
-            android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:fontFamily="monospace"
-			style="@android:style/Widget.Material.Button.Borderless"
-			android:text="Subscribe"/>
-
-        <Button
             android:id="@+id/button_debug_battle_info"
             android:layout_width="wrap_content"
 			android:layout_height="wrap_content"

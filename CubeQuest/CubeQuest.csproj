@@ -40,10 +40,6 @@
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
-    <AotAssemblies>false</AotAssemblies>
-    <EnableLLVM>false</EnableLLVM>
-    <BundleAssemblies>false</BundleAssemblies>
-    <AndroidSupportedAbis>armeabi-v7a;arm64-v8a</AndroidSupportedAbis>
     <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -58,10 +54,6 @@
     <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
-    <AotAssemblies>false</AotAssemblies>
-    <EnableLLVM>false</EnableLLVM>
-    <BundleAssemblies>false</BundleAssemblies>
-    <AndroidSupportedAbis>armeabi-v7a;arm64-v8a</AndroidSupportedAbis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -72,18 +64,39 @@
   <ItemGroup>
     <Compile Include="Account\AccountManager.cs" />
     <Compile Include="Account\Achievement.cs" />
+    <Compile Include="Account\Companions\Bear.cs" />
+    <Compile Include="Account\Companions\Buffalo.cs" />
+    <Compile Include="Account\Companions\Chick.cs" />
+    <Compile Include="Account\Companions\Wolf.cs" />
+    <Compile Include="Account\Companions\Walrus.cs" />
+    <Compile Include="Account\Companions\Snake.cs" />
+    <Compile Include="Account\Companions\Sloth.cs" />
+    <Compile Include="Account\Companions\Rabbit.cs" />
+    <Compile Include="Account\Companions\Penguin.cs" />
+    <Compile Include="Account\Companions\Parrot.cs" />
+    <Compile Include="Account\Companions\Owl.cs" />
+    <Compile Include="Account\Companions\Horse.cs" />
     <Compile Include="Account\Enemies\EnemySnake.cs" />
     <Compile Include="Account\GoogleConnectionListener.cs" />
-    <Compile Include="Account\GoogleFitManager.cs" />
     <Compile Include="Account\Interface\IEnemy.cs" />
     <Compile Include="Account\Interface\ICompanion.cs" />
-    <Compile Include="Account\Companions\CompanionExample.cs" />
+    <Compile Include="Account\Companions\Example.cs" />
     <Compile Include="Account\Interface\ISpell.cs" />
     <Compile Include="Account\Interface\IItem.cs" />
     <Compile Include="Account\Interface\IWeapon.cs" />
     <Compile Include="Account\Interface\SnapshotManager.cs" />
     <Compile Include="Account\User.cs" />
-    <Compile Include="Account\Weapons\WeaponSword.cs" />
+    <Compile Include="Account\Weapons\Axe.cs" />
+    <Compile Include="Account\Weapons\BigSword.cs" />
+    <Compile Include="Account\Weapons\Bow.cs" />
+    <Compile Include="Account\Weapons\Staff.cs" />
+    <Compile Include="Account\Weapons\Club.cs" />
+    <Compile Include="Account\Weapons\Dagger.cs" />
+    <Compile Include="Account\Weapons\Hammer.cs" />
+    <Compile Include="Account\Weapons\LoveStaff.cs" />
+    <Compile Include="Account\Weapons\Mace.cs" />
+    <Compile Include="Account\Weapons\NinjaStar.cs" />
+    <Compile Include="Account\Weapons\Sword.cs" />
     <Compile Include="Battle.cs" />
     <Compile Include="BattleDrawable.cs" />
     <Compile Include="BattleHandler.cs" />
@@ -104,7 +117,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\companion\example.webp" />
-    <AndroidAsset Include="Assets\weapon\basic.webp" />
     <AndroidAsset Include="Assets\player\0.webp" />
     <AndroidAsset Include="Assets\enemy\snake.webp" />
     <AndroidAsset Include="Assets\enemy\snake2.webp" />
@@ -120,6 +132,29 @@
     <AndroidAsset Include="Assets\developer\tacmotor.webp" />
     <AndroidAsset Include="Assets\developer\timnnyman.webp" />
     <AndroidAsset Include="Assets\animated\selected.webp" />
+    <AndroidAsset Include="Assets\companion\bear.webp" />
+    <AndroidAsset Include="Assets\companion\buffalo.webp" />
+    <AndroidAsset Include="Assets\companion\chick.webp" />
+    <AndroidAsset Include="Assets\companion\horse.webp" />
+    <AndroidAsset Include="Assets\companion\owl.webp" />
+    <AndroidAsset Include="Assets\companion\parrot.webp" />
+    <AndroidAsset Include="Assets\companion\penguin.webp" />
+    <AndroidAsset Include="Assets\companion\rabbit.webp" />
+    <AndroidAsset Include="Assets\companion\sloth.webp" />
+    <AndroidAsset Include="Assets\companion\snake.webp" />
+    <AndroidAsset Include="Assets\companion\walrus.webp" />
+    <AndroidAsset Include="Assets\companion\wolf.webp" />
+    <AndroidAsset Include="Assets\weapon\axe.webp" />
+    <AndroidAsset Include="Assets\weapon\big_sword.webp" />
+    <AndroidAsset Include="Assets\weapon\bow.webp" />
+    <AndroidAsset Include="Assets\weapon\club.webp" />
+    <AndroidAsset Include="Assets\weapon\dagger.webp" />
+    <AndroidAsset Include="Assets\weapon\hammer.webp" />
+    <AndroidAsset Include="Assets\weapon\love_staff.webp" />
+    <AndroidAsset Include="Assets\weapon\mace.webp" />
+    <AndroidAsset Include="Assets\weapon\ninja_star.webp" />
+    <AndroidAsset Include="Assets\weapon\staff.webp" />
+    <AndroidAsset Include="Assets\weapon\sword.webp" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">
       <SubType>Designer</SubType>
@@ -166,9 +201,6 @@
       <Version>60.1142.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Drive">
-      <Version>60.1142.1</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.GooglePlayServices.Fitness">
       <Version>60.1142.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Games">

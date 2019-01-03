@@ -3,12 +3,10 @@ using Android.Gms.Auth.Api;
 using Android.Gms.Auth.Api.SignIn;
 using Android.Gms.Common.Apis;
 using Android.Gms.Drive;
-using Android.Gms.Fitness;
 using Android.Gms.Games;
 using Android.Gms.Games.Achievement;
 using Android.Graphics;
 using Android.Support.V7.App;
-using Android.Util;
 using Android.Views;
 using System;
 using System.Collections.Generic;
@@ -16,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace CubeQuest.Account
 {
-    public static class AccountManager
+	public static class AccountManager
     {
         public delegate void SuccessEvent(Statuses status);
 
@@ -35,8 +33,6 @@ namespace CubeQuest.Account
 		private static GoogleApiClient googleClient;
 
         private static GoogleSignInOptions signInOptions;
-
-        public static GoogleFitManager Fitness { get; private set; }
 
 		private static Context context;
 
@@ -72,7 +68,6 @@ namespace CubeQuest.Account
             // Setup sign in options
 	        signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultGamesSignIn)
 	            .RequestScopes(DriveClass.ScopeAppfolder)
-	            .RequestScopes(FitnessClass.ScopeActivityRead)
 	            .Build();
 
             // Create google client
@@ -99,20 +94,6 @@ namespace CubeQuest.Account
 
             // Register callback to our connection listener
             googleClient.RegisterConnectionCallbacks(connectionListener);
-
-            // Connect to Google Fit once successful
-            OnSuccess += status => ConnectFit();
-        }
-
-        /// <summary>
-        /// Connect and attempt sign in to Google Fit
-        /// </summary>
-        private static void ConnectFit()
-        {
-            Fitness = new GoogleFitManager(context, signInOptions);
-
-            Fitness.Success += status => Log.Info("GOOGLE_FIT", "OK");
-            Fitness.Failure += status => Log.Info("GOOGLE_FIT", "ERR");
         }
 
         /// <summary>

@@ -2,18 +2,18 @@
 
 namespace CubeQuest.Account.Companions
 {
-    public class CompanionExample : ICompanion
+    public class Penguin : ICompanion
     {
         public int Health => 0;
         public int Armor  => 0;
-        public int Attack => 0;
+        public int Attack => 2;
 
         public float Evasion => 0f;
 
-        public string Icon => "companion/example";
+        public string Icon => "penguin";
 
-        public string Name => "Example Companion";
-        public string Info => "Does nothing, for testing only";
+        public string Name => "Penguin";
+        public string Info => "Provides attack";
 
         public void BeforeBattle()
         {

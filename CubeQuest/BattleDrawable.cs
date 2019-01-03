@@ -14,6 +14,7 @@ namespace CubeQuest
 			selectedDrawable = CreateAnimatedDrawable(assets, "selected");
 		}
 
+		// TODO: This crashes on <9.0
 		private static AnimatedImageDrawable CreateAnimatedDrawable(AssetManager assets, string fileName) => 
 			CreateFromStream(assets.Open($"animated/{fileName}.webp"), fileName) as AnimatedImageDrawable;
 

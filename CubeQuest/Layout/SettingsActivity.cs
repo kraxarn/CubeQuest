@@ -99,7 +99,9 @@ namespace CubeQuest.Layout
 		private void OpenLicenses()
 		{
 			var view = LayoutInflater.Inflate(Resource.Layout.view_dialog_credits, null, false);
-			view.FindViewById<TextView>(Resource.Id.text_special_thanks).Visibility = ViewStates.Gone;
+
+			view.FindViewById<TextView>(Resource.Id.text_special_thanks).Text =
+				"Special thanks to KenneyNL (CC0) and 7Souls (GDM) for the assets and Juhani Junkala (CC0) for the music";
 
 			var adapter = BuildUserEntriesAdapter(view, new List<UserEntry>
 			{
