@@ -31,11 +31,23 @@ namespace CubeQuest.Account
         /// All companions currently equipped by the user (max 3)
         /// </summary>
         private readonly List<ICompanion> equippedCompanions;
+		
+		/// <summary>
+		/// Add experience to the user
+		/// </summary>
+        public void AddExperience(int amount) => 
+	        experience += amount;
+
+		/// <summary>
+		/// Current user experience
+		/// </summary>
+        private float experience;
 
         /// <summary>
-        /// Level of the user, decides base stats - TODO
+        /// Level of the user, decides base stats
         /// </summary>
-        private uint level;
+        public uint Level =>
+	        (uint) experience / 100;
 
         /// <summary>
         /// Damage reduction from attacks
@@ -76,7 +88,7 @@ namespace CubeQuest.Account
         {
             get
             {
-                var h = 100 + (int) level * 5;
+                var h = 100 + (int) Level * 5;
 
                 foreach (var companion in equippedCompanions)
                     h += companion.Health;
@@ -115,7 +127,7 @@ namespace CubeQuest.Account
         {
             companions = new List<ICompanion>();
             equippedCompanions = new List<ICompanion>(3);
-            level = 1;
+            experience = 100;
             Health = MaxHealth;
         }
 
