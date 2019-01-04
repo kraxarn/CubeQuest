@@ -98,6 +98,22 @@ namespace CubeQuest.Account
         }
 
 		/// <summary>
+		/// Use's attack power
+		/// </summary>
+        public int Attack
+        {
+	        get
+	        {
+		        var a = (int) Level * 2;
+
+		        foreach (var companion in equippedCompanions)
+			        a += companion.Attack;
+
+		        return a;
+			}
+        }
+
+		/// <summary>
 		/// Percentage evasion from companions
 		/// </summary>
         private float Evasion
@@ -142,21 +158,5 @@ namespace CubeQuest.Account
         /// </summary>
         public static User FromString(string json) => 
             JSON.ToObject<User>(json);
-
-		/// <summary>
-		/// Attack an enemy
-		/// </summary>
-        public void Attack()
-        {
-            // TODO
-        }
-
-		/// <summary>
-		/// Take damage from an enemy
-		/// </summary>
-        public void Damage()
-        {
-            // TODO
-        }
     }
 }
