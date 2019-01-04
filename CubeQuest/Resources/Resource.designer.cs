@@ -68,25 +68,31 @@ namespace CubeQuest
 			public const int abc_tooltip_exit = 2131034123;
 			
 			// aapt resource value: 0x7f05000c
-			public const int cycle = 2131034124;
+			public const int attack = 2131034124;
 			
 			// aapt resource value: 0x7f05000d
-			public const int design_bottom_sheet_slide_in = 2131034125;
+			public const int cycle = 2131034125;
 			
 			// aapt resource value: 0x7f05000e
-			public const int design_bottom_sheet_slide_out = 2131034126;
+			public const int cycleAttack = 2131034126;
 			
 			// aapt resource value: 0x7f05000f
-			public const int design_snackbar_in = 2131034127;
+			public const int design_bottom_sheet_slide_in = 2131034127;
 			
 			// aapt resource value: 0x7f050010
-			public const int design_snackbar_out = 2131034128;
+			public const int design_bottom_sheet_slide_out = 2131034128;
 			
 			// aapt resource value: 0x7f050011
-			public const int flash = 2131034129;
+			public const int design_snackbar_in = 2131034129;
 			
 			// aapt resource value: 0x7f050012
-			public const int shake = 2131034130;
+			public const int design_snackbar_out = 2131034130;
+			
+			// aapt resource value: 0x7f050013
+			public const int flash = 2131034131;
+			
+			// aapt resource value: 0x7f050014
+			public const int shake = 2131034132;
 			
 			static Animation()
 			{
@@ -4096,13 +4102,13 @@ namespace CubeQuest
 			public const int image = 2131624068;
 			
 			// aapt resource value: 0x7f0e011d
-			public const int image_battle_companion_1 = 2131624221;
+			public const int image_battle_companion_0 = 2131624221;
 			
 			// aapt resource value: 0x7f0e011e
-			public const int image_battle_companion_2 = 2131624222;
+			public const int image_battle_companion_1 = 2131624222;
 			
 			// aapt resource value: 0x7f0e011f
-			public const int image_battle_companion_3 = 2131624223;
+			public const int image_battle_companion_2 = 2131624223;
 			
 			// aapt resource value: 0x7f0e0114
 			public const int image_battle_enemy0 = 2131624212;

@@ -72,7 +72,7 @@ namespace CubeQuest
             // Companions
             var companions = new List<ImageView>();
 
-            companions.Add(mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion0));
+            companions.Add(mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion_0));
 
             // Flashing health bar animation
             flashAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
@@ -143,9 +143,9 @@ namespace CubeQuest
             CreateEnemyEvents(enemyButtons);
 
 			// Replace cube placeholders with test images
-			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_1).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/bear.webp")));
-			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_2).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/buffalo.webp")));
-			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_3).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/chick.webp")));
+			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_0).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/bear.webp")));
+			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_1).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/buffalo.webp")));
+			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_2).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/chick.webp")));
 		}
 
         /// <summary>
