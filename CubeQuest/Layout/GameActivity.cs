@@ -21,6 +21,8 @@ using Android.Gms.Location;
 using CubeQuest.Handler;
 using CubeQuest.ListView.Item;
 using AlertDialog = Android.App.AlertDialog;
+using World_generation;
+using CubeQuest.WorldGen;
 
 namespace CubeQuest.Layout
 {
@@ -66,6 +68,8 @@ namespace CubeQuest.Layout
 		/// All markers except the player
 		/// </summary>
         private Dictionary<LatLng, Marker> markers;
+        
+        private ChunkHandler chunkHandler;
 
         private AlertDialog itemPopupDialog;
 
@@ -93,6 +97,7 @@ namespace CubeQuest.Layout
             firstTime = true;
 
 			markers = new Dictionary<LatLng, Marker>();
+            chunkHandler = new ChunkHandler();
 
             // Get main view
             mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
@@ -237,6 +242,10 @@ namespace CubeQuest.Layout
         {
             // Set local maps
             googleMap = map;
+            MapHandler.Map = map;
+            MapHandler.Visited = new List<LatLng>();
+
+            //map.CameraChange += Map_CameraChange;
 
             // Disable scrolling
             if (!MainActivity.DebugMode)
@@ -251,6 +260,7 @@ namespace CubeQuest.Layout
             // Get last known location or 0,0 if not known
             // TODO: If not known, show loading dialog
             var location = userLocation == null ? new LatLng(0, 0) : userLocation.ToLatLng();
+            chunkHandler.UpdateCoord(location.Latitude, location.Longitude);
 
             // Create player marker
             AddPlayer(location, 0);
@@ -265,6 +275,14 @@ namespace CubeQuest.Layout
             googleMap.MoveCamera(CameraUpdateFactory.NewCameraPosition(position));
 
             googleMap.SetOnMarkerClickListener(this);
+        }
+
+        private void Map_CameraChange(object sender, GoogleMap.CameraChangeEventArgs e)
+        {
+            if (e?.Position?.Target != null)
+            {
+                chunkHandler.UpdateCoord(e.Position.Target.Latitude, e.Position.Target.Longitude);
+            }
         }
 
         public bool OnMarkerClick(Marker marker)
