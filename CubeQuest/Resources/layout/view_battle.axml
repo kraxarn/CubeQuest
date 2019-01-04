@@ -11,6 +11,7 @@
 
     <LinearLayout
         android:id="@+id/linearlayout_battle_names_enemies_top"
+        android:paddingTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -65,8 +66,6 @@
             android:progress="100"
             android:layout_gravity="center_vertical"/>
 
-        
-
         <ProgressBar
 			android:id="@+id/battle_health_enemy1"
             android:layout_height="wrap_content"
@@ -97,78 +96,18 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearlayout_battle_names_enemies_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/progress_battle_health_enemies_top"
-        android:orientation="horizontal">
+   
 
-        <TextView
-            android:id="@+id/enemy_name3"
-            android:layout_width="wrap_content" 
-            android:layout_height="wrap_content" 
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="10sp"
-            android:text="SUPER NOODLE"/>
-
-        <TextView 
-            android:id="@+id/enemy_name4"
-            android:layout_width="wrap_content" 
-            android:layout_height="wrap_content" 
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="10sp"
-            android:text="DANGER NOODLE"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/progress_battle_health_enemies_top_bottom"
-        app:layout_constraintTop_toBottomOf="@+id/linearlayout_battle_names_enemies_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ProgressBar
-			android:id="@+id/battle_health_enemy3"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_weight="2"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginHorizontal="4dp"
-            android:paddingBottom="8dp"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:progressTint="#d32f2f"
-            android:progressBackgroundTint="#bdbdbd"
-            android:progress="100"
-            android:layout_gravity="center_vertical"/>
-
-        <ProgressBar
-			android:id="@+id/battle_health_enemy4"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_weight="2"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginHorizontal="4dp"
-            android:paddingBottom="8dp"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:progressTint="#d32f2f"
-            android:progressBackgroundTint="#bdbdbd"
-            android:progress="100"
-            android:layout_gravity="center_vertical"/>
-
-    </LinearLayout>
+    
 
 
     <!-- Top row of enemies -->
     <LinearLayout
         android:id="@+id/layout_enemy_top"
-        app:layout_constraintTop_toBottomOf="@id/progress_battle_health_enemies_top_bottom"
+        app:layout_constraintTop_toBottomOf="@id/progress_battle_health_enemies_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
+        android:paddingTop="48dp"
         android:orientation="horizontal">
 
         <ImageButton
@@ -200,32 +139,7 @@
 
     </LinearLayout>
 
-    <!-- Bottom row of enemies -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/layout_enemy_top">
-
-        <ImageButton
-            android:id="@+id/button_battle_enemy3"
-            android:src="@drawable/ic_sword"
-            android:background="@android:color/transparent"
-            android:layout_margin="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-
-        <ImageButton
-            android:id="@+id/button_battle_enemy4"
-            android:src="@drawable/ic_sword"
-            android:background="@android:color/transparent"
-            android:layout_margin="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
+    
 
     <!-- Top row of selected markers -->
     <LinearLayout
@@ -259,28 +173,7 @@
 
     </LinearLayout>
 
-    <!-- Bottom row of selected markers -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/layout_enemy_top">
 
-        <ImageView
-            android:id="@+id/image_battle_enemy3"
-            android:layout_margin="8dp"
-            android:layout_width="256px"
-            android:layout_height="256px"
-            android:layout_weight="1"/>
-
-        <ImageView
-            android:id="@+id/image_battle_enemy4"
-            android:layout_margin="8dp"
-            android:layout_width="256px"
-            android:layout_height="256px"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
 
     <GridLayout
         android:id="@+id/layout_battle_actions"
