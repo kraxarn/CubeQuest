@@ -49,7 +49,7 @@
         android:id="@+id/progress_battle_health_enemies_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/linearlayout_battle_names_enemies_top"
+        app:layout_constraintTop_toBottomOf="@id/linearlayout_battle_names_enemies_top"
         android:orientation="horizontal">
 
         <ProgressBar
@@ -143,7 +143,7 @@
 
     <!-- Top row of selected markers -->
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@id/progress_battle_health_enemies_top_bottom"
+        app:layout_constraintTop_toBottomOf="@id/progress_battle_health_enemies_top"
         android:id="@+id/layout_enemy_image_top"
         android:paddingTop="16dp"
         android:layout_width="match_parent"

@@ -71,7 +71,7 @@ namespace CubeQuest
             // Start battle music
             MusicManager.Play(MusicManager.EMusicTrack.Battle);
 
-            battleHandler = new BattleHandler();
+            
 
             // Set context
             this.context = context;
@@ -97,7 +97,9 @@ namespace CubeQuest
 
             // Enemy image buttons
             var enemyButtons = EnemyButtons.ToArray();
-            
+
+            battleHandler = new BattleHandler(enemyButtons, enemyHealthBars, playerHealthBar);
+
             // Enemy health bars
             enemyHealthBars = EnemyHealthBars.ToArray();
 
@@ -127,19 +129,6 @@ namespace CubeQuest
 			// When clicking 'attack'
 			view.FindViewById<Button>(Resource.Id.button_battle_attack).Click += (sender, args) =>
 			{
-				anims[SelectedEnemyIndex].New(slashFrames, 75);
-
-				void SwitchBack()
-				{
-					anims[SelectedEnemyIndex].New(selectedFrames, 400);
-					anims[SelectedEnemyIndex].Done -= SwitchBack;
-				}
-
-				anims[SelectedEnemyIndex].Done += SwitchBack;
-
-                companions[0].StartAnimation(AnimationUtils.LoadAnimation(context, Resource.Animation.attack));
-                BattleHandler.PlayerAttack(5);
-                StartTimer(enemyButtons);
 
 
 
