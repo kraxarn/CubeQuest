@@ -140,7 +140,7 @@ namespace CubeQuest.Account
 		/// <summary>
 		/// If the next attack should hit based on the current evasion
 		/// </summary>
-        private bool ShouldHit => 
+        public bool ShouldHit => 
 			new Random().NextDouble() <= Evasion;
 
 		public User()
