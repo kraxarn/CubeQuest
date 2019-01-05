@@ -17,4 +17,4 @@
         android:layout_marginTop="16dp"
         android:text="You found a squared cube!"/>
 
-<LinearLayout>
+</LinearLayout>
