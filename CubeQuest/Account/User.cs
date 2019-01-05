@@ -151,6 +151,15 @@ namespace CubeQuest.Account
             Health = MaxHealth;
         }
 
+		/// <summary>
+		/// Get the total damage that should be done to the player
+		/// </summary>
+		public int GetDamage(int damage)
+		{
+			var d = damage - Armor;
+			return d < 0 ? 0 : d;
+		}
+
         /// <summary>
         /// Serializes <see cref="User"/> to a JSON string
         /// </summary>
