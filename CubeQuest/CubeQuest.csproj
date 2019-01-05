@@ -349,9 +349,6 @@
     <AndroidResource Include="Resources\layout\view_dialog_credits.axml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_canvas_test.axml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\anim\attack.xml" />
   </ItemGroup>
   <ItemGroup>
