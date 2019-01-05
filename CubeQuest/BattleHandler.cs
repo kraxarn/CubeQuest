@@ -24,12 +24,8 @@ namespace CubeQuest
 
         public void StartAction(int index, EActionType action)
         {
-            PlayerAttack(AccountManager.CurrentUser.Attack, index);
-            DateTime Tthen = DateTime.Now;
-            do
-            {
-                
-            } while (Tthen.AddSeconds(5) > DateTime.Now);
+            //PlayerAttack(AccountManager.CurrentUser.Attack, index);
+
             EnemyAttack(10);
 
         }
