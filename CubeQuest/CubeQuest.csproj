@@ -98,12 +98,10 @@
     <Compile Include="Account\Weapons\NinjaStar.cs" />
     <Compile Include="Account\Weapons\Sword.cs" />
     <Compile Include="Battle.cs" />
-    <Compile Include="BattleDrawable.cs" />
     <Compile Include="BattleHandler.cs" />
     <Compile Include="Handler\ImageAnimator.cs" />
     <Compile Include="Handler\LocationManager.cs" />
     <Compile Include="Handler\MusicManager.cs" />
-    <Compile Include="Layout\CanvasTestActivity.cs" />
     <Compile Include="Layout\GameActivity.cs" />
     <Compile Include="Layout\MainActivity.cs" />
     <Compile Include="Layout\SettingsActivity.cs" />
