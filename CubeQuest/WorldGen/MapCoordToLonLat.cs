@@ -8,8 +8,8 @@ namespace World_generation
 {
     class MapCoordToLonLat
     {
-        public static double CalcLon(double x) => ((Map(Vars.LonRange, Vars.XRange, x) + Vars.LonMax) % Vars.LonRange) + Vars.LonMin;
-        public static double CalcLat(double y) => ((Map(Vars.LatRange, Vars.YRange, y) + Vars.LatMax) % Vars.LatRange) + Vars.LatMin;
+        public static double CalcLon(double x) => (x / Vars.ChunkXWidth) * Vars.ChunkWidth;
+        public static double CalcLat(double y) => (y / Vars.ChunkYHeight) * Vars.ChunkHeight;
 
 
         public static int ConvertLatToChunkX(double lat) => (int)(lat / Vars.ChunkWidth);
