@@ -143,17 +143,6 @@
     <AndroidAsset Include="Assets\companion\snake.webp" />
     <AndroidAsset Include="Assets\companion\walrus.webp" />
     <AndroidAsset Include="Assets\companion\wolf.webp" />
-    <AndroidAsset Include="Assets\weapon\axe.webp" />
-    <AndroidAsset Include="Assets\weapon\big_sword.webp" />
-    <AndroidAsset Include="Assets\weapon\bow.webp" />
-    <AndroidAsset Include="Assets\weapon\club.webp" />
-    <AndroidAsset Include="Assets\weapon\dagger.webp" />
-    <AndroidAsset Include="Assets\weapon\hammer.webp" />
-    <AndroidAsset Include="Assets\weapon\love_staff.webp" />
-    <AndroidAsset Include="Assets\weapon\mace.webp" />
-    <AndroidAsset Include="Assets\weapon\ninja_star.webp" />
-    <AndroidAsset Include="Assets\weapon\staff.webp" />
-    <AndroidAsset Include="Assets\weapon\sword.webp" />
     <None Include="Keystore\CubeQuest.jks" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">
