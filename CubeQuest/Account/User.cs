@@ -53,7 +53,15 @@ namespace CubeQuest.Account
         /// <summary>
         /// Damage reduction from attacks
         /// </summary>
-        private int armor;
+        public int Armor
+        {
+	        get
+	        {
+		        var a = 0;
+				equippedCompanions.ForEach(c => a += c.Armor);
+				return a;
+	        }
+        }
 
         private int health;
 
