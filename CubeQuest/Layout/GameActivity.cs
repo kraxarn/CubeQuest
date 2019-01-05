@@ -295,8 +295,28 @@ namespace CubeQuest.Layout
             */
 
             battleInfo.State = BottomSheetBehavior.StateCollapsed;
+            
+
+            if (!PlayerWithinRange(marker.Position))
+            {
+                var battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
+                battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Enabled = false;
+            }
+
+
 
             return true;
+        }
+
+        private bool PlayerWithinRange(LatLng target)
+        {
+            double playerLat = playerMarker.Position.Latitude;
+            double playerLon = playerMarker.Position.Longitude;
+            double targetLat = target.Latitude;
+            double targetLon = target.Longitude;
+            float[] results = new float[3];
+            Location.DistanceBetween(playerLat, playerLon, targetLat, targetLon, results);
+            return results[0] < 100; //100 Meters
         }
 
         /// <summary>
