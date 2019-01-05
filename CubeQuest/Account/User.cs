@@ -89,10 +89,7 @@ namespace CubeQuest.Account
             get
             {
                 var h = 100 + (int) Level * 5;
-
-                foreach (var companion in equippedCompanions)
-                    h += companion.Health;
-
+				equippedCompanions.ForEach(c => h += c.Health);
                 return h;
             }
         }
@@ -105,10 +102,7 @@ namespace CubeQuest.Account
 	        get
 	        {
 		        var a = (int) Level * 2;
-
-		        foreach (var companion in equippedCompanions)
-			        a += companion.Attack;
-
+				equippedCompanions.ForEach(c => a += c.Attack);
 		        return a;
 			}
         }
@@ -123,8 +117,7 @@ namespace CubeQuest.Account
 		        var e = 0f;
 				
 				// TODO: We probably don't want evasion stacking like this
-				foreach (var companion in equippedCompanions)
-			        e += companion.Evasion;
+				equippedCompanions.ForEach(c => e += c.Evasion);
 
 		        if (e > 1f)
 			        e = 1f;
