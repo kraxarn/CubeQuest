@@ -182,9 +182,6 @@ namespace CubeQuest.Layout
 	            battleInfo.State = BottomSheetBehavior.StateCollapsed;
             };
 
-            FindViewById<Button>(Resource.Id.button_debug_canvas_test).Click += (sender, args) => 
-	            StartActivity(typeof(CanvasTestActivity));
-
             //Set up itemPopupView, set up briefcase button 
             //and link itemPopupView to the briefcase button
             itemPopupView = LayoutInflater.Inflate(Resource.Layout.view_popup_layout, null);
