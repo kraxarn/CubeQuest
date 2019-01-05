@@ -50,22 +50,19 @@ namespace CubeQuest.Battle
             var action1 = new QueueAction(() =>
             {
                 PlayerAttack(AccountManager.CurrentUser.Attack, index);
-            });
+                Thread.Sleep(1000);
+            }, true);
             
             battleQueue.Add(action1);
             
             battleQueue.Add(new QueueAction(() =>
             {
                 EnemyAttack(10);
-            }));
+                Thread.Sleep(600);
+            }, true));
 
             battleQueue.Execute();
-
-            Task.Run(() =>
-            {
-                Thread.Sleep(1000);
-            });
-
+            
         }
 
         private void PlayerAttack(int damage, int index)
@@ -89,35 +86,19 @@ namespace CubeQuest.Battle
 
         private void EnemyAttack(int damage)
         {
-            AccountManager.CurrentUser.Health -= damage;
-
             OnAnimation?.Invoke(EAnimationTarget.Enemy, EAnimationType.Attack);
 
-            playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
+            if (!AccountManager.CurrentUser.ShouldHit)
+                return;
 
+            damage = AccountManager.CurrentUser.GetDamage(damage);
+
+            AccountManager.CurrentUser.Health -= damage;
+            
             if (AccountManager.CurrentUser.Health <= 0)
                 BattleEnd?.Invoke(false);
         }
-
-        private void AnimateAttackPlayer(ImageView player, Animation animation)
-        {
-            player.StartAnimation(animation);
-        }
-
-        private void AnimateAttackEnemy(ImageButton enemy, Animation animation)
-        {
-            enemy.StartAnimation(animation);
-        }
-
-        private static void AnimateTakingDamagePlayer(ImageView player, Animation animation)
-        {
-            player.StartAnimation(animation);
-        }
-
-        private static void AnimateTakingDamageEnemy(ImageButton enemy, Animation animation)
-        {
-            enemy.StartAnimation(animation);
-        }
+        
 
     }
 

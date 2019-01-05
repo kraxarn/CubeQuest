@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Android.App;
 using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
@@ -64,7 +65,7 @@ namespace CubeQuest.Battle
 
         private readonly BattleHandler battleHandler;
 
-        public BattleCore(Context context, View view, AssetManager assets, IItem item)
+        public BattleCore(Activity context, View view, AssetManager assets, IItem item)
         {
             // Start battle music
             MusicManager.Play(MusicManager.EMusicTrack.Battle);
@@ -122,11 +123,22 @@ namespace CubeQuest.Battle
 
             // Load image animators
             var anims = GetImageAnimators(selectedFrames);
+            
+            
 
 			// When clicking 'attack'
 			view.FindViewById<Button>(Resource.Id.button_battle_attack).Click += (sender, args) =>
 			{
                 battleHandler.StartAction(selectedEnemyIndex, BattleHandler.EActionType.Attack);
+            };
+
+            battleHandler.BattleEnd += won =>
+            {
+                if (won)
+                {
+                    View gameoverView = context.LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
+                    new AlertDialog.Builder(context).SetView(gameoverView).Show();
+                }
             };
 
 
@@ -165,7 +177,10 @@ namespace CubeQuest.Battle
 			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_0).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/bear.webp")));
 			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_1).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/buffalo.webp")));
 			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_2).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/chick.webp")));
-		}
+
+            AccountManager.CurrentUser.OnHealthChange += health =>
+                playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
+        }
 
         async void StartTimer(ImageButton[] enemyButtons)
         {
@@ -178,6 +193,8 @@ namespace CubeQuest.Battle
         {
             view.StartAnimation(attackAnimation);
         }
+
+
 
         /// <summary>
         /// Selected enemy
@@ -279,8 +296,7 @@ namespace CubeQuest.Battle
             imageButtons[1].Click += (sender, args) => SelectedEnemyIndex = 1;
             imageButtons[2].Click += (sender, args) => SelectedEnemyIndex = 2;
         }
-
-
+        
 
         /// <summary>
         /// Loads animation from assets folder
@@ -294,48 +310,6 @@ namespace CubeQuest.Battle
 
 	        return bitmaps;
         }
-
-        // FUNCTIONS FOR THE BATTLE HANDLER
-
-        public void EnemyLoseLife(int damage)
-        {
-            enemyHealthBars[selectedEnemyIndex].Progress -= damage;
-        }
-
-        public void PlayerLoseLife(int damage)
-        {
-            playerHealthBar.Progress -= damage;
-        }
-
-        public void AnimateAttackPlayer(ImageView player, Animation animation)
-        {
-            player.StartAnimation(animation);
-        }
-
-        public void AnimateAttackEnemy(ImageButton enemy, Animation animation)
-        {
-            enemy.StartAnimation(animation);
-        }
-
-        public static void AnimateTakingDamagePlayer(ImageView player, Animation animation)
-        {
-            player.StartAnimation(animation);
-        }
-
-        public static void AnimateTakingDamageEnemy(ImageButton enemy, Animation animation)
-        {
-            enemy.StartAnimation(animation);
-        }
-
-        public static void AttackingAnimationEnded(bool ContinueLoop)
-        {
-
-        }
-        
-
-
-
-
     }
 
     public static class ExtensionMethods
