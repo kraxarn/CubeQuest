@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
 using Android.Views;
 using Android.Views.Animations;
 using Android.Widget;
-using CubeQuest.Account.Interface;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CubeQuest.Account;
+using CubeQuest.Account.Interface;
 using CubeQuest.Handler;
 using CubeQuest.Layout;
-using Java.Util.Functions;
 
-namespace CubeQuest
+namespace CubeQuest.Battle
 {
-    public class Battle
+    public class BattleCore
     {
         /// <summary>
         /// Event for when battle ends, used by <see cref="End"/>
@@ -67,7 +64,7 @@ namespace CubeQuest
 
         private readonly BattleHandler battleHandler;
 
-        public Battle(Context context, View view, AssetManager assets, IItem item)
+        public BattleCore(Context context, View view, AssetManager assets, IItem item)
         {
             // Start battle music
             MusicManager.Play(MusicManager.EMusicTrack.Battle);

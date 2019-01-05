@@ -1,16 +1,10 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Contexts;
-using System.Timers;
-using Android.Accounts;
-using Android.Views;
 using Android.Views.Animations;
 using Android.Widget;
-using AccountManager = CubeQuest.Account.AccountManager;
+using CubeQuest.Account;
 
-namespace CubeQuest
+namespace CubeQuest.Battle
 {
     public  class BattleHandler
     {
