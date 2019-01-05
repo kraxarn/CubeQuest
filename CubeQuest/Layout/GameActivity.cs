@@ -296,6 +296,11 @@ namespace CubeQuest.Layout
                 var battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
                 battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Enabled = false;
             }
+            else
+            {
+                var battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
+                battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Enabled = true;
+            }
 
 
 
