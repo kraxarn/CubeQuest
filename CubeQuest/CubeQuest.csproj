@@ -97,8 +97,10 @@
     <Compile Include="Account\Weapons\Mace.cs" />
     <Compile Include="Account\Weapons\NinjaStar.cs" />
     <Compile Include="Account\Weapons\Sword.cs" />
-    <Compile Include="Battle.cs" />
-    <Compile Include="BattleHandler.cs" />
+    <Compile Include="Battle\BattleCore.cs" />
+    <Compile Include="Battle\BattleHandler.cs" />
+    <Compile Include="Battle\BattleQueue.cs" />
+    <Compile Include="Battle\IQueueAction.cs" />
     <Compile Include="Handler\ImageAnimator.cs" />
     <Compile Include="Handler\LocationManager.cs" />
     <Compile Include="Handler\MusicManager.cs" />
