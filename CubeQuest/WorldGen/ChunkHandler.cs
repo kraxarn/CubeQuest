@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace World_generation
+namespace CubeQuest.WorldGen
 {
-    class ChunkHandler
+	internal class ChunkHandler
     {
         //(Math.Pow(x1-x2,2)+Math.Pow(y1-y2,2)) < (d*d);
 

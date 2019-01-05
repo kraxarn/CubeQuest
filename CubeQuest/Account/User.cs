@@ -16,6 +16,18 @@ namespace CubeQuest.Account
         /// All companions currently equipped by the user (max 3)
         /// </summary>
         private readonly List<ICompanion> equippedCompanions;
+
+		/// <summary>
+		/// Total number of equipped companions (max 3)
+		/// </summary>
+        public int EquippedCompanionCount => 
+	        equippedCompanions.Count;
+
+		/// <summary>
+		/// Total number of companions in our inventory
+		/// </summary>
+        public int CompanionCount => 
+	        companions.Count;
 		
 		/// <summary>
 		/// Add experience to the user

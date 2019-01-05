@@ -110,7 +110,6 @@
     <Compile Include="WorldGen\MapImitator.cs" />
     <Compile Include="WorldGen\Perlin.cs" />
     <Compile Include="WorldGen\PointSpot.cs" />
-    <Compile Include="WorldGen\Program.cs" />
     <Compile Include="WorldGen\Test.cs" />
     <Compile Include="WorldGen\Vars.cs" />
     <Compile Include="WorldGen\WorldGen.cs" />

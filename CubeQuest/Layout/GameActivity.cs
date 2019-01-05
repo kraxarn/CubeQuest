@@ -21,7 +21,6 @@ using CubeQuest.ListView.Item;
 using CubeQuest.WorldGen;
 using System;
 using System.Collections.Generic;
-using World_generation;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest.Layout
@@ -295,6 +294,11 @@ namespace CubeQuest.Layout
             {
                 var battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
                 battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Enabled = false;
+            }
+            else
+            {
+                var battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
+                battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Enabled = true;
             }
 
 

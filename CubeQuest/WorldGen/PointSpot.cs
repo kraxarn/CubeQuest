@@ -1,13 +1,8 @@
 ﻿using Android.Gms.Maps.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace World_generation
+namespace CubeQuest.WorldGen
 {
-    class PointSpot
+	internal class PointSpot
     {
         public PointSpot(int x, int y, double count = 0)
         {
@@ -23,14 +18,10 @@ namespace World_generation
         public double Lat => MapCoordToLonLat.CalcLat(X);
         public double Lon => MapCoordToLonLat.CalcLon(Y);
 
-        public LatLng ToLatLng()
-        {
-            return new LatLng(Lat, Lon);
-        }
+        public LatLng ToLatLng() => 
+	        new LatLng(Lat, Lon);
 
-        public override string ToString()
-        {
-            return "X:" + X + " - Y:" + Y + " -- Lat: " + Lat + " - Lon:" + Lon;
-        }
+        public override string ToString() => 
+	        $"X:{X} - Y:{Y} -- Lat: {Lat} - Lon:{Lon}";
     }
 }

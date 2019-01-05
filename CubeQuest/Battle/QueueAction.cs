@@ -16,5 +16,8 @@ namespace CubeQuest.Battle
 
 		public void Execute() => 
 			action.Invoke();
+
+		public void End() => 
+			OnEnd?.Invoke(this, null);
 	}
 }
