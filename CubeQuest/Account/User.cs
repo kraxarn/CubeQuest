@@ -78,7 +78,7 @@ namespace CubeQuest.Account
         /// Current health in percentage
         /// </summary>
         public int HealthPercentage => 
-            MaxHealth / Health * 100;
+            (Health / MaxHealth) * 100;
 
         /// <summary>
         /// User's maximum health

@@ -10,6 +10,7 @@ using CubeQuest.Account.Interface;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CubeQuest.Account;
 using CubeQuest.Handler;
 using CubeQuest.Layout;
 using Java.Util.Functions;
@@ -70,9 +71,7 @@ namespace CubeQuest
         {
             // Start battle music
             MusicManager.Play(MusicManager.EMusicTrack.Battle);
-
             
-
             // Set context
             this.context = context;
 
@@ -83,27 +82,28 @@ namespace CubeQuest
             var companions = new List<ImageView>();
 
             companions.Add(mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion_0));
+            companions.Add(mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion_1));
+            companions.Add(mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion_2));
 
-            // Flashing health bar animation
+            // Animations
             flashAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
             attackAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.attack);
             shakeAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.shake);
-
-
-            //attackAnimation.AnimationEnd += delegate { AttackAnimationEnded(true); };
-
+            
             // Load enemy sprite(s)
             var enemySprite = BitmapFactory.DecodeStream(assets.Open($"enemy/{item.Icon}.webp"));
 
             // Enemy image buttons
             var enemyButtons = EnemyButtons.ToArray();
 
-            battleHandler = new BattleHandler(enemyButtons, enemyHealthBars, playerHealthBar);
-
             // Enemy health bars
             enemyHealthBars = EnemyHealthBars.ToArray();
 
+            // Player health bar
             playerHealthBar = view.FindViewById<ProgressBar>(Resource.Id.progress_battle_health);
+
+            // Battlehandler
+            battleHandler = new BattleHandler(enemyButtons, enemyHealthBars, playerHealthBar);
 
             // Set bitmaps of enemy buttons
             enemyButtons.SetBitmaps(enemySprite);
@@ -129,14 +129,25 @@ namespace CubeQuest
 			// When clicking 'attack'
 			view.FindViewById<Button>(Resource.Id.button_battle_attack).Click += (sender, args) =>
 			{
-
-
-
-                
+                battleHandler.StartAction(selectedEnemyIndex, BattleHandler.EActionType.Attack);
+                AccountManager.CurrentUser.Health += 0;
             };
 
-            var Stack = new Stack<Function>();
-            
+
+            // Player attacks animation in battle
+            battleHandler.PlayerAttackAnimation += delegate
+            {
+                companions[0].StartAnimation(attackAnimation);
+                enemyButtons[selectedEnemyIndex].StartAnimation(shakeAnimation);
+            };
+
+            // Enemy attacks animations in battle
+            battleHandler.EnemyAttackAnimation += delegate
+            {
+                enemyButtons[selectedEnemyIndex].StartAnimation(attackAnimation);
+                companions[0].StartAnimation(shakeAnimation);
+            };
+
 
             // When clicking 'run'
             view.FindViewById<Button>(Resource.Id.button_battle_run).Click += (sender, args) =>
@@ -163,6 +174,11 @@ namespace CubeQuest
             await Task.Delay(5000);
             enemyButtons[selectedEnemyIndex]
                 .StartAnimation(AnimationUtils.LoadAnimation(context, Resource.Animation.attack));
+        }
+
+        private void PlayAnimation(View view)
+        {
+            view.StartAnimation(attackAnimation);
         }
 
         /// <summary>
