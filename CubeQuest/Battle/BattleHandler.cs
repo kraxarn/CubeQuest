@@ -11,14 +11,13 @@ namespace CubeQuest.Battle
         private  ImageButton[] enemies;
         private  ProgressBar[] enemyHealthBars;
         private  ProgressBar playerHealthBar;
-
-        
+        private BattleQueue battleQue;
 
         public enum EActionType { Attack, Spare }
 
         public void StartAction(int index, EActionType action)
         {
-            //PlayerAttack(AccountManager.CurrentUser.Attack, index);
+            PlayerAttack(AccountManager.CurrentUser.Attack, index);
 
             EnemyAttack(10);
 

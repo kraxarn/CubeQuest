@@ -127,7 +127,6 @@ namespace CubeQuest.Battle
 			view.FindViewById<Button>(Resource.Id.button_battle_attack).Click += (sender, args) =>
 			{
                 battleHandler.StartAction(selectedEnemyIndex, BattleHandler.EActionType.Attack);
-                AccountManager.CurrentUser.Health += 0;
             };
 
 

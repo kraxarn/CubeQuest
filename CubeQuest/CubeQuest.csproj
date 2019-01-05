@@ -100,7 +100,9 @@
     <Compile Include="Battle\BattleCore.cs" />
     <Compile Include="Battle\BattleHandler.cs" />
     <Compile Include="Battle\BattleQueue.cs" />
+    <Compile Include="Battle\EnemyAttack.cs" />
     <Compile Include="Battle\IQueueAction.cs" />
+    <Compile Include="Battle\PlayerAttack.cs" />
     <Compile Include="Handler\ImageAnimator.cs" />
     <Compile Include="Handler\LocationManager.cs" />
     <Compile Include="Handler\MusicManager.cs" />
