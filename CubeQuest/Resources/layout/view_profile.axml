@@ -84,21 +84,8 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_horizontal"
 			android:rowCount="3"
-			android:columnCount="4">
-
-			<!-- Primary weapon -->
-			<ImageButton
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_margin="8dp"
-				android:background="?android:selectableItemBackground"
-				android:src="@drawable/ic_sword"/>
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
-				android:layout_margin="8dp"
-				android:text="primary"/>
+			android:columnCount="3"
+            android:orientation="vertical">
 
 			<!-- Companion 1 -->
 			<ImageButton
@@ -113,20 +100,12 @@
 				android:layout_gravity="center_vertical"
 				android:layout_margin="8dp"
 				android:text="cube1"/>
-
-			<!-- Secondary weapon -->
-			<ImageButton
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_margin="8dp"
-				android:background="?android:selectableItemBackground"
-				android:src="@drawable/ic_shield"/>
-			<TextView
+            <TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_vertical"
 				android:layout_margin="8dp"
-				android:text="secondary"/>
+				android:text="cube1_info"/>
 
 			<!-- Companion 2 -->
 			<ImageButton
@@ -141,20 +120,12 @@
 				android:layout_gravity="center_vertical"
 				android:layout_margin="8dp"
 				android:text="cube2"/>
-
-			<!-- Spell -->
-			<ImageButton
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_margin="8dp"
-				android:background="?android:selectableItemBackground"
-				android:src="@drawable/ic_spell"/>
-			<TextView
+            <TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_vertical"
 				android:layout_margin="8dp"
-				android:text="spell"/>
+				android:text="cube2_info"/>
 
 			<!-- Companion 3 -->
 			<ImageButton
@@ -168,7 +139,14 @@
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_vertical"
 				android:layout_margin="8dp"
+                android:gravity="center_horizontal"
 				android:text="cube3"/>
+            <TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:layout_margin="8dp"
+				android:text="cube3_info"/>
 
 		</GridLayout>
 	</FrameLayout>
