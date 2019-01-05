@@ -1,5 +1,6 @@
 using Android.App;
 using Android.Content;
+using Android.Gms.Location;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Graphics;
@@ -14,16 +15,14 @@ using Android.Widget;
 using CubeQuest.Account;
 using CubeQuest.Account.Enemies;
 using CubeQuest.Account.Interface;
-using CubeQuest.Account.Weapons;
-using System;
-using System.Collections.Generic;
-using Android.Gms.Location;
 using CubeQuest.Battle;
 using CubeQuest.Handler;
 using CubeQuest.ListView.Item;
-using AlertDialog = Android.App.AlertDialog;
-using World_generation;
 using CubeQuest.WorldGen;
+using System;
+using System.Collections.Generic;
+using World_generation;
+using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest.Layout
 {
@@ -192,13 +191,7 @@ namespace CubeQuest.Layout
             popupRecycler.SetLayoutManager(itemPopup);
 
             //Create a list of test items.
-            var items = new List<IItem>
-            {
-	            new Sword(),
-	            new Sword(),
-	            new Sword(),
-	            new Sword()
-            };
+            var items = new List<IItem>();
 
             var adapter = new ItemViewAdapter(items);
 

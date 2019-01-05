@@ -8,16 +8,6 @@ namespace CubeQuest.Account
     public class User
     {
         /// <summary>
-        /// Primary weapon equipped, like a sword
-        /// </summary>
-        private IWeapon primaryWeapon;
-
-        /// <summary>
-        /// Secondary weapon equipped, like a shield
-        /// </summary>
-        private IWeapon secondaryWeapon;
-
-        /// <summary>
         /// Magic spell equipped
         /// </summary>
         private ISpell spell;

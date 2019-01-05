@@ -83,26 +83,13 @@
     <Compile Include="Account\Companions\Example.cs" />
     <Compile Include="Account\Interface\ISpell.cs" />
     <Compile Include="Account\Interface\IItem.cs" />
-    <Compile Include="Account\Interface\IWeapon.cs" />
     <Compile Include="Account\SnapshotManager.cs" />
     <Compile Include="Account\User.cs" />
-    <Compile Include="Account\Weapons\Axe.cs" />
-    <Compile Include="Account\Weapons\BigSword.cs" />
-    <Compile Include="Account\Weapons\Bow.cs" />
-    <Compile Include="Account\Weapons\Staff.cs" />
-    <Compile Include="Account\Weapons\Club.cs" />
-    <Compile Include="Account\Weapons\Dagger.cs" />
-    <Compile Include="Account\Weapons\Hammer.cs" />
-    <Compile Include="Account\Weapons\LoveStaff.cs" />
-    <Compile Include="Account\Weapons\Mace.cs" />
-    <Compile Include="Account\Weapons\NinjaStar.cs" />
-    <Compile Include="Account\Weapons\Sword.cs" />
     <Compile Include="Battle\BattleCore.cs" />
     <Compile Include="Battle\BattleHandler.cs" />
     <Compile Include="Battle\BattleQueue.cs" />
-    <Compile Include="Battle\EnemyAttack.cs" />
     <Compile Include="Battle\IQueueAction.cs" />
-    <Compile Include="Battle\PlayerAttack.cs" />
+    <Compile Include="Battle\QueueAction.cs" />
     <Compile Include="Handler\ImageAnimator.cs" />
     <Compile Include="Handler\LocationManager.cs" />
     <Compile Include="Handler\MusicManager.cs" />
@@ -157,17 +144,6 @@
     <AndroidAsset Include="Assets\companion\snake.webp" />
     <AndroidAsset Include="Assets\companion\walrus.webp" />
     <AndroidAsset Include="Assets\companion\wolf.webp" />
-    <AndroidAsset Include="Assets\weapon\axe.webp" />
-    <AndroidAsset Include="Assets\weapon\big_sword.webp" />
-    <AndroidAsset Include="Assets\weapon\bow.webp" />
-    <AndroidAsset Include="Assets\weapon\club.webp" />
-    <AndroidAsset Include="Assets\weapon\dagger.webp" />
-    <AndroidAsset Include="Assets\weapon\hammer.webp" />
-    <AndroidAsset Include="Assets\weapon\love_staff.webp" />
-    <AndroidAsset Include="Assets\weapon\mace.webp" />
-    <AndroidAsset Include="Assets\weapon\ninja_star.webp" />
-    <AndroidAsset Include="Assets\weapon\staff.webp" />
-    <AndroidAsset Include="Assets\weapon\sword.webp" />
     <None Include="Keystore\CubeQuest.jks" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">
@@ -372,9 +348,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\view_dialog_credits.axml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_canvas_test.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\anim\attack.xml" />
