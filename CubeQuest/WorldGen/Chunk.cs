@@ -55,6 +55,11 @@ namespace CubeQuest.WorldGen
             //Loop all point look for match then hide
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public override bool Equals(object obj)
         {
             return (obj is Chunk) && ((obj as Chunk).X == this.X && (obj as Chunk).Y == this.Y);
