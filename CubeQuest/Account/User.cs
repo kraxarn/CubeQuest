@@ -7,6 +7,10 @@ namespace CubeQuest.Account
 {
     public class User
     {
+	    public delegate void OnHealthChangeEvent(int newHealth);
+
+		public event OnHealthChangeEvent OnHealthChange;
+
         /// <summary>
         /// All companions the player has
         /// </summary>
@@ -68,6 +72,8 @@ namespace CubeQuest.Account
 			        health = 0;
 				else if (health > MaxHealth)
 			        health = MaxHealth;
+
+				OnHealthChange?.Invoke(health);
 	        }
         }
 
