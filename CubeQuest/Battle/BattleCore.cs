@@ -99,7 +99,7 @@ namespace CubeQuest.Battle
             // Player health bar
             playerHealthBar = view.FindViewById<ProgressBar>(Resource.Id.progress_battle_health);
 
-            // Battlehandler
+            // Battle handler
             battleHandler = new BattleHandler(enemyButtons, enemyHealthBars, playerHealthBar);
 
             // Set bitmaps of enemy buttons
@@ -131,20 +131,22 @@ namespace CubeQuest.Battle
 
 
             // Player attacks animation in battle
-            battleHandler.PlayerAttackAnimation += delegate
+            battleHandler.OnAnimation += (target, type) => 
             {
-                companions[0].StartAnimation(attackAnimation);
-                enemyButtons[selectedEnemyIndex].StartAnimation(shakeAnimation);
+                switch (target)
+                {
+                    case BattleHandler.EAnimationTarget.Player:
+                        companions[0].StartAnimation(attackAnimation);
+                        enemyButtons[selectedEnemyIndex].StartAnimation(shakeAnimation);
+                        break;
+
+                    case BattleHandler.EAnimationTarget.Enemy:
+                        enemyButtons[selectedEnemyIndex].StartAnimation(attackAnimation);
+                        companions[0].StartAnimation(shakeAnimation);
+                        break;
+                }
             };
-
-            // Enemy attacks animations in battle
-            battleHandler.EnemyAttackAnimation += delegate
-            {
-                enemyButtons[selectedEnemyIndex].StartAnimation(attackAnimation);
-                companions[0].StartAnimation(shakeAnimation);
-            };
-
-
+            
             // When clicking 'run'
             view.FindViewById<Button>(Resource.Id.button_battle_run).Click += (sender, args) =>
             {

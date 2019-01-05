@@ -1,28 +1,23 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Android.Views.Animations;
 using Android.Widget;
 using CubeQuest.Account;
 
 namespace CubeQuest.Battle
 {
-    public  class BattleHandler
+    public class BattleHandler
     {
-        private  ImageButton[] enemies;
-        private  ProgressBar[] enemyHealthBars;
-        private  ProgressBar playerHealthBar;
-        private BattleQueue battleQue;
+        private ImageButton[] enemies;
+        private ProgressBar[] enemyHealthBars;
+        private ProgressBar playerHealthBar;
+        private BattleQueue battleQueue;
 
         public enum EActionType { Attack, Spare }
-
-        public void StartAction(int index, EActionType action)
-        {
-            PlayerAttack(AccountManager.CurrentUser.Attack, index);
-
-            EnemyAttack(10);
-
-        }
-        
+        public enum EAnimationTarget { Player, Enemy }
+        public enum EAnimationType { Attack, Damage }
 
         private bool EnemiesAreDead
         {
@@ -36,26 +31,48 @@ namespace CubeQuest.Battle
 
         public event BattleEndEvent BattleEnd;
 
-        public delegate void PlayerAttackAnimationEvent();
+        public delegate void OnAnimationEvent(EAnimationTarget target, EAnimationType type);
 
-        public event PlayerAttackAnimationEvent PlayerAttackAnimation;
+        public event OnAnimationEvent OnAnimation;
 
-        public delegate void EnemyAttackAnimationEvent();
-
-        public event EnemyAttackAnimationEvent EnemyAttackAnimation;
 
         public BattleHandler(ImageButton[] enemies, ProgressBar[] enemyHealthBars, ProgressBar playerHealthBar)
         {
             this.enemies = enemies;
             this.enemyHealthBars = enemyHealthBars;
             this.playerHealthBar = playerHealthBar;
+
+            battleQueue = new BattleQueue();
+        }
+
+        public void StartAction(int index, EActionType action)
+        {
+            var action1 = new QueueAction(() =>
+            {
+                PlayerAttack(AccountManager.CurrentUser.Attack, index);
+            });
+            
+            battleQueue.Add(action1);
+            
+            battleQueue.Add(new QueueAction(() =>
+            {
+                EnemyAttack(10);
+            }));
+
+            battleQueue.Execute();
+
+            Task.Run(() =>
+            {
+                Thread.Sleep(1000);
+            });
+
         }
 
         private void PlayerAttack(int damage, int index)
         {
             enemyHealthBars[index].Progress -= damage;
 
-            PlayerAttackAnimation?.Invoke();
+            OnAnimation?.Invoke(EAnimationTarget.Player, EAnimationType.Attack);
 
             if (enemyHealthBars[index].Progress <= 0)
                 KillEnemy(index);
@@ -74,13 +91,9 @@ namespace CubeQuest.Battle
         {
             AccountManager.CurrentUser.Health -= damage;
 
-            var health = AccountManager.CurrentUser.Health;
-
-            EnemyAttackAnimation?.Invoke();
+            OnAnimation?.Invoke(EAnimationTarget.Enemy, EAnimationType.Attack);
 
             playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
-
-            var healthProcent = AccountManager.CurrentUser.HealthPercentage;
 
             if (AccountManager.CurrentUser.Health <= 0)
                 BattleEnd?.Invoke(false);
