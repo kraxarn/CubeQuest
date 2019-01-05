@@ -1,5 +1,9 @@
-﻿using System.CodeDom.Compiler;
+﻿using System;
+using System.CodeDom.Compiler;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.Remoting.Contexts;
+using System.Timers;
 using Android.Accounts;
 using Android.Views;
 using Android.Views.Animations;
@@ -10,16 +14,22 @@ namespace CubeQuest
 {
     public  class BattleHandler
     {
-        private readonly ImageButton[] enemies;
-        private readonly ProgressBar[] enemyHealthBars;
-        private readonly ProgressBar playerHealthBar;
+        private  ImageButton[] enemies;
+        private  ProgressBar[] enemyHealthBars;
+        private  ProgressBar playerHealthBar;
+
+        
 
         public enum EActionType { Attack, Spare }
 
-        private void StartAction(int index, EActionType action)
+        public void StartAction(int index, EActionType action)
         {
-            PlayerAttack(AccountManager.CurrentUser.Attack, index);
+            //PlayerAttack(AccountManager.CurrentUser.Attack, index);
+
+            EnemyAttack(10);
+
         }
+        
 
         private bool EnemiesAreDead
         {
@@ -33,6 +43,14 @@ namespace CubeQuest
 
         public event BattleEndEvent BattleEnd;
 
+        public delegate void PlayerAttackAnimationEvent();
+
+        public event PlayerAttackAnimationEvent PlayerAttackAnimation;
+
+        public delegate void EnemyAttackAnimationEvent();
+
+        public event EnemyAttackAnimationEvent EnemyAttackAnimation;
+
         public BattleHandler(ImageButton[] enemies, ProgressBar[] enemyHealthBars, ProgressBar playerHealthBar)
         {
             this.enemies = enemies;
@@ -43,6 +61,8 @@ namespace CubeQuest
         private void PlayerAttack(int damage, int index)
         {
             enemyHealthBars[index].Progress -= damage;
+
+            PlayerAttackAnimation?.Invoke();
 
             if (enemyHealthBars[index].Progress <= 0)
                 KillEnemy(index);
@@ -60,6 +80,8 @@ namespace CubeQuest
         private void EnemyAttack(int damage)
         {
             AccountManager.CurrentUser.Health -= damage;
+
+            EnemyAttackAnimation?.Invoke();
 
             playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
 
