@@ -81,9 +81,13 @@ namespace CubeQuest
         {
             AccountManager.CurrentUser.Health -= damage;
 
+            var health = AccountManager.CurrentUser.Health;
+
             EnemyAttackAnimation?.Invoke();
 
             playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
+
+            var healthProcent = AccountManager.CurrentUser.HealthPercentage;
 
             if (AccountManager.CurrentUser.Health <= 0)
                 BattleEnd?.Invoke(false);

@@ -265,7 +265,7 @@ namespace CubeQuest.Layout
             // Target player with initial zoom
             var position = CameraPosition.InvokeBuilder()
                 .Target(location)
-                .Zoom(24f)
+                .Zoom(17f)
                 .Build();
 
             // Move camera to player

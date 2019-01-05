@@ -10,6 +10,7 @@ using CubeQuest.Account.Interface;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Android.App;
 using CubeQuest.Account;
 using CubeQuest.Handler;
 using CubeQuest.Layout;
@@ -147,6 +148,8 @@ namespace CubeQuest
                 enemyButtons[selectedEnemyIndex].StartAnimation(attackAnimation);
                 companions[0].StartAnimation(shakeAnimation);
             };
+
+            battleHandler.BattleEnd += playerWon => { new AlertDialog.Builder(context).SetTitle(""); };
 
 
             // When clicking 'run'
