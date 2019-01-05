@@ -4969,19 +4969,22 @@ namespace CubeQuest
 			public const int view_dialog_credits = 2130968661;
 			
 			// aapt resource value: 0x7f040056
-			public const int view_item_card = 2130968662;
+			public const int view_dialog_loot = 2130968662;
 			
 			// aapt resource value: 0x7f040057
-			public const int view_popup_item = 2130968663;
+			public const int view_item_card = 2130968663;
 			
 			// aapt resource value: 0x7f040058
-			public const int view_popup_layout = 2130968664;
+			public const int view_popup_item = 2130968664;
 			
 			// aapt resource value: 0x7f040059
-			public const int view_profile = 2130968665;
+			public const int view_popup_layout = 2130968665;
 			
 			// aapt resource value: 0x7f04005a
-			public const int view_user_entry = 2130968666;
+			public const int view_profile = 2130968666;
+			
+			// aapt resource value: 0x7f04005b
+			public const int view_user_entry = 2130968667;
 			
 			static Layout()
 			{
