@@ -1,15 +1,10 @@
-﻿using Android.Gms.Maps.Model;
+﻿using System.Collections.Generic;
+using Android.Gms.Maps.Model;
 using Android.Util;
-using CubeQuest.WorldGen;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace World_generation
+namespace CubeQuest.WorldGen
 {
-    class Chunk
+	internal class Chunk
     {
         public Chunk(int x, int y)
         {
@@ -34,7 +29,7 @@ namespace World_generation
                 Markers.Add(MapHandler.AddMarker(points[i].ToLatLng(), "Title", BitmapDescriptorFactory.FromAsset("enemy/snake.webp")));
             }
             Log.Debug("", X + ":" + Y + " Points: " + points.Count + " Markers: " + Markers.Count);
-            Log.Debug("", "Is visable? " + Markers[0].Visible);
+            Log.Debug("", "Is visible? " + Markers[0].Visible);
         }
 
         public void Unload()

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace World_generation
+﻿namespace CubeQuest.WorldGen
 {
-    class Vars
+	internal class Vars
     {
         public static int LonMin = -90;
         public static int LonMax = 90;

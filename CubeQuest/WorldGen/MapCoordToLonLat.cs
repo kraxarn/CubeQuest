@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace World_generation
+﻿namespace CubeQuest.WorldGen
 {
-    class MapCoordToLonLat
+	static class MapCoordToLonLat
     {
         public static double CalcLon(double x) => (x / Vars.ChunkXWidth) * Vars.ChunkWidth;
         public static double CalcLat(double y) => (y / Vars.ChunkYHeight) * Vars.ChunkHeight;

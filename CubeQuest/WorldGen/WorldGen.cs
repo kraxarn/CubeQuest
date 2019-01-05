@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace World_generation
+namespace CubeQuest.WorldGen
 {
-    class WorldGen
+	internal class WorldGen
     {
         const double multiplier = 0.1;
         static int[,] Dirr = new int[,] { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
