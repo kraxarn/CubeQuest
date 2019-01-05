@@ -81,7 +81,6 @@
     <Compile Include="Account\Interface\IEnemy.cs" />
     <Compile Include="Account\Interface\ICompanion.cs" />
     <Compile Include="Account\Companions\Example.cs" />
-    <Compile Include="Account\Interface\ISpell.cs" />
     <Compile Include="Account\Interface\IItem.cs" />
     <Compile Include="Account\SnapshotManager.cs" />
     <Compile Include="Account\User.cs" />

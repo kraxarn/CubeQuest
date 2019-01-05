@@ -8,11 +8,6 @@ namespace CubeQuest.Account
     public class User
     {
         /// <summary>
-        /// Magic spell equipped
-        /// </summary>
-        private ISpell spell;
-
-        /// <summary>
         /// All companions the player has
         /// </summary>
         private readonly List<ICompanion> companions;
