@@ -18,6 +18,7 @@ using CubeQuest.Account.Weapons;
 using System;
 using System.Collections.Generic;
 using Android.Gms.Location;
+using CubeQuest.Battle;
 using CubeQuest.Handler;
 using CubeQuest.ListView.Item;
 using AlertDialog = Android.App.AlertDialog;
@@ -265,7 +266,7 @@ namespace CubeQuest.Layout
             // Target player with initial zoom
             var position = CameraPosition.InvokeBuilder()
                 .Target(location)
-                .Zoom(24f)
+                .Zoom(17f)
                 .Build();
 
             // Move camera to player
@@ -440,7 +441,7 @@ namespace CubeQuest.Layout
             mainView.FindViewById<ProgressBar>(Resource.Id.progress_battle_health).Progress =
                 AccountManager.CurrentUser.Health;
 
-            var battle = new Battle(this, battleView, Assets, new EnemySnake());
+            var battle = new BattleCore(this, battleView, Assets, new EnemySnake());
 
             var centerX = mainView.Width  / 2;
             var centerY = mainView.Height / 2;

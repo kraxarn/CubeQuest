@@ -1,10 +1,10 @@
-﻿using Android.Gms.Common.Apis;
+﻿using System.Threading.Tasks;
+using Android.Gms.Common.Apis;
 using Android.Gms.Games;
 using Android.Gms.Games.Snapshot;
 using Android.Runtime;
-using System.Threading.Tasks;
 
-namespace CubeQuest.Account.Interface
+namespace CubeQuest.Account
 {
     public static class SnapshotManager
     {

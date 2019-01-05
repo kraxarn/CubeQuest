@@ -15,8 +15,8 @@ namespace World_generation
 
         public static int ChunkXWidth = 50;
         public static int ChunkYHeight = 50;
-        public static double ChunkWidth = 0.02;
-        public static double ChunkHeight = 0.02;
+        public static double ChunkWidth = 0.004;
+        public static double ChunkHeight = 0.004;
 
         public static int LonRange => LonMax - LonMin;
         public static int LatRange => LatMax - LatMin;
