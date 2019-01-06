@@ -102,6 +102,8 @@ namespace CubeQuest.Battle
             // Player health bar
             playerHealthBar = view.FindViewById<ProgressBar>(Resource.Id.progress_battle_health);
 
+            playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
+
             // Battle handler
             battleHandler = new BattleHandler(enemyButtons, enemyHealthBars, playerHealthBar);
 

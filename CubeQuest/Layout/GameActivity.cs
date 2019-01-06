@@ -101,10 +101,13 @@ namespace CubeQuest.Layout
             // Get main view
             mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
             mainView.Visibility = ViewStates.Invisible;
+            
+            var healthBar = FindViewById<ProgressBar>(Resource.Id.barHealth);
 
-			var health = AccountManager.CurrentUser.HealthPercentage;
+            healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
 
-            FindViewById<ProgressBar>(Resource.Id.barHealth).Progress = health;
+            AccountManager.CurrentUser.OnHealthChange +=
+                health => healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
 
             // Get last known location
             locationManager = new Handler.LocationManager(this);
@@ -230,6 +233,11 @@ namespace CubeQuest.Layout
             };
 
 
+        }
+
+        private void CurrentUser_OnHealthChange(int newHealth)
+        {
+            throw new NotImplementedException();
         }
 
         public override void OnEnterAnimationComplete()
