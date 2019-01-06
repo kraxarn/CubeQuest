@@ -11,7 +11,6 @@ namespace CubeQuest.WorldGen
 
         public WorldGen()
         {
-            //GenerateWorld();
         }
 
         public static List<PointSpot> GenerateArea(int xMin, int xMax, int yMin, int yMax)
@@ -67,65 +66,6 @@ namespace CubeQuest.WorldGen
             return returnPoints.Distinct().ToList();
         }
 
-
-        public static void OldWorldGen()
-        {
-            int yEnd = 10000;
-            int xEnd = 86;
-            for (int y = 0; y < yEnd; y++)
-            {
-                for (int x = 0; x < xEnd; x++)
-                {
-                    //getChar(Perlin.OctavePerlin(x * multiplier, y * multiplier, 0, 4, 0.5));
-                    //Console.Write(GetChar(Perlin.OctavePerlin(x * multiplier, y * multiplier, 0, 1, 1)));
-                    Console.Write(GetChar(Perlin.OctavePerlin(x * multiplier, y * multiplier, 0, 4, 0.5)));
-                    //Console.Write(GetChar(Perlin.OctavePerlin(x * multiplier, y * multiplier, 0, 2, 2)));
-                    if (x < xEnd - 1)
-                    {
-                        Console.Write(" ");
-                    }
-                }
-                Console.WriteLine();
-            }
-        }
-
-        static void GenerateWorld()
-        {
-            int xStart = -186;
-            int yStart = -2000;
-            int yEnd = -1000;
-            int xEnd = -100;
-
-            char[] lastRow = new char[xEnd-xStart];
-            List<PointSpot> pointsToAdd = new List<PointSpot>();
-
-            for (int y = yStart; y < yEnd; y++)
-            {
-                for (int x = xStart; x < xEnd; x++)
-                {
-                    double val = Perling(x, y);
-                    if (val <= 1)
-                        if (lastRow[x-xStart] == ' ')
-                        {
-                            PointSpot pooi = GetLocalMin(x, y, val);
-                            pooi.Count = val;
-                            pointsToAdd.Add(pooi);
-                        }
-
-                    lastRow[x - xStart] = val <= 1 ? 'X' : ' ';
-                    PointSpot poi = pointsToAdd.Find(p => p.X == x && p.Y == y);
-                    bool excist = poi != null;
-                    Console.Write(excist ? "X" : " ");
-                    if (excist)
-                    {
-                        pointsToAdd.Remove(poi);
-                    }
-
-                }
-                //Console.WriteLine();
-            }
-        }
-
         static PointSpot GetLocalMin(int x, int y, double min)
         {
             for (int i = 0; i < 4; i++)
@@ -139,7 +79,6 @@ namespace CubeQuest.WorldGen
             return new PointSpot(x, y, min);
         }
 
-
         public static List<PointSpot> LoadChunk(int x, int y)
         {
             return GenerateArea(x * Vars.ChunkXWidth, (x + 1) * Vars.ChunkXWidth, y * Vars.ChunkYHeight, (y + 1) * Vars.ChunkYHeight);
@@ -148,21 +87,6 @@ namespace CubeQuest.WorldGen
         static double Perling(int x, int y)
         {
             return Perlin.OctavePerlin(x * multiplier, y * multiplier, 0, 2, 2);
-        }
-
-        static char GetChar(double v)
-        {
-            Char[] arr = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
-            int arLen = arr.Length;
-            for (int i = 0; i < arLen; i++)
-            {
-                double val = ((i + 1) / (double)arLen);
-                if (v < val)
-                {
-                    return arr[i];
-                }
-            }
-            return ' ';
         }
     }
 }
