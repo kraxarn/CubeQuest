@@ -30,13 +30,11 @@ namespace CubeQuest.WorldGen
 
             int xDis;
             int yDis;
-            int arrayIndex;
 
             for (int i = 0; i < 9; i++)
             {
                 xDis = -1 + (i % 3);
                 yDis = -1 + (i / 3);
-                arrayIndex = 3 * yDis + xDis + 4; //3 * (y + 1) + (x + 1)
                 int x = chunkXCoord + xDis;
                 int y = chunkYCoord + yDis;
                 if (!WorldChunks.Any(c => c.X == x && c.Y == y))
