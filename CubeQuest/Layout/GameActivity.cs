@@ -104,14 +104,18 @@ namespace CubeQuest.Layout
             mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
             mainView.Visibility = ViewStates.Invisible;
 
+            // Get health bar and heart
             var healthBar = FindViewById<ProgressBar>(Resource.Id.barHealth);
+            var healthBarHeart = FindViewById<ImageView>(Resource.Id.barHeart);
+
 
             healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
 
             AccountManager.CurrentUser.OnHealthChange +=
                 health => healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
 
-            AccountManager.CurrentUser.OnDeadChange += isAlive => healthBar.Alpha = isAlive ? 1f : 0.5f;
+            // When you die the health bar and heart is set.
+            AccountManager.CurrentUser.OnDeadChange += isAlive => healthBar.Alpha = healthBarHeart.Alpha = isAlive ? 1f : 0.5f;
 
 
             // Get last known location
@@ -138,7 +142,7 @@ namespace CubeQuest.Layout
 
                     if (location.Speed > 0)
                     {
-                        AccountManager.CurrentUser.Health += 10;
+                        AccountManager.CurrentUser.Health += 1;
                     }
 
                     // If map hasn't loaded yet, ignore player marker
@@ -451,7 +455,7 @@ namespace CubeQuest.Layout
 
             var animator = ViewAnimationUtils.CreateCircularReveal(battleView, centerX, centerY, 0f, radius);
 
-            battle.End += () =>
+            battle.End += (type) =>
             {
                 MusicManager.Play(MusicManager.EMusicTrack.Map);
 
@@ -460,7 +464,7 @@ namespace CubeQuest.Layout
                 {
                     RunOnUiThread(() =>
                         {
-                            if (AccountManager.CurrentUser.IsAlive)
+                            if (type == BattleCore.EBattleEndType.Won)
                             {
                                 var dialogView = this.LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
 
@@ -468,8 +472,7 @@ namespace CubeQuest.Layout
                                     .SetView(dialogView)
                                     .Show();
                             }
-
-                            else
+                            else if(type == BattleCore.EBattleEndType.Lost)
                             {
                                 new AlertDialog.Builder(this)
                                     .SetTitle("You died!")

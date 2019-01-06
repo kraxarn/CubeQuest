@@ -22,7 +22,14 @@ namespace CubeQuest.Battle
         /// <summary>
         /// Event for when battle ends, used by <see cref="End"/>
         /// </summary>
-        public delegate void EndEvent();
+        public delegate void EndEvent(EBattleEndType battleEndType);
+
+        public enum EBattleEndType
+        {
+            Won,
+            Lost,
+            Ran
+        };
 
         /// <summary>
         /// When the battle ends
@@ -138,18 +145,19 @@ namespace CubeQuest.Battle
             {
                 if (won)
                 {
-                    End?.Invoke();
+                    End?.Invoke(EBattleEndType.Won);
                 }
                 else
                 {
-                    End?.Invoke();
+                    End?.Invoke(EBattleEndType.Lost);
                 }
             };
 
 
             // Player attacks animation in battle
-            battleHandler.OnAnimation += (target, type) => 
+            battleHandler.OnAnimation += (target, type) =>
             {
+                
                 switch (target)
                 {
                     case BattleHandler.EAnimationTarget.Player:
@@ -162,6 +170,7 @@ namespace CubeQuest.Battle
                         companions[0].StartAnimation(shakeAnimation);
                         break;
                 }
+                
             };
             
             // When clicking 'run'
@@ -172,19 +181,14 @@ namespace CubeQuest.Battle
                     anim.Stop();
 
                 // Invoke end event
-                End?.Invoke();
+                End?.Invoke(EBattleEndType.Ran);
 			};
 
 			// When clicking 'win'
 			view.FindViewById<Button>(Resource.Id.button_battle_magic).Click += (sender, args) =>
-			{
-				var dialogView = context.LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
-
-				new AlertDialog.Builder(context)
-					.SetView(dialogView)
-					.SetPositiveButton("Collect", (s, a) => End?.Invoke())
-					.Show();
-			};
+                {
+                    End?.Invoke(EBattleEndType.Won);
+                };
 
             // Create events when clicking on enemies
             CreateEnemyEvents(enemyButtons);
@@ -209,9 +213,7 @@ namespace CubeQuest.Battle
         {
             view.StartAnimation(attackAnimation);
         }
-
-
-
+        
         /// <summary>
         /// Selected enemy
         /// </summary>
