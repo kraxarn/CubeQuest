@@ -10,6 +10,7 @@ using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
 using System.Collections.Generic;
+using Android.Graphics;
 using CubeQuest.Handler;
 using Uri = Android.Net.Uri;
 
@@ -138,8 +139,10 @@ namespace CubeQuest.Layout
             MusicManager.Volume = 0.2f;
             MusicManager.Play(MusicManager.EMusicTrack.Map);
 
-            // Google signin
-            if (IsConnected)
+			AccountManager.SaveBitmap = BitmapFactory.DecodeStream(Assets.Open("enemy/snake.webp"));
+
+			// Google signin
+			if (IsConnected)
                 AccountManager.Create(this);
         }
 

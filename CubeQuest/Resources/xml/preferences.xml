@@ -79,6 +79,16 @@
 			app:title="Log out"
 			app:summary="Log out and close the app"/>
 
+		<Preference
+			app:key="load_progress"
+			app:title="View progress"
+			app:summary="View save files"/>
+
+		<Preference
+			app:key="save_progress"
+			app:title="Save progress"
+			app:summary="Save your progress to the cloud"/>
+
 	</PreferenceCategory>
 
 </PreferenceScreen>
