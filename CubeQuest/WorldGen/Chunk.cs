@@ -24,12 +24,10 @@ namespace CubeQuest.WorldGen
             List<PointSpot> points = WorldGen.LoadChunk(X, Y);
             for (int i = 0; i < points.Count; i++)
             {
-                Log.Debug("", points[i].ToLatLng().ToString() + "");
-
+                double val = points[i].Value;
+                //Value: 
                 Markers.Add(MapHandler.AddMarker(points[i].ToLatLng(), "Title", BitmapDescriptorFactory.FromAsset("enemy/snake.webp")));
             }
-            Log.Debug("", X + ":" + Y + " Points: " + points.Count + " Markers: " + Markers.Count);
-            Log.Debug("", "Is visible? " + Markers[0].Visible);
         }
 
         public void Unload()

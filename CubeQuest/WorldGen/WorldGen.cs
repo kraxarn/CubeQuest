@@ -29,7 +29,7 @@ namespace CubeQuest.WorldGen
                             PointSpot localMinSpot = GetLocalMin(x, y, val);
                             if (!(localMinSpot.X < xMin || localMinSpot.X >= xMax || localMinSpot.Y < yMin || localMinSpot.Y >= yMax))
                             {
-                                localMinSpot.Count = val;
+                                localMinSpot.Value = val;
                                 pointsToAdd.Add(localMinSpot);
                                 returnPoints.Add(localMinSpot);
                             }
