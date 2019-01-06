@@ -212,6 +212,9 @@ namespace CubeQuest.Layout
             FindViewById<Switch>(Resource.Id.switch_debug_auto_camera).CheckedChange += (sender, args) => 
 	            autoCamera = args.IsChecked;
 
+            if (!MainActivity.DebugMode)
+	            FindViewById<LinearLayout>(Resource.Id.layout_debug_tools).Visibility = ViewStates.Gone;
+
             //Set up itemPopupView, set up briefcase button 
             //and link itemPopupView to the briefcase button
             itemPopupView = LayoutInflater.Inflate(Resource.Layout.view_popup_layout, null);
