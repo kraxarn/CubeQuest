@@ -29,9 +29,9 @@
                 
                 <ImageView
                     android:id="@+id/item_icon"
-                    android:src="@drawable/ic_sword"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:src="@drawable/ic_cube"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/fab_margin"
                 />
                 
@@ -44,6 +44,7 @@
                     android:layout_marginEnd="@dimen/fab_margin"
                 />
                 <ImageButton
+                    android:id="@+id/item_expand_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_heart"

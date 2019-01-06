@@ -135,7 +135,7 @@ namespace CubeQuest.Layout
             base.OnStart();
 
             MusicManager.Create(this);
-            MusicManager.Volume = 0.4f;
+            MusicManager.Volume = 0.2f;
             MusicManager.Play(MusicManager.EMusicTrack.Map);
 
             // Google signin

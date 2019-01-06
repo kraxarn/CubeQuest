@@ -90,6 +90,7 @@
     <Compile Include="Battle\IQueueAction.cs" />
     <Compile Include="Battle\QueueAction.cs" />
     <Compile Include="Handler\ImageAnimator.cs" />
+    <Compile Include="Handler\ImageHandler.cs" />
     <Compile Include="Handler\LocationManager.cs" />
     <Compile Include="Handler\MusicManager.cs" />
     <Compile Include="Layout\GameActivity.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="ListView\Users\UserEntriesAdapter.cs" />
     <Compile Include="ListView\Users\UserEntryViewHolder.cs" />
     <Compile Include="ListView\Users\UserEntry.cs" />
+    <Compile Include="MonsterGen\MonsterFactory.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ListView\Item\ItemViewAdapter.cs" />
