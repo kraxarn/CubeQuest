@@ -10,6 +10,7 @@ using CubeQuest.ListView.Users;
 using System.Collections.Generic;
 using Android.Views;
 using Android.Widget;
+using CubeQuest.Account;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
 
 namespace CubeQuest.Layout
@@ -52,6 +53,14 @@ namespace CubeQuest.Layout
 
 			FindPreference("licenses").PreferenceClick += (sender, args) =>
 				OpenLicenses();
+
+			FindPreference("save_progress").PreferenceClick += (sender, args) =>
+			{
+				AccountManager.SaveUserProgress();
+			};
+
+			FindPreference("load_progress").PreferenceClick += (sender, args) => 
+				StartActivityForResult(AccountManager.SelectSaveIntent, 9003);
 		}
 
 		/// <summary>
