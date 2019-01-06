@@ -10,7 +10,9 @@ using Android.Support.V7.App;
 using Android.Views;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
+using Android.Util;
 
 namespace CubeQuest.Account
 {
@@ -48,6 +50,17 @@ namespace CubeQuest.Account
         /// </summary>
 	    public static string Name => 
 	        GamesClass.Players.GetCurrentPlayer(googleClient).DisplayName;
+
+        private static SnapshotManager snapshotManager;
+
+        public static byte[] SaveData
+        {
+	        get => snapshotManager.Snapshot;
+	        set => snapshotManager.Snapshot = value;
+        }
+
+        public static Intent SelectSaveIntent => 
+	        snapshotManager.SelectSnapshotIntent;
 
         /// <summary>
         /// Creates account manager and attempts to sign in silently (triggers <see cref="OnSuccess"/> or <see cref="OnFailure"/>
@@ -90,6 +103,8 @@ namespace CubeQuest.Account
 	                OnSuccess?.Invoke(silentSignIn.Status);
 	            else
 	                OnFailure?.Invoke(silentSignIn.Status);
+
+				snapshotManager = new SnapshotManager(googleClient);
 	        };
 
             // Register callback to our connection listener
@@ -120,8 +135,11 @@ namespace CubeQuest.Account
                 OnFailure?.Invoke(result.Status);
 		}
 
+		[Obsolete("Doesn't work")]
 	    public static Bitmap SaveIcon =>
 	        BitmapFactory.DecodeResource(context.Resources, Resource.Mipmap.ic_launcher_round);
+
+	    public static Bitmap SaveBitmap;
 
         public static Intent AchievementsIntent => 
             GamesClass.Achievements.GetAchievementsIntent(googleClient);
@@ -137,6 +155,21 @@ namespace CubeQuest.Account
 
         public static void SetViewForPopups(View view) => 
             GamesClass.SetViewForPopups(googleClient, view);
+
+        public static void SaveUserProgress()
+        {
+	        SaveData = Encoding.UTF8.GetBytes(CurrentUser.ToString());
+
+			//GetUserProgress();
+        }
+
+        public static void GetUserProgress()
+        {
+	        var data = SaveData;
+	        var str = Encoding.UTF8.GetString(data);
+
+	        Log.Info("SAVE_DATA", str ?? "NO_DATA");
+        }
     }
 
     public static class DateTimeConverter
