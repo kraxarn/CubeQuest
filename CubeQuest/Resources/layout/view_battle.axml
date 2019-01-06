@@ -199,11 +199,12 @@
             android:text="Defense"/>
 
         <Button
+            android:id="@+id/button_battle_magic"
             android:layout_columnWeight="1"
             android:drawableLeft="@drawable/ic_spell"
             android:backgroundTint="@color/colorPrimaryDark"
             android:padding="16dp"
-            android:text="Magic"/>
+            android:text="Win"/>
 
         <Button
             android:id="@+id/button_battle_run"
