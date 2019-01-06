@@ -156,9 +156,17 @@ namespace CubeQuest.Layout
             profileView.FindViewById<ImageButton>(Resource.Id.button_settings).Click += (sender, args) =>
 	            StartActivity(new Intent(this, typeof(SettingsActivity)));
 
+			// Avoid clicking through profile view
+			profileView.Touch += (sender, args) => 
+				args.Handled = true;
+
             // Inflate battle view
             battleView = FindViewById<ViewStub>(Resource.Id.stub_battle).Inflate();
             battleView.Visibility = ViewStates.Invisible;
+
+			// Avoid clicking through battle view
+            battleView.Touch += (sender, args) => 
+	            args.Handled = true;
 
             // Setup debug mode
             FindViewById<Button>(Resource.Id.button_debug_enemy).Click += (sender, args) =>
