@@ -109,6 +109,15 @@ namespace CubeQuest.Layout
             AccountManager.CurrentUser.OnHealthChange +=
                 health => healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
 
+            AccountManager.CurrentUser.OnDeadChange += (isAlive) =>
+            {
+                if (!isAlive)
+                {
+                    healthBar.Alpha = 0.5f;
+                }
+            };
+
+
             // Get last known location
             locationManager = new Handler.LocationManager(this);
             userLocation    = await locationManager.GetLastKnownLocationAsync();
@@ -449,15 +458,7 @@ namespace CubeQuest.Layout
                 animator2.AnimationEnd += (o, eventArgs) => battleView.Visibility = ViewStates.Invisible;
                 animator2.Start();
                 fabUser.Show();
-
-                using (var db = new AlertDialog.Builder(this))
-                {
-                    db.SetTitle("hello");
-                    db.SetMessage("test");
-                    db.SetPositiveButton("Ok", (sender, args) => {  });
-                    db.SetNegativeButton("Cancel", (sender, args) => {  });
-                    db.Show();
-                }
+                
             };
 
             battleView.Visibility = ViewStates.Visible;

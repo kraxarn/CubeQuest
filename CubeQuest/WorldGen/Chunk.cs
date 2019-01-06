@@ -27,6 +27,7 @@ namespace CubeQuest.WorldGen
                 double val = points[i].Value;
                 //Value: 
                 Markers.Add(MapHandler.AddMarker(points[i].ToLatLng(), "Title", BitmapDescriptorFactory.FromAsset("enemy/snake.webp")));
+                Markers[i].Tag = val;
             }
         }
 

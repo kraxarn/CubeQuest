@@ -145,6 +145,14 @@ namespace CubeQuest.Battle
 	                    .SetPositiveButton("Collect", (sender, args) => End?.Invoke())
 	                    .Show();
                 }
+                else
+                {
+                    new AlertDialog.Builder(context)
+                        .SetTitle("You lost")
+                        .SetMessage("Would you like to continue?")
+                        .SetPositiveButton("Collect", (sender, args) => End?.Invoke())
+                        .Show();
+                }
             };
 
 
