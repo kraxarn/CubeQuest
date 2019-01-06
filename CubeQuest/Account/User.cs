@@ -1,12 +1,12 @@
-﻿using System;
-using CubeQuest.Account.Interface;
+﻿using CubeQuest.Account.Interface;
 using fastJSON;
+using System;
 using System.Collections.Generic;
-using Android.Gms.Games.MultiPlayer.TurnBased;
+using System.Text;
 
 namespace CubeQuest.Account
 {
-    public class User
+	public class User
     {
         public delegate void OnHealthChangeEvent(int newHealth);
 
@@ -212,5 +212,11 @@ namespace CubeQuest.Account
         /// </summary>
         public static User FromString(string json) =>
             JSON.ToObject<User>(json);
+
+        public byte[] ToBytes() =>
+	        Encoding.UTF8.GetBytes(ToString());
+
+        public static User FromBytes(byte[] data) =>
+	        FromString(Encoding.UTF8.GetString(data));
     }
 }
