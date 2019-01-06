@@ -306,7 +306,8 @@ namespace CubeQuest.Layout
 
             var battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
             battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Enabled = isWithinRange;
-            
+            battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Alpha = isWithinRange ? 1 : 0.5f;
+
             return true;
         }
 
