@@ -21,23 +21,23 @@ namespace CubeQuest.MonsterGen
             IEnemy enemy;
             if(val <= 0.7)
             {
-                enemy = new EnemySnake();
+                enemy = new PinkAlien();
             }
             else if (val <= 0.8)
             {
-                enemy = new EnemySnake();
+                enemy = new YellowAlien();
             }
             else if (val <= 0.9)
             {
-                enemy = new EnemySnake();
+                enemy = new GreenAlien();
             }
             else if (val <= 0.95)
             {
-                enemy = new EnemySnake();
+                enemy = new BlueAlien();
             }
             else if (val <= 1)
             {
-                enemy = new EnemySnake();
+                enemy = new BeigeAlien();
             }
             else
             {
