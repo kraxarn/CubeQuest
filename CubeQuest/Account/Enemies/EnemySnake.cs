@@ -1,7 +1,9 @@
-﻿using CubeQuest.Account.Interface;
+﻿using System;
+using CubeQuest.Account.Interface;
 
 namespace CubeQuest.Account.Enemies
 {
+	[Obsolete]
     public class EnemySnake : IEnemy
     {
         public string Icon => "snake";

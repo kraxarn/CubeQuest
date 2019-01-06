@@ -15,12 +15,16 @@ namespace CubeQuest.Handler
 {
     class ImageHandler
     {
-        private static Dictionary<string, BitmapDescriptor> images = new Dictionary<string, BitmapDescriptor>()
+        private static Dictionary<ImageName, BitmapDescriptor> images = new Dictionary<ImageName, BitmapDescriptor>()
        {
-        { "snake", BitmapDescriptorFactory.FromAsset("enemy/snake.webp")},
-        { "dog", BitmapDescriptorFactory.FromAsset("enemy/snake.webp")},
-        { "", BitmapDescriptorFactory.FromAsset("enemy/snake.webp")}
+        { ImageName.ALIEN_BEIGE, BitmapDescriptorFactory.FromAsset("enemy/alien_beige.webp")},
+        { ImageName.ALIEN_BLUE, BitmapDescriptorFactory.FromAsset("enemy/alien_blue.webp")},
+        { ImageName.ALIEN_GREEN, BitmapDescriptorFactory.FromAsset("enemy/alien_green.webp")},
+        { ImageName.ALIEN_PINK, BitmapDescriptorFactory.FromAsset("enemy/alien_pink.webp")},
+        { ImageName.ALIEN_YELLOW, BitmapDescriptorFactory.FromAsset("enemy/alien_yellow.webp")}
     };
-        public static BitmapDescriptor GetImage(string name) => images[name];
+
+        public enum ImageName { ALIEN_BEIGE, ALIEN_BLUE,ALIEN_GREEN,ALIEN_PINK,ALIEN_YELLOW}
+        public static BitmapDescriptor GetImage(ImageName name) => images[name];
     }
 }

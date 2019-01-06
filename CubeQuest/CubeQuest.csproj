@@ -76,7 +76,12 @@
     <Compile Include="Account\Companions\Parrot.cs" />
     <Compile Include="Account\Companions\Owl.cs" />
     <Compile Include="Account\Companions\Horse.cs" />
+    <Compile Include="Account\Enemies\BeigeAlien.cs" />
+    <Compile Include="Account\Enemies\BlueAlien.cs" />
     <Compile Include="Account\Enemies\EnemySnake.cs" />
+    <Compile Include="Account\Enemies\GreenAlien.cs" />
+    <Compile Include="Account\Enemies\PinkAlien.cs" />
+    <Compile Include="Account\Enemies\YellowAlien.cs" />
     <Compile Include="Account\GoogleConnectionListener.cs" />
     <Compile Include="Account\Interface\IEnemy.cs" />
     <Compile Include="Account\Interface\ICompanion.cs" />
@@ -142,6 +147,11 @@
     <AndroidAsset Include="Assets\companion\snake.webp" />
     <AndroidAsset Include="Assets\companion\walrus.webp" />
     <AndroidAsset Include="Assets\companion\wolf.webp" />
+    <AndroidAsset Include="Assets\enemy\alien_beige.webp" />
+    <AndroidAsset Include="Assets\enemy\alien_blue.webp" />
+    <AndroidAsset Include="Assets\enemy\alien_green.webp" />
+    <AndroidAsset Include="Assets\enemy\alien_pink.webp" />
+    <AndroidAsset Include="Assets\enemy\alien_yellow.webp" />
     <None Include="Keystore\CubeQuest.jks" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">
