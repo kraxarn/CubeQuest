@@ -111,13 +111,7 @@ namespace CubeQuest.Layout
             AccountManager.CurrentUser.OnHealthChange +=
                 health => healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
 
-            AccountManager.CurrentUser.OnDeadChange += (isAlive) =>
-            {
-                if (!isAlive)
-                {
-                    healthBar.Alpha = 0.5f;
-                }
-            };
+            AccountManager.CurrentUser.OnDeadChange += isAlive => healthBar.Alpha = isAlive ? 1f : 0.5f;
 
 
             // Get last known location
@@ -141,6 +135,11 @@ namespace CubeQuest.Layout
 
                     // Update user location
                     userLocation = location;
+
+                    if (location.Speed > 0)
+                    {
+                        AccountManager.CurrentUser.Health += 10;
+                    }
 
                     // If map hasn't loaded yet, ignore player marker
                     if (playerMarker == null)
