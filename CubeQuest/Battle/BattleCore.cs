@@ -136,7 +136,15 @@ namespace CubeQuest.Battle
 
             battleHandler.BattleEnd += won =>
             {
-                End?.Invoke();
+                if (won)
+                {
+                    var dialogView = context.LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
+
+                    new AlertDialog.Builder(context)
+	                    .SetView(dialogView)
+	                    .SetPositiveButton("Collect", (sender, args) => End?.Invoke())
+	                    .Show();
+                }
             };
 
 
@@ -166,7 +174,18 @@ namespace CubeQuest.Battle
 
                 // Invoke end event
                 End?.Invoke();
-            };
+			};
+
+			// When clicking 'win'
+			view.FindViewById<Button>(Resource.Id.button_battle_magic).Click += (sender, args) =>
+			{
+				var dialogView = context.LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
+
+				new AlertDialog.Builder(context)
+					.SetView(dialogView)
+					.SetPositiveButton("Collect", (s, a) => End?.Invoke())
+					.Show();
+			};
 
             // Create events when clicking on enemies
             CreateEnemyEvents(enemyButtons);
