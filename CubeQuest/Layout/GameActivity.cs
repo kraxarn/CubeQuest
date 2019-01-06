@@ -85,6 +85,8 @@ namespace CubeQuest.Layout
         /// </summary>
         private bool firstTime;
 
+        private bool autoCamera;
+
         /// <summary>
         /// Value returned from the achievements intent
         /// </summary>
@@ -107,17 +109,15 @@ namespace CubeQuest.Layout
             // Get health bar and heart
             var healthBar = FindViewById<ProgressBar>(Resource.Id.barHealth);
             var healthBarHeart = FindViewById<ImageView>(Resource.Id.barHeart);
-
-
+			
             healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
 
-            AccountManager.CurrentUser.OnHealthChange +=
-                health => healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
+            AccountManager.CurrentUser.OnHealthChange += health => 
+	            healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
 
             // When you die the health bar and heart is set.
             AccountManager.CurrentUser.OnDeadChange += isAlive => healthBar.Alpha = healthBarHeart.Alpha = isAlive ? 1f : 0.5f;
-
-
+			
             // Get last known location
             locationManager = new Handler.LocationManager(this);
             userLocation = await locationManager.GetLastKnownLocationAsync();
@@ -150,7 +150,9 @@ namespace CubeQuest.Layout
                         return;
 
                     playerMarker.Position = location.ToLatLng();
-                    googleMap.AnimateCamera(CameraUpdateFactory.NewLatLng(location.ToLatLng()));
+
+					if (autoCamera)
+						googleMap.AnimateCamera(CameraUpdateFactory.NewLatLng(location.ToLatLng()));
                 };
 
             // Show profile when clicking on button
@@ -205,6 +207,10 @@ namespace CubeQuest.Layout
 
                 battleInfo.State = BottomSheetBehavior.StateCollapsed;
             };
+
+			// Add auto camera toggle
+            FindViewById<Switch>(Resource.Id.switch_debug_auto_camera).CheckedChange += (sender, args) => 
+	            autoCamera = args.IsChecked;
 
             //Set up itemPopupView, set up briefcase button 
             //and link itemPopupView to the briefcase button
@@ -267,7 +273,7 @@ namespace CubeQuest.Layout
             MapHandler.Map = map;
             MapHandler.Visited = new List<LatLng>();
 
-            //map.CameraChange += Map_CameraChange;
+            map.CameraChange += Map_CameraChange;
 
             // Disable scrolling
             if (!MainActivity.DebugMode)

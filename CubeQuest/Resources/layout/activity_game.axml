@@ -53,6 +53,14 @@
 		android:paddingBottom="42dp"
 		android:orientation="vertical">
 
+        <Switch
+            android:id="@+id/switch_debug_auto_camera"
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+            android:typeface="monospace"
+            android:checked="true"
+            android:text="Auto camera"/>
+
         <Button
             android:id="@+id/button_debug_canvas_test"
             android:layout_width="wrap_content"
