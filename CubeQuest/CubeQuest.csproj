@@ -84,7 +84,6 @@
     <Compile Include="Account\Interface\IItem.cs" />
     <Compile Include="Account\SnapshotManager.cs" />
     <Compile Include="Account\User.cs" />
-    <Compile Include="Battle\Attack.cs" />
     <Compile Include="Battle\BattleCore.cs" />
     <Compile Include="Battle\BattleHandler.cs" />
     <Compile Include="Battle\BattleQueue.cs" />

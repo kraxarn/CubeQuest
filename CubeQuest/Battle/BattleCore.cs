@@ -134,11 +134,7 @@ namespace CubeQuest.Battle
 
             battleHandler.BattleEnd += won =>
             {
-                if (won)
-                {
-                    View gameoverView = context.LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
-                    new AlertDialog.Builder(context).SetView(gameoverView).Show();
-                }
+                End?.Invoke();
             };
 
 
