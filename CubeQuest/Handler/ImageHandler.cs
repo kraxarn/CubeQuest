@@ -13,7 +13,7 @@ using Android.Widget;
 
 namespace CubeQuest.Handler
 {
-    class ImageHandler
+	public class ImageHandler
     {
         private static Dictionary<ImageName, BitmapDescriptor> images = new Dictionary<ImageName, BitmapDescriptor>()
        {
