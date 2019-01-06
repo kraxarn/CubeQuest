@@ -4,16 +4,16 @@ namespace CubeQuest.WorldGen
 {
 	internal class PointSpot
     {
-        public PointSpot(int x, int y, double count = 0)
+        public PointSpot(int x, int y, double value = 0)
         {
             X = x;
             Y = y;
-            Count = count;
+            Value = value;
         }
 
         public int X { get; set; }
         public int Y { get; set; }
-        public double Count { get; set; }
+        public double Value { get; set; }
 
         public double Lat => MapCoordToLonLat.CalcLat(X);
         public double Lon => MapCoordToLonLat.CalcLon(Y);
