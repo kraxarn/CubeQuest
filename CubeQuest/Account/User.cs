@@ -53,7 +53,7 @@ namespace CubeQuest.Account
         /// Level of the user, decides base stats
         /// </summary>
         public uint Level =>
-            (uint)experience / 100;
+            (uint) experience / 100;
 
         /// <summary>
         /// Damage reduction from attacks
@@ -77,7 +77,7 @@ namespace CubeQuest.Account
                     isAlive = true;
                     OnDeadChange?.Invoke(isAlive);
                 }
-               
+
                 return isAlive;
             }
         }
@@ -103,7 +103,11 @@ namespace CubeQuest.Account
                     isAlive = false;
                     OnDeadChange?.Invoke(isAlive);
                 }
-
+                else if (!isAlive && HealthPercentage >= 25)
+                {
+                    isAlive = true;
+                    OnDeadChange?.Invoke(isAlive);
+                }
                 else if (health > MaxHealth)
                     health = MaxHealth;
 
@@ -120,7 +124,7 @@ namespace CubeQuest.Account
             {
                 var mHealth = MaxHealth;
 
-                var healthPrecentage = (int)(((float)Health / (float)MaxHealth) * 100);
+                var healthPrecentage = (int) (((float) Health / (float) MaxHealth) * 100);
 
                 return healthPrecentage;
             }
@@ -135,7 +139,7 @@ namespace CubeQuest.Account
         {
             get
             {
-                var h = 100 + (int)Level * 5;
+                var h = 100 + (int) Level * 5;
                 equippedCompanions.ForEach(c => h += c.Health);
                 return h;
             }
@@ -148,7 +152,7 @@ namespace CubeQuest.Account
         {
             get
             {
-                var a = (int)Level * 2;
+                var a = (int) Level * 2;
                 equippedCompanions.ForEach(c => a += c.Attack);
                 return a;
             }
