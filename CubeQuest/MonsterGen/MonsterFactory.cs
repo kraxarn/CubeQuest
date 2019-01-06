@@ -19,19 +19,19 @@ namespace CubeQuest.MonsterGen
         public static IEnemy CreateMonster(double val)
         {
             IEnemy enemy;
-            if(val <= 0.7)
+            if(val <= 0.85)
             {
                 enemy = new PinkAlien();
             }
-            else if (val <= 0.8)
+            else if (val <= 0.9)
             {
                 enemy = new YellowAlien();
             }
-            else if (val <= 0.9)
+            else if (val <= 0.95)
             {
                 enemy = new GreenAlien();
             }
-            else if (val <= 0.95)
+            else if (val <= 0.98)
             {
                 enemy = new BlueAlien();
             }
