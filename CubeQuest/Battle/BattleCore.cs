@@ -138,20 +138,11 @@ namespace CubeQuest.Battle
             {
                 if (won)
                 {
-                    var dialogView = context.LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
-
-                    new AlertDialog.Builder(context)
-	                    .SetView(dialogView)
-	                    .SetPositiveButton("Collect", (sender, args) => End?.Invoke())
-	                    .Show();
+                    End?.Invoke();
                 }
                 else
                 {
-                    new AlertDialog.Builder(context)
-                        .SetTitle("You lost")
-                        .SetMessage("Would you like to continue?")
-                        .SetPositiveButton("Collect", (sender, args) => End?.Invoke())
-                        .Show();
+                    End?.Invoke();
                 }
             };
 

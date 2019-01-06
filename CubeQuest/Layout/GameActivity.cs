@@ -21,26 +21,28 @@ using CubeQuest.ListView.Item;
 using CubeQuest.WorldGen;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Timers;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest.Layout
 {
-	[Activity(Label = "GameActivity", Theme = "@style/AppTheme.NoActionBar")]
+    [Activity(Label = "GameActivity", Theme = "@style/AppTheme.NoActionBar")]
     public class GameActivity : AppCompatActivity, IOnMapReadyCallback, GoogleMap.IOnMarkerClickListener
     {
-		/// <summary>
-		/// Current location of the user
-		/// </summary>
+        /// <summary>
+        /// Current location of the user
+        /// </summary>
         private Location userLocation;
-        
-		/// <summary>
-		/// The main map
-		/// </summary>
+
+        /// <summary>
+        /// The main map
+        /// </summary>
         private GoogleMap googleMap;
 
-		/// <summary>
-		/// Manages and updates our location
-		/// </summary>
+        /// <summary>
+        /// Manages and updates our location
+        /// </summary>
         private Handler.LocationManager locationManager;
 
         /// <summary>
@@ -48,26 +50,26 @@ namespace CubeQuest.Layout
         /// </summary>
         private Marker playerMarker;
 
-		/// <summary>
-		/// Main view for the profile
-		/// </summary>
+        /// <summary>
+        /// Main view for the profile
+        /// </summary>
         private View profileView;
 
-		/// <summary>
-		/// Main view for the battle ui
-		/// </summary>
+        /// <summary>
+        /// Main view for the battle ui
+        /// </summary>
         private View battleView;
 
-		/// <summary>
-		/// Main view with map
-		/// </summary>
+        /// <summary>
+        /// Main view with map
+        /// </summary>
         private View mainView;
 
-		/// <summary>
-		/// All markers except the player
-		/// </summary>
+        /// <summary>
+        /// All markers except the player
+        /// </summary>
         private Dictionary<LatLng, Marker> markers;
-        
+
         private ChunkHandler chunkHandler;
 
         private AlertDialog itemPopupDialog;
@@ -78,9 +80,9 @@ namespace CubeQuest.Layout
 
         private BottomSheetBehavior battleInfo;
 
-		/// <summary>
-		/// First time starting the activity
-		/// </summary>
+        /// <summary>
+        /// First time starting the activity
+        /// </summary>
         private bool firstTime;
 
         /// <summary>
@@ -95,13 +97,13 @@ namespace CubeQuest.Layout
 
             firstTime = true;
 
-			markers = new Dictionary<LatLng, Marker>();
+            markers = new Dictionary<LatLng, Marker>();
             chunkHandler = new ChunkHandler();
-
+            
             // Get main view
             mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
             mainView.Visibility = ViewStates.Invisible;
-            
+
             var healthBar = FindViewById<ProgressBar>(Resource.Id.barHealth);
 
             healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
@@ -120,10 +122,10 @@ namespace CubeQuest.Layout
 
             // Get last known location
             locationManager = new Handler.LocationManager(this);
-            userLocation    = await locationManager.GetLastKnownLocationAsync();
+            userLocation = await locationManager.GetLastKnownLocationAsync();
 
             // Get map and listen when it's ready
-            var mapFragment = (SupportMapFragment) SupportFragmentManager.FindFragmentById(Resource.Id.map);
+            var mapFragment = (SupportMapFragment)SupportFragmentManager.FindFragmentById(Resource.Id.map);
             mapFragment.GetMapAsync(this);
 
             var textDebugLocation = FindViewById<TextView>(Resource.Id.text_debug_location);
@@ -143,14 +145,14 @@ namespace CubeQuest.Layout
                     // If map hasn't loaded yet, ignore player marker
                     if (playerMarker == null)
                         return;
-                    
+
                     playerMarker.Position = location.ToLatLng();
                     googleMap.AnimateCamera(CameraUpdateFactory.NewLatLng(location.ToLatLng()));
                 };
 
             // Show profile when clicking on button
-            FindViewById<FloatingActionButton>(Resource.Id.fabUser).Click  += (sender, args) => ToggleProfile(true);
-            FindViewById<FloatingActionButton>(Resource.Id.fabGame).Click  += (sender, args) => ToggleProfile(false);
+            FindViewById<FloatingActionButton>(Resource.Id.fabUser).Click += (sender, args) => ToggleProfile(true);
+            FindViewById<FloatingActionButton>(Resource.Id.fabGame).Click += (sender, args) => ToggleProfile(false);
 
             // Set up profile view
             profileView = FindViewById<ViewStub>(Resource.Id.stub_profile).Inflate();
@@ -162,23 +164,23 @@ namespace CubeQuest.Layout
             profileView.FindViewById<TextView>(Resource.Id.textProfileName).Text = AccountManager.Name;
 
             // Set button actions
-            profileView.FindViewById<ImageButton>(Resource.Id.button_achievements).Click += (sender, args) => 
+            profileView.FindViewById<ImageButton>(Resource.Id.button_achievements).Click += (sender, args) =>
                 StartActivityForResult(AccountManager.AchievementsIntent, RcAchievementUi);
 
             profileView.FindViewById<ImageButton>(Resource.Id.button_settings).Click += (sender, args) =>
-	            StartActivity(new Intent(this, typeof(SettingsActivity)));
+                StartActivity(new Intent(this, typeof(SettingsActivity)));
 
-			// Avoid clicking through profile view
-			profileView.Touch += (sender, args) => 
-				args.Handled = true;
+            // Avoid clicking through profile view
+            profileView.Touch += (sender, args) =>
+                args.Handled = true;
 
             // Inflate battle view
             battleView = FindViewById<ViewStub>(Resource.Id.stub_battle).Inflate();
             battleView.Visibility = ViewStates.Invisible;
 
-			// Avoid clicking through battle view
-            battleView.Touch += (sender, args) => 
-	            args.Handled = true;
+            // Avoid clicking through battle view
+            battleView.Touch += (sender, args) =>
+                args.Handled = true;
 
             // Setup debug mode
             FindViewById<Button>(Resource.Id.button_debug_enemy).Click += (sender, args) =>
@@ -188,17 +190,17 @@ namespace CubeQuest.Layout
             FindViewById<Button>(Resource.Id.button_debug_battle).Click += (sender, args) => StartBattle();
 
             var battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
-			battleInfo         = BottomSheetBehavior.From(battleInfoView);
-            battleInfo.State   = BottomSheetBehavior.StateHidden;
+            battleInfo = BottomSheetBehavior.From(battleInfoView);
+            battleInfo.State = BottomSheetBehavior.StateHidden;
 
             battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Click +=
-	            (sender, args) => StartBattle();
+                (sender, args) => StartBattle();
 
             FindViewById<Button>(Resource.Id.button_debug_battle_info).Click += (sender, args) =>
             {
-	            battleInfoView.FindViewById<ImageView>(Resource.Id.image_battle_info).SetImageBitmap(BitmapFactory.DecodeStream(Assets.Open("enemy/snake.webp")));
+                battleInfoView.FindViewById<ImageView>(Resource.Id.image_battle_info).SetImageBitmap(BitmapFactory.DecodeStream(Assets.Open("enemy/snake.webp")));
 
-	            battleInfo.State = BottomSheetBehavior.StateCollapsed;
+                battleInfo.State = BottomSheetBehavior.StateCollapsed;
             };
 
             //Set up itemPopupView, set up briefcase button 
@@ -223,19 +225,19 @@ namespace CubeQuest.Layout
                 if (itemPopupDialog == null)
                 {
                     itemPopupDialog = new AlertDialog.Builder(this)
-	                    .SetView(itemPopupView)
-	                    .SetPositiveButton("Apply", (o, ee) =>
-	                    {
-							/*
+                        .SetView(itemPopupView)
+                        .SetPositiveButton("Apply", (o, ee) =>
+                        {
+                            /*
 							 Insert code that makes the users choice of item from the
 							 list become their selected equipment
 							*/
-	                    })
-	                    .SetNegativeButton("Cancel", (o, ee) =>
-	                    {
-		                    //Insert code for closing dialog without any updates to chosen equipment
-		                })
-	                    .Create();
+                        })
+                        .SetNegativeButton("Cancel", (o, ee) =>
+                        {
+                            //Insert code for closing dialog without any updates to chosen equipment
+                        })
+                        .Create();
                 }
 
                 itemPopupDialog.Show();
@@ -251,8 +253,8 @@ namespace CubeQuest.Layout
 
         public override void OnEnterAnimationComplete()
         {
-	        base.OnEnterAnimationComplete();
-			StartEnterAnimation();
+            base.OnEnterAnimationComplete();
+            StartEnterAnimation();
         }
 
         public void OnMapReady(GoogleMap map)
@@ -267,13 +269,13 @@ namespace CubeQuest.Layout
             // Disable scrolling
             if (!MainActivity.DebugMode)
             {
-	            googleMap.UiSettings.ScrollGesturesEnabled = false;
-	            googleMap.UiSettings.ZoomGesturesEnabled   = false;
+                googleMap.UiSettings.ScrollGesturesEnabled = false;
+                googleMap.UiSettings.ZoomGesturesEnabled = false;
             }
 
             // Set custom theme to map
             googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, Resource.Raw.map_theme_dark));
-            
+
             // Get last known location or 0,0 if not known
             // TODO: If not known, show loading dialog
             var location = userLocation == null ? new LatLng(0, 0) : userLocation.ToLatLng();
@@ -314,9 +316,9 @@ namespace CubeQuest.Layout
             bool isWithinRange = Handler.LocationManager.GetDistance(userLocation.ToLatLng(), marker.Position) < range;
 
             var battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
-            battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Enabled = isWithinRange;
-            battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Alpha = isWithinRange ? 1 : 0.5f;
-
+            battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Enabled = isWithinRange && AccountManager.CurrentUser.IsAlive;
+            battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Alpha = isWithinRange && AccountManager.CurrentUser.IsAlive ? 1 : 0.5f;
+            
             return true;
         }
 
@@ -325,16 +327,16 @@ namespace CubeQuest.Layout
         /// </summary>
         private void AddMarker(LatLng latLng, string title, BitmapDescriptor icon)
         {
-			// Check if marker was already added
-			// TODO: Don't know how slow this will be
-	        if (markers.ContainsKey(latLng))
-		        return;
+            // Check if marker was already added
+            // TODO: Don't know how slow this will be
+            if (markers.ContainsKey(latLng))
+                return;
 
-	        markers.Add(latLng, googleMap.AddMarker(new MarkerOptions()
-		        .SetPosition(latLng)
-		        .SetTitle(title)
-		        .Anchor(0.5f, 0.5f)
-		        .SetIcon(icon)));
+            markers.Add(latLng, googleMap.AddMarker(new MarkerOptions()
+                .SetPosition(latLng)
+                .SetTitle(title)
+                .Anchor(0.5f, 0.5f)
+                .SetIcon(icon)));
         }
 
         /// <summary>
@@ -342,15 +344,15 @@ namespace CubeQuest.Layout
 		/// </summary>
         private void AddPlayer(LatLng position, int playerIcon)
         {
-			var marker = googleMap.AddMarker(new MarkerOptions()
-				.SetPosition(position)
-				.SetTitle(AccountManager.Name)
-				.SetIcon(BitmapDescriptorFactory.FromAsset($"player/{playerIcon}.webp")));
+            var marker = googleMap.AddMarker(new MarkerOptions()
+                .SetPosition(position)
+                .SetTitle(AccountManager.Name)
+                .SetIcon(BitmapDescriptorFactory.FromAsset($"player/{playerIcon}.webp")));
 
-			marker.ZIndex = 10f;
-			marker.Tag = "player";
+            marker.ZIndex = 10f;
+            marker.Tag = "player";
 
-			playerMarker = marker;
+            playerMarker = marker;
         }
 
         protected override void OnStart()
@@ -376,7 +378,7 @@ namespace CubeQuest.Layout
         {
             // FABs
             var fabUser = FindViewById<FloatingActionButton>(Resource.Id.fabUser);
-            var fabMap  = FindViewById<FloatingActionButton>(Resource.Id.fabGame);
+            var fabMap = FindViewById<FloatingActionButton>(Resource.Id.fabGame);
 
             // Show or hide buttons
             if (enabled)
@@ -394,10 +396,10 @@ namespace CubeQuest.Layout
 
             // Starting/ending point
             var centerX = fabUser.Left + fabUser.Width / 2;
-            var centerY = fabUser.Top  + fabUser.Height / 2;
+            var centerY = fabUser.Top + fabUser.Height / 2;
 
             // Button radius
-            var radius = (float) Math.Sqrt(centerX * centerX + centerY * centerY);
+            var radius = (float)Math.Sqrt(centerX * centerX + centerY * centerY);
 
             var animator = ViewAnimationUtils.CreateCircularReveal(profileView, centerX, centerY, enabled ? 0f : radius, enabled ? radius : 0f);
 
@@ -412,27 +414,27 @@ namespace CubeQuest.Layout
 
         private void StartEnterAnimation()
         {
-	        if (!firstTime)
-		        return;
+            if (!firstTime)
+                return;
 
-	        var centerX = mainView.Width  / 2;
-	        var centerY = mainView.Height / 2;
+            var centerX = mainView.Width / 2;
+            var centerY = mainView.Height / 2;
 
-	        var radius = (float) Math.Sqrt(centerX * centerX + centerY * centerY);
+            var radius = (float)Math.Sqrt(centerX * centerX + centerY * centerY);
 
-			// TODO: If app is put in background, this crashes it
-	        var animator = ViewAnimationUtils.CreateCircularReveal(mainView, centerX, centerY, 0f, radius);
+            // TODO: If app is put in background, this crashes it
+            var animator = ViewAnimationUtils.CreateCircularReveal(mainView, centerX, centerY, 0f, radius);
 
-	        mainView.Visibility = ViewStates.Visible;
-	        animator.Start();
+            mainView.Visibility = ViewStates.Visible;
+            animator.Start();
 
-	        firstTime = false;
+            firstTime = false;
         }
 
         private void StartBattle()
         {
-			// Hide battle info
-			battleInfo.State = BottomSheetBehavior.StateHidden;
+            // Hide battle info
+            battleInfo.State = BottomSheetBehavior.StateHidden;
 
             var fabUser = FindViewById<FloatingActionButton>(Resource.Id.fabUser);
             fabUser.Hide();
@@ -443,10 +445,10 @@ namespace CubeQuest.Layout
 
             var battle = new BattleCore(this, battleView, Assets, new EnemySnake());
 
-            var centerX = mainView.Width  / 2;
+            var centerX = mainView.Width / 2;
             var centerY = mainView.Height / 2;
 
-            var radius = (float) Math.Sqrt(centerX * centerX + centerY * centerY);
+            var radius = (float)Math.Sqrt(centerX * centerX + centerY * centerY);
 
             var animator = ViewAnimationUtils.CreateCircularReveal(battleView, centerX, centerY, 0f, radius);
 
@@ -454,11 +456,35 @@ namespace CubeQuest.Layout
             {
                 MusicManager.Play(MusicManager.EMusicTrack.Map);
 
+
+                new Thread(new ThreadStart(delegate
+                {
+                    RunOnUiThread(() =>
+                        {
+                            if (AccountManager.CurrentUser.IsAlive)
+                            {
+                                var dialogView = this.LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
+
+                                new AlertDialog.Builder(this)
+                                    .SetView(dialogView)
+                                    .Show();
+                            }
+
+                            else
+                            {
+                                new AlertDialog.Builder(this)
+                                    .SetTitle("You died!")
+                                    .SetMessage("You will be able to attack enemies again when you have 25% life")
+                                    .Show();
+                            }
+                        }
+                    );
+                })).Start();
+
                 var animator2 = ViewAnimationUtils.CreateCircularReveal(battleView, centerX, centerY, radius, 0f);
                 animator2.AnimationEnd += (o, eventArgs) => battleView.Visibility = ViewStates.Invisible;
                 animator2.Start();
                 fabUser.Show();
-                
             };
 
             battleView.Visibility = ViewStates.Visible;
@@ -474,19 +500,19 @@ namespace CubeQuest.Layout
 
         protected override void OnPause()
         {
-	        base.OnPause();
+            base.OnPause();
 
-			// Balanced power accuracy wi-fi and cell information to determine location and very rarely gps
-			if (locationManager != null)
-				locationManager.LocationPriority = LocationRequest.PriorityBalancedPowerAccuracy;
-		}
+            // Balanced power accuracy wi-fi and cell information to determine location and very rarely gps
+            if (locationManager != null)
+                locationManager.LocationPriority = LocationRequest.PriorityBalancedPowerAccuracy;
+        }
 
         protected override void OnResume()
         {
-	        base.OnResume();
+            base.OnResume();
 
-	        if (locationManager != null)
-				locationManager.LocationPriority = LocationRequest.PriorityHighAccuracy;
-		}
+            if (locationManager != null)
+                locationManager.LocationPriority = LocationRequest.PriorityHighAccuracy;
+        }
     }
 }
