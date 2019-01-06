@@ -1,5 +1,6 @@
 using Android.App;
 using Android.Content;
+using Android.Gms.Location;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Graphics;
@@ -14,12 +15,12 @@ using Android.Widget;
 using CubeQuest.Account;
 using CubeQuest.Account.Enemies;
 using CubeQuest.Account.Interface;
-using CubeQuest.Account.Weapons;
-using System;
-using System.Collections.Generic;
-using Android.Gms.Location;
+using CubeQuest.Battle;
 using CubeQuest.Handler;
 using CubeQuest.ListView.Item;
+using CubeQuest.WorldGen;
+using System;
+using System.Collections.Generic;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest.Layout
@@ -66,6 +67,8 @@ namespace CubeQuest.Layout
 		/// All markers except the player
 		/// </summary>
         private Dictionary<LatLng, Marker> markers;
+        
+        private ChunkHandler chunkHandler;
 
         private AlertDialog itemPopupDialog;
 
@@ -93,14 +96,27 @@ namespace CubeQuest.Layout
             firstTime = true;
 
 			markers = new Dictionary<LatLng, Marker>();
+            chunkHandler = new ChunkHandler();
 
             // Get main view
             mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
             mainView.Visibility = ViewStates.Invisible;
+            
+            var healthBar = FindViewById<ProgressBar>(Resource.Id.barHealth);
 
-			var health = AccountManager.CurrentUser.Health;
+            healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
 
-            FindViewById<ProgressBar>(Resource.Id.barHealth).Progress = health;
+            AccountManager.CurrentUser.OnHealthChange +=
+                health => healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
+
+            AccountManager.CurrentUser.OnDeadChange += (isAlive) =>
+            {
+                if (!isAlive)
+                {
+                    healthBar.Alpha = 0.5f;
+                }
+            };
+
 
             // Get last known location
             locationManager = new Handler.LocationManager(this);
@@ -152,9 +168,17 @@ namespace CubeQuest.Layout
             profileView.FindViewById<ImageButton>(Resource.Id.button_settings).Click += (sender, args) =>
 	            StartActivity(new Intent(this, typeof(SettingsActivity)));
 
+			// Avoid clicking through profile view
+			profileView.Touch += (sender, args) => 
+				args.Handled = true;
+
             // Inflate battle view
             battleView = FindViewById<ViewStub>(Resource.Id.stub_battle).Inflate();
             battleView.Visibility = ViewStates.Invisible;
+
+			// Avoid clicking through battle view
+            battleView.Touch += (sender, args) => 
+	            args.Handled = true;
 
             // Setup debug mode
             FindViewById<Button>(Resource.Id.button_debug_enemy).Click += (sender, args) =>
@@ -177,9 +201,6 @@ namespace CubeQuest.Layout
 	            battleInfo.State = BottomSheetBehavior.StateCollapsed;
             };
 
-            FindViewById<Button>(Resource.Id.button_debug_canvas_test).Click += (sender, args) => 
-	            StartActivity(typeof(CanvasTestActivity));
-
             //Set up itemPopupView, set up briefcase button 
             //and link itemPopupView to the briefcase button
             itemPopupView = LayoutInflater.Inflate(Resource.Layout.view_popup_layout, null);
@@ -189,13 +210,7 @@ namespace CubeQuest.Layout
             popupRecycler.SetLayoutManager(itemPopup);
 
             //Create a list of test items.
-            var items = new List<IItem>
-            {
-	            new Sword(),
-	            new Sword(),
-	            new Sword(),
-	            new Sword()
-            };
+            var items = new List<IItem>();
 
             var adapter = new ItemViewAdapter(items);
 
@@ -225,6 +240,13 @@ namespace CubeQuest.Layout
 
                 itemPopupDialog.Show();
             };
+
+
+        }
+
+        private void CurrentUser_OnHealthChange(int newHealth)
+        {
+            throw new NotImplementedException();
         }
 
         public override void OnEnterAnimationComplete()
@@ -237,6 +259,10 @@ namespace CubeQuest.Layout
         {
             // Set local maps
             googleMap = map;
+            MapHandler.Map = map;
+            MapHandler.Visited = new List<LatLng>();
+
+            //map.CameraChange += Map_CameraChange;
 
             // Disable scrolling
             if (!MainActivity.DebugMode)
@@ -251,6 +277,7 @@ namespace CubeQuest.Layout
             // Get last known location or 0,0 if not known
             // TODO: If not known, show loading dialog
             var location = userLocation == null ? new LatLng(0, 0) : userLocation.ToLatLng();
+            chunkHandler.UpdateCoord(location.Latitude, location.Longitude);
 
             // Create player marker
             AddPlayer(location, 0);
@@ -258,7 +285,7 @@ namespace CubeQuest.Layout
             // Target player with initial zoom
             var position = CameraPosition.InvokeBuilder()
                 .Target(location)
-                .Zoom(24f)
+                .Zoom(17f)
                 .Build();
 
             // Move camera to player
@@ -267,19 +294,28 @@ namespace CubeQuest.Layout
             googleMap.SetOnMarkerClickListener(this);
         }
 
+        private void Map_CameraChange(object sender, GoogleMap.CameraChangeEventArgs e)
+        {
+            if (e?.Position?.Target != null)
+            {
+                chunkHandler.UpdateCoord(e.Position.Target.Latitude, e.Position.Target.Longitude);
+            }
+        }
+
         public bool OnMarkerClick(Marker marker)
         {
             // Ignore player
             if (marker.Tag?.ToString() == "player")
                 return true;
 
-            /*
-             TODO: Check distance
-             To get distance in meters, use:
-             (int) (LocationManager.GetDistance(userLocation.ToLatLng(), marker.Position) + 0.5)
-            */
-
             battleInfo.State = BottomSheetBehavior.StateCollapsed;
+
+            int range = 200; //in meters
+            bool isWithinRange = Handler.LocationManager.GetDistance(userLocation.ToLatLng(), marker.Position) < range;
+
+            var battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
+            battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Enabled = isWithinRange;
+            battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Alpha = isWithinRange ? 1 : 0.5f;
 
             return true;
         }
@@ -403,9 +439,9 @@ namespace CubeQuest.Layout
 
             // Sets the health on the progressbar 
             mainView.FindViewById<ProgressBar>(Resource.Id.progress_battle_health).Progress =
-                AccountManager.CurrentUser.Health;
+                AccountManager.CurrentUser.HealthPercentage;
 
-            var battle = new Battle(this, battleView, Assets, new EnemySnake());
+            var battle = new BattleCore(this, battleView, Assets, new EnemySnake());
 
             var centerX = mainView.Width  / 2;
             var centerY = mainView.Height / 2;
@@ -422,6 +458,7 @@ namespace CubeQuest.Layout
                 animator2.AnimationEnd += (o, eventArgs) => battleView.Visibility = ViewStates.Invisible;
                 animator2.Start();
                 fabUser.Show();
+                
             };
 
             battleView.Visibility = ViewStates.Visible;

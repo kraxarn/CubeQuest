@@ -1,18 +1,23 @@
-﻿using Android.Content;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Android.App;
+using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.Views;
 using Android.Views.Animations;
 using Android.Widget;
+using CubeQuest.Account;
 using CubeQuest.Account.Interface;
-using System.Collections.Generic;
-using System.Linq;
 using CubeQuest.Handler;
 using CubeQuest.Layout;
 
-namespace CubeQuest
+namespace CubeQuest.Battle
 {
-    public class Battle
+    public class BattleCore
     {
         /// <summary>
         /// Event for when battle ends, used by <see cref="End"/>
@@ -56,13 +61,17 @@ namespace CubeQuest
         /// </summary>
         private readonly Animation flashAnimation;
 
-        public Battle(Context context, View view, AssetManager assets, IItem item)
+        private readonly Animation shakeAnimation;
+
+        private readonly Animation attackAnimation;
+
+        private readonly BattleHandler battleHandler;
+
+        public BattleCore(Activity context, View view, AssetManager assets, IItem item)
         {
             // Start battle music
             MusicManager.Play(MusicManager.EMusicTrack.Battle);
-
-            BattleHandler.Battle = this;
-
+            
             // Set context
             this.context = context;
 
@@ -72,21 +81,31 @@ namespace CubeQuest
             // Companions
             var companions = new List<ImageView>();
 
-            companions.Add(mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion0));
+            companions.Add(mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion_0));
+            companions.Add(mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion_1));
+            companions.Add(mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion_2));
 
-            // Flashing health bar animation
+            // Animations
             flashAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
-
+            attackAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.attack);
+            shakeAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.shake);
+            
             // Load enemy sprite(s)
             var enemySprite = BitmapFactory.DecodeStream(assets.Open($"enemy/{item.Icon}.webp"));
 
             // Enemy image buttons
             var enemyButtons = EnemyButtons.ToArray();
-            
+
             // Enemy health bars
             enemyHealthBars = EnemyHealthBars.ToArray();
 
+            // Player health bar
             playerHealthBar = view.FindViewById<ProgressBar>(Resource.Id.progress_battle_health);
+
+            playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
+
+            // Battle handler
+            battleHandler = new BattleHandler(enemyButtons, enemyHealthBars, playerHealthBar);
 
             // Set bitmaps of enemy buttons
             enemyButtons.SetBitmaps(enemySprite);
@@ -112,22 +131,48 @@ namespace CubeQuest
 			// When clicking 'attack'
 			view.FindViewById<Button>(Resource.Id.button_battle_attack).Click += (sender, args) =>
 			{
-				anims[SelectedEnemyIndex].New(slashFrames, 75);
-
-				void SwitchBack()
-				{
-					anims[SelectedEnemyIndex].New(selectedFrames, 400);
-					anims[SelectedEnemyIndex].Done -= SwitchBack;
-				}
-
-				anims[SelectedEnemyIndex].Done += SwitchBack;
-
-                companions[0].StartAnimation(AnimationUtils.LoadAnimation(context, Resource.Animation.attack));
-                BattleHandler.PlayerAttack(5);
-                enemyButtons[selectedEnemyIndex]
-                    .StartAnimation(AnimationUtils.LoadAnimation(context, Resource.Animation.attack));
+                battleHandler.StartAction(selectedEnemyIndex, BattleHandler.EActionType.Attack);
             };
 
+            battleHandler.BattleEnd += won =>
+            {
+                if (won)
+                {
+                    var dialogView = context.LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
+
+                    new AlertDialog.Builder(context)
+	                    .SetView(dialogView)
+	                    .SetPositiveButton("Collect", (sender, args) => End?.Invoke())
+	                    .Show();
+                }
+                else
+                {
+                    new AlertDialog.Builder(context)
+                        .SetTitle("You lost")
+                        .SetMessage("Would you like to continue?")
+                        .SetPositiveButton("Collect", (sender, args) => End?.Invoke())
+                        .Show();
+                }
+            };
+
+
+            // Player attacks animation in battle
+            battleHandler.OnAnimation += (target, type) => 
+            {
+                switch (target)
+                {
+                    case BattleHandler.EAnimationTarget.Player:
+                        companions[0].StartAnimation(attackAnimation);
+                        enemyButtons[selectedEnemyIndex].StartAnimation(shakeAnimation);
+                        break;
+
+                    case BattleHandler.EAnimationTarget.Enemy:
+                        enemyButtons[selectedEnemyIndex].StartAnimation(attackAnimation);
+                        companions[0].StartAnimation(shakeAnimation);
+                        break;
+                }
+            };
+            
             // When clicking 'run'
             view.FindViewById<Button>(Resource.Id.button_battle_run).Click += (sender, args) =>
             {
@@ -137,16 +182,44 @@ namespace CubeQuest
 
                 // Invoke end event
                 End?.Invoke();
-            };
+			};
+
+			// When clicking 'win'
+			view.FindViewById<Button>(Resource.Id.button_battle_magic).Click += (sender, args) =>
+			{
+				var dialogView = context.LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
+
+				new AlertDialog.Builder(context)
+					.SetView(dialogView)
+					.SetPositiveButton("Collect", (s, a) => End?.Invoke())
+					.Show();
+			};
 
             // Create events when clicking on enemies
             CreateEnemyEvents(enemyButtons);
 
 			// Replace cube placeholders with test images
-			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_1).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/bear.webp")));
-			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_2).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/buffalo.webp")));
-			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_3).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/chick.webp")));
-		}
+			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_0).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/bear.webp")));
+			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_1).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/buffalo.webp")));
+			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_2).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/chick.webp")));
+
+            AccountManager.CurrentUser.OnHealthChange += health =>
+                playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
+        }
+
+        async void StartTimer(ImageButton[] enemyButtons)
+        {
+            await Task.Delay(5000);
+            enemyButtons[selectedEnemyIndex]
+                .StartAnimation(AnimationUtils.LoadAnimation(context, Resource.Animation.attack));
+        }
+
+        private void PlayAnimation(View view)
+        {
+            view.StartAnimation(attackAnimation);
+        }
+
+
 
         /// <summary>
         /// Selected enemy
@@ -191,9 +264,7 @@ namespace CubeQuest
             {
                 Resource.Id.button_battle_enemy0,
                 Resource.Id.button_battle_enemy1,
-                Resource.Id.button_battle_enemy2,
-                Resource.Id.button_battle_enemy3,
-                Resource.Id.button_battle_enemy4
+                Resource.Id.button_battle_enemy2
             };
 
         /// <summary>
@@ -210,9 +281,7 @@ namespace CubeQuest
             {
                 Resource.Id.battle_health_enemy0,
                 Resource.Id.battle_health_enemy1,
-                Resource.Id.battle_health_enemy2,
-                Resource.Id.battle_health_enemy3,
-                Resource.Id.battle_health_enemy4,
+                Resource.Id.battle_health_enemy2
 
             };
 
@@ -229,22 +298,28 @@ namespace CubeQuest
         {
             mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy0),
             mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy1),
-            mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy2),
-            mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy3),
-            mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy4)
+            mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy2)
         };
         
         /// <summary>
         /// Get image animators for each overlay image
         /// </summary>
+        [Obsolete]
         private ImageAnimator[] GetImageAnimators(IReadOnlyList<Bitmap> frames) =>
             new[]
             {
                 new ImageAnimator(enemyOverlays[0], frames, 400),
                 new ImageAnimator(enemyOverlays[1], frames, 400),
-                new ImageAnimator(enemyOverlays[2], frames, 400),
-                new ImageAnimator(enemyOverlays[3], frames, 400),
-                new ImageAnimator(enemyOverlays[4], frames, 400)
+                new ImageAnimator(enemyOverlays[2], frames, 400)
+            };
+
+        /// <summary>
+        /// Get animated drawables for each overlay image
+        /// </summary>
+        private IEnumerable<Drawable> GetImageDrawables(Resources res, IReadOnlyList<Bitmap> frames) =>
+            new[]
+            {
+                ImageAnimator.GetAnimatedDrawable(res, frames.ToList(), 400, true)
             };
         
         /// <summary>
@@ -255,11 +330,8 @@ namespace CubeQuest
             imageButtons[0].Click += (sender, args) => SelectedEnemyIndex = 0;
             imageButtons[1].Click += (sender, args) => SelectedEnemyIndex = 1;
             imageButtons[2].Click += (sender, args) => SelectedEnemyIndex = 2;
-            imageButtons[3].Click += (sender, args) => SelectedEnemyIndex = 3;
-            imageButtons[4].Click += (sender, args) => SelectedEnemyIndex = 4;
         }
-
-
+        
 
         /// <summary>
         /// Loads animation from assets folder
@@ -273,44 +345,6 @@ namespace CubeQuest
 
 	        return bitmaps;
         }
-
-        // FUNCTIONS FOR THE BATTLE HANDLER
-
-        public void EnemyLoseLife(int damage)
-        {
-            enemyHealthBars[selectedEnemyIndex].Progress -= damage;
-        }
-
-        public void PlayerLoseLife(int damage)
-        {
-            playerHealthBar.Progress -= damage;
-        }
-
-        public void AnimateAttackPlayer(ImageView player, Animation animation)
-        {
-            player.StartAnimation(animation);
-        }
-
-        public void AnimateAttackEnemy(ImageButton enemy, Animation animation)
-        {
-            enemy.StartAnimation(animation);
-        }
-
-        public static void AnimateTakingDamagePlayer(ImageView player, Animation animation)
-        {
-            player.StartAnimation(animation);
-        }
-
-        public static void AnimateTakingDamageEnemy(ImageButton enemy, Animation animation)
-        {
-            enemy.StartAnimation(animation);
-
-        }
-        
-
-
-
-
     }
 
     public static class ExtensionMethods

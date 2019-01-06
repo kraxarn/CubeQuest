@@ -1,20 +1,20 @@
-﻿using Android.Gms.Common.Apis;
+﻿using System.Threading.Tasks;
+using Android.Gms.Common.Apis;
 using Android.Gms.Games;
 using Android.Gms.Games.Snapshot;
 using Android.Runtime;
-using System.Threading.Tasks;
 
-namespace CubeQuest.Account.Interface
+namespace CubeQuest.Account
 {
     public static class SnapshotManager
     {
-        private static GoogleApiClient _googleClient;
+        private static GoogleApiClient googleClient;
 
         private const string CurrentSaveName = "CubeQuestSave";
 
         public static void Create(GoogleApiClient client)
         {
-            _googleClient = client;
+            googleClient = client;
         }
 
         private static async Task<ISnapshot> GetSnapshot()
@@ -22,7 +22,7 @@ namespace CubeQuest.Account.Interface
             const int policy = Snapshots.ResolutionPolicyMostRecentlyModified;
 
             // TODO: No idea if this actually works (probably not)
-            var x = await GamesClass.Snapshots.Open(_googleClient, CurrentSaveName, true, policy);
+            var x = await GamesClass.Snapshots.Open(googleClient, CurrentSaveName, true, policy);
             return x.JavaCast<ISnapshot>();
         }
 
@@ -42,7 +42,7 @@ namespace CubeQuest.Account.Interface
                 .Build();
 
             // Commit
-            await GamesClass.Snapshots.CommitAndClose(_googleClient, snapshot, metadataChange);
+            await GamesClass.Snapshots.CommitAndClose(googleClient, snapshot, metadataChange);
         }
 
         public static byte[] Snapshot

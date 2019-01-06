@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Android.Content.Res;
 using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.Widget;
 
 namespace CubeQuest.Handler
@@ -31,6 +34,7 @@ namespace CubeQuest.Handler
 		/// <param name="image"><see cref="ImageView"/> to be animated</param>
 		/// <param name="bitmaps">All bitmaps in the animation</param>
 		/// <param name="delay">Delay in milliseconds</param>
+		[Obsolete("Use GetAnimatedDrawable")]
 		public ImageAnimator(ImageView image, IReadOnlyList<Bitmap> bitmaps, int delay)
 		{
 			this.bitmaps = bitmaps;
@@ -77,5 +81,16 @@ namespace CubeQuest.Handler
 		/// Stop the animation at the current frame
 		/// </summary>
         public void Stop() => running = false;
+
+		/// <summary>
+		/// Create an animated bitmap
+		/// </summary>
+		public static Drawable GetAnimatedDrawable(Resources res, List<Bitmap> frames, int duration, bool loop)
+		{
+			var animation = new AnimationDrawable();
+			frames.ForEach(f => animation.AddFrame(new BitmapDrawable(res, f), duration));
+			animation.OneShot = !loop;
+			return animation;
+		}
     }
 }
