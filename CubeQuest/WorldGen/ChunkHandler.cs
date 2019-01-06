@@ -54,19 +54,5 @@ namespace CubeQuest.WorldGen
                 }
             }
         }
-
-        public void Print()
-        {
-            WorldChunks.OrderBy(c => c.X).ThenBy(c => c.Y);
-            for (int i = 0; i < WorldChunks.Count; i++)
-            {
-                if (i % 3 == 0)
-                {
-                    Console.WriteLine();
-                }
-                Console.Write(WorldChunks[i].ToString());
-            }
-            //WorldChunks.ForEach(c => Console.WriteLine(c.ToString()));
-        }
     }
 }
