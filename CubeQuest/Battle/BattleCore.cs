@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.Views;
 using Android.Views.Animations;
 using Android.Widget;
@@ -123,8 +125,6 @@ namespace CubeQuest.Battle
 
             // Load image animators
             var anims = GetImageAnimators(selectedFrames);
-            
-            
 
 			// When clicking 'attack'
 			view.FindViewById<Button>(Resource.Id.button_battle_attack).Click += (sender, args) =>
@@ -275,12 +275,22 @@ namespace CubeQuest.Battle
         /// <summary>
         /// Get image animators for each overlay image
         /// </summary>
+        [Obsolete]
         private ImageAnimator[] GetImageAnimators(IReadOnlyList<Bitmap> frames) =>
             new[]
             {
                 new ImageAnimator(enemyOverlays[0], frames, 400),
                 new ImageAnimator(enemyOverlays[1], frames, 400),
                 new ImageAnimator(enemyOverlays[2], frames, 400)
+            };
+
+        /// <summary>
+        /// Get animated drawables for each overlay image
+        /// </summary>
+        private IEnumerable<Drawable> GetImageDrawables(Resources res, IReadOnlyList<Bitmap> frames) =>
+            new[]
+            {
+                ImageAnimator.GetAnimatedDrawable(res, frames.ToList(), 400, true)
             };
         
         /// <summary>

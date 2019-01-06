@@ -106,10 +106,8 @@
     <Compile Include="WorldGen\ChunkHandler.cs" />
     <Compile Include="WorldGen\MapCoordToLonLat.cs" />
     <Compile Include="WorldGen\MapHandler.cs" />
-    <Compile Include="WorldGen\MapImitator.cs" />
     <Compile Include="WorldGen\Perlin.cs" />
     <Compile Include="WorldGen\PointSpot.cs" />
-    <Compile Include="WorldGen\Test.cs" />
     <Compile Include="WorldGen\Vars.cs" />
     <Compile Include="WorldGen\WorldGen.cs" />
   </ItemGroup>

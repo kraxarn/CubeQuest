@@ -156,9 +156,17 @@ namespace CubeQuest.Layout
             profileView.FindViewById<ImageButton>(Resource.Id.button_settings).Click += (sender, args) =>
 	            StartActivity(new Intent(this, typeof(SettingsActivity)));
 
+			// Avoid clicking through profile view
+			profileView.Touch += (sender, args) => 
+				args.Handled = true;
+
             // Inflate battle view
             battleView = FindViewById<ViewStub>(Resource.Id.stub_battle).Inflate();
             battleView.Visibility = ViewStates.Invisible;
+
+			// Avoid clicking through battle view
+            battleView.Touch += (sender, args) => 
+	            args.Handled = true;
 
             // Setup debug mode
             FindViewById<Button>(Resource.Id.button_debug_enemy).Click += (sender, args) =>
@@ -283,40 +291,15 @@ namespace CubeQuest.Layout
             if (marker.Tag?.ToString() == "player")
                 return true;
 
-            /*
-             TODO: Check distance
-             To get distance in meters, use:
-             (int) (LocationManager.GetDistance(userLocation.ToLatLng(), marker.Position) + 0.5)
-            */
-
             battleInfo.State = BottomSheetBehavior.StateCollapsed;
+
+            int range = 200; //in meters
+            bool isWithinRange = Handler.LocationManager.GetDistance(userLocation.ToLatLng(), marker.Position) < range;
+
+            var battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
+            battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Enabled = isWithinRange;
             
-
-            if (!PlayerWithinRange(marker.Position))
-            {
-                var battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
-                battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Enabled = false;
-            }
-            else
-            {
-                var battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
-                battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Enabled = true;
-            }
-
-
-
             return true;
-        }
-
-        private bool PlayerWithinRange(LatLng target)
-        {
-            double playerLat = playerMarker.Position.Latitude;
-            double playerLon = playerMarker.Position.Longitude;
-            double targetLat = target.Latitude;
-            double targetLon = target.Longitude;
-            float[] results = new float[3];
-            Location.DistanceBetween(playerLat, playerLon, targetLat, targetLon, results);
-            return results[0] < 100; //100 Meters
         }
 
         /// <summary>
