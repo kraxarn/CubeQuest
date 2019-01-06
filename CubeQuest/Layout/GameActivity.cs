@@ -102,7 +102,7 @@ namespace CubeQuest.Layout
             mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
             mainView.Visibility = ViewStates.Invisible;
 
-			var health = AccountManager.CurrentUser.Health;
+			var health = AccountManager.CurrentUser.HealthPercentage;
 
             FindViewById<ProgressBar>(Resource.Id.barHealth).Progress = health;
 
@@ -228,6 +228,8 @@ namespace CubeQuest.Layout
 
                 itemPopupDialog.Show();
             };
+
+
         }
 
         public override void OnEnterAnimationComplete()
@@ -419,7 +421,7 @@ namespace CubeQuest.Layout
 
             // Sets the health on the progressbar 
             mainView.FindViewById<ProgressBar>(Resource.Id.progress_battle_health).Progress =
-                AccountManager.CurrentUser.Health;
+                AccountManager.CurrentUser.HealthPercentage;
 
             var battle = new BattleCore(this, battleView, Assets, new EnemySnake());
 
@@ -438,6 +440,15 @@ namespace CubeQuest.Layout
                 animator2.AnimationEnd += (o, eventArgs) => battleView.Visibility = ViewStates.Invisible;
                 animator2.Start();
                 fabUser.Show();
+
+                using (var db = new AlertDialog.Builder(this))
+                {
+                    db.SetTitle("hello");
+                    db.SetMessage("test");
+                    db.SetPositiveButton("Ok", (sender, args) => {  });
+                    db.SetNegativeButton("Cancel", (sender, args) => {  });
+                    db.Show();
+                }
             };
 
             battleView.Visibility = ViewStates.Visible;

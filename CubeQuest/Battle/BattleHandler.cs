@@ -67,7 +67,7 @@ namespace CubeQuest.Battle
 
         private void PlayerAttack(int damage, int index)
         {
-            enemyHealthBars[index].Progress -= damage;
+            enemyHealthBars[index].Progress -= damage + 50;
 
             OnAnimation?.Invoke(EAnimationTarget.Player, EAnimationType.Attack);
 
@@ -88,8 +88,8 @@ namespace CubeQuest.Battle
         {
             OnAnimation?.Invoke(EAnimationTarget.Enemy, EAnimationType.Attack);
 
-            if (!AccountManager.CurrentUser.ShouldHit)
-                return;
+            //if (!AccountManager.CurrentUser.ShouldHit)
+            //    return;
 
             damage = AccountManager.CurrentUser.GetDamage(damage);
 
