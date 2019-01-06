@@ -16,14 +16,31 @@ namespace CubeQuest.ListView.Item
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
-	        if (!(holder is ItemViewHolder itemHolder))
-	            return;
+            if (!(holder is ItemViewHolder itemHolder))
+                return;
 
             itemHolder.Name.Text = items[position].Name;
 
             //Replace below line with something that gets the real icon
-            itemHolder.Icon.SetImageResource(Android.Resource.Drawable.ArrowDownFloat);
+            itemHolder.Icon.SetImageResource(Resource.Drawable.ic_companion);
+
+            itemHolder.expandCollapse.SetImageResource(Resource.Drawable.ic_numbered_list);
             itemHolder.Info.Text = items[position].Info;
+            itemHolder.Info.Visibility = ViewStates.Gone;
+
+            //Makes info text disappear or appear on the click
+            itemHolder.expandCollapse.Click += (object sender, System.EventArgs e) => {
+            if(itemHolder.Info.Visibility == ViewStates.Gone)
+                {
+                    itemHolder.Info.Visibility = ViewStates.Visible;
+                    itemHolder.expandCollapse.SetImageResource(Resource.Drawable.ic_shield);
+                }
+                else
+                {
+                    itemHolder.Info.Visibility = ViewStates.Gone;
+                    itemHolder.expandCollapse.SetImageResource(Resource.Drawable.ic_numbered_list);
+                }
+            };
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) =>
