@@ -27,8 +27,9 @@ namespace CubeQuest.WorldGen
             for (int i = 0; i < points.Count; i++)
             {
                 double val = points[i].Value;
+                //Value: 
                 IEnemy enemy = MonsterFactory.CreateMonster(val);
-                Markers.Add(MapHandler.AddMarker(points[i].ToLatLng(), enemy.Name, BitmapDescriptorFactory.FromAsset(enemy.Icon)));
+                Markers.Add(MapHandler.AddMarker(points[i].ToLatLng(), enemy.Name, BitmapDescriptorFactory.FromAsset($"enemy/{enemy.Icon}.webp")));
                 Markers[i].Tag = val;
             }
         }
