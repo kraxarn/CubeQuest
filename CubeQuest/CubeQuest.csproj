@@ -140,11 +140,6 @@
     <AndroidAsset Include="Assets\companion\snake.webp" />
     <AndroidAsset Include="Assets\companion\walrus.webp" />
     <AndroidAsset Include="Assets\companion\wolf.webp" />
-    <AndroidAsset Include="Assets\music\battle.opus" />
-    <AndroidAsset Include="Assets\music\dead.opus" />
-    <AndroidAsset Include="Assets\music\map0.opus" />
-    <AndroidAsset Include="Assets\music\map1.opus" />
-    <AndroidAsset Include="Assets\music\map2.opus" />
     <None Include="Keystore\CubeQuest.jks" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">
@@ -309,7 +304,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Assets\music\" />
+  </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\view_battle.axml">
       <SubType>Designer</SubType>
