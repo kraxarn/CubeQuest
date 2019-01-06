@@ -43,7 +43,17 @@ namespace CubeQuest.Battle
             this.playerHealthBar = playerHealthBar;
 
             battleQueue = new BattleQueue();
+
+            battleQueue.OnQueueEnd += () =>
+            {
+                foreach (var enemy in enemies)
+                {
+                    enemy.Enabled = true;
+                }
+            };
         }
+
+        
 
         public void StartAction(int index, EActionType action)
         {

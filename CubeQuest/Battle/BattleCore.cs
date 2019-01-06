@@ -157,6 +157,11 @@ namespace CubeQuest.Battle
             // Player attacks animation in battle
             battleHandler.OnAnimation += (target, type) =>
             {
+
+                foreach (var enemy in enemyButtons)
+                {
+                    enemy.Enabled = false;
+                }
                 
                 switch (target)
                 {
@@ -172,6 +177,7 @@ namespace CubeQuest.Battle
                 }
                 
             };
+            
             
             // When clicking 'run'
             view.FindViewById<Button>(Resource.Id.button_battle_run).Click += (sender, args) =>
