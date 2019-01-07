@@ -22,7 +22,6 @@ using CubeQuest.WorldGen;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Timers;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest.Layout
@@ -85,6 +84,9 @@ namespace CubeQuest.Layout
         /// </summary>
         private bool firstTime;
 
+        /// <summary>
+        /// If the camera should automatically focus on the player on location updates
+        /// </summary>
         private bool autoCamera;
 
         /// <summary>
@@ -144,9 +146,7 @@ namespace CubeQuest.Layout
                     userLocation = location;
 
                     if (location.Speed > 0)
-                    {
                         AccountManager.CurrentUser.Health += 1;
-                    }
 
                     // If map hasn't loaded yet, ignore player marker
                     if (playerMarker == null)
@@ -257,13 +257,6 @@ namespace CubeQuest.Layout
 
                 itemPopupDialog.Show();
             };
-
-
-        }
-
-        private void CurrentUser_OnHealthChange(int newHealth)
-        {
-            throw new NotImplementedException();
         }
 
         public override void OnEnterAnimationComplete()
@@ -314,9 +307,7 @@ namespace CubeQuest.Layout
         private void Map_CameraChange(object sender, GoogleMap.CameraChangeEventArgs e)
         {
             if (e?.Position?.Target != null)
-            {
                 chunkHandler.UpdateCoord(e.Position.Target.Latitude, e.Position.Target.Longitude);
-            }
         }
 
         public bool OnMarkerClick(Marker marker)
@@ -363,7 +354,7 @@ namespace CubeQuest.Layout
                 .SetPosition(position)
                 .SetTitle(AccountManager.Name)
                 .SetIcon(BitmapDescriptorFactory.FromAsset($"player/{playerIcon}.webp")));
-
+            
             marker.ZIndex = 10f;
             marker.Tag = "player";
 
