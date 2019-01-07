@@ -168,14 +168,14 @@ namespace CubeQuest.Battle
                 switch (target)
                 {
                     case BattleHandler.EAnimationTarget.Player:
-                        companions[0].StartAnimation(attackAnimation);
+                        companions[selectedEnemyIndex].StartAnimation(attackAnimation);
                         enemyButtons[selectedEnemyIndex].StartAnimation(shakeAnimation);
                         break;
 
                     case BattleHandler.EAnimationTarget.Enemy:
                         enemyButtons[selectedEnemyIndex].StartAnimation(attackAnimation);
-                        companions[0].StartAnimation(shakeAnimation);
-                        companions[0].Animation.AnimationEnd += (sender, args) =>
+                        companions[selectedEnemyIndex].StartAnimation(shakeAnimation);
+                        companions[selectedEnemyIndex].Animation.AnimationEnd += (sender, args) =>
                         {
                             ButtonsController(mainView, true);
                         };
