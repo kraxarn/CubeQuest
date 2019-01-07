@@ -321,8 +321,17 @@ namespace CubeQuest.Layout
                 return true;
 
             if (marker.Tag is EnemyTag tag)
+            {
+	            var enemy = tag.Enemy;
+
 	            battleInfoView.FindViewById<ImageView>(Resource.Id.image_battle_info)
-		            .SetImageBitmap(BitmapFactory.DecodeStream(Assets.Open($"enemy/{tag.Enemy.Icon}.webp")));
+		            .SetImageBitmap(BitmapFactory.DecodeStream(Assets.Open($"enemy/{enemy.Icon}.webp")));
+
+	            battleInfoView.FindViewById<TextView>(Resource.Id.text_battle_info_title).Text =
+		            $"Level 1 {enemy.Name}";
+
+	            battleInfoView.FindViewById<TextView>(Resource.Id.text_battle_info_description).Text = enemy.Info;
+            }
 
             selectedMarker = marker;
 
