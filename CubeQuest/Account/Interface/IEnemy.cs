@@ -2,7 +2,7 @@
 
 namespace CubeQuest.Account.Interface
 {
-    public interface IEnemy : IItem
+	public interface IEnemy : IItem
     {
 	    ImageHandler.ImageName Image { get; }
     }

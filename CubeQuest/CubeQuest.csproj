@@ -89,6 +89,7 @@
     <Compile Include="Account\Enemies\GreenAlien.cs" />
     <Compile Include="Account\Enemies\PinkAlien.cs" />
     <Compile Include="Account\Enemies\YellowAlien.cs" />
+    <Compile Include="Account\EnemyTag.cs" />
     <Compile Include="Account\GoogleConnectionListener.cs" />
     <Compile Include="Account\Interface\IEnemy.cs" />
     <Compile Include="Account\Interface\ICompanion.cs" />
