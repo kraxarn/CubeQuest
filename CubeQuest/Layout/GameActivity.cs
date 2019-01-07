@@ -334,6 +334,12 @@ namespace CubeQuest.Layout
                 chunkHandler.UpdateCoord(e.Position.Target.Latitude, e.Position.Target.Longitude);
         }
 
+        public void SetText(Dictionary<TextView, string> views)
+        {
+	        foreach (var (key, value) in views)
+		        key.Text = value;
+        }
+
         public bool OnMarkerClick(Marker marker)
         {
             // Ignore player
@@ -344,14 +350,23 @@ namespace CubeQuest.Layout
             {
 	            var enemy = tag.Enemy;
 
+				// Set icon
 	            battleInfoView.FindViewById<ImageView>(Resource.Id.image_battle_info)
 		            .SetImageBitmap(BitmapFactory.DecodeStream(Assets.Open($"enemy/{enemy.Icon}.webp")));
 
+				// Set title
+				// TODO: Set level correctly
 	            battleInfoView.FindViewById<TextView>(Resource.Id.text_battle_info_title).Text =
 		            $"Level 1 {enemy.Name}";
 
+				// Set description
 	            battleInfoView.FindViewById<TextView>(Resource.Id.text_battle_info_description).Text = enemy.Info;
-            }
+
+				// Set stats
+				battleInfoView.FindViewById<TextView>(Resource.Id.text_battle_info_health).Text = $"{enemy.Health}";
+				battleInfoView.FindViewById<TextView>(Resource.Id.text_battle_info_armor).Text  = $"{enemy.Armor}";
+				battleInfoView.FindViewById<TextView>(Resource.Id.text_battle_info_attack).Text = $"{enemy.Attack}";
+			}
 
             selectedMarker = marker;
 
