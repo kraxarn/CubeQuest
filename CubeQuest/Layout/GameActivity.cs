@@ -318,6 +318,8 @@ namespace CubeQuest.Layout
             if (marker.Tag?.ToString() == "player")
                 return true;
 
+            selectedMarker = marker;
+
             battleInfo.State = BottomSheetBehavior.StateCollapsed;
 
             int range = 200; //in meters
