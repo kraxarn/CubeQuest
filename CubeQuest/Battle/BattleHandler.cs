@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Android.Views;
 using Android.Views.Animations;
 using Android.Widget;
 using CubeQuest.Account;
@@ -14,7 +15,7 @@ namespace CubeQuest.Battle
         private ProgressBar[] enemyHealthBars;
         private ProgressBar playerHealthBar;
         private BattleQueue battleQueue;
-
+        
         public enum EActionType { Attack, Spare }
         public enum EAnimationTarget { Player, Enemy }
         public enum EAnimationType { Attack, Damage }
@@ -43,15 +44,19 @@ namespace CubeQuest.Battle
             this.playerHealthBar = playerHealthBar;
 
             battleQueue = new BattleQueue();
+            
 
             battleQueue.OnQueueEnd += () =>
             {
                 foreach (var enemy in enemies)
                 {
                     enemy.Enabled = true;
+                    
                 }
             };
         }
+
+        
 
         
 
@@ -72,7 +77,7 @@ namespace CubeQuest.Battle
             }, true));
 
             battleQueue.Execute();
-
+           
         }
 
         private void PlayerAttack(int damage, int index)

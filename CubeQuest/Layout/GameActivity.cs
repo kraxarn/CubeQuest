@@ -81,6 +81,8 @@ namespace CubeQuest.Layout
 
         private LinearLayout battleInfoView;
 
+        private Marker selectedMarker;
+
         /// <summary>
         /// First time starting the activity
         /// </summary>
@@ -322,6 +324,8 @@ namespace CubeQuest.Layout
 	            battleInfoView.FindViewById<ImageView>(Resource.Id.image_battle_info)
 		            .SetImageBitmap(BitmapFactory.DecodeStream(Assets.Open($"enemy/{tag.Enemy.Icon}.webp")));
 
+            selectedMarker = marker;
+
             battleInfo.State = BottomSheetBehavior.StateCollapsed;
 
             int range = 200; //in meters
@@ -474,11 +478,19 @@ namespace CubeQuest.Layout
                         {
                             if (type == BattleCore.EBattleEndType.Won)
                             {
+                                if(selectedMarker != null)
+                                {
+                                    MapHandler.Visited.Add(selectedMarker.Position);
+                                    selectedMarker.Remove();
+                                }
+
                                 var dialogView = this.LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
 
                                 new AlertDialog.Builder(this)
                                     .SetView(dialogView)
                                     .Show();
+
+                                AccountManager.CurrentUser.AddExperience(10);
                             }
                             else if(type == BattleCore.EBattleEndType.Lost)
                             {
