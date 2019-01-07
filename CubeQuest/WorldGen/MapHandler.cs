@@ -8,7 +8,7 @@ namespace CubeQuest.WorldGen
     {
         public static GoogleMap Map;
 
-        public static List<LatLng> Visited;
+        public static HashSet<LatLng> Visited;
 
         public static Marker AddMarker(LatLng latLng, string title, BitmapDescriptor icon) =>
 	        Map.AddMarker(new MarkerOptions()
