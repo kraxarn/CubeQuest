@@ -80,6 +80,7 @@
             android:src="@drawable/ic_hp"/>
 
         <TextView
+            android:id="@+id/text_battle_info_health"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="4dp"
@@ -93,6 +94,7 @@
             android:src="@drawable/ic_shield"/>
 
         <TextView
+            android:id="@+id/text_battle_info_armor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="4dp"
@@ -105,6 +107,7 @@
             android:src="@drawable/ic_sword"/>
 
         <TextView
+            android:id="@+id/text_battle_info_attack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="4dp"
