@@ -14,10 +14,12 @@ using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
 using CubeQuest.Account.Enemies;
+using CubeQuest.Account.Companions;
 using CubeQuest.Account.Interface;
 using CubeQuest.Battle;
 using CubeQuest.Handler;
 using CubeQuest.ListView.Item;
+using CubeQuest.ListView.Companion;
 using CubeQuest.WorldGen;
 using System;
 using System.Collections.Generic;
@@ -76,6 +78,8 @@ namespace CubeQuest.Layout
         private View itemPopupView;
 
         private RecyclerView popupRecycler;
+
+        private RecyclerView companionRecycler;
 
         private BottomSheetBehavior battleInfo;
 
@@ -221,6 +225,19 @@ namespace CubeQuest.Layout
 
             if (!MainActivity.DebugMode)
 	            FindViewById<LinearLayout>(Resource.Id.layout_debug_tools).Visibility = ViewStates.Gone;
+
+            //Create recyclerView for companions.
+            companionRecycler = (RecyclerView)FindViewById(Resource.Id.companion_list);
+            var companionsList = new List<ICompanion>();
+            companionsList.Add(new Chick());
+            companionsList.Add(new Bear());
+            companionsList.Add(new Chick());
+            companionsList.Add(new Parrot());
+            var companionAdapter = new CompanionViewAdapter(companionsList);
+            var companionLayoutManager = new LinearLayoutManager(this);
+
+            companionRecycler.SetAdapter(companionAdapter);
+            companionRecycler.SetLayoutManager(companionLayoutManager);
 
             //Set up itemPopupView, set up briefcase button 
             //and link itemPopupView to the briefcase button
