@@ -99,6 +99,9 @@ namespace CubeQuest.Layout
 
             firstTime = true;
 
+            // By default, enable auto camera
+            autoCamera = true;
+
             markers = new Dictionary<LatLng, Marker>();
             chunkHandler = new ChunkHandler();
             
