@@ -79,6 +79,8 @@ namespace CubeQuest.Layout
 
         private BottomSheetBehavior battleInfo;
 
+        private Marker selectedMarker;
+
         /// <summary>
         /// First time starting the activity
         /// </summary>
@@ -469,6 +471,12 @@ namespace CubeQuest.Layout
                         {
                             if (type == BattleCore.EBattleEndType.Won)
                             {
+                                if(selectedMarker != null)
+                                {
+                                    MapHandler.Visited.Add(selectedMarker.Position);
+                                    selectedMarker.Remove();
+                                }
+
                                 var dialogView = this.LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
 
                                 new AlertDialog.Builder(this)
