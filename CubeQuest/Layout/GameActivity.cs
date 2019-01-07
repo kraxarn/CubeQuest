@@ -290,11 +290,7 @@ namespace CubeQuest.Layout
         {
             // Set local maps
             googleMap = map;
-            MapHandler.Map = map;
-            if (MapHandler.Visited == null)
-            {
-                MapHandler.Visited = new HashSet<LatLng>();
-            }
+            MapHandler.Init(map);
 
             map.CameraChange += Map_CameraChange;
 
