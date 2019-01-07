@@ -201,6 +201,11 @@ namespace CubeQuest.Account
             return d < 0 ? 0 : d;
         }
 
+        private void AddCompanion(ICompanion companion)
+        {
+           
+        }
+
         /// <summary>
         /// Serializes <see cref="User"/> to a JSON string
         /// </summary>
