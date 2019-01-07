@@ -155,23 +155,17 @@
             android:text="Attack"/>
 
         <Button
+            android:id="@+id/button_battle_spare"
             android:layout_columnWeight="1"
-            android:drawableLeft="@drawable/ic_shield"
+            android:drawableLeft="@drawable/ic_hp"
             android:backgroundTint="@color/colorPrimaryDark"
             android:padding="16dp"
-            android:text="Defense"/>
-
-        <Button
-            android:id="@+id/button_battle_magic"
-            android:layout_columnWeight="1"
-            android:drawableLeft="@drawable/ic_spell"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:padding="16dp"
-            android:text="Win"/>
+            android:text="Spare"/>
 
         <Button
             android:id="@+id/button_battle_run"
             android:layout_columnWeight="1"
+            android:layout_columnSpan="2"
             android:drawableLeft="@drawable/ic_run"
             android:backgroundTint="@color/colorPrimaryDark"
             android:padding="16dp"

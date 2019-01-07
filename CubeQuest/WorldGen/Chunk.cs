@@ -32,8 +32,8 @@ namespace CubeQuest.WorldGen
                 //Value: 
                 IEnemy enemy = MonsterFactory.CreateMonster(val);
                 Marker m = MapHandler.AddMarker(points[i].ToLatLng(), enemy.Name, ImageHandler.GetImage(enemy.Image));
-                m.Tag = (Java.Lang.Object)enemy;
-                Markers.Add(m);
+                //m.Tag = (Java.Lang.Object)enemy;
+                //Markers.Add(m);
             }
         }
 

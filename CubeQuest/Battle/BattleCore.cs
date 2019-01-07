@@ -175,10 +175,7 @@ namespace CubeQuest.Battle
                     case BattleHandler.EAnimationTarget.Enemy:
                         enemyButtons[selectedEnemyIndex].StartAnimation(attackAnimation);
                         companions[selectedEnemyIndex].StartAnimation(shakeAnimation);
-                        companions[selectedEnemyIndex].Animation.AnimationEnd += (sender, args) =>
-                        {
-                            ButtonsController(mainView, true);
-                        };
+                        companions[selectedEnemyIndex].Animation.AnimationEnd += (sender, args) => ButtonsController(mainView, true);
                         break;
                 }
                 
@@ -196,7 +193,7 @@ namespace CubeQuest.Battle
             };
 
             // When clicking 'win'
-            view.FindViewById<Button>(Resource.Id.button_battle_magic).Click += (sender, args) =>
+            view.FindViewById<Button>(Resource.Id.button_battle_spare).Click += (sender, args) =>
                 {
                     End?.Invoke(EBattleEndType.Won);
                 };
@@ -217,7 +214,7 @@ namespace CubeQuest.Battle
         {
             view.FindViewById<Button>(Resource.Id.button_battle_attack).Enabled = turnOn;
             view.FindViewById<Button>(Resource.Id.button_battle_run).Enabled = turnOn;
-            view.FindViewById<Button>(Resource.Id.button_battle_magic).Enabled = turnOn;
+            view.FindViewById<Button>(Resource.Id.button_battle_spare).Enabled = turnOn;
             foreach (var enemy in EnemyButtons)
             {
                 enemy.Enabled = turnOn;
