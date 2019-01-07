@@ -5151,17 +5151,14 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0b002f
 			public const int abc_toolbar_collapse_description = 2131427375;
 			
-			// aapt resource value: 0x7f0b004d
-			public const int achievement_cube_collector = 2131427405;
-			
-			// aapt resource value: 0x7f0b0050
-			public const int action_settings = 2131427408;
+			// aapt resource value: 0x7f0b004e
+			public const int action_settings = 2131427406;
 			
 			// aapt resource value: 0x7f0b004b
 			public const int app_id = 2131427403;
 			
-			// aapt resource value: 0x7f0b004f
-			public const int app_name = 2131427407;
+			// aapt resource value: 0x7f0b004d
+			public const int app_name = 2131427405;
 			
 			// aapt resource value: 0x7f0b003d
 			public const int appbar_scrolling_view_behavior = 2131427389;
@@ -5235,20 +5232,17 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0b0042
 			public const int fab_transformation_sheet_behavior = 2131427394;
 			
-			// aapt resource value: 0x7f0b004e
-			public const int google_maps_key = 2131427406;
+			// aapt resource value: 0x7f0b004c
+			public const int google_maps_key = 2131427404;
 			
 			// aapt resource value: 0x7f0b0043
 			public const int hide_bottom_view_on_scroll_behavior = 2131427395;
 			
-			// aapt resource value: 0x7f0b0051
-			public const int login_notice = 2131427409;
+			// aapt resource value: 0x7f0b004f
+			public const int login_notice = 2131427407;
 			
 			// aapt resource value: 0x7f0b0044
 			public const int mtrl_chip_close_icon_content_description = 2131427396;
-			
-			// aapt resource value: 0x7f0b004c
-			public const int package_name = 2131427404;
 			
 			// aapt resource value: 0x7f0b0045
 			public const int password_toggle_content_description = 2131427397;

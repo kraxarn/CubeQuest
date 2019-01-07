@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Android.Gms.Maps.Model;
 using Android.Util;
+using CubeQuest.Account;
 using CubeQuest.Account.Interface;
 using CubeQuest.Handler;
 using CubeQuest.MonsterGen;
@@ -32,7 +33,7 @@ namespace CubeQuest.WorldGen
                 //Value: 
                 IEnemy enemy = MonsterFactory.CreateMonster(val);
                 Marker m = MapHandler.AddMarker(points[i].ToLatLng(), enemy.Name, ImageHandler.GetImage(enemy.Image));
-                m.Tag = (Java.Lang.Object)enemy;
+                m.Tag = new EnemyTag(enemy.GetType(), 1);
                 Markers.Add(m);
             }
         }

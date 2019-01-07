@@ -79,6 +79,8 @@ namespace CubeQuest.Layout
 
         private BottomSheetBehavior battleInfo;
 
+        private LinearLayout battleInfoView;
+
         /// <summary>
         /// First time starting the activity
         /// </summary>
@@ -197,7 +199,7 @@ namespace CubeQuest.Layout
 
             FindViewById<Button>(Resource.Id.button_debug_battle).Click += (sender, args) => StartBattle();
 
-            var battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
+            battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
             battleInfo = BottomSheetBehavior.From(battleInfoView);
             battleInfo.State = BottomSheetBehavior.StateHidden;
 
@@ -206,7 +208,7 @@ namespace CubeQuest.Layout
 
             FindViewById<Button>(Resource.Id.button_debug_battle_info).Click += (sender, args) =>
             {
-                battleInfoView.FindViewById<ImageView>(Resource.Id.image_battle_info).SetImageBitmap(BitmapFactory.DecodeStream(Assets.Open("enemy/snake.webp")));
+                battleInfoView.FindViewById<ImageView>(Resource.Id.image_battle_info).SetImageBitmap(BitmapFactory.DecodeStream(Assets.Open("enemy/alien_beige.webp")));
 
                 battleInfo.State = BottomSheetBehavior.StateCollapsed;
             };
@@ -316,12 +318,15 @@ namespace CubeQuest.Layout
             if (marker.Tag?.ToString() == "player")
                 return true;
 
+            if (marker.Tag is EnemyTag tag)
+	            battleInfoView.FindViewById<ImageView>(Resource.Id.image_battle_info)
+		            .SetImageBitmap(BitmapFactory.DecodeStream(Assets.Open($"enemy/{tag.Enemy.Icon}.webp")));
+
             battleInfo.State = BottomSheetBehavior.StateCollapsed;
 
             int range = 200; //in meters
             bool isWithinRange = Handler.LocationManager.GetDistance(userLocation.ToLatLng(), marker.Position) < range;
-
-            var battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
+			
             battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Enabled = isWithinRange && AccountManager.CurrentUser.IsAlive;
             battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Alpha = isWithinRange && AccountManager.CurrentUser.IsAlive ? 1 : 0.5f;
             
