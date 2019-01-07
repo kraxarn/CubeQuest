@@ -30,7 +30,6 @@ namespace CubeQuest.WorldGen
             for (int i = 0; i < points.Count; i++)
             {
                 double val = points[i].Value;
-                //Value: 
                 IEnemy enemy = MonsterFactory.CreateMonster(val);
                 Marker m = MapHandler.AddMarker(points[i].ToLatLng(), enemy.Name, ImageHandler.GetImage(enemy.Image));
                 m.Tag = new EnemyTag(enemy.GetType(), 1);
