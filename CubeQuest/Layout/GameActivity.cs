@@ -520,7 +520,7 @@ namespace CubeQuest.Layout
                             {
                                 if(selectedMarker != null)
                                 {
-                                    MapHandler.Visited.Add(selectedMarker.Position);
+                                    MapHandler.Visited.Add(selectedMarker.Position.GetHashCode(), selectedMarker.Position);
                                     selectedMarker.Remove();
                                 }
 

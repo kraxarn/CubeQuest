@@ -30,7 +30,7 @@ namespace CubeQuest.WorldGen
             for (int i = 0; i < points.Count; i++)
             {
                 LatLng coord = points[i].ToLatLng();
-                if (!MapHandler.Visited.Contains(coord))
+                if (!MapHandler.Visited.ContainsKey(coord.GetHashCode()))
                 {
                     double val = points[i].Value;
                     IEnemy enemy = MonsterFactory.CreateMonster(val);
