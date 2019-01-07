@@ -449,7 +449,7 @@ namespace CubeQuest.Layout
             mainView.FindViewById<ProgressBar>(Resource.Id.progress_battle_health).Progress =
                 AccountManager.CurrentUser.HealthPercentage;
 
-            var battle = new BattleCore(this, battleView, Assets, new EnemySnake());
+            var battle = new BattleCore(this, battleView, Assets, new BeigeAlien());
 
             var centerX = mainView.Width / 2;
             var centerY = mainView.Height / 2;
