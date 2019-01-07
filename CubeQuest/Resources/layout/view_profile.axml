@@ -201,4 +201,20 @@
 			android:src="@drawable/ic_settings"/>
 
 	</LinearLayout>
+    
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        >
+        
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/companion_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        />
+        
+    </LinearLayout>
+    
 </LinearLayout>
