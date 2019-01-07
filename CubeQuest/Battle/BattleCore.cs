@@ -40,7 +40,7 @@ namespace CubeQuest.Battle
         /// Current selected index, you probably want to use <see cref="SelectedEnemyIndex"/>
         /// </summary>
         private int selectedEnemyIndex;
-        
+
         /// <summary>
         /// Overlay used for animations for each enemy
         /// </summary>
@@ -78,7 +78,7 @@ namespace CubeQuest.Battle
         {
             // Start battle music
             MusicManager.Play(MusicManager.EMusicTrack.Battle);
-            
+
             // Set context
             this.context = context;
 
@@ -96,7 +96,7 @@ namespace CubeQuest.Battle
             flashAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
             attackAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.attack);
             shakeAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.shake);
-            
+
             // Load enemy sprite(s)
             var enemySprite = BitmapFactory.DecodeStream(assets.Open($"enemy/{item.Icon}.webp"));
 
@@ -125,19 +125,20 @@ namespace CubeQuest.Battle
 
             // Set first enemy as default selected
             SelectedEnemyIndex = 0;
-            
+
             // Load 'selected enemy' frames
             var selectedFrames = LoadAnimation(assets, "selected", 2);
 
-			// Load slash frames when attacking enemy
+            // Load slash frames when attacking enemy
             var slashFrames = LoadAnimation(assets, "slash", 5);
 
             // Load image animators
             var anims = GetImageAnimators(selectedFrames);
 
-			// When clicking 'attack'
-			view.FindViewById<Button>(Resource.Id.button_battle_attack).Click += (sender, args) =>
-			{
+            // When clicking 'attack'
+            view.FindViewById<Button>(Resource.Id.button_battle_attack).Click += (sender, args) =>
+            {
+                ButtonsController(mainView, false);
                 battleHandler.StartAction(selectedEnemyIndex, BattleHandler.EActionType.Attack);
             };
 
@@ -154,6 +155,7 @@ namespace CubeQuest.Battle
             };
 
 
+
             // Player attacks animation in battle
             battleHandler.OnAnimation += (target, type) =>
             {
@@ -162,7 +164,7 @@ namespace CubeQuest.Battle
                 {
                     enemy.Enabled = false;
                 }
-                
+
                 switch (target)
                 {
                     case BattleHandler.EAnimationTarget.Player:
@@ -173,11 +175,14 @@ namespace CubeQuest.Battle
                     case BattleHandler.EAnimationTarget.Enemy:
                         enemyButtons[selectedEnemyIndex].StartAnimation(attackAnimation);
                         companions[0].StartAnimation(shakeAnimation);
+                        companions[0].Animation.AnimationEnd += (sender, args) =>
+                        {
+                            ButtonsController(mainView, true);
+                        };
                         break;
                 }
                 
             };
-            
             
             // When clicking 'run'
             view.FindViewById<Button>(Resource.Id.button_battle_run).Click += (sender, args) =>
@@ -188,10 +193,10 @@ namespace CubeQuest.Battle
 
                 // Invoke end event
                 End?.Invoke(EBattleEndType.Ran);
-			};
+            };
 
-			// When clicking 'win'
-			view.FindViewById<Button>(Resource.Id.button_battle_magic).Click += (sender, args) =>
+            // When clicking 'win'
+            view.FindViewById<Button>(Resource.Id.button_battle_magic).Click += (sender, args) =>
                 {
                     End?.Invoke(EBattleEndType.Won);
                 };
@@ -199,13 +204,26 @@ namespace CubeQuest.Battle
             // Create events when clicking on enemies
             CreateEnemyEvents(enemyButtons);
 
-			// Replace cube placeholders with test images
-			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_0).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/bear.webp")));
-			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_1).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/buffalo.webp")));
-			view.FindViewById<ImageView>(Resource.Id.image_battle_companion_2).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/chick.webp")));
+            // Replace cube placeholders with test images
+            view.FindViewById<ImageView>(Resource.Id.image_battle_companion_0).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/bear.webp")));
+            view.FindViewById<ImageView>(Resource.Id.image_battle_companion_1).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/buffalo.webp")));
+            view.FindViewById<ImageView>(Resource.Id.image_battle_companion_2).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/chick.webp")));
 
             AccountManager.CurrentUser.OnHealthChange += health =>
                 playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
+        }
+
+        private void ButtonsController(View view, bool turnOn)
+        {
+            view.FindViewById<Button>(Resource.Id.button_battle_attack).Enabled = turnOn;
+            view.FindViewById<Button>(Resource.Id.button_battle_run).Enabled = turnOn;
+            view.FindViewById<Button>(Resource.Id.button_battle_magic).Enabled = turnOn;
+            foreach (var enemy in EnemyButtons)
+            {
+                enemy.Enabled = turnOn;
+            }
+
+
         }
 
         async void StartTimer(ImageButton[] enemyButtons)
@@ -219,7 +237,7 @@ namespace CubeQuest.Battle
         {
             view.StartAnimation(attackAnimation);
         }
-        
+
         /// <summary>
         /// Selected enemy
         /// </summary>
@@ -251,14 +269,14 @@ namespace CubeQuest.Battle
         /// Sets a view to use the shake animation on press, for testing only
         /// </summary>
         /// <param name="view"></param>
-        private void CreateTestShakeAnimation(View view) => 
-            view.Click += (sender, args) => 
+        private void CreateTestShakeAnimation(View view) =>
+            view.Click += (sender, args) =>
                 view.StartAnimation(AnimationUtils.LoadAnimation(context, Resource.Animation.shake));
 
         /// <summary>
         /// ID of all enemy buttons
         /// </summary>
-        private static IEnumerable<int> EnemyButtonIds => 
+        private static IEnumerable<int> EnemyButtonIds =>
             new[]
             {
                 Resource.Id.button_battle_enemy0,
@@ -289,7 +307,7 @@ namespace CubeQuest.Battle
         /// </summary>
         private IEnumerable<ProgressBar> EnemyHealthBars =>
             EnemyHealthBarIds.Select(enemy => mainView.FindViewById<ProgressBar>(enemy));
-        
+
         /// <summary>
         /// Get enemy image overlays from <see cref="mainView"/>
         /// </summary>
@@ -299,7 +317,7 @@ namespace CubeQuest.Battle
             mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy1),
             mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy2)
         };
-        
+
         /// <summary>
         /// Get image animators for each overlay image
         /// </summary>
@@ -320,7 +338,7 @@ namespace CubeQuest.Battle
             {
                 ImageAnimator.GetAnimatedDrawable(res, frames.ToList(), 400, true)
             };
-        
+
         /// <summary>
         /// Set <see cref="SelectedEnemyIndex"/> depending on what enemy is pressed
         /// </summary>
@@ -330,19 +348,19 @@ namespace CubeQuest.Battle
             imageButtons[1].Click += (sender, args) => SelectedEnemyIndex = 1;
             imageButtons[2].Click += (sender, args) => SelectedEnemyIndex = 2;
         }
-        
+
 
         /// <summary>
         /// Loads animation from assets folder
         /// </summary>
         private static Bitmap[] LoadAnimation(AssetManager assets, string name, int frames)
         {
-	        var bitmaps = new Bitmap[frames];
+            var bitmaps = new Bitmap[frames];
 
-	        for (var i = 0; i < frames; i++)
-		        bitmaps[i] = BitmapFactory.DecodeStream(assets.Open($"animations/{name}/{i}.webp"));
+            for (var i = 0; i < frames; i++)
+                bitmaps[i] = BitmapFactory.DecodeStream(assets.Open($"animations/{name}/{i}.webp"));
 
-	        return bitmaps;
+            return bitmaps;
         }
     }
 

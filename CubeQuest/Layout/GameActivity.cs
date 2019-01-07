@@ -474,6 +474,8 @@ namespace CubeQuest.Layout
                                 new AlertDialog.Builder(this)
                                     .SetView(dialogView)
                                     .Show();
+
+                                AccountManager.CurrentUser.AddExperience(10);
                             }
                             else if(type == BattleCore.EBattleEndType.Lost)
                             {
