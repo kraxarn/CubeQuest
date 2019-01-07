@@ -9,7 +9,7 @@ using CubeQuest.MonsterGen;
 
 namespace CubeQuest.WorldGen
 {
-	internal class Chunk
+    internal class Chunk
     {
         public Chunk(int x, int y)
         {
@@ -29,11 +29,15 @@ namespace CubeQuest.WorldGen
             List<PointSpot> points = WorldGen.LoadChunk(X, Y);
             for (int i = 0; i < points.Count; i++)
             {
-                double val = points[i].Value;
-                IEnemy enemy = MonsterFactory.CreateMonster(val);
-                Marker m = MapHandler.AddMarker(points[i].ToLatLng(), enemy.Name, ImageHandler.GetImage(enemy.Image));
-                m.Tag = new EnemyTag(enemy.GetType(), 1);
-                Markers.Add(m);
+                LatLng coord = points[i].ToLatLng();
+                if (!MapHandler.Visited.ContainsKey(coord.GetHashCode()))
+                {
+                    double val = points[i].Value;
+                    IEnemy enemy = MonsterFactory.CreateMonster(val);
+                    Marker m = MapHandler.AddMarker(coord, enemy.Name, ImageHandler.GetImage(enemy.Image));
+                    m.Tag = new EnemyTag(enemy.GetType(), 1);
+                    Markers.Add(m);
+                }
             }
         }
 
