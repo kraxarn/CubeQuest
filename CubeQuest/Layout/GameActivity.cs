@@ -512,6 +512,12 @@ namespace CubeQuest.Layout
 
                                 var dialogView = this.LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
 
+                                var companion = CompanionManager.GetRandom();
+
+                                dialogView.FindViewById<TextView>(Resource.Id.loot_text).Text = "You have received a " + companion.Name + "!";
+
+                                AccountManager.CurrentUser.AddCompanion(companion);
+
                                 new AlertDialog.Builder(this)
                                     .SetView(dialogView)
                                     .Show();

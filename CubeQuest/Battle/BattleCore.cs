@@ -200,11 +200,15 @@ namespace CubeQuest.Battle
 
             // Create events when clicking on enemies
             CreateEnemyEvents(enemyButtons);
+            
+            
+                view.FindViewById<ImageView>(Resource.Id.image_battle_companion_0).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/" + AccountManager.CurrentUser.EquippedCompanions[0].Icon + ".webp")));
+                view.FindViewById<ImageView>(Resource.Id.image_battle_companion_1).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/" + AccountManager.CurrentUser.EquippedCompanions[1].Icon + ".webp")));
+                view.FindViewById<ImageView>(Resource.Id.image_battle_companion_2).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/" + AccountManager.CurrentUser.EquippedCompanions[2].Icon + ".webp")));
+           
 
             // Replace cube placeholders with test images
-            view.FindViewById<ImageView>(Resource.Id.image_battle_companion_0).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/bear.webp")));
-            view.FindViewById<ImageView>(Resource.Id.image_battle_companion_1).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/buffalo.webp")));
-            view.FindViewById<ImageView>(Resource.Id.image_battle_companion_2).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/chick.webp")));
+            
 
             AccountManager.CurrentUser.OnHealthChange += health =>
                 playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;

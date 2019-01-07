@@ -106,7 +106,7 @@ namespace CubeQuest.Battle
             //if (!AccountManager.CurrentUser.ShouldHit)
             //    return;
 
-            damage = AccountManager.CurrentUser.GetDamage(damage) + 50;
+            damage = AccountManager.CurrentUser.GetDamage(damage);
 
             AccountManager.CurrentUser.Health -= damage;
 

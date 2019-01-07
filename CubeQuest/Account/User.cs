@@ -3,6 +3,7 @@ using fastJSON;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using CubeQuest.Handler;
 
 namespace CubeQuest.Account
 {
@@ -20,11 +21,13 @@ namespace CubeQuest.Account
         /// All companions the player has
         /// </summary>
         private readonly List<ICompanion> companions;
-
+        
         /// <summary>
         /// All companions currently equipped by the user (max 3)
         /// </summary>
         private readonly List<ICompanion> equippedCompanions;
+
+        public List<ICompanion> EquippedCompanions => equippedCompanions;
 
         /// <summary>
         /// Total number of equipped companions (max 3)
@@ -190,6 +193,15 @@ namespace CubeQuest.Account
             experience = 100;
             Health = MaxHealth;
             isAlive = true;
+
+            GetStartingCompanions();
+        }
+
+        private void GetStartingCompanions()
+        {
+            equippedCompanions.Add(CompanionManager.GetRandom());
+            equippedCompanions.Add(CompanionManager.GetRandom());
+            equippedCompanions.Add(CompanionManager.GetRandom());
         }
 
         /// <summary>
@@ -201,9 +213,12 @@ namespace CubeQuest.Account
             return d < 0 ? 0 : d;
         }
 
-        private void AddCompanion(ICompanion companion)
+        public void AddCompanion(ICompanion companion)
         {
-           
+            if (!companions.Contains(companion))
+            {
+                companions.Add(companion);
+            }
         }
 
         /// <summary>
