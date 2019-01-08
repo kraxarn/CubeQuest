@@ -3,20 +3,20 @@ using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.Gms.Common;
+using Android.Graphics;
 using Android.Net;
 using Android.OS;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
-using System.Collections.Generic;
-using Android.Graphics;
 using CubeQuest.Handler;
+using System.Collections.Generic;
 using Uri = Android.Net.Uri;
 
 namespace CubeQuest.Layout
 {
-	[Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
         private const int RcSignIn = 9001;
@@ -25,9 +25,9 @@ namespace CubeQuest.Layout
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
-			
-			// Check if Google Play Games is installed
-			if (!IsPackageInstalled("com.google.android.play.games"))
+            
+            // Check if Google Play Games is installed
+            if (!IsPackageInstalled("com.google.android.play.games"))
 			{
 				// Toggle error message and connecting spinner
 				ToggleVisibilities(new List<int>
@@ -126,7 +126,10 @@ namespace CubeQuest.Layout
 
 		private void OpenGameActivity()
         {
-	        StartActivity(new Intent(this, typeof(GameActivity)),
+            // Set up asset loader
+            AssetLoader.Create(FindViewById(Android.Resource.Id.Content).Width, Assets);
+
+            StartActivity(new Intent(this, typeof(GameActivity)),
 		        ActivityOptions.MakeCustomAnimation(this, Android.Resource.Animation.FadeIn,
 			        Android.Resource.Animation.FadeOut).ToBundle());
 		}
@@ -134,7 +137,7 @@ namespace CubeQuest.Layout
         protected override void OnStart()
         {
             base.OnStart();
-
+            
             MusicManager.Create(this);
             MusicManager.Volume = 0.2f;
             MusicManager.Play(MusicManager.EMusicTrack.Map);
