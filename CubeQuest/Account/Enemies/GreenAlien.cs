@@ -7,7 +7,9 @@ namespace CubeQuest.Account.Enemies
 	{
 		public ImageHandler.ImageName Image => ImageHandler.ImageName.ALIEN_GREEN;
 
-		public string Icon => "alien_green";
+        public int Level { get; set; }
+
+        public string Icon => "alien_green";
 
 		public string Name => "Green Alien";
 
