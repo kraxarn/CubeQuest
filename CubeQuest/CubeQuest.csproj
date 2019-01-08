@@ -96,7 +96,6 @@
     <Compile Include="Battle\IQueueAction.cs" />
     <Compile Include="Battle\QueueAction.cs" />
     <Compile Include="Handler\AssetLoader.cs" />
-    <Compile Include="Handler\ImageAnimator.cs" />
     <Compile Include="Handler\LocationManager.cs" />
     <Compile Include="Handler\MusicManager.cs" />
     <Compile Include="Handler\CompanionManager.cs" />
