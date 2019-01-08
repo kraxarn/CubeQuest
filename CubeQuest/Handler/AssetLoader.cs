@@ -1,9 +1,11 @@
-﻿using Android.Content.Res;
+﻿using System;
+using Android.Content.Res;
 using Android.Graphics;
 using Android.OS;
 using CubeQuest.Account;
 using CubeQuest.Account.Interface;
 using System.Collections.Generic;
+using Android.Graphics.Drawables;
 
 namespace CubeQuest.Handler
 {
@@ -43,14 +45,25 @@ namespace CubeQuest.Handler
             GetBitmapFromPath($"enemy/{enemy.Icon}.webp");
         
         public static Bitmap GetCompanionBitmap(ICompanion companion) =>
-            GetBitmapFromPath($"companion/{companion.Icon}.webp");
+            GetBitmapFromPath($"companion/{companion.Icon}.webp", 0.5f);
 
-        private static Bitmap GetBitmapFromPath(string path)
+        [Obsolete("GetAnimationDrawable")]
+        public static Bitmap[] GetAnimationBitmaps(string name, int frames)
+        {
+            var b = new Bitmap[frames];
+
+            for (var i = 0; i < frames; i++)
+                b[i] = GetBitmapFromPath($"animations/{name}/{i}.webp");
+
+            return b;
+        }
+
+        private static Bitmap GetBitmapFromPath(string path, float sizeModifier = 1f)
         {
             if (bitmaps.ContainsKey(path))
                 return bitmaps[path];
 
-            var bitmap = ScaleBitmap(DecodeBitmap(path), BitmapSize);
+            var bitmap = ScaleBitmap(DecodeBitmap(path), (int) (BitmapSize * sizeModifier));
             bitmaps.Add(path, bitmap);
             return bitmap;
         }
