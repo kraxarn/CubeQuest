@@ -1,10 +1,15 @@
 ﻿using CubeQuest.Account.Interface;
+using CubeQuest.Handler;
 
 namespace CubeQuest.Account.Enemies
 {
 	public class GreenAlien : IEnemy
 	{
-		public string Icon => "alien_green";
+		public ImageHandler.ImageName Image => ImageHandler.ImageName.ALIEN_GREEN;
+
+        public int Level { get; set; }
+
+        public string Icon => "alien_green";
 
 		public string Name => "Green Alien";
 

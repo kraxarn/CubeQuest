@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Runtime.CompilerServices;
 
 namespace CubeQuest.WorldGen
 {
@@ -54,6 +55,7 @@ namespace CubeQuest.WorldGen
                 permutation[n] = permutation[k];
                 permutation[k] = temp;
             }
+            Permutation();
         }
 
 		private static readonly int[] p;                                                    // Doubled permutation to avoid overflow
@@ -61,11 +63,16 @@ namespace CubeQuest.WorldGen
 		static Perlin()
 		{
 			p = new int[512];
-			for (int x = 0; x < 512; x++)
-			{
-				p[x] = permutation[x % 256];
-			}
+            Permutation();
 		}
+
+        private static void Permutation()
+        {
+            for (int x = 0; x < 512; x++)
+            {
+                p[x] = permutation[x % 256];
+            }
+        }
 
 		public static double perlin(double x, double y, double z)
 		{
