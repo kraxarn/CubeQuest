@@ -142,7 +142,7 @@ namespace CubeQuest.Layout
             MusicManager.Volume = 0.2f;
             MusicManager.Play(MusicManager.EMusicTrack.Map);
 
-			AccountManager.SaveBitmap = BitmapFactory.DecodeStream(Assets.Open("enemy/snake.webp"));
+			AccountManager.SaveBitmap = BitmapFactory.DecodeStream(Assets.Open("player/0.webp"));
 
 			// Google signin
 			if (IsConnected)
