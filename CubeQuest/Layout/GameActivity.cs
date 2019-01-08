@@ -80,6 +80,8 @@ namespace CubeQuest.Layout
 
         private RecyclerView companionRecycler;
 
+        private CompanionViewAdapter companionAdapter;
+
         private BottomSheetBehavior battleInfo;
 
         private LinearLayout battleInfoView;
@@ -226,13 +228,14 @@ namespace CubeQuest.Layout
 	            FindViewById<LinearLayout>(Resource.Id.layout_debug_tools).Visibility = ViewStates.Gone;
 
             //Create recyclerView for companions.
+
             companionRecycler = (RecyclerView)FindViewById(Resource.Id.companion_list);
-            var companionsList = new List<ICompanion>();
-            companionsList.Add(new Chick());
+            //var companionsList = new List<ICompanion>(AccountManager.CurrentUser.companions);
+            /*companionsList.Add(new Chick());
             companionsList.Add(new Bear());
             companionsList.Add(new Chick());
-            companionsList.Add(new Parrot());
-            var companionAdapter = new CompanionViewAdapter(companionsList);
+            companionsList.Add(new Parrot());*/
+            companionAdapter = new CompanionViewAdapter(AccountManager.CurrentUser.companions);
             var companionLayoutManager = new LinearLayoutManager(this);
 
             companionRecycler.SetAdapter(companionAdapter);
@@ -289,7 +292,7 @@ namespace CubeQuest.Layout
         {
             // Set local maps
             googleMap = map;
-            MapHandler.Init(map);
+            MapHandler.Init(map, DateTime.Now.ToString("dd/MM/yyyy").GetHashCode());
 
             map.CameraChange += Map_CameraChange;
 
@@ -530,6 +533,8 @@ namespace CubeQuest.Layout
                                 dialogView.FindViewById<TextView>(Resource.Id.loot_text).Text = "You have received a " + companion.Name + "!";
 
                                 AccountManager.CurrentUser.AddCompanion(companion);
+
+                                companionAdapter.NotifyDataSetChanged();
 
                                 new AlertDialog.Builder(this)
                                     .SetView(dialogView)
