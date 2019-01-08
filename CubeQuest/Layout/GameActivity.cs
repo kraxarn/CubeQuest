@@ -13,7 +13,6 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
-using CubeQuest.Account.Companions;
 using CubeQuest.Account.Interface;
 using CubeQuest.Battle;
 using CubeQuest.Handler;
@@ -353,9 +352,8 @@ namespace CubeQuest.Layout
 		            .SetImageBitmap(BitmapFactory.DecodeStream(Assets.Open($"enemy/{enemy.Icon}.webp")));
 
 				// Set title
-				// TODO: Set level correctly
 	            battleInfoView.FindViewById<TextView>(Resource.Id.text_battle_info_title).Text =
-		            $"Level 1 {enemy.Name}";
+		            $"Level {enemy.Level} {enemy.Name}";
 
 				// Set description
 	            battleInfoView.FindViewById<TextView>(Resource.Id.text_battle_info_description).Text = enemy.Info;
