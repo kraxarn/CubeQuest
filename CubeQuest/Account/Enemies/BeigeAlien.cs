@@ -1,12 +1,9 @@
 ﻿using CubeQuest.Account.Interface;
-using CubeQuest.Handler;
 
 namespace CubeQuest.Account.Enemies
 {
 	public class BeigeAlien : IEnemy
 	{
-		public ImageHandler.ImageName Image => ImageHandler.ImageName.ALIEN_BEIGE;
-
 		public string Icon => "alien_beige";
 
 		public string Name => "Beige Alien";
