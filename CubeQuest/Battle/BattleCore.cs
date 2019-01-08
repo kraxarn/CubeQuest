@@ -135,7 +135,6 @@ namespace CubeQuest.Battle
             // Load image animators
             var anims = GetImageAnimators(selectedFrames);
             
-
             // When clicking attack
             view.FindViewById<Button>(Resource.Id.button_battle_attack).Click += OnAttackClickEvent;
 
@@ -167,9 +166,7 @@ namespace CubeQuest.Battle
                 view.FindViewById<Button>(Resource.Id.button_battle_run).Click -= OnRunClickEvent;
                 view.FindViewById<Button>(Resource.Id.button_battle_spare).Click -= OnSpareClickEvent;
             };
-
-            
-
+			
             // Player attacks animation in battle
             battleHandler.OnAnimation += (target, index) =>
             {
