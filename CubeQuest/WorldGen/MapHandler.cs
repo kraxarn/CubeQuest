@@ -12,9 +12,8 @@ namespace CubeQuest.WorldGen
 
         public static int Seed { get; private set; }
 
-        public static void Init(GoogleMap map)
+        public static void Init(GoogleMap map, int currentSeed)
         {
-            int currentSeed = 0;
             Map = map;
             if(Visited == null)
             {
