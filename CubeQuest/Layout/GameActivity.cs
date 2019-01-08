@@ -292,7 +292,7 @@ namespace CubeQuest.Layout
         {
             // Set local maps
             googleMap = map;
-            MapHandler.Init(map, DateTime.Now.ToString("M/d/yyyy").GetHashCode());
+            MapHandler.Init(map, DateTime.Now.ToString("dd/MM/yyyy").GetHashCode());
 
             map.CameraChange += Map_CameraChange;
 
