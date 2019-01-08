@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace CubeQuest.Handler
 {
-	public static class AssetLoader
+    public static class AssetLoader
     {
         /// <summary>
         /// Width of device
@@ -69,6 +69,19 @@ namespace CubeQuest.Handler
 			animation.Start();
 			return animation;
 		}
+
+        /// <summary>
+        /// Gets a bitmap without scaling it
+        /// </summary>
+        public static Bitmap GetBitmap(string path)
+        {
+            if (bitmaps.ContainsKey(path))
+                return bitmaps[path];
+
+            var bitmap = DecodeBitmap(path);
+            bitmaps.Add(path, bitmap);
+            return bitmap;
+        }
 
 		private static Bitmap GetBitmapFromPath(string path, float sizeModifier = 1f)
         {
