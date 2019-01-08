@@ -20,7 +20,7 @@ namespace CubeQuest.Account
         /// <summary>
         /// All companions the player has
         /// </summary>
-        private readonly List<ICompanion> companions;
+        public readonly List<ICompanion> companions;
         
         /// <summary>
         /// All companions currently equipped by the user (max 3)
