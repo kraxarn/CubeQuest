@@ -20,26 +20,24 @@ namespace CubeQuest.Account
         /// <summary>
         /// All companions the player has
         /// </summary>
-        public readonly List<ICompanion> companions;
+        public List<ICompanion> Companions { get; private set; }
         
         /// <summary>
         /// All companions currently equipped by the user (max 3)
         /// </summary>
-        private readonly List<ICompanion> equippedCompanions;
-
-        public List<ICompanion> EquippedCompanions => equippedCompanions;
+        public List<ICompanion> EquippedCompanions { get; private set; }
 
         /// <summary>
         /// Total number of equipped companions (max 3)
         /// </summary>
         public int EquippedCompanionCount =>
-            equippedCompanions.Count;
+            EquippedCompanions.Count;
 
         /// <summary>
         /// Total number of companions in our inventory
         /// </summary>
         public int CompanionCount =>
-            companions.Count;
+            Companions.Count;
 
         /// <summary>
         /// Add experience to the user
@@ -66,7 +64,7 @@ namespace CubeQuest.Account
             get
             {
                 var a = 0;
-                equippedCompanions.ForEach(c => a += c.Armor);
+                EquippedCompanions.ForEach(c => a += c.Armor);
                 return a;
             }
         }
@@ -143,7 +141,7 @@ namespace CubeQuest.Account
             get
             {
                 var h = 100 + (int) Level * 5;
-                equippedCompanions.ForEach(c => h += c.Health);
+                EquippedCompanions.ForEach(c => h += c.Health);
                 return h;
             }
         }
@@ -156,7 +154,7 @@ namespace CubeQuest.Account
             get
             {
                 var a = (int) Level * 2;
-                equippedCompanions.ForEach(c => a += c.Attack);
+                EquippedCompanions.ForEach(c => a += c.Attack);
                 return a;
             }
         }
@@ -171,7 +169,7 @@ namespace CubeQuest.Account
                 var e = 0f;
 
                 // TODO: We probably don't want evasion stacking like this
-                equippedCompanions.ForEach(c => e += c.Evasion);
+                EquippedCompanions.ForEach(c => e += c.Evasion);
 
                 if (e > 1f)
                     e = 1f;
@@ -188,8 +186,8 @@ namespace CubeQuest.Account
 
         public User()
         {
-            companions = new List<ICompanion>();
-            equippedCompanions = new List<ICompanion>(3);
+            Companions = new List<ICompanion>();
+            EquippedCompanions = new List<ICompanion>(3);
             experience = 100;
             Health = MaxHealth;
             isAlive = true;
@@ -201,7 +199,7 @@ namespace CubeQuest.Account
         {
             foreach (var startingCompanion in CompanionManager.GetStartingCompanions())
             {
-                equippedCompanions.Add(startingCompanion);
+                EquippedCompanions.Add(startingCompanion);
             }
         }
 
@@ -216,9 +214,9 @@ namespace CubeQuest.Account
 
         public void AddCompanion(ICompanion companion)
         {
-            if (!companions.Contains(companion))
+            if (!Companions.Contains(companion))
             {
-                companions.Add(companion);
+                Companions.Add(companion);
             }
         }
 
