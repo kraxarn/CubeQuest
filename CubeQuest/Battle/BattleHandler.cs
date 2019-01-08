@@ -67,6 +67,18 @@ namespace CubeQuest.Battle
         
         public void StartAction(int index, EActionType action)
         {
+            if (action == EActionType.Spare)
+            {
+                battleQueue.Add(new QueueAction(() =>
+                {
+                    EnemyAttack(10, index);
+                    Thread.Sleep(600);
+                }, true));
+
+                battleQueue.Execute();
+
+                return;
+            }
 
             var action1 = new QueueAction(() =>
             {
@@ -123,7 +135,6 @@ namespace CubeQuest.Battle
             {
                 BattleEnd?.Invoke(BattleCore.EBattleEndType.Lost);
             }
-
         }
 
 
