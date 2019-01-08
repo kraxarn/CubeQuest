@@ -8,7 +8,7 @@ namespace CubeQuest.MonsterGen
     {
         public static IEnemy CreateMonster(double val)
         {
-            IEnemy enemy = null;
+            IEnemy enemy;
 
             // Get number between 0-10 and reduce 5
             var level = Math.Abs(val.GetHashCode() % 11) - 5;
@@ -25,7 +25,7 @@ namespace CubeQuest.MonsterGen
 	            enemy = new GreenAlien();
             else if (val <= 0.98)
 	            enemy = new BlueAlien();
-            else if (val <= 1)
+            else
 	            enemy = new BeigeAlien();
 
             enemy.Level = level;

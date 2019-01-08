@@ -78,7 +78,7 @@ namespace CubeQuest.WorldGen
 
         public override bool Equals(object obj)
         {
-            return (obj is Chunk) && ((obj as Chunk).X == this.X && (obj as Chunk).Y == this.Y);
+            return (obj is Chunk) && ((obj as Chunk).X == X && (obj as Chunk).Y == Y);
         }
     }
 }

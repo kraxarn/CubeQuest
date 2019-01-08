@@ -168,7 +168,7 @@ namespace CubeQuest.Account
 	        var data = SaveData;
 	        var str = Encoding.UTF8.GetString(data);
 
-	        Log.Info("SAVE_DATA", str ?? "NO_DATA");
+	        Log.Info("SAVE_DATA", str);
         }
     }
 

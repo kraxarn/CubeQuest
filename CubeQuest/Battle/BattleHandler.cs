@@ -1,33 +1,26 @@
-﻿using System;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-using Android.Views;
-using Android.Views.Animations;
-using Android.Widget;
+﻿using Android.Widget;
 using CubeQuest.Account;
+using System.Linq;
+using System.Threading;
 
 namespace CubeQuest.Battle
 {
     public class BattleHandler
     {
-        private ImageButton[] enemies;
-        private ProgressBar[] enemyHealthBars;
+        private readonly ImageButton[] enemies;
+
+        private readonly ProgressBar[] enemyHealthBars;
+
         private ProgressBar playerHealthBar;
+
         private readonly BattleQueue battleQueue;
         
         public enum EActionType { Attack, Spare }
-        public enum EAnimationTarget { Player, Enemy }
-        public enum EAnimationType { Attack, Damage }
 
-        private bool EnemiesAreDead
-        {
-            get
-            {
-                return !enemyHealthBars.Any(enemy => enemy.Progress > 0);
-            }
-        }
+        public enum EAnimationTarget { Player, Enemy }
+
+        private bool EnemiesAreDead => 
+            !enemyHealthBars.Any(enemy => enemy.Progress > 0);
 
         public delegate void BattleEndEvent(BattleCore.EBattleEndType type);
 
@@ -41,11 +34,8 @@ namespace CubeQuest.Battle
 
         public event OnEnemyKilledEvent OnEnemyKilled;
 
-        public void RanAway()
-        {
-            this.BattleEnd?.Invoke(BattleCore.EBattleEndType.Ran);
-        }
-
+        public void RunAway() => 
+            BattleEnd?.Invoke(BattleCore.EBattleEndType.Ran);
 
         public BattleHandler(ImageButton[] enemies, ProgressBar[] enemyHealthBars, ProgressBar playerHealthBar)
         {
@@ -58,10 +48,7 @@ namespace CubeQuest.Battle
             battleQueue.OnQueueEnd += () =>
             {
                 foreach (var enemy in enemies)
-                {
                     enemy.Enabled = true;
-
-                }
             };
         }
         
@@ -132,12 +119,7 @@ namespace CubeQuest.Battle
             AccountManager.CurrentUser.Health -= damage;
 
             if (AccountManager.CurrentUser.Health <= 0)
-            {
                 BattleEnd?.Invoke(BattleCore.EBattleEndType.Lost);
-            }
         }
-
-
     }
-
 }

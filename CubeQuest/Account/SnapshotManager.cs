@@ -45,15 +45,6 @@ namespace CubeQuest.Account
 			if (result.Snapshot != null)
 				await CommitSnapshotAsync(result.Snapshot, data);
 		}
-
-        private async Task<IResult> SaveSnapshotWithResultAsync(byte[] data)
-        {
-	        // Try to open snapshot
-	        var result = await OpenSnapshot();
-
-	        // Try to write it
-	        return result.Snapshot == null ? (IResult) result : (await CommitSnapshotAsync(result.Snapshot, data)).Status;
-		}
 		
 		private async Task<ISnapshotsCommitSnapshotResult> CommitSnapshotAsync(ISnapshot snapshot, byte[] data)
 		{

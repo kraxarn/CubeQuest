@@ -16,12 +16,12 @@ using CubeQuest.Account;
 using CubeQuest.Account.Interface;
 using CubeQuest.Battle;
 using CubeQuest.Handler;
-using CubeQuest.ListView.Companion;
 using CubeQuest.ListView.Item;
 using CubeQuest.WorldGen;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using CubeQuest.ListView.Companions;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest.Layout
@@ -524,7 +524,7 @@ namespace CubeQuest.Layout
                                     selectedMarker.Remove();
                                 }
 
-                                var dialogView = this.LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
+                                var dialogView = LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
 
                                 var companion = CompanionManager.GetRandom();
 

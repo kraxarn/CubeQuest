@@ -13,7 +13,7 @@ namespace CubeQuest.Account
         {
             get
             {
-                var enemy = Activator.CreateInstance(enemyType) as IEnemy;
+                var enemy = (IEnemy) Activator.CreateInstance(enemyType);
                 enemy.Level = level;
                 return enemy;
             }

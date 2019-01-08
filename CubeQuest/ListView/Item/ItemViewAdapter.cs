@@ -24,21 +24,21 @@ namespace CubeQuest.ListView.Item
             //Replace below line with something that gets the real icon
             itemHolder.Icon.SetImageResource(Resource.Drawable.ic_companion);
 
-            itemHolder.expandCollapse.SetImageResource(Resource.Drawable.ic_numbered_list);
+            itemHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_numbered_list);
             itemHolder.Info.Text = items[position].Info;
             itemHolder.Info.Visibility = ViewStates.Gone;
 
             //Makes info text disappear or appear on the click
-            itemHolder.expandCollapse.Click += (object sender, System.EventArgs e) => {
+            itemHolder.ExpandCollapse.Click += (sender, args) => {
             if(itemHolder.Info.Visibility == ViewStates.Gone)
                 {
                     itemHolder.Info.Visibility = ViewStates.Visible;
-                    itemHolder.expandCollapse.SetImageResource(Resource.Drawable.ic_shield);
+                    itemHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_shield);
                 }
                 else
                 {
                     itemHolder.Info.Visibility = ViewStates.Gone;
-                    itemHolder.expandCollapse.SetImageResource(Resource.Drawable.ic_numbered_list);
+                    itemHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_numbered_list);
                 }
             };
         }

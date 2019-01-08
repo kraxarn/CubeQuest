@@ -3,7 +3,7 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using CubeQuest.Account.Interface;
 
-namespace CubeQuest.ListView.Companion
+namespace CubeQuest.ListView.Companions
 {
     public class CompanionViewAdapter : RecyclerView.Adapter
     {
@@ -24,21 +24,21 @@ namespace CubeQuest.ListView.Companion
             //Replace below line with something that gets the real icon
             companionHolder.Icon.SetImageResource(Resource.Drawable.ic_companion);
 
-            companionHolder.expandCollapse.SetImageResource(Resource.Drawable.ic_numbered_list);
+            companionHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_numbered_list);
             companionHolder.Info.Text = companions[position].Info;
             companionHolder.Info.Visibility = ViewStates.Gone;
 
             //Makes info text disappear or appear on the click
-            companionHolder.expandCollapse.Click += (object sender, System.EventArgs e) => {
+            companionHolder.ExpandCollapse.Click += (sender, args) => {
                 if (companionHolder.Info.Visibility == ViewStates.Gone)
                 {
                     companionHolder.Info.Visibility = ViewStates.Visible;
-                    companionHolder.expandCollapse.SetImageResource(Resource.Drawable.ic_shield);
+                    companionHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_shield);
                 }
                 else
                 {
                     companionHolder.Info.Visibility = ViewStates.Gone;
-                    companionHolder.expandCollapse.SetImageResource(Resource.Drawable.ic_numbered_list);
+                    companionHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_numbered_list);
                 }
             };
         }

@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace CubeQuest.WorldGen
 {
-	internal class WorldGen
+    internal class WorldGen
     {
-        const double multiplier = 0.1;
+        private const double Multiplier = 0.1;
+
         static int[,] Dirr = new int[,] { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
-
-        public WorldGen()
-        {
-        }
-
+        
         public static List<PointSpot> GenerateArea(int xMin, int xMax, int yMin, int yMax)
         {
             char[] lastRow = new char[xMax - xMin];
@@ -86,7 +82,7 @@ namespace CubeQuest.WorldGen
 
         static double Perling(int x, int y)
         {
-            return Perlin.OctavePerlin(x * multiplier, y * multiplier, 0, 2, 2);
+            return Perlin.OctavePerlin(x * Multiplier, y * Multiplier, 0, 2, 2);
         }
     }
 }

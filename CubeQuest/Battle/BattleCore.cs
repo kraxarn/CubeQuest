@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Android.App;
-using Android.Content;
-using Android.Content.Res;
+﻿using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Views;
@@ -13,7 +7,9 @@ using Android.Widget;
 using CubeQuest.Account;
 using CubeQuest.Account.Interface;
 using CubeQuest.Handler;
-using CubeQuest.Layout;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CubeQuest.Battle
 {
@@ -51,13 +47,6 @@ namespace CubeQuest.Battle
         /// </summary>
         private readonly ProgressBar[] enemyHealthBars;
 
-        private readonly ProgressBar playerHealthBar;
-
-        /// <summary>
-        /// Context, probably <see cref="GameActivity"/>
-        /// </summary>
-        private readonly Context context;
-
         /// <summary>
         /// Battle view
         /// </summary>
@@ -68,32 +57,26 @@ namespace CubeQuest.Battle
         /// </summary>
         private readonly Animation flashAnimation;
 
-        private readonly Animation shakeAnimation;
-
-        private readonly Animation attackAnimation;
-
-        public BattleCore(Activity context, View view, IEnemy enemy)
+        public BattleCore(Context context, View view, IEnemy enemy)
         {
             // Start battle music
             MusicManager.Play(MusicManager.EMusicTrack.Battle);
-
-            // Set context
-            this.context = context;
 
             // Set view
             mainView = view;
 
             // Companions
-            var companions = new List<ImageView>();
-
-            companions.Add(mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion_0));
-            companions.Add(mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion_1));
-            companions.Add(mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion_2));
+            var companions = new List<ImageView>
+            {
+                mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion_0),
+                mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion_1),
+                mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion_2)
+            };
 
             // Animations
-            flashAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
-            attackAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.attack);
-            shakeAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.shake);
+            flashAnimation      = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
+            var attackAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.attack);
+            var shakeAnimation  = AnimationUtils.LoadAnimation(context, Resource.Animation.shake);
 
             // Load enemy sprite(s)
             var enemySprite = AssetLoader.GetEnemyBitmap(enemy);
@@ -105,7 +88,7 @@ namespace CubeQuest.Battle
             enemyHealthBars = EnemyHealthBars.ToArray();
 
             // Player health bar
-            playerHealthBar = view.FindViewById<ProgressBar>(Resource.Id.progress_battle_health);
+            var playerHealthBar = view.FindViewById<ProgressBar>(Resource.Id.progress_battle_health);
 
             playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
 
@@ -114,9 +97,6 @@ namespace CubeQuest.Battle
 
             // Set bitmaps of enemy buttons
             enemyButtons.SetBitmaps(enemySprite);
-
-            // Start shake animation when pressing on the first enemy
-            //CreateTestShakeAnimation(enemyButtons[0]);
 
             // Enemy overlays
             enemyOverlays = EnemyImages;
@@ -163,7 +143,8 @@ namespace CubeQuest.Battle
                     case EBattleEndType.Ran:
                         End?.Invoke(EBattleEndType.Ran);
                         break;
-                };
+                }
+
                 view.FindViewById<Button>(Resource.Id.button_battle_attack).Click -= OnAttackClickEvent;
                 view.FindViewById<Button>(Resource.Id.button_battle_run).Click -= OnRunClickEvent;
                 view.FindViewById<Button>(Resource.Id.button_battle_spare).Click -= OnSpareClickEvent;
@@ -200,7 +181,7 @@ namespace CubeQuest.Battle
                 // Invoke end event
                 //End?.Invoke(EBattleEndType.Ran);
 
-                battleHandler.RanAway();
+                battleHandler.RunAway();
             }
 
             // When clicking 'win'
@@ -245,38 +226,21 @@ namespace CubeQuest.Battle
         private void ButtonsController(View view, bool turnOn)
         {
             view.FindViewById<Button>(Resource.Id.button_battle_attack).Enabled = turnOn;
-            view.FindViewById<Button>(Resource.Id.button_battle_run).Enabled = turnOn;
-            view.FindViewById<Button>(Resource.Id.button_battle_spare).Enabled = turnOn;
+            view.FindViewById<Button>(Resource.Id.button_battle_run).Enabled    = turnOn;
+            view.FindViewById<Button>(Resource.Id.button_battle_spare).Enabled  = turnOn;
+
             foreach (var enemy in EnemyButtons)
-            {
                 enemy.Enabled = turnOn;
-            }
 
         }
 
         private void ResetEnemies()
         {
             foreach (var enemy in enemyHealthBars)
-            {
                 enemy.Progress = 100;
-            }
 
             foreach (var enemy in EnemyButtons)
-            {
                 enemy.Clickable = enemy.Enabled = true;
-            }
-        }
-
-        async void StartTimer(ImageButton[] enemyButtons)
-        {
-            await Task.Delay(5000);
-            enemyButtons[selectedEnemyIndex]
-                .StartAnimation(AnimationUtils.LoadAnimation(context, Resource.Animation.attack));
-        }
-
-        private void PlayAnimation(View view)
-        {
-            view.StartAnimation(attackAnimation);
         }
 
         /// <summary>
@@ -305,14 +269,6 @@ namespace CubeQuest.Battle
                 selectedEnemyIndex = value;
             }
         }
-
-        /// <summary>
-        /// Sets a view to use the shake animation on press, for testing only
-        /// </summary>
-        /// <param name="view"></param>
-        private void CreateTestShakeAnimation(View view) =>
-            view.Click += (sender, args) =>
-                view.StartAnimation(AnimationUtils.LoadAnimation(context, Resource.Animation.shake));
 
         /// <summary>
         /// ID of all enemy buttons
