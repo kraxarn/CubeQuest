@@ -74,7 +74,7 @@ namespace CubeQuest.Battle
 
         private readonly BattleHandler battleHandler;
 
-        public BattleCore(Activity context, View view, AssetManager assets, IItem item)
+        public BattleCore(Activity context, View view, IEnemy enemy)
         {
             // Start battle music
             MusicManager.Play(MusicManager.EMusicTrack.Battle);
@@ -98,7 +98,7 @@ namespace CubeQuest.Battle
             shakeAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.shake);
 
             // Load enemy sprite(s)
-            var enemySprite = BitmapFactory.DecodeStream(assets.Open($"enemy/{item.Icon}.webp"));
+            var enemySprite = AssetLoader.GetEnemyBitmap(enemy);
 
             // Enemy image buttons
             var enemyButtons = EnemyButtons.ToArray();
@@ -127,10 +127,10 @@ namespace CubeQuest.Battle
             SelectedEnemyIndex = 0;
 
             // Load 'selected enemy' frames
-            var selectedFrames = LoadAnimation(assets, "selected", 2);
+            var selectedFrames = AssetLoader.GetAnimationBitmaps("selected", 2);
 
             // Load slash frames when attacking enemy
-            var slashFrames = LoadAnimation(assets, "slash", 5);
+            var slashFrames = AssetLoader.GetAnimationBitmaps("slash", 5);
 
             // Load image animators
             var anims = GetImageAnimators(selectedFrames);
@@ -160,10 +160,8 @@ namespace CubeQuest.Battle
             battleHandler.OnAnimation += (target, type) =>
             {
 
-                foreach (var enemy in enemyButtons)
-                {
-                    enemy.Enabled = false;
-                }
+                foreach (var enemyButton in enemyButtons)
+                    enemyButton.Enabled = false;
 
                 switch (target)
                 {
@@ -201,15 +199,11 @@ namespace CubeQuest.Battle
             // Create events when clicking on enemies
             CreateEnemyEvents(enemyButtons);
             
+            // Set companion images
+            view.FindViewById<ImageView>(Resource.Id.image_battle_companion_0).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
+            view.FindViewById<ImageView>(Resource.Id.image_battle_companion_1).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
+            view.FindViewById<ImageView>(Resource.Id.image_battle_companion_2).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
             
-                view.FindViewById<ImageView>(Resource.Id.image_battle_companion_0).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/" + AccountManager.CurrentUser.EquippedCompanions[0].Icon + ".webp")));
-                view.FindViewById<ImageView>(Resource.Id.image_battle_companion_1).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/" + AccountManager.CurrentUser.EquippedCompanions[1].Icon + ".webp")));
-                view.FindViewById<ImageView>(Resource.Id.image_battle_companion_2).SetImageBitmap(BitmapFactory.DecodeStream(assets.Open("companion/" + AccountManager.CurrentUser.EquippedCompanions[2].Icon + ".webp")));
-           
-
-            // Replace cube placeholders with test images
-            
-
             AccountManager.CurrentUser.OnHealthChange += health =>
                 playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
         }
@@ -348,20 +342,6 @@ namespace CubeQuest.Battle
             imageButtons[0].Click += (sender, args) => SelectedEnemyIndex = 0;
             imageButtons[1].Click += (sender, args) => SelectedEnemyIndex = 1;
             imageButtons[2].Click += (sender, args) => SelectedEnemyIndex = 2;
-        }
-
-
-        /// <summary>
-        /// Loads animation from assets folder
-        /// </summary>
-        private static Bitmap[] LoadAnimation(AssetManager assets, string name, int frames)
-        {
-            var bitmaps = new Bitmap[frames];
-
-            for (var i = 0; i < frames; i++)
-                bitmaps[i] = BitmapFactory.DecodeStream(assets.Open($"animations/{name}/{i}.webp"));
-
-            return bitmaps;
         }
     }
 
