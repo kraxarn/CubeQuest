@@ -19,7 +19,7 @@ namespace CubeQuest.Account.Enemies
 
 		public int Armor => 1;
 
-		public int Attack => 1;
+		public int Attack => 1 + (Level / 6);
         
 	}
 }

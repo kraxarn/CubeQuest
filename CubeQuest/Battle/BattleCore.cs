@@ -116,7 +116,7 @@ namespace CubeQuest.Battle
             enemyButtons.SetBitmaps(enemySprite);
 
             // Start shake animation when pressing on the first enemy
-            CreateTestShakeAnimation(enemyButtons[0]);
+            //CreateTestShakeAnimation(enemyButtons[0]);
 
             // Enemy overlays
             enemyOverlays = EnemyImages;
@@ -167,9 +167,7 @@ namespace CubeQuest.Battle
                 view.FindViewById<Button>(Resource.Id.button_battle_run).Click -= OnRunClickEvent;
                 view.FindViewById<Button>(Resource.Id.button_battle_spare).Click -= OnSpareClickEvent;
             };
-
             
-
             // Player attacks animation in battle
             battleHandler.OnAnimation += (target, index) =>
             {
@@ -213,7 +211,23 @@ namespace CubeQuest.Battle
 
             void OnSpareClickEvent(object sender, EventArgs arg)
             {
-                End?.Invoke(EBattleEndType.Won);
+                var enemyTotalHealth = enemyHealthBars.Average(e => e.Progress);
+                var enemyLevel = enemy.Level;
+                var playerLevel = AccountManager.CurrentUser.Level;
+                var success = playerLevel > enemyLevel ? 0.2f : -0.2f;
+
+                success += enemyTotalHealth < 0.25f ? 0.8f : enemyTotalHealth < 0.5f ? 0.4f : 0f;
+
+                if (success >= new Random().NextDouble())
+                {
+                    End?.Invoke(EBattleEndType.Won);
+                }
+                else
+                {
+                    ButtonsController(mainView, false);
+                    battleHandler.StartAction(selectedEnemyIndex, BattleHandler.EActionType.Spare);
+                }
+                
             }
 
             // Create events when clicking on enemies
