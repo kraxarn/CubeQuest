@@ -1,9 +1,6 @@
-﻿using CubeQuest.Handler;
-
-namespace CubeQuest.Account.Interface
+﻿namespace CubeQuest.Account.Interface
 {
 	public interface IEnemy : IItem
     {
-	    ImageHandler.ImageName Image { get; }
     }
 }
