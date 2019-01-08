@@ -9,10 +9,17 @@ namespace CubeQuest.Account
 
 		private readonly int level;
 
-		public IEnemy Enemy => 
-			Activator.CreateInstance(enemyType) as IEnemy;
+		public IEnemy Enemy
+        {
+            get
+            {
+                var enemy = Activator.CreateInstance(enemyType) as IEnemy;
+                enemy.Level = level;
+                return enemy;
+            }
+        }
 
-		public EnemyTag(Type enemyType, int level)
+        public EnemyTag(Type enemyType, int level)
 		{
 			this.enemyType = enemyType;
 			this.level     = level;
