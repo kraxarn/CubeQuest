@@ -1,10 +1,10 @@
 ﻿using Android.Content.Res;
+using Android.Gms.Maps.Model;
 using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.OS;
 using CubeQuest.Account.Interface;
-using System;
 using System.Collections.Generic;
-using Android.Gms.Maps.Model;
 
 namespace CubeQuest.Handler
 {
@@ -48,18 +48,29 @@ namespace CubeQuest.Handler
         public static Bitmap GetCompanionBitmap(ICompanion companion) =>
             GetBitmapFromPath($"companion/{companion.Icon}.webp", 0.5f);
 
-        [Obsolete("GetAnimationDrawable")]
-        public static Bitmap[] GetAnimationBitmaps(string name, int frames)
+        private static Bitmap GetAnimationFrameBitmap(string name, int frame) =>
+	        GetBitmapFromPath($"animations/{name}/{frame}.webp");
+
+        /// <summary>
+        /// Create an animated bitmap
+        /// </summary>
+        public static Drawable GetAnimatedDrawable(Resources res, string name, int frames, int duration, bool loop)
         {
-            var b = new Bitmap[frames];
+	        var animation = new AnimationDrawable();
+			var bitmapFrames = new List<Bitmap>(frames);
+			
+			for (var i = 0; i < frames; i++)
+				bitmapFrames.Add(GetAnimationFrameBitmap(name, i));
 
-            for (var i = 0; i < frames; i++)
-                b[i] = GetBitmapFromPath($"animations/{name}/{i}.webp");
+			// TODO: Load drawable better, like from cache
+			bitmapFrames.ForEach(f => animation.AddFrame(new BitmapDrawable(res, f), duration));
 
-            return b;
-        }
+			animation.OneShot = !loop;
+			animation.Start();
+			return animation;
+		}
 
-        private static Bitmap GetBitmapFromPath(string path, float sizeModifier = 1f)
+		private static Bitmap GetBitmapFromPath(string path, float sizeModifier = 1f)
         {
             if (bitmaps.ContainsKey(path))
                 return bitmaps[path];
