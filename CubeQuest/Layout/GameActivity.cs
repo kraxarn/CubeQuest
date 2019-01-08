@@ -154,7 +154,7 @@ namespace CubeQuest.Layout
                     // Update user location
                     userLocation = location;
 
-                    if (location.Speed > 0)
+                    if (location.Speed > 0 && battleView.Visibility != ViewStates.Visible)
                         AccountManager.CurrentUser.Health += 1;
 
                     // If map hasn't loaded yet, ignore player marker
