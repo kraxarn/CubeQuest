@@ -79,7 +79,6 @@
     <Compile Include="Account\Companions\Horse.cs" />
     <Compile Include="Account\Enemies\BeigeAlien.cs" />
     <Compile Include="Account\Enemies\BlueAlien.cs" />
-    <Compile Include="Account\Enemies\EnemySnake.cs" />
     <Compile Include="Account\Enemies\GreenAlien.cs" />
     <Compile Include="Account\Enemies\PinkAlien.cs" />
     <Compile Include="Account\Enemies\YellowAlien.cs" />
@@ -98,7 +97,6 @@
     <Compile Include="Battle\QueueAction.cs" />
     <Compile Include="Handler\AssetLoader.cs" />
     <Compile Include="Handler\ImageAnimator.cs" />
-    <Compile Include="Handler\ImageHandler.cs" />
     <Compile Include="Handler\LocationManager.cs" />
     <Compile Include="Handler\MusicManager.cs" />
     <Compile Include="Handler\CompanionManager.cs" />
@@ -127,8 +125,6 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\companion\example.webp" />
     <AndroidAsset Include="Assets\player\0.webp" />
-    <AndroidAsset Include="Assets\enemy\snake.webp" />
-    <AndroidAsset Include="Assets\enemy\snake2.webp" />
     <AndroidAsset Include="Assets\animations\selected\0.webp" />
     <AndroidAsset Include="Assets\animations\selected\1.webp" />
     <AndroidAsset Include="Assets\animations\slash\0.webp" />

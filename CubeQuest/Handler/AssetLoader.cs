@@ -1,15 +1,14 @@
-﻿using System;
-using Android.Content.Res;
+﻿using Android.Content.Res;
 using Android.Graphics;
 using Android.OS;
-using CubeQuest.Account;
 using CubeQuest.Account.Interface;
+using System;
 using System.Collections.Generic;
-using Android.Graphics.Drawables;
+using Android.Gms.Maps.Model;
 
 namespace CubeQuest.Handler
 {
-    public static class AssetLoader
+	public static class AssetLoader
     {
         /// <summary>
         /// Width of device
@@ -27,7 +26,7 @@ namespace CubeQuest.Handler
         /// Cache with loaded bitmaps
         /// </summary>
         private static Dictionary<string, Bitmap> bitmaps;
-        
+		
         /// <summary>
         /// Create asset loader
         /// </summary>
@@ -36,6 +35,8 @@ namespace CubeQuest.Handler
             deviceWidth = displayWidth;
             assets = assetManager;
             bitmaps = new Dictionary<string, Bitmap>();
+
+			AssetLoaderConverter.Create();
         }
         
         /// <summary>
@@ -76,4 +77,27 @@ namespace CubeQuest.Handler
         private static Bitmap ScaleBitmap(Bitmap bitmap, int size) => 
             Bitmap.CreateScaledBitmap(bitmap, size, size, false);
     }
+
+	public static class AssetLoaderConverter
+	{
+		/// <summary>
+		/// Dictionary with hash of bitmap and bitmap descriptor
+		/// </summary>
+		private static Dictionary<int, BitmapDescriptor> bitmapDescriptors;
+
+		public static void Create() => 
+			bitmapDescriptors = new Dictionary<int, BitmapDescriptor>(8);
+
+		public static BitmapDescriptor ToBitmapDescriptor(this Bitmap bitmap)
+		{
+			var bitmapHash = bitmap.GetHashCode();
+
+			if (bitmapDescriptors.ContainsKey(bitmapHash))
+				return bitmapDescriptors[bitmapHash];
+
+			var descriptor = BitmapDescriptorFactory.FromBitmap(bitmap);
+			bitmapDescriptors.Add(bitmap.GetHashCode(), descriptor);
+			return descriptor;
+		}
+	}
 }

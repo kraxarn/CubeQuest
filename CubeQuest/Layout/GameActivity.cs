@@ -235,7 +235,7 @@ namespace CubeQuest.Layout
             companionsList.Add(new Bear());
             companionsList.Add(new Chick());
             companionsList.Add(new Parrot());*/
-            companionAdapter = new CompanionViewAdapter(AccountManager.CurrentUser.companions);
+            companionAdapter = new CompanionViewAdapter(AccountManager.CurrentUser.Companions);
             var companionLayoutManager = new LinearLayoutManager(this);
 
             companionRecycler.SetAdapter(companionAdapter);
