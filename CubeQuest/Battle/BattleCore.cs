@@ -127,13 +127,14 @@ namespace CubeQuest.Battle
             ResetEnemies();
 
             // Load 'selected enemy' frames
-            var selectedFrames = AssetLoader.GetAnimationBitmaps("selected", 2);
+			var selectedAnimations = new Drawable[enemyOverlays.Length];
 
-            // Load slash frames when attacking enemy
-            var slashFrames = AssetLoader.GetAnimationBitmaps("slash", 5);
+			// Create 3 copies for each enemy
+			for (var i = 0; i < selectedAnimations.Length; i++)
+				selectedAnimations[i] = AssetLoader.GetAnimatedDrawable(context.Resources, "selected", 2, 400, true);
 
             // Load image animators
-            var anims = GetImageAnimators(selectedFrames);
+            EnemyOverlayDrawable = selectedAnimations;
             
             // When clicking attack
             view.FindViewById<Button>(Resource.Id.button_battle_attack).Click += OnAttackClickEvent;
@@ -195,10 +196,6 @@ namespace CubeQuest.Battle
 
             void OnRunClickEvent(object sender, EventArgs arg)
             {
-                // Unload all animations
-                foreach (var anim in anims)
-                    anim.Stop();
-
                 // Invoke end event
                 //End?.Invoke(EBattleEndType.Ran);
 
@@ -344,27 +341,14 @@ namespace CubeQuest.Battle
             mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy2)
         };
 
-        /// <summary>
-        /// Get image animators for each overlay image
-        /// </summary>
-        [Obsolete]
-        private ImageAnimator[] GetImageAnimators(IReadOnlyList<Bitmap> frames) =>
-            new[]
-            {
-                new ImageAnimator(enemyOverlays[0], frames, 400),
-                new ImageAnimator(enemyOverlays[1], frames, 400),
-                new ImageAnimator(enemyOverlays[2], frames, 400)
-            };
-
-        /// <summary>
-        /// Get animated drawables for each overlay image
-        /// </summary>
-        private IEnumerable<Drawable> GetImageDrawables(Resources res, IReadOnlyList<Bitmap> frames) =>
-            new[]
-            {
-                ImageAnimator.GetAnimatedDrawable(res, frames.ToList(), 400, true)
-            };
-
+        private Drawable[] EnemyOverlayDrawable
+        {
+	        set
+	        {
+		        for (var i = 0; i < enemyOverlays.Length; i++)
+			        enemyOverlays[i].SetImageDrawable(value[i]);
+			}
+        }
 
         /// <summary>
         /// Set <see cref="SelectedEnemyIndex"/> depending on what enemy is pressed
@@ -387,5 +371,5 @@ namespace CubeQuest.Battle
             foreach (var button in buttons)
                 button.SetImageBitmap(bitmap);
         }
-    }
+	}
 }
