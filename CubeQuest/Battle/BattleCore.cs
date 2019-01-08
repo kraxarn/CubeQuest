@@ -72,8 +72,6 @@ namespace CubeQuest.Battle
 
         private readonly Animation attackAnimation;
 
-        private readonly BattleHandler battleHandler;
-
         public BattleCore(Activity context, View view, IEnemy enemy)
         {
             // Start battle music
@@ -112,7 +110,7 @@ namespace CubeQuest.Battle
             playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
 
             // Battle handler
-            battleHandler = new BattleHandler(enemyButtons, enemyHealthBars, playerHealthBar);
+            var battleHandler = new BattleHandler(enemyButtons, enemyHealthBars, playerHealthBar);
 
             // Set bitmaps of enemy buttons
             enemyButtons.SetBitmaps(enemySprite);
@@ -126,6 +124,8 @@ namespace CubeQuest.Battle
             // Set first enemy as default selected
             SelectedEnemyIndex = 0;
 
+            ResetEnemies();
+
             // Load 'selected enemy' frames
             var selectedFrames = AssetLoader.GetAnimationBitmaps("selected", 2);
 
@@ -134,30 +134,38 @@ namespace CubeQuest.Battle
 
             // Load image animators
             var anims = GetImageAnimators(selectedFrames);
-
-            // When clicking 'attack'
-            view.FindViewById<Button>(Resource.Id.button_battle_attack).Click += (sender, args) =>
-            {
-                ButtonsController(mainView, false);
-                battleHandler.StartAction(selectedEnemyIndex, BattleHandler.EActionType.Attack);
-            };
+            
+            view.FindViewById<Button>(Resource.Id.button_battle_attack).Click += OnAttackClickEvent;
 
             battleHandler.BattleEnd += won =>
             {
-                if (won)
+                switch (won)
                 {
-                    End?.Invoke(EBattleEndType.Won);
-                }
-                else
-                {
-                    End?.Invoke(EBattleEndType.Lost);
-                }
+                    case EBattleEndType.Won:
+                        End?.Invoke(EBattleEndType.Won);
+                        break;
+                    case EBattleEndType.Lost:
+                        End?.Invoke(EBattleEndType.Lost);
+                        break;
+                    case EBattleEndType.Ran:
+                        End?.Invoke(EBattleEndType.Ran);
+                        break;
+                };
+                view.FindViewById<Button>(Resource.Id.button_battle_attack).Click -= OnAttackClickEvent;
             };
 
-
+            void OnAttackClickEvent(object sender, EventArgs arg)
+            {
+                if (enemyHealthBars[selectedEnemyIndex].Progress <= 0)
+                {
+                    return;
+                }
+                ButtonsController(mainView, false);
+                battleHandler.StartAction(selectedEnemyIndex, BattleHandler.EActionType.Attack);
+            }
 
             // Player attacks animation in battle
-            battleHandler.OnAnimation += (target, type) =>
+            battleHandler.OnAnimation += (target, index) =>
             {
 
                 foreach (var enemyButton in enemyButtons)
@@ -166,19 +174,19 @@ namespace CubeQuest.Battle
                 switch (target)
                 {
                     case BattleHandler.EAnimationTarget.Player:
-                        companions[selectedEnemyIndex].StartAnimation(attackAnimation);
-                        enemyButtons[selectedEnemyIndex].StartAnimation(shakeAnimation);
+                        companions[index].StartAnimation(attackAnimation);
+                        enemyButtons[index].StartAnimation(shakeAnimation);
                         break;
 
                     case BattleHandler.EAnimationTarget.Enemy:
-                        enemyButtons[selectedEnemyIndex].StartAnimation(attackAnimation);
-                        companions[selectedEnemyIndex].StartAnimation(shakeAnimation);
-                        companions[selectedEnemyIndex].Animation.AnimationEnd += (sender, args) => ButtonsController(mainView, true);
+                        enemyButtons[index].StartAnimation(attackAnimation);
+                        companions[index].StartAnimation(shakeAnimation);
+                        companions[index].Animation.AnimationEnd += (sender, args) => ButtonsController(mainView, true);
                         break;
                 }
-                
+
             };
-            
+
             // When clicking 'run'
             view.FindViewById<Button>(Resource.Id.button_battle_run).Click += (sender, args) =>
             {
@@ -187,7 +195,9 @@ namespace CubeQuest.Battle
                     anim.Stop();
 
                 // Invoke end event
-                End?.Invoke(EBattleEndType.Ran);
+                //End?.Invoke(EBattleEndType.Ran);
+
+                battleHandler.RanAway();
             };
 
             // When clicking 'win'
@@ -198,12 +208,15 @@ namespace CubeQuest.Battle
 
             // Create events when clicking on enemies
             CreateEnemyEvents(enemyButtons);
-            
+
+            // When a enemy dies the button can no longer be clicked.
+            battleHandler.OnEnemyKilled += index => enemyButtons[index].Enabled = enemyButtons[index].Clickable = false;
+
             // Set companion images
             view.FindViewById<ImageView>(Resource.Id.image_battle_companion_0).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
             view.FindViewById<ImageView>(Resource.Id.image_battle_companion_1).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
             view.FindViewById<ImageView>(Resource.Id.image_battle_companion_2).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
-            
+
             AccountManager.CurrentUser.OnHealthChange += health =>
                 playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
         }
@@ -218,7 +231,19 @@ namespace CubeQuest.Battle
                 enemy.Enabled = turnOn;
             }
 
+        }
 
+        private void ResetEnemies()
+        {
+            foreach (var enemy in enemyHealthBars)
+            {
+                enemy.Progress = 100;
+            }
+
+            foreach (var enemy in EnemyButtons)
+            {
+                enemy.Clickable = enemy.Enabled = true;
+            }
         }
 
         async void StartTimer(ImageButton[] enemyButtons)
@@ -294,7 +319,6 @@ namespace CubeQuest.Battle
                 Resource.Id.battle_health_enemy0,
                 Resource.Id.battle_health_enemy1,
                 Resource.Id.battle_health_enemy2
-
             };
 
         /// <summary>
@@ -333,6 +357,7 @@ namespace CubeQuest.Battle
             {
                 ImageAnimator.GetAnimatedDrawable(res, frames.ToList(), 400, true)
             };
+
 
         /// <summary>
         /// Set <see cref="SelectedEnemyIndex"/> depending on what enemy is pressed

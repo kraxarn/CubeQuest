@@ -544,6 +544,13 @@ namespace CubeQuest.Layout
                                     .SetMessage("You will be able to attack enemies again when you have 25% life")
                                     .Show();
                             }
+                            else
+                            {
+                                new AlertDialog.Builder(this)
+                                    .SetTitle("You ran away!")
+                                    .SetMessage("You successfully ran away from the alien")
+                                    .Show();
+                            }
                         }
                     );
                 })).Start();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Android.Views;
@@ -14,7 +15,7 @@ namespace CubeQuest.Battle
         private ImageButton[] enemies;
         private ProgressBar[] enemyHealthBars;
         private ProgressBar playerHealthBar;
-        private BattleQueue battleQueue;
+        private readonly BattleQueue battleQueue;
         
         public enum EActionType { Attack, Spare }
         public enum EAnimationTarget { Player, Enemy }
@@ -28,13 +29,22 @@ namespace CubeQuest.Battle
             }
         }
 
-        public delegate void BattleEndEvent(bool playerWon);
+        public delegate void BattleEndEvent(BattleCore.EBattleEndType type);
 
         public event BattleEndEvent BattleEnd;
 
-        public delegate void OnAnimationEvent(EAnimationTarget target, EAnimationType type);
+        public delegate void OnAnimationEvent(EAnimationTarget target, int index);
 
         public event OnAnimationEvent OnAnimation;
+
+        public delegate void OnEnemyKilledEvent(int index);
+
+        public event OnEnemyKilledEvent OnEnemyKilled;
+
+        public void RanAway()
+        {
+            this.BattleEnd?.Invoke(BattleCore.EBattleEndType.Ran);
+        }
 
 
         public BattleHandler(ImageButton[] enemies, ProgressBar[] enemyHealthBars, ProgressBar playerHealthBar)
@@ -44,24 +54,20 @@ namespace CubeQuest.Battle
             this.playerHealthBar = playerHealthBar;
 
             battleQueue = new BattleQueue();
-            
 
             battleQueue.OnQueueEnd += () =>
             {
                 foreach (var enemy in enemies)
                 {
                     enemy.Enabled = true;
-                    
+
                 }
             };
         }
-
         
-
-        
-
         public void StartAction(int index, EActionType action)
         {
+
             var action1 = new QueueAction(() =>
             {
                 PlayerAttack(AccountManager.CurrentUser.Attack, index);
@@ -72,25 +78,28 @@ namespace CubeQuest.Battle
 
             battleQueue.Add(new QueueAction(() =>
             {
-                EnemyAttack(10);
+                EnemyAttack(10, index);
                 Thread.Sleep(600);
             }, true));
 
             battleQueue.Execute();
-           
+            
         }
 
         private void PlayerAttack(int damage, int index)
         {
-            enemyHealthBars[index].Progress -= damage;
+            enemyHealthBars[index].Progress -= damage + 50;
 
-            OnAnimation?.Invoke(EAnimationTarget.Player, EAnimationType.Attack);
+            OnAnimation?.Invoke(EAnimationTarget.Player, index);
 
             if (enemyHealthBars[index].Progress <= 0)
+            {
                 KillEnemy(index);
-
+                OnEnemyKilled?.Invoke(index);
+            }
+            
             if (EnemiesAreDead)
-                BattleEnd?.Invoke(true);
+                BattleEnd?.Invoke(BattleCore.EBattleEndType.Won);
         }
 
         private void KillEnemy(int index)
@@ -99,9 +108,9 @@ namespace CubeQuest.Battle
             enemies[index].Enabled = false;
         }
 
-        private void EnemyAttack(int damage)
+        private void EnemyAttack(int damage, int index)
         {
-            OnAnimation?.Invoke(EAnimationTarget.Enemy, EAnimationType.Attack);
+            OnAnimation?.Invoke(EAnimationTarget.Enemy, index);
 
             //if (!AccountManager.CurrentUser.ShouldHit)
             //    return;
@@ -112,7 +121,7 @@ namespace CubeQuest.Battle
 
             if (AccountManager.CurrentUser.Health <= 0)
             {
-                BattleEnd?.Invoke(false);
+                BattleEnd?.Invoke(BattleCore.EBattleEndType.Lost);
             }
 
         }

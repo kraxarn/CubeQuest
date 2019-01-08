@@ -94,6 +94,7 @@
     <Compile Include="Battle\BattleCore.cs" />
     <Compile Include="Battle\BattleHandler.cs" />
     <Compile Include="Battle\BattleQueue.cs" />
+    <Compile Include="Battle\EnemyButton.cs" />
     <Compile Include="Battle\IQueueAction.cs" />
     <Compile Include="Battle\QueueAction.cs" />
     <Compile Include="Handler\AssetLoader.cs" />

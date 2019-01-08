@@ -47,6 +47,7 @@ namespace CubeQuest.Battle
 		/// </summary>
 		public void Add(List<IQueueAction> items) => 
 			items.ForEach(i => queue.Enqueue(i));
+        
 
 		/// <summary>
 		/// Start executing the queue
