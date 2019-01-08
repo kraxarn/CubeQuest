@@ -570,6 +570,9 @@ namespace CubeQuest.Layout
 
         public override void OnBackPressed()
         {
+            // Hide battle info
+            battleInfo.State = BottomSheetBehavior.StateHidden;
+
             // If on profile, go back to map, otherwise, ignore
             if (profileView.Visibility == ViewStates.Visible)
                 ToggleProfile(false);
