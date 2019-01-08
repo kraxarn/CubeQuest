@@ -1,5 +1,6 @@
 ﻿using CubeQuest.Account.Enemies;
 using CubeQuest.Account.Interface;
+using Java.Lang;
 
 namespace CubeQuest.MonsterGen
 {
@@ -9,8 +10,15 @@ namespace CubeQuest.MonsterGen
         {
             IEnemy enemy = null;
 
+            // Get number between 0-10 and reduce 5
+            var level = Math.Abs(val.GetHashCode() % 11) - 5;
+
             if (val <= 0.85)
-	            enemy = new PinkAlien();
+            {
+                enemy = new PinkAlien();
+                // Pink alien is always higher/equal
+                level += 5;
+            }
             else if (val <= 0.9)
 	            enemy = new YellowAlien();
             else if (val <= 0.95)
@@ -19,6 +27,8 @@ namespace CubeQuest.MonsterGen
 	            enemy = new BlueAlien();
             else if (val <= 1)
 	            enemy = new BeigeAlien();
+
+            enemy.Level = level;
 
             return enemy;
         }

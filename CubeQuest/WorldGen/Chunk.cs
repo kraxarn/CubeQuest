@@ -1,11 +1,10 @@
 ﻿
-using System.Collections.Generic;
 using Android.Gms.Maps.Model;
-using Android.Util;
 using CubeQuest.Account;
 using CubeQuest.Account.Interface;
 using CubeQuest.Handler;
 using CubeQuest.MonsterGen;
+using System.Collections.Generic;
 
 namespace CubeQuest.WorldGen
 {
@@ -26,6 +25,9 @@ namespace CubeQuest.WorldGen
 
         public void Load()
         {
+            // Save player level for later
+            var playerLevel = AccountManager.CurrentUser.Level;
+
             List<PointSpot> points = WorldGen.LoadChunk(X, Y);
             for (int i = 0; i < points.Count; i++)
             {
@@ -34,8 +36,13 @@ namespace CubeQuest.WorldGen
                 {
                     double val = points[i].Value;
                     IEnemy enemy = MonsterFactory.CreateMonster(val);
+
+                    enemy.Level += (int) playerLevel;
+                    if (enemy.Level < 1)
+                        enemy.Level = 1;
+
 					var m = MapHandler.AddMarker(coord, enemy.Name, AssetLoader.GetEnemyBitmap(enemy).ToBitmapDescriptor());
-					m.Tag = new EnemyTag(enemy.GetType(), 1);
+					m.Tag = new EnemyTag(enemy.GetType(), enemy.Level);
                     Markers.Add(m);
                 }
             }
