@@ -46,16 +46,13 @@ namespace CubeQuest.WorldGen
         public static void UseSeed(int seed)
         {
             Random r = new Random(seed);
-            int swapCount = 500;
-            int item1Index, item2Index;
-            for (int i = 0; i < swapCount; i++)
+            int n = permutation.Length;
+            while (n > 1)
             {
-                item1Index = r.Next(permutation.Length);
-                item2Index = r.Next(permutation.Length);
-
-                int tmp = permutation[item1Index];
-                permutation[item1Index] = permutation[item2Index];
-                permutation[item2Index] = tmp;
+                int k = r.Next(n--);
+                int temp = permutation[n];
+                permutation[n] = permutation[k];
+                permutation[k] = temp;
             }
         }
 
