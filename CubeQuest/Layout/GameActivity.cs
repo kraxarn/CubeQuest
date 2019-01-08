@@ -13,13 +13,12 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
-using CubeQuest.Account.Enemies;
 using CubeQuest.Account.Companions;
 using CubeQuest.Account.Interface;
 using CubeQuest.Battle;
 using CubeQuest.Handler;
-using CubeQuest.ListView.Item;
 using CubeQuest.ListView.Companion;
+using CubeQuest.ListView.Item;
 using CubeQuest.WorldGen;
 using System;
 using System.Collections.Generic;
@@ -118,7 +117,7 @@ namespace CubeQuest.Layout
             // Get main view
             mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
             mainView.Visibility = ViewStates.Invisible;
-
+            
             // Get health bar and heart
             var healthBar = FindViewById<ProgressBar>(Resource.Id.barHealth);
             var healthBarHeart = FindViewById<ImageView>(Resource.Id.barHeart);
@@ -498,7 +497,7 @@ namespace CubeQuest.Layout
             mainView.FindViewById<ProgressBar>(Resource.Id.progress_battle_health).Progress =
                 AccountManager.CurrentUser.HealthPercentage;
 
-            var battle = new BattleCore(this, battleView, Assets, (selectedMarker.Tag as EnemyTag)?.Enemy);
+            var battle = new BattleCore(this, battleView, (selectedMarker.Tag as EnemyTag)?.Enemy);
 
             var centerX = mainView.Width / 2;
             var centerY = mainView.Height / 2;
