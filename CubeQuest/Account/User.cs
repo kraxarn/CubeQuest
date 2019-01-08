@@ -199,9 +199,10 @@ namespace CubeQuest.Account
 
         private void GetStartingCompanions()
         {
-            equippedCompanions.Add(CompanionManager.GetRandom());
-            equippedCompanions.Add(CompanionManager.GetRandom());
-            equippedCompanions.Add(CompanionManager.GetRandom());
+            foreach (var startingCompanion in CompanionManager.GetStartingCompanions())
+            {
+                equippedCompanions.Add(startingCompanion);
+            }
         }
 
         /// <summary>
@@ -210,7 +211,7 @@ namespace CubeQuest.Account
         public int GetDamage(int damage)
         {
             var d = damage - Armor;
-            return d < 0 ? 0 : d;
+            return Math.Max(1, d);
         }
 
         public void AddCompanion(ICompanion companion)

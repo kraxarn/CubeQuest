@@ -67,6 +67,7 @@
     <Compile Include="Account\Companions\Bear.cs" />
     <Compile Include="Account\Companions\Buffalo.cs" />
     <Compile Include="Account\Companions\Chick.cs" />
+    <Compile Include="Account\Companions\Narwhale.cs" />
     <Compile Include="Account\Companions\Wolf.cs" />
     <Compile Include="Account\Companions\Walrus.cs" />
     <Compile Include="Account\Companions\Snake.cs" />
@@ -323,7 +324,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\music\" />
-    <Folder Include="ListView\Companions\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\view_battle.axml">

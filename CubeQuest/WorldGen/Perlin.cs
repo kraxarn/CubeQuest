@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace CubeQuest.WorldGen
 {
 	public static class Perlin
@@ -40,6 +42,22 @@ namespace CubeQuest.WorldGen
         49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127, 4,150,254,
         138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180
     };
+
+        public static void UseSeed(int seed)
+        {
+            Random r = new Random(seed);
+            int swapCount = 500;
+            int item1Index, item2Index;
+            for (int i = 0; i < swapCount; i++)
+            {
+                item1Index = r.Next(permutation.Length);
+                item2Index = r.Next(permutation.Length);
+
+                int tmp = permutation[item1Index];
+                permutation[item1Index] = permutation[item2Index];
+                permutation[item2Index] = tmp;
+            }
+        }
 
 		private static readonly int[] p;                                                    // Doubled permutation to avoid overflow
 
