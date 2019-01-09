@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using Android.Support.V7.Widget;
 using Android.Views;
+using CubeQuest.Handler;
+using CubeQuest.Account;
 using CubeQuest.Account.Interface;
 
 namespace CubeQuest.ListView.Companions
@@ -22,7 +24,7 @@ namespace CubeQuest.ListView.Companions
             companionHolder.Name.Text = companions[position].Name;
 
             //Replace below line with something that gets the real icon
-            companionHolder.Icon.SetImageResource(Resource.Drawable.ic_companion);
+            companionHolder.Icon.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.Companions[position]));
 
             companionHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_numbered_list);
             companionHolder.Info.Text = companions[position].Info;
