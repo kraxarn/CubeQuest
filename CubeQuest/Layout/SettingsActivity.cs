@@ -69,7 +69,7 @@ namespace CubeQuest.Layout
 		private UserEntriesAdapter BuildUserEntriesAdapter(View view, IEnumerable<UserEntry> entries)
 		{
 			var viewUsers = view.FindViewById<RecyclerView>(Resource.Id.view_users);
-			var adapter = new UserEntriesAdapter(entries, Context.Assets);
+			var adapter = new UserEntriesAdapter(entries);
 			viewUsers.SetAdapter(adapter);
 			viewUsers.SetLayoutManager(new LinearLayoutManager(Context));
 			viewUsers.HasFixedSize = true;

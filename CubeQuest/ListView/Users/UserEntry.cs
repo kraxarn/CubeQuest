@@ -1,25 +1,19 @@
-﻿using Android.Content.Res;
-using Android.Graphics;
-using System.Threading.Tasks;
+﻿using Android.Graphics;
+using CubeQuest.Handler;
 
 namespace CubeQuest.ListView.Users
 {
-	public class UserEntry
+    public class UserEntry
 	{
 		/// <summary>
 		/// Path to the image
 		/// </summary>
 		public string Icon { get; }
 
-		public async Task<Bitmap> GetIconBitmapAsync(AssetManager assets)
-		{
-			if (Icon == null)
-				return null;
+        public Bitmap IconBitmap => 
+            Icon == null ? null : AssetLoader.GetBitmap(Icon);
 
-			return await BitmapFactory.DecodeStreamAsync(assets.Open(Icon));
-		}
-
-		public string Title { get; }
+        public string Title { get; }
 
 		public string Description { get; }
 
