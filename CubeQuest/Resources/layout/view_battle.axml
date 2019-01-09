@@ -191,28 +191,33 @@
         app:layout_constraintBottom_toTopOf="@id/progress_battle_health"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:paddingBottom="8dp">
+        android:orientation="horizontal">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/image_battle_companion_0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="8dp"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_companion"/>
 
-        <ImageView
+        <ImageButton
             android:id="@+id/image_battle_companion_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="8dp"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_companion"/>
 
-        <ImageView
+        <ImageButton
             android:id="@+id/image_battle_companion_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="8dp"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_companion"/>
 
     </LinearLayout>

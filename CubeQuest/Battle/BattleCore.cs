@@ -66,16 +66,17 @@ namespace CubeQuest.Battle
             mainView = view;
 
             // Companions
-            var companions = new List<ImageView>
+            var companions = new List<ImageButton>
             {
-                mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion_0),
-                mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion_1),
-                mainView.FindViewById<ImageView>(Resource.Id.image_battle_companion_2)
+                mainView.FindViewById<ImageButton>(Resource.Id.image_battle_companion_0),
+                mainView.FindViewById<ImageButton>(Resource.Id.image_battle_companion_1),
+                mainView.FindViewById<ImageButton>(Resource.Id.image_battle_companion_2)
             };
 
             // Animations
             flashAnimation      = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
-            var attackAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.attack);
+            var enemyAttackAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.enemy_attack);
+            var playerAttackAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.player_attack);
             var shakeAnimation  = AnimationUtils.LoadAnimation(context, Resource.Animation.shake);
 
             // Load enemy sprite(s)
@@ -160,12 +161,12 @@ namespace CubeQuest.Battle
                 switch (target)
                 {
                     case BattleHandler.EAnimationTarget.Player:
-                        companions[index].StartAnimation(attackAnimation);
+                        companions[index].StartAnimation(playerAttackAnimation);
                         enemyButtons[index].StartAnimation(shakeAnimation);
                         break;
 
                     case BattleHandler.EAnimationTarget.Enemy:
-                        enemyButtons[index].StartAnimation(attackAnimation);
+                        enemyButtons[index].StartAnimation(enemyAttackAnimation);
                         companions[index].StartAnimation(shakeAnimation);
                         companions[index].Animation.AnimationEnd += (sender, args) => ButtonsController(mainView, true);
                         break;
@@ -180,7 +181,7 @@ namespace CubeQuest.Battle
             {
                 // Invoke end event
                 //End?.Invoke(EBattleEndType.Ran);
-
+                AccountManager.CurrentUser.HealthPercentage -= 2;
                 battleHandler.RunAway();
             }
 
@@ -215,9 +216,9 @@ namespace CubeQuest.Battle
             battleHandler.OnEnemyKilled += index => enemyButtons[index].Enabled = enemyButtons[index].Clickable = false;
 
             // Set companion images
-            view.FindViewById<ImageView>(Resource.Id.image_battle_companion_0).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
-            view.FindViewById<ImageView>(Resource.Id.image_battle_companion_1).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
-            view.FindViewById<ImageView>(Resource.Id.image_battle_companion_2).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
+            view.FindViewById<ImageButton>(Resource.Id.image_battle_companion_0).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
+            view.FindViewById<ImageButton>(Resource.Id.image_battle_companion_1).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
+            view.FindViewById<ImageButton>(Resource.Id.image_battle_companion_2).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
 
             AccountManager.CurrentUser.OnHealthChange += health =>
                 playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;

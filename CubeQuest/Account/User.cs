@@ -119,8 +119,12 @@ namespace CubeQuest.Account
         /// <summary>
         /// Current health in percentage
         /// </summary>
-        public int HealthPercentage => 
-            (int) ((float) Health / MaxHealth * 100);
+        public int HealthPercentage
+        {
+            get => (int) ((float) Health / MaxHealth * 100);
+
+            set => Health += (int) (Health * (value / 100f));
+        }
 
 
         /// <summary>

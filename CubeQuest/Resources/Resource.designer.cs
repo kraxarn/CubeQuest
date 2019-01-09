@@ -68,31 +68,34 @@ namespace CubeQuest
 			public const int abc_tooltip_exit = 2131034123;
 			
 			// aapt resource value: 0x7f05000c
-			public const int attack = 2131034124;
+			public const int cycle = 2131034124;
 			
 			// aapt resource value: 0x7f05000d
-			public const int cycle = 2131034125;
+			public const int cycleAttack = 2131034125;
 			
 			// aapt resource value: 0x7f05000e
-			public const int cycleAttack = 2131034126;
+			public const int design_bottom_sheet_slide_in = 2131034126;
 			
 			// aapt resource value: 0x7f05000f
-			public const int design_bottom_sheet_slide_in = 2131034127;
+			public const int design_bottom_sheet_slide_out = 2131034127;
 			
 			// aapt resource value: 0x7f050010
-			public const int design_bottom_sheet_slide_out = 2131034128;
+			public const int design_snackbar_in = 2131034128;
 			
 			// aapt resource value: 0x7f050011
-			public const int design_snackbar_in = 2131034129;
+			public const int design_snackbar_out = 2131034129;
 			
 			// aapt resource value: 0x7f050012
-			public const int design_snackbar_out = 2131034130;
+			public const int enemy_attack = 2131034130;
 			
 			// aapt resource value: 0x7f050013
 			public const int flash = 2131034131;
 			
 			// aapt resource value: 0x7f050014
-			public const int shake = 2131034132;
+			public const int player_attack = 2131034132;
+			
+			// aapt resource value: 0x7f050015
+			public const int shake = 2131034133;
 			
 			static Animation()
 			{

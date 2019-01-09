@@ -77,6 +77,9 @@ namespace CubeQuest.Battle
 
             battleQueue.Add(new QueueAction(() =>
             {
+                if (enemyHealthBars[index].Progress <= 0)
+                    return;
+
                 EnemyAttack(10, index);
                 Thread.Sleep(600);
             }, true));

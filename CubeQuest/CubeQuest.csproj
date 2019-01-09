@@ -359,13 +359,16 @@
     <AndroidResource Include="Resources\layout\view_dialog_credits.axml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\anim\attack.xml" />
+    <AndroidResource Include="Resources\anim\enemy_attack.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\anim\cycleAttack.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\view_dialog_loot.axml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\anim\player_attack.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
