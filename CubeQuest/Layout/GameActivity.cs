@@ -187,6 +187,14 @@ namespace CubeQuest.Layout
             profileView.FindViewById<ImageButton>(Resource.Id.button_settings).Click += (sender, args) =>
                 StartActivity(new Intent(this, typeof(SettingsActivity)));
 
+            var cube1Button = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_1);
+            var cube2Button = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_2);
+            var cube3Button = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_3);
+
+            cube1Button.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
+            cube2Button.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
+            cube3Button.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
+
             // Avoid clicking through profile view
             profileView.Touch += (sender, args) =>
                 args.Handled = true;
