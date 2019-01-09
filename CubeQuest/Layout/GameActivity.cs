@@ -200,20 +200,12 @@ namespace CubeQuest.Layout
                 args.Handled = true;
 
             // Setup debug mode
-            FindViewById<Button>(Resource.Id.button_debug_battle).Click += (sender, args) => StartBattle();
-
             battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
             battleInfo = BottomSheetBehavior.From(battleInfoView);
             battleInfo.State = BottomSheetBehavior.StateHidden;
 
             battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Click +=
                 (sender, args) => StartBattle();
-
-            FindViewById<Button>(Resource.Id.button_debug_battle_info).Click += (sender, args) =>
-            {
-                battleInfoView.FindViewById<ImageView>(Resource.Id.image_battle_info).SetImageBitmap(AssetLoader.GetEnemyBitmap(new BeigeAlien()));
-                battleInfo.State = BottomSheetBehavior.StateCollapsed;
-            };
 
 			// Add auto camera toggle
             FindViewById<Switch>(Resource.Id.switch_debug_auto_camera).CheckedChange += (sender, args) => 

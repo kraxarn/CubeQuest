@@ -61,22 +61,6 @@
             android:checked="true"
             android:text="Auto camera"/>
 
-        <Button
-            android:id="@+id/button_debug_battle_info"
-            android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:fontFamily="monospace"
-			style="@android:style/Widget.Material.Button.Borderless"
-			android:text="Battle info"/>
-
-		<Button
-			android:id="@+id/button_debug_battle"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:fontFamily="monospace"
-			style="@android:style/Widget.Material.Button.Borderless"
-			android:text="Start battle"/>
-
 		<TextView
 			android:id="@+id/text_debug_location"
 			android:layout_width="wrap_content"
