@@ -200,10 +200,6 @@ namespace CubeQuest.Layout
                 args.Handled = true;
 
             // Setup debug mode
-            FindViewById<Button>(Resource.Id.button_debug_enemy).Click += (sender, args) =>
-                AddMarker(new LatLng(userLocation.Latitude + 0.0001, userLocation.Longitude + 0.0001), "Enemy",
-                    BitmapDescriptorFactory.FromAsset("enemy/snake2.webp"));
-
             FindViewById<Button>(Resource.Id.button_debug_battle).Click += (sender, args) => StartBattle();
 
             battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);

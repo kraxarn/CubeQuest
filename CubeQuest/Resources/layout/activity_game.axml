@@ -85,14 +85,6 @@
 			style="@android:style/Widget.Material.Button.Borderless"
 			android:text="Start battle"/>
 
-		<Button
-			android:id="@+id/button_debug_enemy"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:fontFamily="monospace"
-			style="@android:style/Widget.Material.Button.Borderless"
-			android:text="Spawn enemy"/>
-
 		<TextView
 			android:id="@+id/text_debug_location"
 			android:layout_width="wrap_content"
