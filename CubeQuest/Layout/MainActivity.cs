@@ -3,7 +3,6 @@ using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.Gms.Common;
-using Android.Graphics;
 using Android.Net;
 using Android.OS;
 using Android.Support.V7.App;
@@ -141,8 +140,6 @@ namespace CubeQuest.Layout
             MusicManager.Create(this);
             MusicManager.Volume = 0.2f;
             MusicManager.Play(MusicManager.EMusicTrack.Map);
-
-			AccountManager.SaveBitmap = BitmapFactory.DecodeStream(Assets.Open("player/0.webp"));
 
 			// Google signin
 			if (IsConnected)

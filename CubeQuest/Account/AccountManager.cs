@@ -5,18 +5,17 @@ using Android.Gms.Common.Apis;
 using Android.Gms.Drive;
 using Android.Gms.Games;
 using Android.Gms.Games.Achievement;
-using Android.Graphics;
 using Android.Support.V7.App;
+using Android.Util;
 using Android.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Android.Util;
 
 namespace CubeQuest.Account
 {
-	public static class AccountManager
+    public static class AccountManager
     {
         public delegate void SuccessEvent(Statuses status);
 
@@ -134,12 +133,6 @@ namespace CubeQuest.Account
             else if (!result.IsSuccess)
                 OnFailure?.Invoke(result.Status);
 		}
-
-		[Obsolete("Doesn't work")]
-	    public static Bitmap SaveIcon =>
-	        BitmapFactory.DecodeResource(context.Resources, Resource.Mipmap.ic_launcher_round);
-
-	    public static Bitmap SaveBitmap;
 
         public static Intent AchievementsIntent => 
             GamesClass.Achievements.GetAchievementsIntent(googleClient);

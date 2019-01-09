@@ -53,7 +53,6 @@ namespace CubeQuest.Account
 
 			// Save snapshot
 			var metadata = new SnapshotMetadataChangeBuilder()
-				.SetCoverImage(AccountManager.SaveBitmap)
 				.SetDescription($"Modified at {DateTime.Now}")
 				.Build();
 
