@@ -123,10 +123,9 @@ namespace CubeQuest.Account
         {
             get => (int) ((float) Health / MaxHealth * 100);
 
-            set => Health += (int) (Health * (value / 100f));
+            set => Health = (int) (MaxHealth * (value / 100f));
         }
-
-
+        
         /// <summary>
         /// User's maximum health
         /// TODO
