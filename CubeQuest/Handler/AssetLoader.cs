@@ -48,6 +48,9 @@ namespace CubeQuest.Handler
         public static Bitmap GetCompanionBitmap(ICompanion companion) =>
             GetBitmapFromPath($"companion/{companion.Icon}.webp", 0.5f);
 
+        public static Bitmap GetPlayerBitmap(int index) =>
+            GetBitmapFromPath($"player/{index}.webp", 0.75f);
+
         private static Bitmap GetAnimationFrameBitmap(string name, int frame) =>
 	        GetBitmapFromPath($"animations/{name}/{frame}.webp");
 

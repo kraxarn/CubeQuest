@@ -402,7 +402,7 @@ namespace CubeQuest.Layout
             var marker = googleMap.AddMarker(new MarkerOptions()
                 .SetPosition(position)
                 .SetTitle(AccountManager.Name)
-                .SetIcon(BitmapDescriptorFactory.FromAsset($"player/{playerIcon}.webp")));
+                .SetIcon(AssetLoader.GetPlayerBitmap(playerIcon).ToBitmapDescriptor()));
             
             marker.ZIndex = 10f;
             marker.Tag = "player";
