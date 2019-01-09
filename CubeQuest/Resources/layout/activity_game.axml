@@ -62,14 +62,6 @@
             android:text="Auto camera"/>
 
         <Button
-            android:id="@+id/button_debug_canvas_test"
-            android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:fontFamily="monospace"
-			style="@android:style/Widget.Material.Button.Borderless"
-			android:text="Battle Canvas"/>
-
-        <Button
             android:id="@+id/button_debug_battle_info"
             android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
