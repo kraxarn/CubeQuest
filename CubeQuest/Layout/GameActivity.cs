@@ -349,7 +349,7 @@ namespace CubeQuest.Layout
 
 				// Set icon
 	            battleInfoView.FindViewById<ImageView>(Resource.Id.image_battle_info)
-		            .SetImageBitmap(BitmapFactory.DecodeStream(Assets.Open($"enemy/{enemy.Icon}.webp")));
+		            .SetImageBitmap(AssetLoader.GetEnemyBitmap(enemy));
 
 				// Set title
 	            battleInfoView.FindViewById<TextView>(Resource.Id.text_battle_info_title).Text =
