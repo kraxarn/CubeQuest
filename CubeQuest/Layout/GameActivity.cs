@@ -21,6 +21,7 @@ using CubeQuest.WorldGen;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using CubeQuest.Account.Enemies;
 using CubeQuest.ListView.Companions;
 using AlertDialog = Android.App.AlertDialog;
 
@@ -214,8 +215,7 @@ namespace CubeQuest.Layout
 
             FindViewById<Button>(Resource.Id.button_debug_battle_info).Click += (sender, args) =>
             {
-                battleInfoView.FindViewById<ImageView>(Resource.Id.image_battle_info).SetImageBitmap(BitmapFactory.DecodeStream(Assets.Open("enemy/alien_beige.webp")));
-
+                battleInfoView.FindViewById<ImageView>(Resource.Id.image_battle_info).SetImageBitmap(AssetLoader.GetEnemyBitmap(new BeigeAlien()));
                 battleInfo.State = BottomSheetBehavior.StateCollapsed;
             };
 
