@@ -67,7 +67,7 @@ namespace CubeQuest.Handler
 
 			// TODO: Load drawable better, like from cache
 			bitmapFrames.ForEach(f => animation.AddFrame(new BitmapDrawable(res, f), duration));
-
+            
 			animation.OneShot = !loop;
 			animation.Start();
 			return animation;
@@ -98,9 +98,10 @@ namespace CubeQuest.Handler
 
         private static Bitmap DecodeBitmap(string path) =>
             Build.VERSION.SdkInt >= BuildVersionCodes.P 
-                ? ImageDecoder.DecodeBitmap(ImageDecoder.CreateSource(assets, path)) 
+                ? ImageDecoder.DecodeBitmap(ImageDecoder.CreateSource(assets, path))
                 : BitmapFactory.DecodeStream(assets.Open(path));
 
+        // TODO: This method of scaling bitmaps is deprecated on Android 9+
         private static Bitmap ScaleBitmap(Bitmap bitmap, int size) => 
             Bitmap.CreateScaledBitmap(bitmap, size, size, false);
     }
