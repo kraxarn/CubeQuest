@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CubeQuest.Account.Companions;
 using CubeQuest.Account.Interface;
 
@@ -6,7 +7,7 @@ namespace CubeQuest.Handler
 {
 	public static class CompanionManager
 	{
-		private static readonly Type[] Companions =
+		private static readonly Type[] CompanionTypes =
 		{
 			typeof(Bear),
 			typeof(Buffalo),
@@ -26,22 +27,24 @@ namespace CubeQuest.Handler
 		/// <summary>
 		/// Get a random companion
 		/// </summary>
-		public static ICompanion GetRandom() => 
-			Activator.CreateInstance(Companions[new Random().Next(Companions.Length)]) as ICompanion;
+		public static ICompanion Random => 
+			Activator.CreateInstance(CompanionTypes[new Random().Next(CompanionTypes.Length)]) as ICompanion;
 
-        public static ICompanion[] GetStartingCompanions()
+        public static IEnumerable<ICompanion> StartingCompanions
         {
-            var seed = new Random().Next(Companions.Length);
-            var interval = new Random().Next(1,12);
-
-            var list = new ICompanion[3];
-
-            for (var i = 0; i < 3; i++)
+            get
             {
-                list[i] = Activator.CreateInstance(Companions[(seed + (interval * i)) % Companions.Length]) as ICompanion;
-            }
+                var seed = new Random().Next(CompanionTypes.Length);
 
-            return list;
+                var interval = new Random().Next(1, 12);
+
+                var list = new ICompanion[3];
+
+                for (var i = 0; i < 3; i++)
+                    list[i] = Activator.CreateInstance(CompanionTypes[(seed + interval * i) % CompanionTypes.Length]) as ICompanion;
+
+                return list;
+            }
         }
 	}
 }
