@@ -186,15 +186,13 @@ namespace CubeQuest.Account
             Health = MaxHealth;
             isAlive = true;
 
-            GetStartingCompanions();
+            AddStartingCompanions();
         }
 
-        private void GetStartingCompanions()
+        private void AddStartingCompanions()
         {
-            foreach (var startingCompanion in CompanionManager.GetStartingCompanions())
-            {
+            foreach (var startingCompanion in CompanionManager.StartingCompanions)
                 EquippedCompanions.Add(startingCompanion);
-            }
         }
 
         /// <summary>
