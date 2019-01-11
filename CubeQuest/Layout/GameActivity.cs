@@ -3,7 +3,6 @@ using Android.Content;
 using Android.Gms.Location;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
-using Android.Graphics;
 using Android.Locations;
 using Android.OS;
 using Android.Support.Design.Widget;
@@ -16,13 +15,12 @@ using CubeQuest.Account;
 using CubeQuest.Account.Interface;
 using CubeQuest.Battle;
 using CubeQuest.Handler;
+using CubeQuest.ListView.Companions;
 using CubeQuest.ListView.Item;
 using CubeQuest.WorldGen;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using CubeQuest.Account.Enemies;
-using CubeQuest.ListView.Companions;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest.Layout
@@ -87,6 +85,16 @@ namespace CubeQuest.Layout
         private LinearLayout battleInfoView;
 
         private Marker selectedMarker;
+
+        /// <summary>
+        /// <see cref="FloatingActionButton"/> for opening the inventory
+        /// </summary>
+        private FloatingActionButton fabUser;
+
+        /// <summary>
+        /// <see cref="FloatingActionButton"/> for returning to the map
+        /// </summary>
+        private FloatingActionButton fabMap;
 
         /// <summary>
         /// First time starting the activity
@@ -168,8 +176,11 @@ namespace CubeQuest.Layout
                 };
 
             // Show profile when clicking on button
-            FindViewById<FloatingActionButton>(Resource.Id.fabUser).Click += (sender, args) => ToggleProfile(true);
-            FindViewById<FloatingActionButton>(Resource.Id.fabGame).Click += (sender, args) => ToggleProfile(false);
+            fabUser = FindViewById<FloatingActionButton>(Resource.Id.fabUser);
+            fabMap = FindViewById<FloatingActionButton>(Resource.Id.fabGame);
+
+            fabUser.Click += (sender, args) => ToggleProfile(true);
+            fabMap.Click  += (sender, args) => ToggleProfile(false);
 
             // Set up profile view
             profileView = FindViewById<ViewStub>(Resource.Id.stub_profile).Inflate();
@@ -430,10 +441,6 @@ namespace CubeQuest.Layout
 
         private void ToggleProfile(bool enabled)
         {
-            // FABs
-            var fabUser = FindViewById<FloatingActionButton>(Resource.Id.fabUser);
-            var fabMap = FindViewById<FloatingActionButton>(Resource.Id.fabGame);
-
             // Show or hide buttons
             if (enabled)
             {
@@ -490,7 +497,7 @@ namespace CubeQuest.Layout
             // Hide battle info
             battleInfo.State = BottomSheetBehavior.StateHidden;
 
-            var fabUser = FindViewById<FloatingActionButton>(Resource.Id.fabUser);
+            // Hide profile button
             fabUser.Hide();
 
             // Sets the health on the progressbar 
