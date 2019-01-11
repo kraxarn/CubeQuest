@@ -506,56 +506,57 @@ namespace CubeQuest.Layout
 
             var animator = ViewAnimationUtils.CreateCircularReveal(battleView, centerX, centerY, 0f, radius);
 
-            battle.End += (type) =>
+            battle.End += type =>
             {
                 MusicManager.Play(MusicManager.EMusicTrack.Map);
-
-
-                new Thread(new ThreadStart(delegate
+                
+                new Thread(() =>
                 {
                     RunOnUiThread(() =>
                         {
-                            if (type == BattleCore.EBattleEndType.Won)
+                            switch (type)
                             {
-                                if(selectedMarker != null)
-                                {
-                                    MapHandler.Visited.Add(selectedMarker.Position.GetHashCode(), selectedMarker.Position);
-                                    selectedMarker.Remove();
-                                }
+                                case BattleCore.EBattleEndType.Won:
+                                    if (selectedMarker != null)
+                                    {
+                                        // TODO: Two different locations and get the same hash code
+                                        MapHandler.Visited.Add(selectedMarker.Position.GetHashCode(), selectedMarker.Position);
+                                        selectedMarker.Remove();
+                                    }
 
-                                var dialogView = LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
+                                    var dialogView = LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
 
-                                var companion = CompanionManager.GetRandom();
+                                    var companion = CompanionManager.Random;
+                                    dialogView.FindViewById<TextView>(Resource.Id.text_loot_title).Text = $"You have received a {companion.Name}!";
+                                    dialogView.FindViewById<ImageView>(Resource.Id.image_loot).SetImageBitmap(AssetLoader.GetCompanionBitmap(companion));
+                                    AccountManager.CurrentUser.AddCompanion(companion);
 
-                                dialogView.FindViewById<TextView>(Resource.Id.loot_text).Text = "You have received a " + companion.Name + "!";
+                                    companionAdapter.NotifyDataSetChanged();
 
-                                AccountManager.CurrentUser.AddCompanion(companion);
+                                    new AlertDialog.Builder(this)
+                                        .SetView(dialogView)
+                                        .Show();
 
-                                companionAdapter.NotifyDataSetChanged();
+                                    AccountManager.CurrentUser.AddExperience(10);
+                                    break;
 
-                                new AlertDialog.Builder(this)
-                                    .SetView(dialogView)
-                                    .Show();
+                                case BattleCore.EBattleEndType.Lost:
+                                    new AlertDialog.Builder(this)
+                                        .SetTitle("You died!")
+                                        .SetMessage("You won't be able to attack enemies until you get at least 25% health by walking")
+                                        .Show();
+                                    break;
 
-                                AccountManager.CurrentUser.AddExperience(10);
-                            }
-                            else if(type == BattleCore.EBattleEndType.Lost)
-                            {
-                                new AlertDialog.Builder(this)
-                                    .SetTitle("You died!")
-                                    .SetMessage("You will be able to attack enemies again when you have 25% life")
-                                    .Show();
-                            }
-                            else
-                            {
-                                new AlertDialog.Builder(this)
-                                    .SetTitle("You ran away!")
-                                    .SetMessage("You successfully ran away from the alien")
-                                    .Show();
+                                case BattleCore.EBattleEndType.Ran:
+                                    new AlertDialog.Builder(this)
+                                        .SetTitle("You ran away!")
+                                        .SetMessage("You successfully ran away from the alien")
+                                        .Show();
+                                    break;
                             }
                         }
                     );
-                })).Start();
+                }).Start();
 
                 var animator2 = ViewAnimationUtils.CreateCircularReveal(battleView, centerX, centerY, radius, 0f);
                 animator2.AnimationEnd += (o, eventArgs) => battleView.Visibility = ViewStates.Invisible;
