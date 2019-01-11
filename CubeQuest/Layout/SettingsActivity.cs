@@ -61,7 +61,12 @@ namespace CubeQuest.Layout
 
 			FindPreference("load_progress").PreferenceClick += (sender, args) => 
 				StartActivityForResult(AccountManager.SelectSaveIntent, 9003);
-		}
+
+            FindPreference("load_progress").PreferenceClick += (sender, args) =>
+            {
+                AccountManager.GetUserProgress();
+            };
+        }
 
 		/// <summary>
 		/// Builds the user entries adapter with the view and entries provided

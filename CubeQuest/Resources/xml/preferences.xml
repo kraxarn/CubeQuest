@@ -79,10 +79,15 @@
 			app:title="Log out"
 			app:summary="Log out and close the app"/>
 
+    <Preference
+      app:key="view_progress"
+      app:title="View progress"
+      app:summary="Show the cloud save UI"/>
+
 		<Preference
 			app:key="load_progress"
-			app:title="View progress"
-			app:summary="View save files"/>
+			app:title="Load progress"
+			app:summary="Show data for your most recent save"/>
 
 		<Preference
 			app:key="save_progress"
