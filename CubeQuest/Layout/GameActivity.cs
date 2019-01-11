@@ -557,7 +557,7 @@ namespace CubeQuest.Layout
                                 case BattleCore.EBattleEndType.Ran:
                                     new AlertDialog.Builder(this)
                                         .SetTitle("You ran away!")
-                                        .SetMessage("You successfully ran away from the alien")
+                                        .SetMessage("You successfully ran away from the alien, but took some damage")
                                         .Show();
                                     break;
                             }
