@@ -516,7 +516,7 @@ namespace CubeQuest.Layout
             battle.End += type =>
             {
                 MusicManager.Play(MusicManager.EMusicTrack.Map);
-                
+
                 new Thread(() =>
                 {
                     RunOnUiThread(() =>
@@ -566,9 +566,12 @@ namespace CubeQuest.Layout
                 }).Start();
 
                 var animator2 = ViewAnimationUtils.CreateCircularReveal(battleView, centerX, centerY, radius, 0f);
-                animator2.AnimationEnd += (o, eventArgs) => battleView.Visibility = ViewStates.Invisible;
+                animator2.AnimationEnd += (o, eventArgs) =>
+                {
+                    battleView.Visibility = ViewStates.Invisible;
+                    fabUser.Show();
+                };
                 animator2.Start();
-                fabUser.Show();
             };
 
             battleView.Visibility = ViewStates.Visible;
