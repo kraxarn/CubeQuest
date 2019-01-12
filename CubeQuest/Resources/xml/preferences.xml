@@ -85,6 +85,11 @@
 			app:summary="Log out and close the app"/>
 
     <Preference
+      app:key="reset_progress"
+      app:title="Reset progress"
+      app:summary="Delete your save and create a new one"/>
+
+    <Preference
       app:key="view_progress"
       app:title="View progress"
       app:summary="Show the cloud save UI"/>

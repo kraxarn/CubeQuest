@@ -77,6 +77,24 @@ namespace CubeQuest.Layout
                     .SetPositiveButton("OK", (IDialogInterfaceOnClickListener) null)
                     .Show();
             };
+
+            FindPreference("reset_progress").PreferenceClick += (sender, args) =>
+            {
+                new AlertDialog.Builder(context)
+                    .SetTitle("Are you sure?")
+                    .SetMessage("All your progress and companions collected will be lost!")
+                    .SetPositiveButton("Yes", (s, a) =>
+                    {
+                        AccountManager.ResetUserProgress();
+                        new AlertDialog.Builder(context)
+                            .SetTitle("Progress reset")
+                            .SetMessage("It's recommended to restart the app to avoid issues")
+                            .SetPositiveButton("OK", (IDialogInterfaceOnClickListener) null)
+                            .Show();
+                    })
+                    .SetNegativeButton("No", (IDialogInterfaceOnClickListener) null)
+                    .Show();
+            };
         }
 
 		/// <summary>

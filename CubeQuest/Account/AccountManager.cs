@@ -148,6 +148,9 @@ namespace CubeQuest.Account
 
         public static async Task<byte[]> GetUserProgress() => 
             (await snapshotManager.LoadSnapshotAsync()).SnapshotContents.ReadFully();
+
+        public static void ResetUserProgress() => 
+            CurrentUser = new User();
     }
 
     public static class DateTimeConverter
