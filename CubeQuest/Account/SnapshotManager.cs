@@ -2,13 +2,12 @@
 using Android.Gms.Common.Apis;
 using Android.Gms.Games;
 using Android.Gms.Games.Snapshot;
-using Android.Runtime;
 using System;
 using System.Threading.Tasks;
 
 namespace CubeQuest.Account
 {
-	public class SnapshotManager
+    public class SnapshotManager
     {
         private readonly GoogleApiClient googleClient;
 
@@ -19,27 +18,30 @@ namespace CubeQuest.Account
 
         public SnapshotManager(GoogleApiClient client) => 
 	        googleClient = client;
-
-        private async Task<ISnapshot> GetSnapshot()
+        
+        public async Task<ISnapshot> LoadSnapshotAsync()
         {
-            const int policy = Snapshots.ResolutionPolicyMostRecentlyModified;
+            var result = await OpenSnapshotAsync();
+            
+            switch (result.Status.StatusCode)
+            {
+                case GamesStatusCodes.StatusSnapshotNotFound:
+                case GamesStatusCodes.StatusSnapshotContentsUnavailable:
+                case GamesStatusCodes.StatusSnapshotFolderUnavailable:
+                    return null;
 
-            // TODO: No idea if this actually works (probably not)
-            var x = await GamesClass.Snapshots.Open(googleClient, CurrentSaveName, true, policy);
-			
-            return x.JavaCast<ISnapshot>();
+                default:
+                    return result.Snapshot;
+            }
         }
-
-        private async Task<ISnapshotContents> LoadFromSnapshot() =>
-            (await GetSnapshot()).SnapshotContents;
-
-        private async Task<ISnapshotsOpenSnapshotResult> OpenSnapshot() => 
+        
+        private async Task<ISnapshotsOpenSnapshotResult> OpenSnapshotAsync() => 
 	        await GamesClass.Snapshots.OpenAsync(googleClient, CurrentSaveName, true);
-
-        private async void SaveSnapshotAsync(byte[] data)
+        
+        public async void SaveSnapshotAsync(byte[] data)
         {
 	        // Try to open snapshot
-	        var result = await OpenSnapshot();
+	        var result = await OpenSnapshotAsync();
 
 	        // Try to write it
 			if (result.Snapshot != null)
@@ -58,11 +60,5 @@ namespace CubeQuest.Account
 
 			return await GamesClass.Snapshots.CommitAndCloseAsync(googleClient, snapshot, metadata);
 		}
-		
-        public byte[] Snapshot
-        {
-            get => LoadFromSnapshot().Result.ReadFully();
-            set => SaveSnapshotAsync(value);
-        }
     }
 }
