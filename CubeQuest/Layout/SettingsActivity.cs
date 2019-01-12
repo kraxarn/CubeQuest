@@ -8,6 +8,7 @@ using Android.Support.V7.Widget;
 using Android.Util;
 using CubeQuest.ListView.Users;
 using System.Collections.Generic;
+using System.Text;
 using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
@@ -24,7 +25,7 @@ namespace CubeQuest.Layout
 
 			SupportFragmentManager
 				.BeginTransaction()
-				.Replace(Android.Resource.Id.Content, new SettingsFragment())
+				.Replace(Android.Resource.Id.Content, new SettingsFragment(this))
 				.Commit();
 
 			PreferenceManager.GetDefaultSharedPreferences(this)
@@ -43,8 +44,13 @@ namespace CubeQuest.Layout
 	}
 
 	public class SettingsFragment : PreferenceFragmentCompat
-	{
-		public override void OnCreatePreferences(Bundle savedInstanceState, string rootKey)
+    {
+        private readonly Context context;
+
+        public SettingsFragment(Context context) => 
+            this.context = context;
+
+        public override void OnCreatePreferences(Bundle savedInstanceState, string rootKey)
 		{
 			AddPreferencesFromResource(Resource.Xml.preferences);
 
@@ -54,17 +60,22 @@ namespace CubeQuest.Layout
 			FindPreference("licenses").PreferenceClick += (sender, args) =>
 				OpenLicenses();
 
-			FindPreference("save_progress").PreferenceClick += (sender, args) =>
-			{
-				AccountManager.SaveUserProgress();
-			};
+			FindPreference("save_progress").PreferenceClick += (sender, args) => 
+                AccountManager.SaveUserProgress();
 
-			FindPreference("load_progress").PreferenceClick += (sender, args) => 
+			FindPreference("view_progress").PreferenceClick += (sender, args) => 
 				StartActivityForResult(AccountManager.SelectSaveIntent, 9003);
 
-            FindPreference("load_progress").PreferenceClick += (sender, args) =>
+            FindPreference("load_progress").PreferenceClick += async (sender, args) =>
             {
-                AccountManager.GetUserProgress();
+                var bytes = await AccountManager.GetUserProgress();
+                var str = Encoding.UTF8.GetString(bytes);
+
+                new AlertDialog.Builder(context)
+                    .SetTitle("Progress")
+                    .SetMessage(str)
+                    .SetPositiveButton("OK", (IDialogInterfaceOnClickListener) null)
+                    .Show();
             };
         }
 
