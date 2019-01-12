@@ -5326,6 +5326,9 @@ namespace CubeQuest
 			// aapt resource value: 0x7f1000ad
 			public const int AlertDialog_AppCompat_Light = 2131755181;
 			
+			// aapt resource value: 0x7f100214
+			public const int AlertDialogStyle = 2131755540;
+			
 			// aapt resource value: 0x7f1000ae
 			public const int Animation_AppCompat_Dialog = 2131755182;
 			
@@ -5338,20 +5341,20 @@ namespace CubeQuest
 			// aapt resource value: 0x7f100181
 			public const int Animation_Design_BottomSheetDialog = 2131755393;
 			
-			// aapt resource value: 0x7f100214
-			public const int AppPreferenceTheme = 2131755540;
+			// aapt resource value: 0x7f100215
+			public const int AppPreferenceTheme = 2131755541;
 			
 			// aapt resource value: 0x7f100213
 			public const int AppTheme = 2131755539;
 			
-			// aapt resource value: 0x7f100216
-			public const int AppTheme_AppBarOverlay = 2131755542;
-			
-			// aapt resource value: 0x7f100215
-			public const int AppTheme_NoActionBar = 2131755541;
-			
 			// aapt resource value: 0x7f100217
-			public const int AppTheme_PopupOverlay = 2131755543;
+			public const int AppTheme_AppBarOverlay = 2131755543;
+			
+			// aapt resource value: 0x7f100216
+			public const int AppTheme_NoActionBar = 2131755542;
+			
+			// aapt resource value: 0x7f100218
+			public const int AppTheme_PopupOverlay = 2131755544;
 			
 			// aapt resource value: 0x7f1000b1
 			public const int Base_AlertDialog_AppCompat = 2131755185;
