@@ -52,12 +52,6 @@ namespace CubeQuest.Account
 
         private static SnapshotManager snapshotManager;
 
-        public static byte[] SaveData
-        {
-	        get => snapshotManager.Snapshot;
-	        set => snapshotManager.Snapshot = value;
-        }
-
         public static Intent SelectSaveIntent => 
 	        snapshotManager.SelectSnapshotIntent;
 
@@ -149,20 +143,11 @@ namespace CubeQuest.Account
         public static void SetViewForPopups(View view) => 
             GamesClass.SetViewForPopups(googleClient, view);
 
-        public static void SaveUserProgress()
-        {
-	        SaveData = Encoding.UTF8.GetBytes(CurrentUser.ToString());
+        public static void SaveUserProgress() => 
+            snapshotManager.SaveSnapshotAsync(Encoding.UTF8.GetBytes(CurrentUser.ToString()));
 
-			//GetUserProgress();
-        }
-
-        public static void GetUserProgress()
-        {
-	        var data = SaveData;
-	        var str = Encoding.UTF8.GetString(data);
-
-	        Log.Info("SAVE_DATA", str);
-        }
+        public static async Task<byte[]> GetUserProgress() => 
+            (await snapshotManager.LoadSnapshotAsync()).SnapshotContents.ReadFully();
     }
 
     public static class DateTimeConverter
