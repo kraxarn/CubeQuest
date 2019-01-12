@@ -11,7 +11,12 @@
 			app:entries="@array/map_theme_entries"
 			app:entryValues="@array/map_theme_values"/>
 
-	</PreferenceCategory>
+    <SwitchPreferenceCompat
+      app:key="fullscreen"
+      app:title="Fullscreen"
+      app:summary="Hide the status and navigation bar (if any)"/>
+
+  </PreferenceCategory>
 
 	<PreferenceCategory
 		app:title="Battery Saver">
