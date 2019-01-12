@@ -71,7 +71,7 @@ namespace CubeQuest.Layout
                 var bytes = await AccountManager.GetUserProgress();
                 var str = Encoding.UTF8.GetString(bytes);
 
-                new AlertDialog.Builder(context)
+                new AlertDialog.Builder(context, Resource.Style.AlertDialogStyle)
                     .SetTitle("Progress")
                     .SetMessage(str)
                     .SetPositiveButton("OK", (IDialogInterfaceOnClickListener) null)
@@ -86,7 +86,8 @@ namespace CubeQuest.Layout
                     .SetPositiveButton("Yes", (s, a) =>
                     {
                         AccountManager.ResetUserProgress();
-                        new AlertDialog.Builder(context)
+
+                        new AlertDialog.Builder(context, Resource.Style.AlertDialogStyle)
                             .SetTitle("Progress reset")
                             .SetMessage("It's recommended to restart the app to avoid issues")
                             .SetPositiveButton("OK", (IDialogInterfaceOnClickListener) null)
@@ -129,7 +130,7 @@ namespace CubeQuest.Layout
 				StartActivity(new Intent(Intent.ActionView)
 					.SetData(Uri.Parse($"https://github.com/{itemView.Title.Text}")));
 
-			new AlertDialog.Builder(Context)
+			new AlertDialog.Builder(Context, Resource.Style.AlertDialogStyle)
 				.SetView(view)
 				.SetTitle("Credits")
 				.SetPositiveButton("OK", (IDialogInterfaceOnClickListener) null)
@@ -156,7 +157,7 @@ namespace CubeQuest.Layout
 				StartActivity(new Intent(Intent.ActionView)
 					.SetData(Uri.Parse($"https://github.com/{(itemView.Title.Text == "fastJSON" ? "mgholam/fastJSON" : "xamarin/xamarin-android")}")));
 
-			new AlertDialog.Builder(Context)
+			new AlertDialog.Builder(Context, Resource.Style.AlertDialogStyle)
 				.SetView(view)
 				.SetTitle("Open Source Licenses")
 				.SetPositiveButton("OK", (IDialogInterfaceOnClickListener)null)
