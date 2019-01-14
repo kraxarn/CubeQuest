@@ -72,7 +72,7 @@ namespace CubeQuest.Layout
 
         private AlertDialog itemPopupDialog;
 
-        private View itemPopupView;
+        private View companionInsertView;
 
         private RecyclerView popupRecycler;
 
@@ -250,20 +250,25 @@ namespace CubeQuest.Layout
             companionRecycler.SetAdapter(companionAdapter);
             companionRecycler.SetLayoutManager(companionLayoutManager);
 
-            //Set up itemPopupView, set up briefcase button 
-            //and link itemPopupView to the briefcase button
-            itemPopupView = LayoutInflater.Inflate(Resource.Layout.view_popup_layout, null);
-            popupRecycler = (RecyclerView)itemPopupView.FindViewById(Resource.Id.popup_recyclerview);
+            //Set up companionInsertView, set up briefcase button 
+            //and link companionInsertView to the briefcase button
+            companionInsertView = LayoutInflater.Inflate(Resource.Layout.view_insert_companion, null);
 
-            var itemPopup = new LinearLayoutManager(itemPopupView.Context);
-            popupRecycler.SetLayoutManager(itemPopup);
+            var itemSlot1 = companionInsertView.FindViewById<LinearLayout>(Resource.Id.companion_slot_1);
+            var itemSlot2 = companionInsertView.FindViewById<LinearLayout>(Resource.Id.companion_slot_2);
+            var itemSlot3 = companionInsertView.FindViewById<LinearLayout>(Resource.Id.companion_slot_3);
 
-            //Create a list of test items.
-            var items = new List<IItem>();
+            itemSlot1.Click += (object sender, EventArgs e) => { itemSlot1.SetBackgroundColor(Android.Graphics.Color.Aquamarine);};
+            itemSlot2.Click += (object sender, EventArgs e) => { itemSlot2.SetBackgroundColor(Android.Graphics.Color.Aquamarine); };
+            itemSlot3.Click += (object sender, EventArgs e) => { itemSlot3.SetBackgroundColor(Android.Graphics.Color.Aquamarine); };
 
-            var adapter = new ItemViewAdapter(items);
+            var slot1Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_1_occupant);
+            var slot2Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_2_occupant);
+            var slot3Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_3_occupant);
 
-            popupRecycler.SetAdapter(adapter);
+            slot1Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
+            slot2Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
+            slot3Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
 
             var briefcaseButton = FindViewById<ImageButton>(Resource.Id.button_briefcase);
 
@@ -272,7 +277,7 @@ namespace CubeQuest.Layout
                 if (itemPopupDialog == null)
                 {
                     itemPopupDialog = new AlertDialog.Builder(this)
-                        .SetView(itemPopupView)
+                        .SetView(companionInsertView)
                         .SetPositiveButton("Apply", (o, ee) =>
                         {
                             /*
