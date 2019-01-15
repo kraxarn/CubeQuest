@@ -5067,7 +5067,10 @@ namespace CubeQuest
 		{
 			
 			// aapt resource value: 0x7f090000
-			public const int map_theme_dark = 2131296256;
+			public const int map_theme_day = 2131296256;
+			
+			// aapt resource value: 0x7f090001
+			public const int map_theme_night = 2131296257;
 			
 			static Raw()
 			{

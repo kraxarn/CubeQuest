@@ -12,11 +12,9 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
-using CubeQuest.Account.Interface;
 using CubeQuest.Battle;
 using CubeQuest.Handler;
 using CubeQuest.ListView.Companions;
-using CubeQuest.ListView.Item;
 using CubeQuest.WorldGen;
 using System;
 using System.Collections.Generic;
@@ -25,7 +23,7 @@ using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest.Layout
 {
-    [Activity(Label = "GameActivity", Theme = "@style/AppTheme.NoActionBar")]
+	[Activity(Label = "GameActivity", Theme = "@style/AppTheme.NoActionBar")]
     public class GameActivity : AppCompatActivity, IOnMapReadyCallback, GoogleMap.IOnMarkerClickListener
     {
         /// <summary>
@@ -111,7 +109,16 @@ namespace CubeQuest.Layout
         /// </summary>
         private const int RcAchievementUi = 9003;
 
-        protected override async void OnCreate(Bundle savedInstanceState)
+        private bool IsDay
+        {
+	        get
+	        {
+		        var now = DateTime.Now;
+		        return now.Hour < 17 && now.Hour > 8;
+			}
+        }
+
+		protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_game);
@@ -318,7 +325,7 @@ namespace CubeQuest.Layout
             }
 
             // Set custom theme to map
-            googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, Resource.Raw.map_theme_dark));
+            googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this,  IsDay ? Resource.Raw.map_theme_day : Resource.Raw.map_theme_night));
 
             // Get last known location or 0,0 if not known
             // TODO: If not known, show loading dialog
@@ -339,7 +346,7 @@ namespace CubeQuest.Layout
 
             googleMap.SetOnMarkerClickListener(this);
         }
-
+		
         private void Map_CameraChange(object sender, GoogleMap.CameraChangeEventArgs e)
         {
             if (e?.Position?.Target != null)
