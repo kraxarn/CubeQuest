@@ -141,6 +141,9 @@ namespace CubeQuest.Layout
 					case AppPreferences.EMapTheme.Day:
 						return Resource.Raw.map_theme_day;
 
+					case AppPreferences.EMapTheme.Midnight:
+						return Resource.Raw.map_theme_midnight;
+
 					default:
 						throw new ArgumentOutOfRangeException();
 		        }

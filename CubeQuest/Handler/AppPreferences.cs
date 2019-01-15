@@ -13,7 +13,8 @@ namespace CubeQuest.Handler
 			// Matches map_theme_values
 			Auto,
 			Day,
-			Night
+			Night,
+			Midnight
 		}
 
 		public static IEnumerable<string> PreferenceKeys =>
@@ -24,7 +25,7 @@ namespace CubeQuest.Handler
 				"fullscreen",
 				// Battery saver
 				"background_updates",
-				"location_accuracy",
+				"gps",
 				// Audio
 				"music_volume",
 				"sound_volume"
@@ -50,10 +51,10 @@ namespace CubeQuest.Handler
 			set => PutBoolean("background_updates", value);
 		}
 
-		public bool LocationAccuracy
+		public bool GpsEnabled
 		{
-			get => GetBoolean("location_accuracy", false);
-			set => PutBoolean("location_accuracy", value);
+			get => GetBoolean("gps_enabled", false);
+			set => PutBoolean("gps_enabled", value);
 		}
 
 		// Audio
@@ -98,7 +99,7 @@ namespace CubeQuest.Handler
 				new KeyValuePair<string, string>("MapTheme",          $"{MapTheme}"),
 				new KeyValuePair<string, string>("Fullscreen",        $"{Fullscreen}"),
 				new KeyValuePair<string, string>("BackgroundUpdates", $"{BackgroundUpdates}"),
-				new KeyValuePair<string, string>("LocationAccuracy",  $"{LocationAccuracy}"),
+				new KeyValuePair<string, string>("GpsEnabled",        $"{GpsEnabled}"),
 				new KeyValuePair<string, string>("MusicVolume",       $"{MusicVolume}"),
 				new KeyValuePair<string, string>("SoundVolume",       $"{SoundVolume}")
 			};
