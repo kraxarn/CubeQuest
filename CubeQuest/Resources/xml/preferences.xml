@@ -7,7 +7,7 @@
 		<ListPreference
 			app:key="map_theme"
 			app:title="Map Theme"
-			app:summary="Theme of the map, currently light"
+			app:summary="Theme of the map"
 			app:entries="@array/map_theme_entries"
 			app:entryValues="@array/map_theme_values"/>
 
