@@ -14,13 +14,14 @@
 	<!-- Alert dialog theming -->
 	<style name="AlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
 		<item name="android:background">@color/colorPrimary</item>
+		<item name="colorAccent">@color/colorAccent</item>
     </style>
 
 	<style name="AppPreferenceTheme" parent="PreferenceThemeOverlay.v14.Material">
 		<!-- Mostly same as regular app theme -->
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-		<item name="colorAccent">#558b2f</item>
+		<item name="colorAccent">@color/colorAccent</item>
 		<item name="android:windowBackground">@color/colorPrimary</item>
 	</style>
 
