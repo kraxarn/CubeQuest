@@ -12,6 +12,7 @@ using System.Text;
 using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
+using CubeQuest.Handler;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
 
 namespace CubeQuest.Layout
@@ -47,12 +48,23 @@ namespace CubeQuest.Layout
     {
         private readonly Context context;
 
-        public SettingsFragment(Context context) => 
-            this.context = context;
+        private readonly AppPreferences prefs;
+
+        public SettingsFragment(Context context)
+        {
+	        this.context = context;
+			prefs = new AppPreferences(context);
+        }
 
         public override void OnCreatePreferences(Bundle savedInstanceState, string rootKey)
 		{
 			AddPreferencesFromResource(Resource.Xml.preferences);
+			
+			// Add all to preference manager
+			foreach (var key in AppPreferences.PreferenceKeys)
+				FindPreference(key).PreferenceDataStore = prefs;
+
+			// TODO: Set correct preference summaries here!
 
 			FindPreference("credits").PreferenceClick += (sender, args) => 
 				OpenCredits();
@@ -96,7 +108,16 @@ namespace CubeQuest.Layout
                     .SetNegativeButton("No", (IDialogInterfaceOnClickListener) null)
                     .Show();
             };
-        }
+
+            FindPreference("debug_preferences").PreferenceClick += (sender, args) =>
+            {
+	            new AlertDialog.Builder(context, Resource.Style.AlertDialogStyle)
+		            .SetTitle("Preferences")
+		            .SetMessage(prefs.ToString())
+		            .SetPositiveButton("OK", (IDialogInterfaceOnClickListener) null)
+		            .Show();
+            };
+		}
 
 		/// <summary>
 		/// Builds the user entries adapter with the view and entries provided
@@ -163,5 +184,11 @@ namespace CubeQuest.Layout
 				.SetPositiveButton("OK", (IDialogInterfaceOnClickListener)null)
 				.Show();
 		}
-	}
+
+		public override void OnStop()
+		{
+			base.OnStop();
+			prefs.Save();
+		}
+    }
 }

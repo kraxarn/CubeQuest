@@ -1,6 +1,6 @@
 ﻿<PreferenceScreen
 	xmlns:app="http://schemas.android.com/apk/res-auto">
-
+	
 	<PreferenceCategory
 		app:title="Appearance">
 
@@ -11,12 +11,12 @@
 			app:entries="@array/map_theme_entries"
 			app:entryValues="@array/map_theme_values"/>
 
-    <SwitchPreferenceCompat
-      app:key="fullscreen"
-      app:title="Fullscreen"
-      app:summary="Hide the status and navigation bar (if any)"/>
+	    <SwitchPreferenceCompat
+	      app:key="fullscreen"
+	      app:title="Fullscreen"
+	      app:summary="Hide the status and navigation bar (if any)"/>
 
-  </PreferenceCategory>
+	</PreferenceCategory>
 
 	<PreferenceCategory
 		app:title="Battery Saver">
@@ -74,6 +74,11 @@
 			app:title="Version"
 			app:summary="v1.0-development"/>
 
+		<Preference
+			app:key="debug_preferences"
+			app:title="Show preferences"
+			app:summary="DEBUG: Show current shared preferences"/>
+
 	</PreferenceCategory>
 
 	<PreferenceCategory
@@ -83,16 +88,16 @@
 			app:key="log_out"
 			app:title="Log out"
 			app:summary="Log out and close the app"/>
+		
+		<Preference
+			app:key="reset_progress"
+			app:title="Reset progress"
+			app:summary="Delete your save and create a new one"/>
 
-    <Preference
-      app:key="reset_progress"
-      app:title="Reset progress"
-      app:summary="Delete your save and create a new one"/>
-
-    <Preference
-      app:key="view_progress"
-      app:title="View progress"
-      app:summary="Show the cloud save UI"/>
+		<Preference
+			app:key="view_progress"
+			app:title="View progress"
+			app:summary="Show the cloud save UI"/>
 
 		<Preference
 			app:key="load_progress"
@@ -105,5 +110,4 @@
 			app:summary="Save your progress to the cloud"/>
 
 	</PreferenceCategory>
-
 </PreferenceScreen>

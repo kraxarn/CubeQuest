@@ -99,6 +99,7 @@
     <Compile Include="Handler\LocationManager.cs" />
     <Compile Include="Handler\MusicManager.cs" />
     <Compile Include="Handler\CompanionManager.cs" />
+    <Compile Include="Handler\AppPreferences.cs" />
     <Compile Include="Layout\GameActivity.cs" />
     <Compile Include="Layout\MainActivity.cs" />
     <Compile Include="Layout\SettingsActivity.cs" />
