@@ -23,13 +23,11 @@ namespace CubeQuest.Handler
 				"map_theme",
 				"fullscreen",
 				// Battery saver
-				//"black_map",
-				//"black_app",
-				//"background_updates",
-				//"location_accuracy",
+				"background_updates",
+				"location_accuracy",
 				// Audio
 				"music_volume",
-				//"sound_volume"
+				"sound_volume"
 			};
 
 		// Appearance
@@ -46,18 +44,6 @@ namespace CubeQuest.Handler
 		}
 
 		// Battery saver
-		public bool BlackMap
-		{
-			get => GetBoolean("black_map", false);
-			set => PutBoolean("black_map", value);
-		}
-
-		public bool BlackApp
-		{
-			get => GetBoolean("black_app", false);
-			set => PutBoolean("black_app", value);
-		}
-
 		public bool BackgroundUpdates
 		{
 			get => GetBoolean("background_updates", true);
@@ -111,12 +97,10 @@ namespace CubeQuest.Handler
 			{
 				new KeyValuePair<string, string>("MapTheme",          $"{MapTheme}"),
 				new KeyValuePair<string, string>("Fullscreen",        $"{Fullscreen}"),
-				//new KeyValuePair<string, string>("BlackMap",          $"{BlackMap}"),
-				//new KeyValuePair<string, string>("BlackApp",          $"{BlackApp}"),
-				//new KeyValuePair<string, string>("BackgroundUpdates", $"{BackgroundUpdates}"),
-				//new KeyValuePair<string, string>("LocationAccuracy",  $"{LocationAccuracy}"),
+				new KeyValuePair<string, string>("BackgroundUpdates", $"{BackgroundUpdates}"),
+				new KeyValuePair<string, string>("LocationAccuracy",  $"{LocationAccuracy}"),
 				new KeyValuePair<string, string>("MusicVolume",       $"{MusicVolume}"),
-				//new KeyValuePair<string, string>("SoundVolume",       $"{SoundVolume}")
+				new KeyValuePair<string, string>("SoundVolume",       $"{SoundVolume}")
 			};
 
 		public override bool GetBoolean(string key, bool defValue) => 
