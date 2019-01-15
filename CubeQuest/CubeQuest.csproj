@@ -165,6 +165,7 @@
     <AndroidResource Include="Resources\layout\view_item_card.axml" />
     <AndroidResource Include="Resources\layout\view_popup_item.axml" />
     <AndroidResource Include="Resources\layout\view_popup_layout.axml" />
+    <AndroidResource Include="Resources\layout\view_insert_companion.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_main.axml">
