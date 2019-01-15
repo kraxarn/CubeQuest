@@ -11,9 +11,9 @@ namespace CubeQuest.Handler
 		public enum EMapTheme
 		{
 			// Matches map_theme_values
-			Light,
-			Dark,
-			Auto
+			Auto,
+			Day,
+			Night
 		}
 
 		public static IEnumerable<string> PreferenceKeys =>
@@ -23,19 +23,19 @@ namespace CubeQuest.Handler
 				"map_theme",
 				"fullscreen",
 				// Battery saver
-				"black_map",
-				"black_app",
-				"background_updates",
-				"location_accuracy",
+				//"black_map",
+				//"black_app",
+				//"background_updates",
+				//"location_accuracy",
 				// Audio
 				"music_volume",
-				"sound_volume"
+				//"sound_volume"
 			};
 
 		// Appearance
 		public EMapTheme MapTheme
 		{
-			get => Enum.TryParse(GetString("map_theme", "Light"), out EMapTheme theme) ? theme : EMapTheme.Light;
+			get => Enum.TryParse(GetString("map_theme", "Day"), out EMapTheme theme) ? theme : EMapTheme.Auto;
 			set => PutString("map_theme", value.ToString());
 		}
 
@@ -111,12 +111,12 @@ namespace CubeQuest.Handler
 			{
 				new KeyValuePair<string, string>("MapTheme",          $"{MapTheme}"),
 				new KeyValuePair<string, string>("Fullscreen",        $"{Fullscreen}"),
-				new KeyValuePair<string, string>("BlackMap",          $"{BlackMap}"),
-				new KeyValuePair<string, string>("BlackApp",          $"{BlackApp}"),
-				new KeyValuePair<string, string>("BackgroundUpdates", $"{BackgroundUpdates}"),
-				new KeyValuePair<string, string>("LocationAccuracy",  $"{LocationAccuracy}"),
+				//new KeyValuePair<string, string>("BlackMap",          $"{BlackMap}"),
+				//new KeyValuePair<string, string>("BlackApp",          $"{BlackApp}"),
+				//new KeyValuePair<string, string>("BackgroundUpdates", $"{BackgroundUpdates}"),
+				//new KeyValuePair<string, string>("LocationAccuracy",  $"{LocationAccuracy}"),
 				new KeyValuePair<string, string>("MusicVolume",       $"{MusicVolume}"),
-				new KeyValuePair<string, string>("SoundVolume",       $"{SoundVolume}")
+				//new KeyValuePair<string, string>("SoundVolume",       $"{SoundVolume}")
 			};
 
 		public override bool GetBoolean(string key, bool defValue) => 

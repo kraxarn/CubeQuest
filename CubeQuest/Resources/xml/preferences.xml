@@ -19,40 +19,11 @@
 	</PreferenceCategory>
 
 	<PreferenceCategory
-		app:title="Battery Saver">
-
-		<SwitchPreferenceCompat
-			app:key="black_map"
-			app:title="Black Map"
-			app:summary="Use black colors on the map"/>
-
-		<SwitchPreferenceCompat
-			app:key="black_app"
-			app:title="Black App"
-			app:summary="Use black colors instead of brown in the app"/>
-
-		<SwitchPreferenceCompat
-			app:key="background_updates"
-			app:title="Background Updates"
-			app:summary="Update location in the background with lowered accuracy"/>
-
-		<SwitchPreferenceCompat
-			app:key="location_accuracy"
-			app:title="Lower location accuracy"
-			app:summary="Use WiFi and cell towers instead of GPS to get device location"/>
-
-	</PreferenceCategory>
-
-	<PreferenceCategory
 		app:title="Audio">
 
 		<SeekBarPreference
 			app:key="music_volume"
 			app:title="Music Volume"/>
-
-		<SeekBarPreference
-			app:key="sound_volume"
-			app:title="Sound Effects Volume"/>
 
 	</PreferenceCategory>
 

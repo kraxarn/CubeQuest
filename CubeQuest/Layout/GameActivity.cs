@@ -84,6 +84,8 @@ namespace CubeQuest.Layout
 
         private Marker selectedMarker;
 
+        private AppPreferences preferences;
+
         /// <summary>
         /// <see cref="FloatingActionButton"/> for opening the inventory
         /// </summary>
@@ -109,6 +111,9 @@ namespace CubeQuest.Layout
         /// </summary>
         private const int RcAchievementUi = 9003;
 
+		/// <summary>
+		/// If it's day (8-17)
+		/// </summary>
         private bool IsDay
         {
 	        get
@@ -116,6 +121,30 @@ namespace CubeQuest.Layout
 		        var now = DateTime.Now;
 		        return now.Hour < 17 && now.Hour > 8;
 			}
+        }
+
+		/// <summary>
+		/// Selected map theme from time and preferences
+		/// </summary>
+        private int MapTheme
+        {
+	        get
+	        {
+		        switch (preferences.MapTheme)
+		        {
+					case AppPreferences.EMapTheme.Auto:
+						return IsDay ? Resource.Raw.map_theme_day : Resource.Raw.map_theme_night;
+
+					case AppPreferences.EMapTheme.Night:
+						return Resource.Raw.map_theme_night;
+
+					case AppPreferences.EMapTheme.Day:
+						return Resource.Raw.map_theme_day;
+
+					default:
+						throw new ArgumentOutOfRangeException();
+		        }
+	        }
         }
 
 		protected override async void OnCreate(Bundle savedInstanceState)
@@ -130,6 +159,8 @@ namespace CubeQuest.Layout
 
             markers = new Dictionary<LatLng, Marker>();
             chunkHandler = new ChunkHandler();
+
+			preferences = new AppPreferences(this);
             
             // Get main view
             mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
@@ -325,7 +356,7 @@ namespace CubeQuest.Layout
             }
 
             // Set custom theme to map
-            googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this,  IsDay ? Resource.Raw.map_theme_day : Resource.Raw.map_theme_night));
+            googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, MapTheme));
 
             // Get last known location or 0,0 if not known
             // TODO: If not known, show loading dialog
@@ -615,6 +646,8 @@ namespace CubeQuest.Layout
 
             if (locationManager != null)
                 locationManager.LocationPriority = LocationRequest.PriorityHighAccuracy;
+			
+            googleMap?.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, MapTheme));
         }
     }
 }
