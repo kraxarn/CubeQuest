@@ -56,6 +56,12 @@ namespace CubeQuest.Layout
 			prefs = new AppPreferences(context);
         }
 
+        public bool Fullscreen
+        {
+	        get => View.SystemUiVisibility != 0;
+	        set => View.SystemUiVisibility = (StatusBarVisibility) (value ? SystemUiFlags.HideNavigation | SystemUiFlags.ImmersiveSticky | SystemUiFlags.Fullscreen : 0);
+        }
+
         public override void OnCreatePreferences(Bundle savedInstanceState, string rootKey)
 		{
 			AddPreferencesFromResource(Resource.Xml.preferences);
@@ -119,7 +125,19 @@ namespace CubeQuest.Layout
             };
 		}
 
-		/// <summary>
+        public override bool OnPreferenceTreeClick(Preference preference)
+        {
+	        switch (preference.Key)
+	        {
+				case "fullscreen":
+					Fullscreen = (preference as SwitchPreferenceCompat)?.Checked ?? false;
+					break;
+	        }
+
+	        return base.OnPreferenceTreeClick(preference);
+        }
+
+        /// <summary>
 		/// Builds the user entries adapter with the view and entries provided
 		/// </summary>
 		private UserEntriesAdapter BuildUserEntriesAdapter(View view, IEnumerable<UserEntry> entries)

@@ -25,7 +25,7 @@ namespace CubeQuest.Handler
 				"fullscreen",
 				// Battery saver
 				"background_updates",
-				"gps",
+				"gps_enabled",
 				// Audio
 				"music_volume",
 				"sound_volume"

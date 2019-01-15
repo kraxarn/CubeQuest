@@ -9,12 +9,31 @@
 			app:title="Map Theme"
 			app:summary="Theme of the map"
 			app:entries="@array/map_theme_entries"
-			app:entryValues="@array/map_theme_values"/>
+			app:entryValues="@array/map_theme_values"
+			app:defaultValue="Auto"/>
 
 	    <SwitchPreferenceCompat
 	      app:key="fullscreen"
 	      app:title="Fullscreen"
-	      app:summary="Hide the status and navigation bar (if any)"/>
+	      app:summary="Hide the status and navigation bar (if any)"
+	      app:defaultValue="false"/>
+
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		app:title="Battery Saver">
+
+		<SwitchPreferenceCompat
+			app:key="background_updates"
+			app:title="Background Updates"
+			app:summary="Update location in the background without GPS"
+			app:defaultValue="true"/>
+
+		<SwitchPreferenceCompat
+			app:key="gps_enabled"
+			app:title="Enable GPS"
+			app:summary="Use GPS to get device location and with the help of WiFi and cell towers"
+			app:defaultValue="true"/>
 
 	</PreferenceCategory>
 
@@ -23,7 +42,13 @@
 
 		<SeekBarPreference
 			app:key="music_volume"
-			app:title="Music Volume"/>
+			app:title="Music Volume"
+			app:defaultValue="25"/>
+
+		<SeekBarPreference
+			app:key="sound_volume"
+			app:title="Sound Volume"
+			app:defaultValue="25"/>
 
 	</PreferenceCategory>
 

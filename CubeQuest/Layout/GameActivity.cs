@@ -19,6 +19,8 @@ using CubeQuest.WorldGen;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
+using Android.Graphics;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest.Layout
@@ -150,6 +152,31 @@ namespace CubeQuest.Layout
 	        }
         }
 
+		/// <summary>
+		/// If the map is currently using the day theme
+		/// </summary>
+		private bool IsMapDay
+		{
+			get
+			{
+				switch (preferences.MapTheme)
+				{
+					case AppPreferences.EMapTheme.Auto:
+						return IsDay;
+
+					case AppPreferences.EMapTheme.Day:
+						return true;
+
+					case AppPreferences.EMapTheme.Night:
+					case AppPreferences.EMapTheme.Midnight:
+						return false;
+
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
+			}
+		}
+
 		protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -258,6 +285,32 @@ namespace CubeQuest.Layout
             // Avoid clicking through battle view
             battleView.Touch += (sender, args) =>
                 args.Handled = true;
+			
+			// Check if using fullscreen HUD
+			if (preferences.Fullscreen)
+			{
+				void HudUpdate()
+				{
+					var batteryManager = (BatteryManager) GetSystemService(BatteryService);
+					var hud = mainView.FindViewById<TextView>(Resource.Id.text_game_hud);
+					hud.SetTextColor(IsMapDay ? Color.Black : Color.White);
+
+					Task.Run(() =>
+					{
+						while (true)
+						{
+							var time = DateTime.Now.ToString("HH:mm");
+							var battery = batteryManager.GetIntProperty((int) BatteryProperty.Capacity);
+							hud.Text = $"{time} | {battery}%";
+
+							Thread.Sleep(500);
+						}
+					});
+				}
+
+				// Wrap it in a function to avoid an async warning
+				HudUpdate();
+			}
 
             // Setup debug mode
             FindViewById<Button>(Resource.Id.button_debug_focus_player).Click += (sender, args) => 
@@ -651,6 +704,9 @@ namespace CubeQuest.Layout
                 locationManager.LocationPriority = LocationRequest.PriorityHighAccuracy;
 			
             googleMap?.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, MapTheme));
+
+			// Enable or disable fullscreen
+            mainView.SystemUiVisibility = (StatusBarVisibility) (preferences.Fullscreen ? SystemUiFlags.HideNavigation | SystemUiFlags.ImmersiveSticky | SystemUiFlags.Fullscreen : 0);
         }
     }
 }
