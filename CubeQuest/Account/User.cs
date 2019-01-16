@@ -2,6 +2,7 @@
 using CubeQuest.Handler;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CubeQuest.Account
@@ -232,8 +233,11 @@ namespace CubeQuest.Account
 		public byte[] ToBytes() =>
 	        Encoding.UTF8.GetBytes(ToString());
 
-        public static User FromBytes(byte[] data) =>
-	        FromText(Encoding.UTF8.GetString(data));
+		/// <summary>
+		/// Tries to load <see cref="SaveData"/> from string, returns null on failure
+		/// </summary>
+        public static User FromBytes(byte[] data) => 
+	        data.Any() ? FromText(Encoding.UTF8.GetString(data)) : null;
 
         private SaveData ToSaveData() =>
 	        new SaveData
