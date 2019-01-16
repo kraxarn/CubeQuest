@@ -93,7 +93,7 @@ namespace CubeQuest.Layout
 
             FindPreference("reset_progress").PreferenceClick += (sender, args) =>
             {
-                new AlertDialog.Builder(context)
+                new AlertDialog.Builder(context, Resource.Style.AlertDialogStyle)
                     .SetTitle("Are you sure?")
                     .SetMessage("All your progress and companions collected will be lost!")
                     .SetPositiveButton("Yes", (s, a) =>
