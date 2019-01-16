@@ -9,7 +9,6 @@ using Android.Support.V7.App;
 using Android.Views;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CubeQuest.Account
@@ -87,9 +86,9 @@ namespace CubeQuest.Account
             // Wait until we connected and attempt to sign in silently when we do
             connectionListener.Connected += async hint =>
 	        {
-                CurrentUser = new User();
+                CurrentUser = await GetUserProgressOrDefaultAsync() ?? new User();
 
-	            var silentSignIn = await Auth.GoogleSignInApi.SilentSignIn(googleClient);
+                var silentSignIn = await Auth.GoogleSignInApi.SilentSignIn(googleClient);
 
 	            if (silentSignIn.Status.IsSuccess)
 	                OnSuccess?.Invoke(silentSignIn.Status);
@@ -144,8 +143,11 @@ namespace CubeQuest.Account
 
         public static void SaveUserProgress() => 
             snapshotManager.SaveSnapshotAsync(CurrentUser.ToBytes());
-
-        public static async Task<User> GetUserProgress() => 
+		
+		/// <summary>
+		/// Tries to load user save async, returns null on failure
+		/// </summary>
+        public static async Task<User> GetUserProgressOrDefaultAsync() => 
 	        User.FromBytes((await snapshotManager.LoadSnapshotAsync()).SnapshotContents.ReadFully());
 
         public static void ResetUserProgress() => 
