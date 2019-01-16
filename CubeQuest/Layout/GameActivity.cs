@@ -111,6 +111,10 @@ namespace CubeQuest.Layout
         /// </summary>
         private const int RcAchievementUi = 9003;
 
+        private int selectedSlot = 0;
+
+        private ImageButton[] equippedCubes;
+
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -198,13 +202,15 @@ namespace CubeQuest.Layout
             profileView.FindViewById<ImageButton>(Resource.Id.button_settings).Click += (sender, args) =>
                 StartActivity(new Intent(this, typeof(SettingsActivity)));
 
-            var cube1Button = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_1);
-            var cube2Button = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_2);
-            var cube3Button = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_3);
+            equippedCubes = new ImageButton[3];
 
-            cube1Button.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
-            cube2Button.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
-            cube3Button.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
+            equippedCubes[0] = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_1);
+            equippedCubes[1] = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_2);
+            equippedCubes[2] = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_3);
+
+            equippedCubes[0].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
+            equippedCubes[1].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
+            equippedCubes[2].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
 
             // Avoid clicking through profile view
             profileView.Touch += (sender, args) =>
@@ -244,56 +250,13 @@ namespace CubeQuest.Layout
             companionsList.Add(new Bear());
             companionsList.Add(new Chick());
             companionsList.Add(new Parrot());*/
-            companionAdapter = new CompanionViewAdapter(AccountManager.CurrentUser.Companions);
+            companionAdapter = new CompanionViewAdapter(AccountManager.CurrentUser.Companions, this);
             var companionLayoutManager = new LinearLayoutManager(this);
 
             companionRecycler.SetAdapter(companionAdapter);
             companionRecycler.SetLayoutManager(companionLayoutManager);
 
-            //Set up companionInsertView, set up briefcase button 
-            //and link companionInsertView to the briefcase button
-            companionInsertView = LayoutInflater.Inflate(Resource.Layout.view_insert_companion, null);
-
-            var itemSlot1 = companionInsertView.FindViewById<LinearLayout>(Resource.Id.companion_slot_1);
-            var itemSlot2 = companionInsertView.FindViewById<LinearLayout>(Resource.Id.companion_slot_2);
-            var itemSlot3 = companionInsertView.FindViewById<LinearLayout>(Resource.Id.companion_slot_3);
-
-            itemSlot1.Click += (object sender, EventArgs e) => { itemSlot1.SetBackgroundColor(Android.Graphics.Color.Aquamarine);};
-            itemSlot2.Click += (object sender, EventArgs e) => { itemSlot2.SetBackgroundColor(Android.Graphics.Color.Aquamarine); };
-            itemSlot3.Click += (object sender, EventArgs e) => { itemSlot3.SetBackgroundColor(Android.Graphics.Color.Aquamarine); };
-
-            var slot1Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_1_occupant);
-            var slot2Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_2_occupant);
-            var slot3Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_3_occupant);
-
-            slot1Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
-            slot2Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
-            slot3Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
-
-            var briefcaseButton = FindViewById<ImageButton>(Resource.Id.button_briefcase);
-
-            briefcaseButton.Click += (sender, e) =>
-            {
-                if (itemPopupDialog == null)
-                {
-                    itemPopupDialog = new AlertDialog.Builder(this)
-                        .SetView(companionInsertView)
-                        .SetPositiveButton("Apply", (o, ee) =>
-                        {
-                            /*
-							 Insert code that makes the users choice of item from the
-							 list become their selected equipment
-							*/
-                        })
-                        .SetNegativeButton("Cancel", (o, ee) =>
-                        {
-                            //Insert code for closing dialog without any updates to chosen equipment
-                        })
-                        .Create();
-                }
-
-                itemPopupDialog.Show();
-            };
+            companionAdapter.EquippedCompanionChanged += a_companionChanged;
         }
 
         public override void OnEnterAnimationComplete()
@@ -608,6 +571,14 @@ namespace CubeQuest.Layout
 
             if (locationManager != null)
                 locationManager.LocationPriority = LocationRequest.PriorityHighAccuracy;
+        }
+
+        protected void a_companionChanged(object sender, EventArgs e)
+        {
+            equippedCubes[0].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
+            equippedCubes[1].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
+            equippedCubes[2].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
+
         }
     }
 }
