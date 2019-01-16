@@ -88,6 +88,7 @@
     <Compile Include="Account\Interface\ICompanion.cs" />
     <Compile Include="Account\Companions\Example.cs" />
     <Compile Include="Account\Interface\IItem.cs" />
+    <Compile Include="Account\SaveData.cs" />
     <Compile Include="Account\SnapshotManager.cs" />
     <Compile Include="Account\User.cs" />
     <Compile Include="Battle\BattleCore.cs" />

@@ -1,9 +1,8 @@
 ﻿using CubeQuest.Account.Interface;
-using fastJSON;
+using CubeQuest.Handler;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using CubeQuest.Handler;
 
 namespace CubeQuest.Account
 {
@@ -214,27 +213,44 @@ namespace CubeQuest.Account
         public void AddCompanion(ICompanion companion)
         {
             if (!Companions.Contains(companion))
-            {
-                Companions.Add(companion);
-            }
+	            Companions.Add(companion);
         }
 
         /// <summary>
-        /// Serializes <see cref="User"/> to a JSON string
+        /// Serializes to a <see cref="SaveData"/> JSON
         /// </summary>
+        /// <returns></returns>
         public override string ToString() =>
-            JSON.ToJSON(this);
+	        ToSaveData().ToString();
 
-        /// <summary>
-        /// Deserializes a JSON into a <see cref="User"/> 
-        /// </summary>
-        public static User FromString(string json) =>
-            JSON.ToObject<User>(json);
+		/// <summary>
+		/// Deserializes a <see cref="SaveData"/> string into a <see cref="User"/> 
+		/// </summary>
+		private static User FromText(string text) => 
+			FromSaveData(new SaveData(text));
 
-        public byte[] ToBytes() =>
+		public byte[] ToBytes() =>
 	        Encoding.UTF8.GetBytes(ToString());
 
         public static User FromBytes(byte[] data) =>
-	        FromString(Encoding.UTF8.GetString(data));
+	        FromText(Encoding.UTF8.GetString(data));
+
+        private SaveData ToSaveData() =>
+	        new SaveData
+	        {
+		        Companions         = Companions.ToTypeList(),
+		        EquippedCompanions = EquippedCompanions.ToTypeList(),
+		        Experience         = experience,
+		        Health             = Health
+	        };
+		
+        private static User FromSaveData(SaveData save) =>
+	        new User
+	        {
+		        Health             = save.Health,
+		        experience         = save.Experience,
+		        EquippedCompanions = save.EquippedCompanions.ToCompanions(),
+		        Companions         = save.Companions.ToCompanions()
+	        };
     }
 }

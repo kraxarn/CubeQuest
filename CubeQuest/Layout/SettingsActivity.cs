@@ -80,10 +80,9 @@ namespace CubeQuest.Layout
 
             FindPreference("load_progress").PreferenceClick += async (sender, args) =>
             {
-                var bytes = await AccountManager.GetUserProgress();
-                var str = Encoding.UTF8.GetString(bytes);
+                var user = await AccountManager.GetUserProgress();
 
-				Alert.ShowSimple(context, "Progress", str);
+				Alert.ShowSimple(context, "Progress", user.ToString());
             };
 
             FindPreference("reset_progress").PreferenceClick += (sender, args) =>
