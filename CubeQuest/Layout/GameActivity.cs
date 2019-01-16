@@ -630,8 +630,22 @@ namespace CubeQuest.Layout
 
                                     var dialogView = LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
 
+                                    string GetStringPrefix(string value)
+                                    {
+	                                    switch (value[0])
+	                                    {
+											case 'e':
+											case 'o':
+												return "an";
+
+											default:
+												return "a";
+	                                    }
+                                    }
+
                                     var companion = CompanionManager.Random;
-                                    dialogView.FindViewById<TextView>(Resource.Id.text_loot_title).Text = $"You have found a {companion.Name}!";
+                                    dialogView.FindViewById<TextView>(Resource.Id.text_loot_title).Text = 
+	                                    $"You have found {GetStringPrefix(companion.Name)} {companion.Name}!";
                                     dialogView.FindViewById<ImageView>(Resource.Id.image_loot).SetImageBitmap(AssetLoader.GetCompanionBitmap(companion));
                                     AccountManager.CurrentUser.AddCompanion(companion);
 
