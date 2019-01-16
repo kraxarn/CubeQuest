@@ -540,6 +540,23 @@ namespace CubeQuest.Layout
             else
                 animator.AnimationEnd += (o, eventArgs) => profileView.Visibility = ViewStates.Invisible;
 
+			// Update values on opening profile
+			if (enabled)
+			{
+				var user = AccountManager.CurrentUser;
+
+				var stats = new[]
+				{
+					new KeyValuePair<int, string>(Resource.Id.text_profile_hp,     $"{user.HealthPercentage}%"),
+					new KeyValuePair<int, string>(Resource.Id.text_profile_attack, $"{user.Attack}"),
+					new KeyValuePair<int, string>(Resource.Id.text_profile_level,  $"{user.Level}"),
+					new KeyValuePair<int, string>(Resource.Id.text_profile_armor,  $"{user.Armor}")
+				};
+
+				foreach (var (key, value) in stats)
+					mainView.FindViewById<TextView>(key).Text = value;
+			}
+
             animator.Start();
         }
 
