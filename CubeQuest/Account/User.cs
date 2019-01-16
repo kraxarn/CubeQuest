@@ -92,9 +92,16 @@ namespace CubeQuest.Account
         /// </summary>
         public int Health
         {
-            get => health;
+	        get
+	        {
+				// Update health if companions affected our max health
+		        if (health > MaxHealth)
+			        health = MaxHealth;
 
-            set
+		        return health;
+	        }
+
+	        set
             {
                 health = value;
 
@@ -121,7 +128,7 @@ namespace CubeQuest.Account
         /// </summary>
         public int HealthPercentage
         {
-            get => (int) ((float) Health / MaxHealth * 100);
+			get => (int) ((float) Health / MaxHealth * 100);
 
             set => Health = (int) (MaxHealth * (value / 100f));
         }
@@ -135,7 +142,7 @@ namespace CubeQuest.Account
             get
             {
                 var h = 100 + (int) Level * 5;
-                EquippedCompanions.ForEach(c => h += c.Health);
+                //EquippedCompanions.ForEach(c => h += c.Health);
                 return h;
             }
         }

@@ -25,6 +25,8 @@ namespace CubeQuest.Handler
 
         private readonly LocationRequest locationRequest;
 
+        private readonly LocationCallback locationCallback;
+
         public LocationManager(Context context)
         {
             // Create client from context
@@ -39,7 +41,7 @@ namespace CubeQuest.Handler
             locationRequest.SetInterval(1000);
 
             // Receives all location updates
-            var locationCallback = new LocationCallback();
+            locationCallback = new LocationCallback();
             locationCallback.LocationResult += (sender, args) =>
             {
                 if (args.Result == null)
@@ -50,10 +52,16 @@ namespace CubeQuest.Handler
             };
 
             // Start receiving location updates
-            client.RequestLocationUpdatesAsync(locationRequest, locationCallback);
+			Start();
         }
 
-		/// <summary>
+        public async void Start() => 
+	        await client.RequestLocationUpdatesAsync(locationRequest, locationCallback);
+
+        public async void Stop() => 
+	        await client.RemoveLocationUpdatesAsync(locationCallback);
+
+        /// <summary>
 		/// Accuracy for location (100/highest - 105/lowest)
 		/// </summary>
         public int LocationPriority

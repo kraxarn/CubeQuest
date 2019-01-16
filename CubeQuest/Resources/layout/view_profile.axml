@@ -9,14 +9,30 @@
 	android:padding="16dp"
 	android:background="@color/colorPrimary">
 
-	<!-- Name title (h4) -->
-	<TextView
-		android:id="@+id/textProfileName"
-		android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:textSize="34sp"
-		android:textAlignment="center"
-		android:text="(name)"/>
+        android:orientation="horizontal">
+
+        <!-- Name title (h4) -->
+	    <TextView
+		    android:id="@+id/textProfileName"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+            android:layout_weight="1"
+		    android:textSize="34sp"
+		    android:textAlignment="center"
+		    android:text="(name)"/>
+
+        <ImageButton
+		    android:id="@+id/button_settings"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:padding="8dp"
+		    android:background="?android:selectableItemBackground"
+		    android:src="@drawable/ic_settings"/>
+
+    </LinearLayout>
 
 	<!-- Table layout for stats -->
 	<TableLayout
@@ -33,6 +49,7 @@
 				android:layout_marginEnd="8dp"
 				android:src="@drawable/ic_hp"/>
 			<TextView
+                android:id="@+id/text_profile_hp"
 				android:textSize="20sp"
 				android:text="0 / 0"/>
 
@@ -42,6 +59,7 @@
 				android:layout_marginEnd="8dp"
 				android:src="@drawable/ic_sword"/>
 			<TextView
+                android:id="@+id/text_profile_attack"
 				android:textSize="20sp"
 				android:text="0"/>
 
@@ -55,6 +73,7 @@
 			<ImageView
 				android:src="@drawable/ic_level"/>
 			<TextView
+                android:id="@+id/text_profile_level"
 				android:textSize="20sp"
 				android:text="1"/>
 
@@ -64,6 +83,7 @@
 				android:layout_marginEnd="8dp"
 				android:src="@drawable/ic_shield"/>
 			<TextView
+                android:id="@+id/text_profile_armor"
 				android:textSize="20sp"
 				android:text="0"/>
 
@@ -153,57 +173,6 @@
 
 		</GridLayout>
 	</FrameLayout>
-
-	<!-- Buttons -->
-	<LinearLayout
-		android:layout_marginTop="16dp"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:gravity="center_horizontal">
-
-		<ImageButton
-			android:id="@+id/button_achievements"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:background="?android:selectableItemBackground"
-			android:padding="8dp"
-			android:src="@drawable/ic_trophy"/>
-
-		<ImageButton
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="16dp"
-			android:padding="8dp"
-			android:background="?android:selectableItemBackground"
-			android:src="@drawable/ic_numbered_list"/>
-
-		<ImageButton
-            android:id="@+id/button_briefcase"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="16dp"
-			android:padding="8dp"
-			android:background="?android:selectableItemBackground"
-			android:src="@drawable/ic_briefcase"/>
-
-		<ImageButton
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="16dp"
-			android:padding="8dp"
-			android:background="?android:selectableItemBackground"
-			android:src="@drawable/ic_companion"/>
-
-		<ImageButton
-			android:id="@+id/button_settings"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="16dp"
-			android:padding="8dp"
-			android:background="?android:selectableItemBackground"
-			android:src="@drawable/ic_settings"/>
-
-	</LinearLayout>
     
     <LinearLayout
         android:layout_marginTop="16dp"

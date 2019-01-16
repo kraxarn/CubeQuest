@@ -59,11 +59,6 @@
 
     </LinearLayout>
 
-
-
-
-
-
     <!-- Top row of enemies -->
     <LinearLayout
         android:id="@+id/layout_enemy_top"
@@ -102,8 +97,6 @@
 
     </LinearLayout>
 
-
-
     <!-- Top row of selected markers -->
     <LinearLayout
         app:layout_constraintTop_toBottomOf="@id/progress_battle_health_enemies_top"
@@ -135,8 +128,6 @@
             android:layout_weight="1"/>
 
     </LinearLayout>
-
-
 
     <GridLayout
         android:id="@+id/layout_battle_actions"

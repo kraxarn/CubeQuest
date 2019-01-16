@@ -41,6 +41,14 @@
 			android:layout_height="wrap_content"
 			android:src="@drawable/ic_heart"/>
 
+        <TextView
+            android:id="@+id/text_game_hud"
+            android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:textAlignment="viewEnd"
+            android:textSize="16sp"/>
+
 	</FrameLayout>
 
 	<!-- Debug stuff -->

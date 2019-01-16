@@ -12,20 +12,20 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
-using CubeQuest.Account.Interface;
 using CubeQuest.Battle;
 using CubeQuest.Handler;
 using CubeQuest.ListView.Companions;
-using CubeQuest.ListView.Item;
 using CubeQuest.WorldGen;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
+using Android.Graphics;
 using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest.Layout
 {
-    [Activity(Label = "GameActivity", Theme = "@style/AppTheme.NoActionBar")]
+	[Activity(Label = "GameActivity", Theme = "@style/AppTheme.NoActionBar")]
     public class GameActivity : AppCompatActivity, IOnMapReadyCallback, GoogleMap.IOnMarkerClickListener
     {
         /// <summary>
@@ -86,6 +86,8 @@ namespace CubeQuest.Layout
 
         private Marker selectedMarker;
 
+        private AppPreferences preferences;
+
         /// <summary>
         /// <see cref="FloatingActionButton"/> for opening the inventory
         /// </summary>
@@ -111,11 +113,73 @@ namespace CubeQuest.Layout
         /// </summary>
         private const int RcAchievementUi = 9003;
 
-        private int selectedSlot = 0;
+        private Dictionary<string, TextView> profileStats;
 
-        private ImageButton[] equippedCubes;
+		/// <summary>
+		/// If it's day (8-17)
+		/// </summary>
+		private bool IsDay
+        {
+	        get
+	        {
+		        var now = DateTime.Now;
+		        return now.Hour < 17 && now.Hour > 8;
+			}
+        }
 
-        protected override async void OnCreate(Bundle savedInstanceState)
+		/// <summary>
+		/// Selected map theme from time and preferences
+		/// </summary>
+        private int MapTheme
+        {
+	        get
+	        {
+		        switch (preferences.MapTheme)
+		        {
+					case AppPreferences.EMapTheme.Auto:
+						return IsDay ? Resource.Raw.map_theme_day : Resource.Raw.map_theme_night;
+
+					case AppPreferences.EMapTheme.Night:
+						return Resource.Raw.map_theme_night;
+
+					case AppPreferences.EMapTheme.Day:
+						return Resource.Raw.map_theme_day;
+
+					case AppPreferences.EMapTheme.Midnight:
+						return Resource.Raw.map_theme_midnight;
+
+					default:
+						throw new ArgumentOutOfRangeException();
+		        }
+	        }
+        }
+
+		/// <summary>
+		/// If the map is currently using the day theme
+		/// </summary>
+		private bool IsMapDay
+		{
+			get
+			{
+				switch (preferences.MapTheme)
+				{
+					case AppPreferences.EMapTheme.Auto:
+						return IsDay;
+
+					case AppPreferences.EMapTheme.Day:
+						return true;
+
+					case AppPreferences.EMapTheme.Night:
+					case AppPreferences.EMapTheme.Midnight:
+						return false;
+
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
+			}
+		}
+
+		protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_game);
@@ -127,6 +191,8 @@ namespace CubeQuest.Layout
 
             markers = new Dictionary<LatLng, Marker>();
             chunkHandler = new ChunkHandler();
+
+			preferences = new AppPreferences(this);
             
             // Get main view
             mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
@@ -195,12 +261,8 @@ namespace CubeQuest.Layout
             // Set values on profile
             profileView.FindViewById<TextView>(Resource.Id.textProfileName).Text = AccountManager.Name;
 
-            // Set button actions
-            profileView.FindViewById<ImageButton>(Resource.Id.button_achievements).Click += (sender, args) =>
-                StartActivityForResult(AccountManager.AchievementsIntent, RcAchievementUi);
-
-            profileView.FindViewById<ImageButton>(Resource.Id.button_settings).Click += (sender, args) =>
-                StartActivity(new Intent(this, typeof(SettingsActivity)));
+            profileView.FindViewById<ImageButton>(Resource.Id.button_settings).Click += (sender, args) => 
+	            StartActivity(new Intent(this, typeof(SettingsActivity)));
 
             equippedCubes = new ImageButton[3];
 
@@ -223,6 +285,32 @@ namespace CubeQuest.Layout
             // Avoid clicking through battle view
             battleView.Touch += (sender, args) =>
                 args.Handled = true;
+			
+			// Check if using fullscreen HUD
+			if (preferences.Fullscreen)
+			{
+				void HudUpdate()
+				{
+					var batteryManager = (BatteryManager) GetSystemService(BatteryService);
+					var hud = mainView.FindViewById<TextView>(Resource.Id.text_game_hud);
+					hud.SetTextColor(IsMapDay ? Color.Black : Color.White);
+
+					Task.Run(() =>
+					{
+						while (true)
+						{
+							var time = DateTime.Now.ToString("HH:mm");
+							var battery = batteryManager.GetIntProperty((int) BatteryProperty.Capacity);
+							hud.Text = $"{time} | {battery}%";
+
+							Thread.Sleep(1000);
+						}
+					});
+				}
+
+				// Wrap it in a function to avoid an async warning
+				HudUpdate();
+			}
 
             // Setup debug mode
             FindViewById<Button>(Resource.Id.button_debug_focus_player).Click += (sender, args) => 
@@ -256,7 +344,25 @@ namespace CubeQuest.Layout
             companionRecycler.SetAdapter(companionAdapter);
             companionRecycler.SetLayoutManager(companionLayoutManager);
 
-            companionAdapter.EquippedCompanionChanged += a_companionChanged;
+            //Set up companionInsertView, set up briefcase button 
+            //and link companionInsertView to the briefcase button
+            companionInsertView = LayoutInflater.Inflate(Resource.Layout.view_insert_companion, null);
+
+            var itemSlot1 = companionInsertView.FindViewById<LinearLayout>(Resource.Id.companion_slot_1);
+            var itemSlot2 = companionInsertView.FindViewById<LinearLayout>(Resource.Id.companion_slot_2);
+            var itemSlot3 = companionInsertView.FindViewById<LinearLayout>(Resource.Id.companion_slot_3);
+
+            itemSlot1.Click += (sender, e) => itemSlot1.SetBackgroundColor(Color.Aquamarine);
+            itemSlot2.Click += (sender, e) => itemSlot2.SetBackgroundColor(Color.Aquamarine);
+            itemSlot3.Click += (sender, e) => itemSlot3.SetBackgroundColor(Color.Aquamarine);
+
+            var slot1Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_1_occupant);
+            var slot2Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_2_occupant);
+            var slot3Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_3_occupant);
+
+            slot1Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
+            slot2Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
+            slot3Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
         }
 
         public override void OnEnterAnimationComplete()
@@ -281,7 +387,7 @@ namespace CubeQuest.Layout
             }
 
             // Set custom theme to map
-            googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, Resource.Raw.map_theme_dark));
+            googleMap.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, MapTheme));
 
             // Get last known location or 0,0 if not known
             // TODO: If not known, show loading dialog
@@ -302,7 +408,7 @@ namespace CubeQuest.Layout
 
             googleMap.SetOnMarkerClickListener(this);
         }
-
+		
         private void Map_CameraChange(object sender, GoogleMap.CameraChangeEventArgs e)
         {
             if (e?.Position?.Target != null)
@@ -438,6 +544,31 @@ namespace CubeQuest.Layout
             else
                 animator.AnimationEnd += (o, eventArgs) => profileView.Visibility = ViewStates.Invisible;
 
+			// Update values on opening profile
+			if (enabled)
+			{
+				if (profileStats == null)
+				{
+					TextView FindTextView(int id) => 
+						mainView.FindViewById<TextView>(id);
+
+					profileStats = new Dictionary<string, TextView>
+					{
+						{"hp",     FindTextView(Resource.Id.text_profile_hp)},
+						{"attack", FindTextView(Resource.Id.text_profile_attack)},
+						{"level",  FindTextView(Resource.Id.text_profile_level)},
+						{"armor",  FindTextView(Resource.Id.text_profile_armor)}
+					};
+				}
+
+				var user = AccountManager.CurrentUser;
+
+				profileStats["hp"].Text     = $"{user.HealthPercentage}%";
+				profileStats["attack"].Text = $"{user.Attack}";
+				profileStats["level"].Text  = $"{user.Level}";
+				profileStats["armor"].Text  = $"{user.Armor}";
+			}
+
             animator.Start();
         }
 
@@ -562,7 +693,15 @@ namespace CubeQuest.Layout
 
             // Balanced power accuracy wi-fi and cell information to determine location and very rarely gps
             if (locationManager != null)
-                locationManager.LocationPriority = LocationRequest.PriorityBalancedPowerAccuracy;
+            {
+	            locationManager.LocationPriority = preferences.GpsEnabled
+		            ? LocationRequest.PriorityBalancedPowerAccuracy
+		            : LocationRequest.PriorityHighAccuracy;
+
+				// If background updating is disabled, stop listening for location updates
+				if (!preferences.BackgroundUpdates)
+					locationManager.Stop();
+			}
         }
 
         protected override void OnResume()
@@ -570,7 +709,18 @@ namespace CubeQuest.Layout
             base.OnResume();
 
             if (locationManager != null)
-                locationManager.LocationPriority = LocationRequest.PriorityHighAccuracy;
+            {
+	            locationManager.LocationPriority = LocationRequest.PriorityHighAccuracy;
+
+				// If background updating is disabled, start listening for locations again
+				if (!preferences.BackgroundUpdates)
+					locationManager.Start();
+            }
+
+            googleMap?.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, MapTheme));
+
+			// Enable or disable fullscreen
+            mainView.SystemUiVisibility = (StatusBarVisibility) (preferences.Fullscreen ? SystemUiFlags.HideNavigation | SystemUiFlags.ImmersiveSticky | SystemUiFlags.Fullscreen : 0);
         }
 
         protected void a_companionChanged(object sender, EventArgs e)
