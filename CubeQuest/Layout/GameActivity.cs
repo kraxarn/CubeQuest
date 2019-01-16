@@ -631,31 +631,27 @@ namespace CubeQuest.Layout
                                     var dialogView = LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
 
                                     var companion = CompanionManager.Random;
-                                    dialogView.FindViewById<TextView>(Resource.Id.text_loot_title).Text = $"You have received a {companion.Name}!";
+                                    dialogView.FindViewById<TextView>(Resource.Id.text_loot_title).Text = $"You have found a {companion.Name}!";
                                     dialogView.FindViewById<ImageView>(Resource.Id.image_loot).SetImageBitmap(AssetLoader.GetCompanionBitmap(companion));
                                     AccountManager.CurrentUser.AddCompanion(companion);
 
                                     companionAdapter.NotifyDataSetChanged();
 
-                                    new AlertDialog.Builder(this)
-                                        .SetView(dialogView)
-                                        .Show();
+									Handler.AlertDialog.ShowSimple(this, $"{companion.Name}!", dialogView);
 
                                     AccountManager.CurrentUser.AddExperience(10);
                                     break;
 
                                 case BattleCore.EBattleEndType.Lost:
-                                    new AlertDialog.Builder(this)
-                                        .SetTitle("You died!")
-                                        .SetMessage("You won't be able to attack enemies until you get at least 25% health by walking")
-                                        .Show();
+									Handler.AlertDialog.ShowSimple(this, 
+										"You died!",
+										"You won't be able to attack enemies until you get at least 25% health by walking");
                                     break;
 
                                 case BattleCore.EBattleEndType.Ran:
-                                    new AlertDialog.Builder(this)
-                                        .SetTitle("You ran away!")
-                                        .SetMessage("You successfully ran away from the alien, but took some damage")
-                                        .Show();
+									Handler.AlertDialog.ShowSimple(this, 
+										"You ran away!", 
+										"You successfully ran away from the alien, but took some damage");
                                     break;
                             }
                         }
