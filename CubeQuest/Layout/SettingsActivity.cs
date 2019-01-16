@@ -12,7 +12,6 @@ using CubeQuest.Handler;
 using CubeQuest.ListView.Users;
 using System.Collections.Generic;
 using System.Text;
-using AlertDialog = Android.Support.V7.App.AlertDialog;
 using Uri = Android.Net.Uri;
 
 namespace CubeQuest.Layout
@@ -84,40 +83,27 @@ namespace CubeQuest.Layout
                 var bytes = await AccountManager.GetUserProgress();
                 var str = Encoding.UTF8.GetString(bytes);
 
-                new AlertDialog.Builder(context, Resource.Style.AlertDialogStyle)
-                    .SetTitle("Progress")
-                    .SetMessage(str)
-                    .SetPositiveButton("OK", (IDialogInterfaceOnClickListener) null)
-                    .Show();
+				Alert.ShowSimple(context, "Progress", str);
             };
 
             FindPreference("reset_progress").PreferenceClick += (sender, args) =>
             {
-                new AlertDialog.Builder(context, Resource.Style.AlertDialogStyle)
+                Alert.Build(context)
                     .SetTitle("Are you sure?")
                     .SetMessage("All your progress and companions collected will be lost!")
                     .SetPositiveButton("Yes", (s, a) =>
                     {
                         AccountManager.ResetUserProgress();
-
-                        new AlertDialog.Builder(context, Resource.Style.AlertDialogStyle)
-                            .SetTitle("Progress reset")
-                            .SetMessage("It's recommended to restart the app to avoid issues")
-                            .SetPositiveButton("OK", (IDialogInterfaceOnClickListener) null)
-                            .Show();
+                        Alert.ShowSimple(context, 
+	                        "Progress reset", 
+	                        "It's recommended to restart the app to avoid issues");
                     })
                     .SetNegativeButton("No", (IDialogInterfaceOnClickListener) null)
                     .Show();
             };
 
-            FindPreference("debug_preferences").PreferenceClick += (sender, args) =>
-            {
-	            new AlertDialog.Builder(context, Resource.Style.AlertDialogStyle)
-		            .SetTitle("Preferences")
-		            .SetMessage(Preferences.ToString())
-		            .SetPositiveButton("OK", (IDialogInterfaceOnClickListener) null)
-		            .Show();
-            };
+            FindPreference("debug_preferences").PreferenceClick += (sender, args) => 
+	            Alert.ShowSimple(context, "Preferences", $"{Preferences}");
         }
 
         public override void OnStart()
@@ -171,11 +157,7 @@ namespace CubeQuest.Layout
 				StartActivity(new Intent(Intent.ActionView)
 					.SetData(Uri.Parse($"https://github.com/{itemView.Title.Text}")));
 
-			new AlertDialog.Builder(Context, Resource.Style.AlertDialogStyle)
-				.SetView(view)
-				.SetTitle("Credits")
-				.SetPositiveButton("OK", (IDialogInterfaceOnClickListener) null)
-				.Show();
+			Alert.ShowSimple(Context, "Credits", view);
 		}
 
 		/// <summary>
@@ -197,12 +179,8 @@ namespace CubeQuest.Layout
 			adapter.OnItemClick += itemView =>
 				StartActivity(new Intent(Intent.ActionView)
 					.SetData(Uri.Parse($"https://github.com/{(itemView.Title.Text == "fastJSON" ? "mgholam/fastJSON" : "xamarin/xamarin-android")}")));
-
-			new AlertDialog.Builder(Context, Resource.Style.AlertDialogStyle)
-				.SetView(view)
-				.SetTitle("Open Source Licenses")
-				.SetPositiveButton("OK", (IDialogInterfaceOnClickListener)null)
-				.Show();
+			
+			Alert.ShowSimple(Context, "Open Source Licenses", view);
 		}
     }
 }

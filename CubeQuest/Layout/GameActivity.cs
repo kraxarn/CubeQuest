@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Android.Graphics;
-using AlertDialog = Android.App.AlertDialog;
 
 namespace CubeQuest.Layout
 {
@@ -69,8 +68,6 @@ namespace CubeQuest.Layout
         private Dictionary<LatLng, Marker> markers;
 
         private ChunkHandler chunkHandler;
-
-        private AlertDialog itemPopupDialog;
 
         private View companionInsertView;
 
@@ -503,7 +500,7 @@ namespace CubeQuest.Layout
             if (!locationManager?.IsLocationServicesEnabled ?? true)
             {
                 // TODO: Show fullscreen until user enabled location
-                new AlertDialog.Builder(this)
+                Alert.Build(this)
                     .SetTitle("Location Required")
                     .SetMessage("GPS is required to get your location, but it's disabled")
                     .SetPositiveButton("Enable It", (sender, args) => StartActivity(new Intent(Android.Provider.Settings.ActionLocationSourceSettings)))
