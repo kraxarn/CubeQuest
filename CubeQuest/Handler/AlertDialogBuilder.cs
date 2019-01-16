@@ -1,17 +1,18 @@
 ﻿using Android.Content;
 using Android.Views;
+using Android.Support.V7.App;
 
 namespace CubeQuest.Handler
 {
-	public static class AlertDialog
+	public static class Alert
 	{
-		public static Android.Support.V7.App.AlertDialog.Builder Build(Context context) => 
-			new Android.Support.V7.App.AlertDialog.Builder(context, Resource.Style.AlertDialogStyle);
+		public static AlertDialog.Builder Build(Context context) => 
+			new AlertDialog.Builder(context, Resource.Style.AlertDialogStyle);
 
 		/// <summary>
 		/// Builds a simple alert dialog and sets the title and positive button
 		/// </summary>
-		private static Android.Support.V7.App.AlertDialog.Builder BuildSimple(Context context, string title) =>
+		private static AlertDialog.Builder BuildSimple(Context context, string title) =>
 			Build(context)
 				.SetTitle(title)
 				.SetPositiveButton("OK", (IDialogInterfaceOnClickListener) null);

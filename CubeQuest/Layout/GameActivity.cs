@@ -651,19 +651,19 @@ namespace CubeQuest.Layout
 
                                     companionAdapter.NotifyDataSetChanged();
 
-									Handler.AlertDialog.ShowSimple(this, $"{companion.Name}!", dialogView);
+									Alert.ShowSimple(this, $"{companion.Name}!", dialogView);
 
                                     AccountManager.CurrentUser.AddExperience(10);
                                     break;
 
                                 case BattleCore.EBattleEndType.Lost:
-									Handler.AlertDialog.ShowSimple(this, 
+									Alert.ShowSimple(this, 
 										"You died!",
 										"You won't be able to attack enemies until you get at least 25% health by walking");
                                     break;
 
                                 case BattleCore.EBattleEndType.Ran:
-									Handler.AlertDialog.ShowSimple(this, 
+									Alert.ShowSimple(this, 
 										"You ran away!", 
 										"You successfully ran away from the alien, but took some damage");
                                     break;
