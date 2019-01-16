@@ -693,7 +693,15 @@ namespace CubeQuest.Layout
 
             // Balanced power accuracy wi-fi and cell information to determine location and very rarely gps
             if (locationManager != null)
-                locationManager.LocationPriority = LocationRequest.PriorityBalancedPowerAccuracy;
+            {
+	            locationManager.LocationPriority = preferences.GpsEnabled
+		            ? LocationRequest.PriorityBalancedPowerAccuracy
+		            : LocationRequest.PriorityHighAccuracy;
+
+				// If background updating is disabled, stop listening for location updates
+				if (!preferences.BackgroundUpdates)
+					locationManager.Stop();
+			}
         }
 
         protected override void OnResume()
@@ -701,8 +709,14 @@ namespace CubeQuest.Layout
             base.OnResume();
 
             if (locationManager != null)
-                locationManager.LocationPriority = LocationRequest.PriorityHighAccuracy;
-			
+            {
+	            locationManager.LocationPriority = LocationRequest.PriorityHighAccuracy;
+
+				// If background updating is disabled, start listening for locations again
+				if (!preferences.BackgroundUpdates)
+					locationManager.Start();
+            }
+
             googleMap?.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, MapTheme));
 
 			// Enable or disable fullscreen

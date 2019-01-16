@@ -6,7 +6,6 @@ using Android.Gms.Drive;
 using Android.Gms.Games;
 using Android.Gms.Games.Achievement;
 using Android.Support.V7.App;
-using Android.Util;
 using Android.Views;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace CubeQuest.Account
 {
-    public static class AccountManager
+	public static class AccountManager
     {
         public delegate void SuccessEvent(Statuses status);
 
