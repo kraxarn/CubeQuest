@@ -171,13 +171,12 @@ namespace CubeQuest.Layout
 
 			var adapter = BuildUserEntriesAdapter(view, new List<UserEntry>
 			{
-				new UserEntry(null,  "fastJSON", "By mgholam (CPOL license)"),
 				new UserEntry(null,  "Xamarin",  "By Xamarin Inc. (MIT license)")
 			});
 
 			adapter.OnItemClick += itemView =>
 				StartActivity(new Intent(Intent.ActionView)
-					.SetData(Uri.Parse($"https://github.com/{(itemView.Title.Text == "fastJSON" ? "mgholam/fastJSON" : "xamarin/xamarin-android")}")));
+					.SetData(Uri.Parse("https://github.com/xamarin/xamarin-android")));
 			
 			Alert.ShowSimple(Context, "Open Source Licenses", view);
 		}
