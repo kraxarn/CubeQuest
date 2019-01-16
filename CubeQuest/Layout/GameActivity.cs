@@ -589,7 +589,7 @@ namespace CubeQuest.Layout
 
             var radius = (float)Math.Sqrt(centerX * centerX + centerY * centerY);
 
-            // TODO: If app is put in background, this crashes it
+            // TODO: If app is put in background, this crashes it (IllegalStateException)
             var animator = ViewAnimationUtils.CreateCircularReveal(mainView, centerX, centerY, 0f, radius);
 
             mainView.Visibility = ViewStates.Visible;
