@@ -263,8 +263,8 @@ namespace CubeQuest.Layout
             profileView.FindViewById<ImageButton>(Resource.Id.button_achievements).Click += (sender, args) =>
                 StartActivityForResult(AccountManager.AchievementsIntent, RcAchievementUi);
 
-            profileView.FindViewById<ImageButton>(Resource.Id.button_settings).Click += (sender, args) =>
-                StartActivity(new Intent(this, typeof(SettingsActivity)));
+            profileView.FindViewById<ImageButton>(Resource.Id.button_settings).Click += (sender, args) => 
+	            StartActivity(new Intent(this, typeof(SettingsActivity)));
 
             var cube1Button = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_1);
             var cube2Button = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_2);
@@ -303,7 +303,7 @@ namespace CubeQuest.Layout
 							var battery = batteryManager.GetIntProperty((int) BatteryProperty.Capacity);
 							hud.Text = $"{time} | {battery}%";
 
-							Thread.Sleep(500);
+							Thread.Sleep(1000);
 						}
 					});
 				}
