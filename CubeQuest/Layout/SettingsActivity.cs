@@ -118,6 +118,12 @@ namespace CubeQuest.Layout
 		            .SetPositiveButton("OK", (IDialogInterfaceOnClickListener) null)
 		            .Show();
             };
+        }
+
+        public override void OnStart()
+        {
+	        base.OnStart();
+	        Fullscreen = Preferences.Fullscreen;
 		}
 
         public override bool OnPreferenceTreeClick(Preference preference)
