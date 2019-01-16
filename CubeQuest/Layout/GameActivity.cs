@@ -67,22 +67,44 @@ namespace CubeQuest.Layout
         /// </summary>
         private Dictionary<LatLng, Marker> markers;
 
+		/// <summary>
+		/// Handles loading chunks for the map
+		/// </summary>
         private ChunkHandler chunkHandler;
 
+		/// <summary>
+		/// TODO
+		/// </summary>
         private View companionInsertView;
 
-        private RecyclerView popupRecycler;
-
+		/// <summary>
+		/// TODO
+		/// </summary>
         private RecyclerView companionRecycler;
 
+		/// <summary>
+		/// TODO
+		/// </summary>
         private CompanionViewAdapter companionAdapter;
 
+		/// <summary>
+		/// Battle info after pressing on en enemy
+		/// </summary>
         private BottomSheetBehavior battleInfo;
 
+		/// <summary>
+		/// Main view in <see cref="battleInfo"/>
+		/// </summary>
         private LinearLayout battleInfoView;
 
+		/// <summary>
+		/// Last clicked marker
+		/// </summary>
         private Marker selectedMarker;
 
+		/// <summary>
+		/// Custom <see cref="ISharedPreferences"/>
+		/// </summary>
         private AppPreferences preferences;
 
         /// <summary>
@@ -110,6 +132,9 @@ namespace CubeQuest.Layout
         /// </summary>
         private const int RcAchievementUi = 9003;
 
+		/// <summary>
+		/// Dictionary with text views for our profile stats
+		/// </summary>
         private Dictionary<string, TextView> profileStats;
 
 		/// <summary>
