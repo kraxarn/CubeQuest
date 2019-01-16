@@ -59,15 +59,13 @@ namespace CubeQuest.Layout
 			set
 			{
 				context = value;
-				preferences = new AppPreferences(value);
+				Preferences = new AppPreferences(value);
 			}
 		}
 
-		private AppPreferences preferences;
+		public AppPreferences Preferences { get; private set; }
 
-		public AppPreferences Preferences => preferences;
-
-        public bool Fullscreen
+		public bool Fullscreen
         {
 	        get => View.SystemUiVisibility != 0;
 	        set => View.SystemUiVisibility = (StatusBarVisibility) (value ? SystemUiFlags.HideNavigation | SystemUiFlags.ImmersiveSticky | SystemUiFlags.Fullscreen : 0);
@@ -79,7 +77,7 @@ namespace CubeQuest.Layout
 			
 			// Add all to preference manager
 			foreach (var key in AppPreferences.PreferenceKeys)
-				FindPreference(key).PreferenceDataStore = preferences;
+				FindPreference(key).PreferenceDataStore = Preferences;
 
 			// TODO: Set correct preference summaries here!
 
@@ -130,7 +128,7 @@ namespace CubeQuest.Layout
             {
 	            new AlertDialog.Builder(context, Resource.Style.AlertDialogStyle)
 		            .SetTitle("Preferences")
-		            .SetMessage(preferences.ToString())
+		            .SetMessage(Preferences.ToString())
 		            .SetPositiveButton("OK", (IDialogInterfaceOnClickListener) null)
 		            .Show();
             };
@@ -145,7 +143,7 @@ namespace CubeQuest.Layout
 					break;
 	        }
 
-			preferences.Save();
+			Preferences.Save();
 	        return base.OnPreferenceTreeClick(preference);
         }
 
