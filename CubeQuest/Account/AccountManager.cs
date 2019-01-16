@@ -143,10 +143,10 @@ namespace CubeQuest.Account
             GamesClass.SetViewForPopups(googleClient, view);
 
         public static void SaveUserProgress() => 
-            snapshotManager.SaveSnapshotAsync(Encoding.UTF8.GetBytes(CurrentUser.ToString()));
+            snapshotManager.SaveSnapshotAsync(CurrentUser.ToBytes());
 
-        public static async Task<byte[]> GetUserProgress() => 
-            (await snapshotManager.LoadSnapshotAsync()).SnapshotContents.ReadFully();
+        public static async Task<User> GetUserProgress() => 
+	        User.FromBytes((await snapshotManager.LoadSnapshotAsync()).SnapshotContents.ReadFully());
 
         public static void ResetUserProgress() => 
             CurrentUser = new User();
