@@ -40,7 +40,7 @@ namespace CubeQuest.Layout
         /// <summary>
         /// Manages and updates our location
         /// </summary>
-        private Handler.LocationManager locationManager;
+        private LocationHandler locationHandler;
 
         /// <summary>
         /// Marker used to represent the player
@@ -208,8 +208,8 @@ namespace CubeQuest.Layout
             AccountManager.CurrentUser.OnDeadChange += isAlive => healthBar.Alpha = healthBarHeart.Alpha = isAlive ? 1f : 0.5f;
 			
             // Get last known location
-            locationManager = new Handler.LocationManager(this);
-            userLocation = await locationManager.GetLastKnownLocationAsync();
+            locationHandler = new LocationHandler(this);
+            userLocation = await locationHandler.GetLastKnownLocationAsync();
 
             // Get map and listen when it's ready
             var mapFragment = (SupportMapFragment)SupportFragmentManager.FindFragmentById(Resource.Id.map);
@@ -217,7 +217,7 @@ namespace CubeQuest.Layout
 
             var textDebugLocation = FindViewById<TextView>(Resource.Id.text_debug_location);
 
-            locationManager.OnLocationUpdate += location =>
+            locationHandler.OnLocationUpdate += location =>
                 {
                     // TODO: Check speed etc. here
                     // TODO: Show a loading dialog until we get the first position
@@ -448,7 +448,7 @@ namespace CubeQuest.Layout
             battleInfo.State = BottomSheetBehavior.StateCollapsed;
 
             int range = 200; //in meters
-            bool isWithinRange = Handler.LocationManager.GetDistance(userLocation.ToLatLng(), marker.Position) < range;
+            bool isWithinRange = LocationHandler.GetDistance(userLocation.ToLatLng(), marker.Position) < range;
 			
             battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Enabled = isWithinRange && AccountManager.CurrentUser.IsAlive;
             battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Alpha = isWithinRange && AccountManager.CurrentUser.IsAlive ? 1 : 0.5f;
@@ -497,7 +497,7 @@ namespace CubeQuest.Layout
             AccountManager.SetViewForPopups(FindViewById(Android.Resource.Id.Content));
 
             // Check if GPS is enabled
-            if (!locationManager?.IsLocationServicesEnabled ?? true)
+            if (!locationHandler?.IsLocationServicesEnabled ?? true)
             {
                 // TODO: Show fullscreen until user enabled location
                 Alert.Build(this)
@@ -697,15 +697,15 @@ namespace CubeQuest.Layout
             base.OnPause();
 
             // Balanced power accuracy wi-fi and cell information to determine location and very rarely gps
-            if (locationManager != null)
+            if (locationHandler != null)
             {
-	            locationManager.LocationPriority = preferences.GpsEnabled
+	            locationHandler.LocationPriority = preferences.GpsEnabled
 		            ? LocationRequest.PriorityBalancedPowerAccuracy
 		            : LocationRequest.PriorityHighAccuracy;
 
 				// If background updating is disabled, stop listening for location updates
 				if (!preferences.BackgroundUpdates)
-					locationManager.Stop();
+					locationHandler.Stop();
 			}
         }
 
@@ -713,13 +713,13 @@ namespace CubeQuest.Layout
         {
             base.OnResume();
 
-            if (locationManager != null)
+            if (locationHandler != null)
             {
-	            locationManager.LocationPriority = LocationRequest.PriorityHighAccuracy;
+	            locationHandler.LocationPriority = LocationRequest.PriorityHighAccuracy;
 
 				// If background updating is disabled, start listening for locations again
 				if (!preferences.BackgroundUpdates)
-					locationManager.Start();
+					locationHandler.Start();
             }
 
             googleMap?.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, MapTheme));

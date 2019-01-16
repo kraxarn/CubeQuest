@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CubeQuest.Handler
 {
-    public class LocationManager
+	public class LocationHandler
     {
         public delegate void LocationUpdateEvent(Location location);
 
@@ -21,19 +21,19 @@ namespace CubeQuest.Handler
         /// </summary>
         private readonly FusedLocationProviderClient client;
 
-        private readonly Android.Locations.LocationManager locationManager;
+        private readonly LocationManager locationManager;
 
         private readonly LocationRequest locationRequest;
 
         private readonly LocationCallback locationCallback;
 
-        public LocationManager(Context context)
+        public LocationHandler(Context context)
         {
             // Create client from context
             client = LocationServices.GetFusedLocationProviderClient(context);
 
             // Create Android location manager
-            locationManager = context.GetSystemService(Context.LocationService) as Android.Locations.LocationManager;
+            locationManager = context.GetSystemService(Context.LocationService) as LocationManager;
 
             // Create location request and set some options
             locationRequest = new LocationRequest();
@@ -109,7 +109,7 @@ namespace CubeQuest.Handler
         }
     }
 
-    public static class LocationManagerExtensions
+    public static class LocationHandlerExtensions
     {
         /// <summary>
         /// Converts a <see cref="Location"/> to a <see cref="LatLng"/>
