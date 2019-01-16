@@ -1,19 +1,20 @@
 ﻿using Android.App;
 using Android.Content;
-using Android.Net;
 using Android.OS;
 using Android.Support.V7.App;
 using Android.Support.V7.Preferences;
 using Android.Support.V7.Widget;
 using Android.Util;
-using CubeQuest.ListView.Users;
-using System.Collections.Generic;
-using System.Text;
 using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
 using CubeQuest.Handler;
+using CubeQuest.ListView.Users;
+using System.Collections.Generic;
+using System.Text;
+using Android.Support.Design.Widget;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
+using Uri = Android.Net.Uri;
 
 namespace CubeQuest.Layout
 {
@@ -23,11 +24,16 @@ namespace CubeQuest.Layout
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
+			SetContentView(Resource.Layout.activity_settings);
+			
+			var settings = (SettingsFragment) SupportFragmentManager.FindFragmentById(Resource.Id.fragment_settings);
+			settings.AppContext = this;
 
-			SupportFragmentManager
-				.BeginTransaction()
-				.Replace(Android.Resource.Id.Content, new SettingsFragment(this))
-				.Commit();
+			FindViewById<FloatingActionButton>(Resource.Id.fab_settings_save).Click += (sender, args) =>
+			{
+				settings.Preferences.Save();
+				Finish();
+			};
 
 			PreferenceManager.GetDefaultSharedPreferences(this)
 				.RegisterOnSharedPreferenceChangeListener(this);
@@ -45,16 +51,21 @@ namespace CubeQuest.Layout
 	}
 
 	public class SettingsFragment : PreferenceFragmentCompat
-    {
-        private readonly Context context;
+	{
+		private Context context;
 
-        private readonly AppPreferences prefs;
+		public Context AppContext
+		{
+			set
+			{
+				context = value;
+				preferences = new AppPreferences(value);
+			}
+		}
 
-        public SettingsFragment(Context context)
-        {
-	        this.context = context;
-			prefs = new AppPreferences(context);
-        }
+		private AppPreferences preferences;
+
+		public AppPreferences Preferences => preferences;
 
         public bool Fullscreen
         {
@@ -63,12 +74,12 @@ namespace CubeQuest.Layout
         }
 
         public override void OnCreatePreferences(Bundle savedInstanceState, string rootKey)
-		{
+        {
 			AddPreferencesFromResource(Resource.Xml.preferences);
 			
 			// Add all to preference manager
 			foreach (var key in AppPreferences.PreferenceKeys)
-				FindPreference(key).PreferenceDataStore = prefs;
+				FindPreference(key).PreferenceDataStore = preferences;
 
 			// TODO: Set correct preference summaries here!
 
@@ -119,7 +130,7 @@ namespace CubeQuest.Layout
             {
 	            new AlertDialog.Builder(context, Resource.Style.AlertDialogStyle)
 		            .SetTitle("Preferences")
-		            .SetMessage(prefs.ToString())
+		            .SetMessage(preferences.ToString())
 		            .SetPositiveButton("OK", (IDialogInterfaceOnClickListener) null)
 		            .Show();
             };
@@ -134,6 +145,7 @@ namespace CubeQuest.Layout
 					break;
 	        }
 
+			preferences.Save();
 	        return base.OnPreferenceTreeClick(preference);
         }
 
@@ -201,12 +213,6 @@ namespace CubeQuest.Layout
 				.SetTitle("Open Source Licenses")
 				.SetPositiveButton("OK", (IDialogInterfaceOnClickListener)null)
 				.Show();
-		}
-
-		public override void OnStop()
-		{
-			base.OnStop();
-			prefs.Save();
 		}
     }
 }
