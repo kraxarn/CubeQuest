@@ -11,7 +11,6 @@ using CubeQuest.Account;
 using CubeQuest.Handler;
 using CubeQuest.ListView.Users;
 using System.Collections.Generic;
-using System.Text;
 using Uri = Android.Net.Uri;
 
 namespace CubeQuest.Layout
@@ -80,9 +79,15 @@ namespace CubeQuest.Layout
 
             FindPreference("load_progress").PreferenceClick += async (sender, args) =>
             {
-                var user = await AccountManager.GetUserProgress();
+	            var user = await AccountManager.GetUserProgressOrDefaultAsync();
 
-				Alert.ShowSimple(context, "Progress", user.ToString());
+	            if (user == null)
+	            {
+		            Alert.ShowSimple(context, "No progress", "No user progress found to show");
+		            return;
+	            }
+
+	            Alert.ShowSimple(context, "Progress", user.ToString());
             };
 
             FindPreference("reset_progress").PreferenceClick += (sender, args) =>
