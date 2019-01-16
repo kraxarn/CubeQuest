@@ -113,10 +113,12 @@ namespace CubeQuest.Layout
         /// </summary>
         private const int RcAchievementUi = 9003;
 
+        private Dictionary<string, TextView> profileStats;
+
 		/// <summary>
 		/// If it's day (8-17)
 		/// </summary>
-        private bool IsDay
+		private bool IsDay
         {
 	        get
 	        {
@@ -543,18 +545,26 @@ namespace CubeQuest.Layout
 			// Update values on opening profile
 			if (enabled)
 			{
+				if (profileStats == null)
+				{
+					TextView FindTextView(int id) => 
+						mainView.FindViewById<TextView>(id);
+
+					profileStats = new Dictionary<string, TextView>
+					{
+						{"hp",     FindTextView(Resource.Id.text_profile_hp)},
+						{"attack", FindTextView(Resource.Id.text_profile_attack)},
+						{"level",  FindTextView(Resource.Id.text_profile_level)},
+						{"armor",  FindTextView(Resource.Id.text_profile_armor)}
+					};
+				}
+
 				var user = AccountManager.CurrentUser;
 
-				var stats = new[]
-				{
-					new KeyValuePair<int, string>(Resource.Id.text_profile_hp,     $"{user.HealthPercentage}%"),
-					new KeyValuePair<int, string>(Resource.Id.text_profile_attack, $"{user.Attack}"),
-					new KeyValuePair<int, string>(Resource.Id.text_profile_level,  $"{user.Level}"),
-					new KeyValuePair<int, string>(Resource.Id.text_profile_armor,  $"{user.Armor}")
-				};
-
-				foreach (var (key, value) in stats)
-					mainView.FindViewById<TextView>(key).Text = value;
+				profileStats["hp"].Text     = $"{user.HealthPercentage}%";
+				profileStats["attack"].Text = $"{user.Attack}";
+				profileStats["level"].Text  = $"{user.Level}";
+				profileStats["armor"].Text  = $"{user.Armor}";
 			}
 
             animator.Start();
