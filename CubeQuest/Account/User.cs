@@ -142,7 +142,7 @@ namespace CubeQuest.Account
             get
             {
                 var h = 100 + (int) Level * 5;
-                EquippedCompanions.ForEach(c => h += c.Health);
+                //EquippedCompanions.ForEach(c => h += c.Health);
                 return h;
             }
         }
