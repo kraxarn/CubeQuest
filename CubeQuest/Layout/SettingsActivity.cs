@@ -1,10 +1,10 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Support.V7.Preferences;
 using Android.Support.V7.Widget;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
 using CubeQuest.Account;
@@ -12,14 +12,13 @@ using CubeQuest.Handler;
 using CubeQuest.ListView.Users;
 using System.Collections.Generic;
 using System.Text;
-using Android.Support.Design.Widget;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
 using Uri = Android.Net.Uri;
 
 namespace CubeQuest.Layout
 {
 	[Activity(Label = "SettingsActivity", Theme = "@style/AppTheme.NoActionBar")]
-	public class SettingsActivity : AppCompatActivity, ISharedPreferencesOnSharedPreferenceChangeListener
+	public class SettingsActivity : AppCompatActivity
 	{
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -34,19 +33,6 @@ namespace CubeQuest.Layout
 				settings.Preferences.Save();
 				Finish();
 			};
-
-			PreferenceManager.GetDefaultSharedPreferences(this)
-				.RegisterOnSharedPreferenceChangeListener(this);
-		}
-
-		public void OnSharedPreferenceChanged(ISharedPreferences sharedPreferences, string key)
-		{
-			switch (key)
-			{
-				default:
-					Log.Info("PREFERENCES", $"Ignoring {key} as key wasn't found");
-					break;
-			}
 		}
 	}
 
