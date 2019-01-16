@@ -115,10 +115,12 @@ namespace CubeQuest.Layout
 
         private Dictionary<string, TextView> profileStats;
 
-		/// <summary>
-		/// If it's day (8-17)
-		/// </summary>
-		private bool IsDay
+        private ImageButton[] equippedCubes;
+
+        /// <summary>
+        /// If it's day (8-17)
+        /// </summary>
+        private bool IsDay
         {
 	        get
 	        {
@@ -344,25 +346,8 @@ namespace CubeQuest.Layout
             companionRecycler.SetAdapter(companionAdapter);
             companionRecycler.SetLayoutManager(companionLayoutManager);
 
-            //Set up companionInsertView, set up briefcase button 
-            //and link companionInsertView to the briefcase button
-            companionInsertView = LayoutInflater.Inflate(Resource.Layout.view_insert_companion, null);
+            companionAdapter.EquippedCompanionChanged += a_companionChanged;
 
-            var itemSlot1 = companionInsertView.FindViewById<LinearLayout>(Resource.Id.companion_slot_1);
-            var itemSlot2 = companionInsertView.FindViewById<LinearLayout>(Resource.Id.companion_slot_2);
-            var itemSlot3 = companionInsertView.FindViewById<LinearLayout>(Resource.Id.companion_slot_3);
-
-            itemSlot1.Click += (sender, e) => itemSlot1.SetBackgroundColor(Color.Aquamarine);
-            itemSlot2.Click += (sender, e) => itemSlot2.SetBackgroundColor(Color.Aquamarine);
-            itemSlot3.Click += (sender, e) => itemSlot3.SetBackgroundColor(Color.Aquamarine);
-
-            var slot1Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_1_occupant);
-            var slot2Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_2_occupant);
-            var slot3Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_3_occupant);
-
-            slot1Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
-            slot2Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
-            slot3Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
         }
 
         public override void OnEnterAnimationComplete()
