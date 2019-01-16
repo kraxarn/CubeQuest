@@ -259,10 +259,6 @@ namespace CubeQuest.Layout
             // Set values on profile
             profileView.FindViewById<TextView>(Resource.Id.textProfileName).Text = AccountManager.Name;
 
-            // Set button actions
-            profileView.FindViewById<ImageButton>(Resource.Id.button_achievements).Click += (sender, args) =>
-                StartActivityForResult(AccountManager.AchievementsIntent, RcAchievementUi);
-
             profileView.FindViewById<ImageButton>(Resource.Id.button_settings).Click += (sender, args) => 
 	            StartActivity(new Intent(this, typeof(SettingsActivity)));
 
@@ -352,9 +348,9 @@ namespace CubeQuest.Layout
             var itemSlot2 = companionInsertView.FindViewById<LinearLayout>(Resource.Id.companion_slot_2);
             var itemSlot3 = companionInsertView.FindViewById<LinearLayout>(Resource.Id.companion_slot_3);
 
-            itemSlot1.Click += (object sender, EventArgs e) => { itemSlot1.SetBackgroundColor(Android.Graphics.Color.Aquamarine);};
-            itemSlot2.Click += (object sender, EventArgs e) => { itemSlot2.SetBackgroundColor(Android.Graphics.Color.Aquamarine); };
-            itemSlot3.Click += (object sender, EventArgs e) => { itemSlot3.SetBackgroundColor(Android.Graphics.Color.Aquamarine); };
+            itemSlot1.Click += (sender, e) => itemSlot1.SetBackgroundColor(Color.Aquamarine);
+            itemSlot2.Click += (sender, e) => itemSlot2.SetBackgroundColor(Color.Aquamarine);
+            itemSlot3.Click += (sender, e) => itemSlot3.SetBackgroundColor(Color.Aquamarine);
 
             var slot1Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_1_occupant);
             var slot2Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_2_occupant);
@@ -363,31 +359,6 @@ namespace CubeQuest.Layout
             slot1Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
             slot2Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
             slot3Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
-
-            var briefcaseButton = FindViewById<ImageButton>(Resource.Id.button_briefcase);
-
-            briefcaseButton.Click += (sender, e) =>
-            {
-                if (itemPopupDialog == null)
-                {
-                    itemPopupDialog = new AlertDialog.Builder(this)
-                        .SetView(companionInsertView)
-                        .SetPositiveButton("Apply", (o, ee) =>
-                        {
-                            /*
-							 Insert code that makes the users choice of item from the
-							 list become their selected equipment
-							*/
-                        })
-                        .SetNegativeButton("Cancel", (o, ee) =>
-                        {
-                            //Insert code for closing dialog without any updates to chosen equipment
-                        })
-                        .Create();
-                }
-
-                itemPopupDialog.Show();
-            };
         }
 
         public override void OnEnterAnimationComplete()
