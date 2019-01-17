@@ -12,10 +12,10 @@ namespace CubeQuest.Account.Enemies
 
 		public string Info => "An alien that's green";
 
-		public int Health => 1;
+		public int Health => 15 * Level;
 
 		public int Armor => 1;
 
-		public int Attack => 1 + (Level / 4);
+		public int Attack => 3 + (Level / 4);
 	}
 }
