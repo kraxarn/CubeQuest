@@ -2,7 +2,7 @@
 
 namespace CubeQuest.Account.Companions
 {
-    public class Narwhale : ICompanion
+    public class Narwhal : ICompanion
     {
         public int Health => 0;
         public int Armor => 0;
@@ -10,9 +10,9 @@ namespace CubeQuest.Account.Companions
 
         public float Evasion => 0f;
 
-        public string Icon => "penguin";
+        public string Icon => "narwhal";
 
-        public string Name => "Narwhale";
+        public string Name => "Narwhal";
         public string Info => "Provides attack";
 
         public void BeforeBattle()
