@@ -67,7 +67,7 @@
     <Compile Include="Account\Companions\Bear.cs" />
     <Compile Include="Account\Companions\Buffalo.cs" />
     <Compile Include="Account\Companions\Chick.cs" />
-    <Compile Include="Account\Companions\Narwhale.cs" />
+    <Compile Include="Account\Companions\Narwhal.cs" />
     <Compile Include="Account\Companions\Wolf.cs" />
     <Compile Include="Account\Companions\Walrus.cs" />
     <Compile Include="Account\Companions\Snake.cs" />
@@ -156,6 +156,7 @@
     <AndroidAsset Include="Assets\enemy\alien_green.webp" />
     <AndroidAsset Include="Assets\enemy\alien_pink.webp" />
     <AndroidAsset Include="Assets\enemy\alien_yellow.webp" />
+    <AndroidAsset Include="Assets\companion\narwhal.webp" />
     <None Include="Keystore\CubeQuest.jks" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">
@@ -387,6 +388,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_save.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_missed.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

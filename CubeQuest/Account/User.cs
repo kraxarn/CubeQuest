@@ -50,6 +50,9 @@ namespace CubeQuest.Account
         /// </summary>
         private float experience;
 
+		public int ExperienceToNextLevel => 
+			100 - (int) (experience % 100);
+
         /// <summary>
         /// Level of the user, decides base stats
         /// </summary>
@@ -163,7 +166,7 @@ namespace CubeQuest.Account
         /// <summary>
         /// Percentage evasion from companions
         /// </summary>
-        private float Evasion
+        public float Evasion
         {
             get
             {

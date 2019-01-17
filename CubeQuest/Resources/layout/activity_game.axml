@@ -70,6 +70,14 @@
             android:text="Auto camera"/>
 
         <Button
+            android:id="@+id/button_debug_respawn"
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:fontFamily="monospace"
+			style="@android:style/Widget.Material.Button.Borderless"
+			android:text="Respawn"/>
+
+        <Button
             android:id="@+id/button_debug_focus_player"
             android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -99,14 +107,16 @@
 		android:inflatedId="@+id/stub_profile_tree"
 		android:layout="@layout/view_profile"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"/>
+		android:layout_height="match_parent"
+        android:visibility="invisible"/>
 
 	<ViewStub
 		android:id="@+id/stub_battle"
 		android:inflatedId="@+id/stub_battle_tree"
 		android:layout="@layout/view_battle"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"/>
+		android:layout_height="match_parent"
+        android:visibility="invisible"/>
 
 	<!-- Map FAB -->
 	<android.support.design.widget.FloatingActionButton
