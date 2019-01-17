@@ -10,6 +10,7 @@ using CubeQuest.Handler;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 
 namespace CubeQuest.Battle
 {
@@ -24,7 +25,8 @@ namespace CubeQuest.Battle
         {
             Won,
             Lost,
-            Ran
+            Ran,
+            Spare
         };
 
         /// <summary>
@@ -106,6 +108,12 @@ namespace CubeQuest.Battle
             SelectedEnemyIndex = 0;
 
             ResetEnemies();
+
+            // Spare timer
+            Timer timer = new Timer(1200);
+
+            timer.AutoReset = false;
+            
 
             // Load 'selected enemy' frames
 			var selectedAnimations = new Drawable[enemyOverlays.Length];
@@ -201,6 +209,16 @@ namespace CubeQuest.Battle
                 else
                 {
                     ButtonsController(mainView, false);
+                    timer.Start();
+                    view.FindViewById<TextView>(Resource.Id.progress_battle_spare_message_text_view).Visibility =
+                        ViewStates.Visible;
+
+                    timer.Elapsed += (o, args) =>
+                    {
+                        view.FindViewById<TextView>(Resource.Id.progress_battle_spare_message_text_view).Visibility =
+                            ViewStates.Invisible;
+                    };
+
                     battleHandler.StartAction(selectedEnemyIndex, BattleHandler.EActionType.Spare);
                 }
                 
@@ -343,4 +361,5 @@ namespace CubeQuest.Battle
                 button.SetImageBitmap(bitmap);
         }
 	}
+    
 }
