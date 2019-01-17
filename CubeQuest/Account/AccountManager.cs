@@ -38,28 +38,10 @@ namespace CubeQuest.Account
 
 	    public static bool IsConnected => googleClient.IsConnected;
 
-	    private static User user;
-
 	    /// <summary>
 	    /// Current user signed in
 	    /// </summary>
-	    public static User CurrentUser
-	    {
-		    private set => user = value;
-		    get
-		    {
-			    if (user == null)
-			    {
-					var handler = new Android.OS.Handler(Looper.MainLooper);
-					handler.Post(async () => user = await CreateUser());
-			    }
-
-			    if (user == null)
-					throw new InvalidOperationException("User is null");
-
-			    return user;
-		    }
-	    }
+	    public static User CurrentUser { private set; get; }
 
 	    /// <summary>
         /// Google Play display name
@@ -115,17 +97,13 @@ namespace CubeQuest.Account
 				snapshotManager = new SnapshotManager(googleClient);
 
 				// Try to load from save file, otherwise, create new user
-				//var user = await AccountManager.GetUserProgressOrDefaultAsync();
-				//CurrentUser = new User();
-				//CurrentUser = await GetUserProgressOrDefaultAsync() ?? new User();
+				// TODO
+				CurrentUser = new User();
 	        };
 
             // Register callback to our connection listener
             googleClient.RegisterConnectionCallbacks(connectionListener);
         }
-
-        private static async Task<User> CreateUser() => 
-	        await GetUserProgressOrDefaultAsync() ?? new User();
 
         /// <summary>
 		/// Get intent used to sign in with Google
