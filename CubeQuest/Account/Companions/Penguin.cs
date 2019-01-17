@@ -15,6 +15,8 @@ namespace CubeQuest.Account.Companions
         public string Name => "Penguin";
         public string Info => "Provides attack";
 
+        public ECompanionType Type => ECompanionType.Offensive;
+
         public void BeforeBattle()
         {
         }

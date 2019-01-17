@@ -10,6 +10,7 @@ using CubeQuest.Handler;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 
 namespace CubeQuest.Battle
 {
@@ -117,6 +118,9 @@ namespace CubeQuest.Battle
 
             ResetEnemies();
 
+            // Spare timer
+            Timer timer = new Timer(1200);
+
             // Load 'selected enemy' frames
 			var selectedAnimations = new Drawable[enemyOverlays.Length];
 
@@ -211,6 +215,16 @@ namespace CubeQuest.Battle
                 else
                 {
                     ButtonsController(mainView, false);
+                    timer.Start();
+                    view.FindViewById<TextView>(Resource.Id.progress_battle_spare_message_text_view).Visibility =
+                        ViewStates.Visible;
+
+                    timer.Elapsed += (o, args) =>
+                    {
+                        view.FindViewById<TextView>(Resource.Id.progress_battle_spare_message_text_view).Visibility =
+                            ViewStates.Invisible;
+                    };
+
                     battleHandler.StartAction(selectedEnemyIndex, BattleHandler.EActionType.Spare);
                 }
                 

@@ -15,6 +15,8 @@ namespace CubeQuest.Account.Companions
         public string Name => "Owl";
         public string Info => "Provides attack and evasion";
 
+        public ECompanionType Type => ECompanionType.Offensive;
+
         public void BeforeBattle()
         {
         }

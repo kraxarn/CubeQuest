@@ -17,6 +17,11 @@ namespace CubeQuest.Account
 
         public event OnDeadChangeEvent OnDeadChange;
 
+        private Random random;
+
+        private Random Rng => 
+	        random ?? (random = new Random());
+
         /// <summary>
         /// All companions the player has
         /// </summary>
@@ -157,8 +162,14 @@ namespace CubeQuest.Account
         {
             get
             {
-                var a = (int) Level * 10;
+	            var level = (int) Level;
+
+                var a = level * 10;
                 EquippedCompanions.ForEach(c => a += c.Attack);
+
+				// Get up to 2% stronger attack
+				a += Rng.Next(-5 * level, 5 * level);
+
                 return a;
             }
         }

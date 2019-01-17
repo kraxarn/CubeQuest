@@ -488,7 +488,7 @@ namespace CubeQuest.Layout
 
             battleInfo.State = BottomSheetBehavior.StateCollapsed;
 
-            int range = 200; //in meters
+            int range = 50; //in meters
             bool isWithinRange = LocationHandler.GetDistance(userLocation.ToLatLng(), marker.Position) < range;
 			
             battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Enabled = isWithinRange && AccountManager.CurrentUser.IsAlive;
