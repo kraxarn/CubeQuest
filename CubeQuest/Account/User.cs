@@ -72,7 +72,7 @@ namespace CubeQuest.Account
             get
             {
                 var a = 0;
-                EquippedCompanions.ForEach(c => a += c.Armor);
+                EquippedCompanions.ForEach(c => a += c.Armor.Scale(Level));
                 return a;
             }
         }
@@ -150,7 +150,7 @@ namespace CubeQuest.Account
             get
             {
                 var h = 100 + (int) Level * 5;
-                //EquippedCompanions.ForEach(c => h += c.Health);
+                //EquippedCompanions.ForEach(c => h += c.Health.Scale(Level));
                 return h;
             }
         }
@@ -165,7 +165,7 @@ namespace CubeQuest.Account
 	            var level = (int) Level;
 
                 var a = level * 10;
-                EquippedCompanions.ForEach(c => a += c.Attack);
+                EquippedCompanions.ForEach(c => a += c.Attack.Scale(Level));
 
 				// Get up to 2% stronger attack
 				a += Rng.Next(-5 * level, 5 * level);
@@ -271,4 +271,13 @@ namespace CubeQuest.Account
 		        Companions         = save.Companions.ToCompanions()
 	        };
     }
+
+	public static class UserExtensions
+	{
+		/// <summary>
+		/// Scale a specific stat to the level, usually for companion boosts
+		/// </summary>
+		public static int Scale(this int stat, uint level) => 
+			stat * (int) Math.Ceiling(level / 2.0);
+	}
 }
