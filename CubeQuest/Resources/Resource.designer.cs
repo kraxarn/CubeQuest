@@ -3942,8 +3942,17 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0e004b
 			public const int collapseActionView = 2131624011;
 			
+			// aapt resource value: 0x7f0e013a
+			public const int companion_1_name = 2131624250;
+			
 			// aapt resource value: 0x7f0e013c
-			public const int companion_list = 2131624252;
+			public const int companion_2_name = 2131624252;
+			
+			// aapt resource value: 0x7f0e013e
+			public const int companion_3_name = 2131624254;
+			
+			// aapt resource value: 0x7f0e013f
+			public const int companion_list = 2131624255;
 			
 			// aapt resource value: 0x7f0e0122
 			public const int companion_slot_1 = 2131624226;
@@ -4119,8 +4128,8 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0e0120
 			public const int image_loot = 2131624224;
 			
-			// aapt resource value: 0x7f0e013d
-			public const int image_user_entry_icon = 2131624253;
+			// aapt resource value: 0x7f0e0140
+			public const int image_user_entry_icon = 2131624256;
 			
 			// aapt resource value: 0x7f0e00dc
 			public const int imgbut_101 = 2131624156;
@@ -4158,11 +4167,11 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0e0139
 			public const int inventory_companion_1 = 2131624249;
 			
-			// aapt resource value: 0x7f0e013a
-			public const int inventory_companion_2 = 2131624250;
-			
 			// aapt resource value: 0x7f0e013b
-			public const int inventory_companion_3 = 2131624251;
+			public const int inventory_companion_2 = 2131624251;
+			
+			// aapt resource value: 0x7f0e013d
+			public const int inventory_companion_3 = 2131624253;
 			
 			// aapt resource value: 0x7f0e0070
 			public const int invisible = 2131624048;
@@ -4239,8 +4248,8 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0e00b4
 			public const int map = 2131624116;
 			
-			// aapt resource value: 0x7f0e0141
-			public const int masked = 2131624257;
+			// aapt resource value: 0x7f0e0144
+			public const int masked = 2131624260;
 			
 			// aapt resource value: 0x7f0e00ef
 			public const int media_actions = 2131624175;
@@ -4608,11 +4617,11 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0e011f
 			public const int text_special_thanks = 2131624223;
 			
-			// aapt resource value: 0x7f0e013f
-			public const int text_user_entry_description = 2131624255;
+			// aapt resource value: 0x7f0e0142
+			public const int text_user_entry_description = 2131624258;
 			
-			// aapt resource value: 0x7f0e013e
-			public const int text_user_entry_title = 2131624254;
+			// aapt resource value: 0x7f0e0141
+			public const int text_user_entry_title = 2131624257;
 			
 			// aapt resource value: 0x7f0e0018
 			public const int textinput_counter = 2131623960;
@@ -4677,8 +4686,8 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0e011e
 			public const int view_users = 2131624222;
 			
-			// aapt resource value: 0x7f0e0140
-			public const int visible = 2131624256;
+			// aapt resource value: 0x7f0e0143
+			public const int visible = 2131624259;
 			
 			// aapt resource value: 0x7f0e002d
 			public const int wide = 2131623981;

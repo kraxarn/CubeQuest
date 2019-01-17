@@ -76,7 +76,6 @@ namespace CubeQuest.Layout
 		/// <summary>
 		/// TODO
 		/// </summary>
-        private View companionInsertView;
 
 		/// <summary>
 		/// TODO
@@ -139,6 +138,8 @@ namespace CubeQuest.Layout
         private Dictionary<string, TextView> profileStats;
 
         private ImageButton[] equippedCubes;
+
+        private TextView[] equippedCubeNames;
 
         /// <summary>
         /// If it's day (8-17)
@@ -275,11 +276,16 @@ namespace CubeQuest.Layout
 	            StartActivity(new Intent(this, typeof(SettingsActivity)));
 
             equippedCubes = new ImageButton[3];
+            equippedCubeNames = new TextView[3];
 
             equippedCubes[0] = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_1);
             equippedCubes[1] = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_2);
             equippedCubes[2] = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_3);
-			
+
+            equippedCubeNames[0] = profileView.FindViewById<TextView>(Resource.Id.companion_1_name);
+            equippedCubeNames[1] = profileView.FindViewById<TextView>(Resource.Id.companion_2_name);
+            equippedCubeNames[2] = profileView.FindViewById<TextView>(Resource.Id.companion_3_name);
+
             // Avoid clicking through profile view
             profileView.Touch += (sender, args) =>
                 args.Handled = true;
@@ -372,8 +378,12 @@ namespace CubeQuest.Layout
 			equippedCubes[1].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
 			equippedCubes[2].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
 
-			// Create recyclerView for companions
-			companionRecycler = FindViewById<RecyclerView>(Resource.Id.companion_list);
+            equippedCubeNames[0].Text = AccountManager.CurrentUser.EquippedCompanions[0].Name;
+            equippedCubeNames[1].Text = AccountManager.CurrentUser.EquippedCompanions[1].Name;
+            equippedCubeNames[2].Text = AccountManager.CurrentUser.EquippedCompanions[2].Name;
+
+            // Create recyclerView for companions
+            companionRecycler = FindViewById<RecyclerView>(Resource.Id.companion_list);
 			companionAdapter = new CompanionViewAdapter(AccountManager.CurrentUser.Companions, this);
 			var companionLayoutManager = new LinearLayoutManager(this);
 
@@ -772,6 +782,10 @@ namespace CubeQuest.Layout
             equippedCubes[0].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
             equippedCubes[1].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
             equippedCubes[2].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
+
+            equippedCubeNames[0].Text = AccountManager.CurrentUser.EquippedCompanions[0].Name;
+            equippedCubeNames[1].Text = AccountManager.CurrentUser.EquippedCompanions[1].Name;
+            equippedCubeNames[2].Text = AccountManager.CurrentUser.EquippedCompanions[2].Name;
 
         }
     }
