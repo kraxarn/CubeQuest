@@ -15,6 +15,8 @@ namespace CubeQuest.Account.Companions
         public string Name => "Buffalo";
         public string Info => "Provides a lot of attack at the cost of some evasion";
 
+        public ECompanionType Type => ECompanionType.Offensive;
+
         public void BeforeBattle()
         {
         }
