@@ -13,7 +13,7 @@ namespace CubeQuest.Handler
 			typeof(Buffalo),
 			typeof(Chick),
 			typeof(Horse),
-            typeof(Narwhale),
+            typeof(Narwhal),
 			typeof(Owl),
 			typeof(Parrot),
 			typeof(Penguin),
@@ -34,14 +34,24 @@ namespace CubeQuest.Handler
         {
             get
             {
-                var seed = new Random().Next(CompanionTypes.Length);
+                Random r = new Random();
+                int n = CompanionTypes.Length;
+                int[] indexes = new int[n];
+                for (int i = 0; i < indexes.Length; i++)
+                    indexes[i] = i;
 
-                var interval = new Random().Next(1, 12);
+                while (n > 1)
+                {
+                    int k = r.Next(n--);
+                    int temp = indexes[n];
+                    indexes[n] = indexes[k];
+                    indexes[k] = temp;
+                }
 
                 var list = new ICompanion[3];
 
                 for (var i = 0; i < 3; i++)
-                    list[i] = Activator.CreateInstance(CompanionTypes[(seed + interval * i) % CompanionTypes.Length]) as ICompanion;
+                    list[i] = Activator.CreateInstance(CompanionTypes[(indexes[i]) % CompanionTypes.Length]) as ICompanion;
 
                 return list;
             }

@@ -77,18 +77,8 @@ namespace CubeQuest.Layout
 			FindPreference("view_progress").PreferenceClick += (sender, args) => 
 				StartActivityForResult(AccountManager.SelectSaveIntent, 9003);
 
-            FindPreference("load_progress").PreferenceClick += async (sender, args) =>
-            {
-	            var user = await AccountManager.GetUserProgressOrDefaultAsync();
-
-	            if (user == null)
-	            {
-		            Alert.ShowSimple(context, "No progress", "No user progress found to show");
-		            return;
-	            }
-
-	            Alert.ShowSimple(context, "Progress", user.ToString());
-            };
+            FindPreference("load_progress").PreferenceClick += (sender, args) => 
+	            Alert.ShowSimple(context, "Progress", AccountManager.CurrentUser.ToString().Replace(',', '\n'));
 
             FindPreference("reset_progress").PreferenceClick += (sender, args) =>
             {
