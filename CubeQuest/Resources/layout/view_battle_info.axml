@@ -36,7 +36,6 @@
                 android:id="@+id/text_battle_info_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Level 5 Danger Noodle"
                 android:textSize="16sp"/>
 
             <TextView
@@ -61,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Danger noodles, sometimes known as 'nope ropes' or 'sneks' tries to be scary, but becase they are so cute, they are very rarely taken seriously."/>
+    />
 
     <GridLayout
         android:layout_width="wrap_content"

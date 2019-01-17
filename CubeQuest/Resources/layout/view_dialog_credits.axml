@@ -17,6 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Special thanks to everyone who helped testing!"/>
+        android:text="@string/special_thanks_text"/>
 
 </LinearLayout>

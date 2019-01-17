@@ -14,7 +14,7 @@ namespace CubeQuest.Account.Enemies
 
 		public int Health => 5 * Level;
 
-		public int Armor => 1;
+		public int Armor => Level;
 
 		public int Attack => 1 + (Level / 6);
 	}

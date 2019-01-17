@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:autoSizeTextType="uniform"
             android:gravity="center"
-            android:text="We will not be spared, continue to fight!"
+            android:text="@string/spare_message_text"
             android:textSize="18sp"
             android:visibility="invisible"
             />
@@ -163,7 +163,7 @@
             android:drawableLeft="@drawable/ic_sword"
             android:backgroundTint="@color/colorPrimaryDark"
             android:padding="16dp"
-            android:text="Attack"/>
+            android:text="@string/attack_button_text"/>
 
         <Button
             android:id="@+id/button_battle_spare"
@@ -171,7 +171,7 @@
             android:drawableLeft="@drawable/ic_hp"
             android:backgroundTint="@color/colorPrimaryDark"
             android:padding="16dp"
-            android:text="Spare"/>
+            android:text="@string/spare_button_text"/>
 
         <Button
             android:id="@+id/button_battle_run"
@@ -180,7 +180,7 @@
             android:drawableLeft="@drawable/ic_run"
             android:backgroundTint="@color/colorPrimaryDark"
             android:padding="16dp"
-            android:text="Run"/>
+            android:text="@string/run_button_text"/>
 
     </GridLayout>
 
