@@ -97,7 +97,7 @@ namespace CubeQuest.Battle
         private void PlayerAttack(int index)
         {
             
-            enemyHealthBars[index].Progress -= AccountManager.CurrentUser.Attack;
+            enemyHealthBars[index].Progress -= (int)((AccountManager.CurrentUser.Attack / (float)enemy.Health)*100);
 
             OnAnimation?.Invoke(EAnimationTarget.Player, index);
 
