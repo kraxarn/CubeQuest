@@ -2,6 +2,7 @@
 using CubeQuest.Account;
 using System.Linq;
 using System.Threading;
+using CubeQuest.Account.Interface;
 
 namespace CubeQuest.Battle
 {
@@ -14,10 +15,14 @@ namespace CubeQuest.Battle
         private ProgressBar playerHealthBar;
 
         private readonly BattleQueue battleQueue;
+
+        private IEnemy enemy;
         
         public enum EActionType { Attack, Spare }
 
         public enum EAnimationTarget { Player, Enemy }
+
+
 
         private bool EnemiesAreDead => 
             !enemyHealthBars.Any(enemy => enemy.Progress > 0);
@@ -37,11 +42,12 @@ namespace CubeQuest.Battle
         public void RunAway() => 
             BattleEnd?.Invoke(BattleCore.EBattleEndType.Ran);
 
-        public BattleHandler(ImageButton[] enemies, ProgressBar[] enemyHealthBars, ProgressBar playerHealthBar)
+        public BattleHandler(ImageButton[] enemies, ProgressBar[] enemyHealthBars, ProgressBar playerHealthBar, IEnemy enemyInfo)
         {
             this.enemies = enemies;
             this.enemyHealthBars = enemyHealthBars;
             this.playerHealthBar = playerHealthBar;
+            this.enemy = enemyInfo;
 
             battleQueue = new BattleQueue();
 
@@ -58,7 +64,7 @@ namespace CubeQuest.Battle
             {
                 battleQueue.Add(new QueueAction(() =>
                 {
-                    EnemyAttack(10, index);
+                    EnemyAttack(index);
                     Thread.Sleep(600);
                 }, true));
 
@@ -69,7 +75,7 @@ namespace CubeQuest.Battle
 
             var action1 = new QueueAction(() =>
             {
-                PlayerAttack(AccountManager.CurrentUser.Attack, index);
+                PlayerAttack(index);
                 Thread.Sleep(1000);
             }, true);
 
@@ -80,7 +86,7 @@ namespace CubeQuest.Battle
                 if (enemyHealthBars[index].Progress <= 0)
                     return;
 
-                EnemyAttack(10, index);
+                EnemyAttack(index);
                 Thread.Sleep(600);
             }, true));
 
@@ -88,9 +94,10 @@ namespace CubeQuest.Battle
             
         }
 
-        private void PlayerAttack(int damage, int index)
+        private void PlayerAttack(int index)
         {
-            enemyHealthBars[index].Progress -= damage + 50;
+            
+            enemyHealthBars[index].Progress -= AccountManager.CurrentUser.Attack;
 
             OnAnimation?.Invoke(EAnimationTarget.Player, index);
 
@@ -110,13 +117,13 @@ namespace CubeQuest.Battle
             enemies[index].Enabled = false;
         }
 
-        private void EnemyAttack(int damage, int index)
+        private void EnemyAttack(int index)
         {
             OnAnimation?.Invoke(EAnimationTarget.Enemy, index);
 
             //if (!AccountManager.CurrentUser.ShouldHit)
             //    return;
-
+            var damage = enemy.Attack;
             damage = AccountManager.CurrentUser.GetDamage(damage);
 
             AccountManager.CurrentUser.Health -= damage;

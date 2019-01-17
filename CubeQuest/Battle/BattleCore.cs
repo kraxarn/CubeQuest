@@ -94,7 +94,7 @@ namespace CubeQuest.Battle
             playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
 
             // Battle handler
-            var battleHandler = new BattleHandler(enemyButtons, enemyHealthBars, playerHealthBar);
+            var battleHandler = new BattleHandler(enemyButtons, enemyHealthBars, playerHealthBar, enemy);
 
             // Set bitmaps of enemy buttons
             enemyButtons.SetBitmaps(enemySprite);

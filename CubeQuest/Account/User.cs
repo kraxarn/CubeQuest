@@ -154,7 +154,7 @@ namespace CubeQuest.Account
         {
             get
             {
-                var a = (int) Level * 2;
+                var a = (int) Level * 10;
                 EquippedCompanions.ForEach(c => a += c.Attack);
                 return a;
             }
