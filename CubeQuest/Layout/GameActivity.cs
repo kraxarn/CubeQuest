@@ -20,11 +20,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Android.Content.PM;
 using Android.Graphics;
 
 namespace CubeQuest.Layout
 {
-	[Activity(Label = "GameActivity", Theme = "@style/AppTheme.NoActionBar")]
+	[Activity(Label = "GameActivity", Theme = "@style/AppTheme.NoActionBar", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Landscape)]
     public class GameActivity : AppCompatActivity, IOnMapReadyCallback, GoogleMap.IOnMarkerClickListener
     {
         /// <summary>
