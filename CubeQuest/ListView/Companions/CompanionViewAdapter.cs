@@ -4,6 +4,7 @@ using Android.Views;
 using CubeQuest.Handler;
 using CubeQuest.Account;
 using CubeQuest.Account.Interface;
+using CubeQuest.Account.Companions;
 using Android.Widget;
 using System;
 using Android.Support.V7.App;
@@ -13,12 +14,18 @@ namespace CubeQuest.ListView.Companions
 {
     public class CompanionViewAdapter : RecyclerView.Adapter
     {
-        private readonly List<ICompanion> companions;
+        private List<ICompanion> companions;
         private Context parentGroup;
+
+        ImageView slot1Occupant;
+        ImageView slot2Occupant;
+        ImageView slot3Occupant;
 
         public CompanionViewAdapter(List<ICompanion> companions, Context parent)
         {
             this.companions = companions;
+            companions.Add(new Bear());
+            companions.Add(new Parrot());
             parentGroup = parent;
             createInsertView();
 
@@ -75,7 +82,15 @@ namespace CubeQuest.ListView.Companions
                             */
                             if (selectedSlot >= 0 && selectedSlot < 3)
                             {
+                                ICompanion tempEquip = AccountManager.CurrentUser.EquippedCompanions[selectedSlot];
                                 AccountManager.CurrentUser.EquippedCompanions[selectedSlot] = getCompanion(position);
+                                companions[position] = tempEquip;
+
+                                slot1Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
+                                slot2Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
+                                slot3Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
+                                NotifyItemChanged(position);
+
                                 EquippedCompanionChanged.Invoke(this, null);
                             }
                         })
@@ -117,25 +132,25 @@ namespace CubeQuest.ListView.Companions
             itemSlot1.Click += (object sender, EventArgs e) => {
                 itemSlot2.SetBackgroundColor(Android.Graphics.Color.Transparent);
                 itemSlot3.SetBackgroundColor(Android.Graphics.Color.Transparent);
-                itemSlot1.SetBackgroundColor(Android.Graphics.Color.AliceBlue);
+                itemSlot1.SetBackgroundResource(Resource.Drawable.backgrnd_rounded_corners);
                 selectedSlot = 0;
             };
             itemSlot2.Click += (object sender, EventArgs e) => {
-                itemSlot2.SetBackgroundColor(Android.Graphics.Color.Aquamarine);
+                itemSlot2.SetBackgroundResource(Resource.Drawable.backgrnd_rounded_corners);
                 itemSlot1.SetBackgroundColor(Android.Graphics.Color.Transparent);
                 itemSlot3.SetBackgroundColor(Android.Graphics.Color.Transparent);
                 selectedSlot = 1;
             };
             itemSlot3.Click += (object sender, EventArgs e) => {
-                itemSlot3.SetBackgroundColor(Android.Graphics.Color.Aquamarine);
+                itemSlot3.SetBackgroundResource(Resource.Drawable.backgrnd_rounded_corners);
                 itemSlot2.SetBackgroundColor(Android.Graphics.Color.Transparent);
                 itemSlot1.SetBackgroundColor(Android.Graphics.Color.Transparent);
                 selectedSlot = 2;
             };
 
-            var slot1Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_1_occupant);
-            var slot2Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_2_occupant);
-            var slot3Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_3_occupant);
+            slot1Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_1_occupant);
+            slot2Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_2_occupant);
+            slot3Occupant = companionInsertView.FindViewById<ImageView>(Resource.Id.slot_3_occupant);
 
             slot1Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
             slot2Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
