@@ -8,7 +8,7 @@
 	    float Evasion { get; }
 
 		/// <summary>
-		/// The companion's primary ability
+		/// The companion's primary attribute
 		/// </summary>
 		ECompanionType Type { get; }
 
@@ -27,11 +27,20 @@
         /// </summary>
         void AfterBattle();
     }
-
+	
     public enum ECompanionType
     {
+		/// <summary>
+		/// Usually provides health and armor
+		/// </summary>
 	    Defensive,
+		/// <summary>
+		/// Usually provides attack
+		/// </summary>
 	    Offensive,
+		/// <summary>
+		/// Usually provides evasion
+		/// </summary>
 	    Passive
     }
 }
