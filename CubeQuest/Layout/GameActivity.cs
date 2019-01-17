@@ -434,7 +434,7 @@ namespace CubeQuest.Layout
         private void Map_CameraChange(object sender, GoogleMap.CameraChangeEventArgs e)
         {
             if (e?.Position?.Target != null)
-                chunkHandler.UpdateCoord(e.Position.Target.Latitude, e.Position.Target.Longitude);
+                chunkHandler?.UpdateCoord(e.Position.Target.Latitude, e.Position.Target.Longitude);
         }
 
         public void SetText(Dictionary<TextView, string> views)
