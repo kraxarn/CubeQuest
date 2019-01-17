@@ -56,11 +56,16 @@ namespace CubeQuest.Battle
         /// Animation used for flashing health bars
         /// </summary>
         private readonly Animation flashAnimation;
+		
+		/// <summary>
+		/// Buttons for all companions
+		/// </summary>
+        private readonly ImageButton[] companionButtons;
 
-		// TODO: Make array
-        private readonly List<ImageButton> companions;
-
-        private ImageButton[] enemyButtons;
+		/// <summary>
+		/// Buttons for all enemies
+		/// </summary>
+        private readonly ImageButton[] enemyButtons;
 
         public BattleCore(Context context, View view, IEnemy enemy)
         {
@@ -71,7 +76,7 @@ namespace CubeQuest.Battle
             mainView = view;
 
             // Companions
-            companions = new List<ImageButton>
+            companionButtons = new []
             {
                 mainView.FindViewById<ImageButton>(Resource.Id.image_battle_companion_0),
                 mainView.FindViewById<ImageButton>(Resource.Id.image_battle_companion_1),
@@ -164,15 +169,15 @@ namespace CubeQuest.Battle
                 switch (target)
                 {
                     case BattleHandler.EAnimationTarget.Player:
-                        companions[index].StartAnimation(playerAttackAnimation);
+                        companionButtons[index].StartAnimation(playerAttackAnimation);
                         enemyButtons[index].StartAnimation(shakeAnimation);
                         enemyButtons[index].Animation.AnimationEnd += OnCompanionAnimationEnd;
 						break;
 
                     case BattleHandler.EAnimationTarget.Enemy:
                         enemyButtons[index].StartAnimation(enemyAttackAnimation);
-                        companions[index].StartAnimation(shakeAnimation);
-                        companions[index].Animation.AnimationEnd += OnCompanionAnimationEnd;
+                        companionButtons[index].StartAnimation(shakeAnimation);
+                        companionButtons[index].Animation.AnimationEnd += OnCompanionAnimationEnd;
                         break;
                 }
 
@@ -230,7 +235,7 @@ namespace CubeQuest.Battle
         {
 	        ButtonsController(mainView, true);
 			
-			companions.Select(c => c.Animation).ClearAnimationEndListeners(OnCompanionAnimationEnd);
+			companionButtons.Select(c => c.Animation).ClearAnimationEndListeners(OnCompanionAnimationEnd);
 
 			enemyButtons.Select(c => c.Animation).ClearAnimationEndListeners(OnCompanionAnimationEnd);
 		}
