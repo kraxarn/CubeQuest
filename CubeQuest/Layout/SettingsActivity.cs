@@ -81,9 +81,10 @@ namespace CubeQuest.Layout
                     {
                         AccountManager.ResetUserProgress();
                         Alert.ShowSimple(context, 
-	                        "Progress reset", 
-	                        "It's recommended to restart the app to avoid issues");
-                    })
+	                        GetString(Resource.String.reset_progress_title),
+							GetString(Resource.String.reset_progress_message));
+
+					})
                     .SetNegativeButton("No", (IDialogInterfaceOnClickListener) null)
                     .Show();
             };
@@ -91,7 +92,7 @@ namespace CubeQuest.Layout
             FindPreference("sign_out").PreferenceClick += (sender, args) =>
             {
 	            Alert.Build(context)
-		            .SetTitle("Are you sure?")
+		            .SetTitle(Resource.String.are_you_sure)
 		            .SetMessage("You'll need to re-authenticate again next time and your progress may be lost")
 		            .SetPositiveButton("Yes", async (s, a) =>
 		            {

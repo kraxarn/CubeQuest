@@ -27,7 +27,10 @@
 	</string-array>
 
 	<string name="special_thanks">Special thanks to everyone who helped testing!</string>
+
 	<string name="reset_progress_notice">All your progress and companions collected will be lost!</string>
+	<string name="reset_progress_title">Progress reset</string>
+	<string name="reset_progress_message">It\'s recommended to restart the app to avoid issues</string>
 
 	<!-- Inventory -->
 	<string name="slot_1">Slot 1</string>
