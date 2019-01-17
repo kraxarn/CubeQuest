@@ -21,9 +21,7 @@ namespace CubeQuest.Battle
         public enum EActionType { Attack, Spare }
 
         public enum EAnimationTarget { Player, Enemy }
-
-
-
+		
         private bool EnemiesAreDead => 
             !enemyHealthBars.Any(enemy => enemy.Progress > 0);
 
@@ -96,7 +94,6 @@ namespace CubeQuest.Battle
 
         private void PlayerAttack(int index)
         {
-            
             enemyHealthBars[index].Progress -= (int)((AccountManager.CurrentUser.Attack / (float)enemy.Health)*100);
 
             OnAnimation?.Invoke(EAnimationTarget.Player, index);
