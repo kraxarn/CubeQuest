@@ -10,7 +10,6 @@ using Android.Views;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Android.OS;
 
 namespace CubeQuest.Account
 {
@@ -41,7 +40,7 @@ namespace CubeQuest.Account
 	    /// <summary>
 	    /// Current user signed in
 	    /// </summary>
-	    public static User CurrentUser { private set; get; }
+	    public static User CurrentUser { get; private set; }
 
 	    /// <summary>
         /// Google Play display name
@@ -95,14 +94,17 @@ namespace CubeQuest.Account
 	                OnFailure?.Invoke(silentSignIn.Status);
 
 				snapshotManager = new SnapshotManager(googleClient);
-
-				// Try to load from save file, otherwise, create new user
-				// TODO
-				CurrentUser = new User();
 	        };
 
             // Register callback to our connection listener
             googleClient.RegisterConnectionCallbacks(connectionListener);
+        }
+
+        public static async Task<bool> LoadCurrentUser()
+        {
+	        var userProgress = await GetUserProgressOrDefaultAsync();
+			CurrentUser = userProgress ?? new User();
+			return userProgress != null;
         }
 
         /// <summary>

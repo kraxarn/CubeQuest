@@ -214,32 +214,19 @@ namespace CubeQuest.Layout
             autoCamera = true;
 
             markers = new Dictionary<LatLng, Marker>();
-            chunkHandler = new ChunkHandler();
-
+            
 			preferences = new AppPreferences(this);
             
             // Get main view
             mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
             mainView.Visibility = ViewStates.Invisible;
             
-            // Get health bar and heart
-            var healthBar = FindViewById<ProgressBar>(Resource.Id.barHealth);
-            var healthBarHeart = FindViewById<ImageView>(Resource.Id.barHeart);
-			
-            healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
-
-            AccountManager.CurrentUser.OnHealthChange += health => 
-	            healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
-
-            // When you die the health bar and heart is set.
-            AccountManager.CurrentUser.OnDeadChange += isAlive => healthBar.Alpha = healthBarHeart.Alpha = isAlive ? 1f : 0.5f;
-			
             // Get last known location
             locationHandler = new LocationHandler(this);
             userLocation = await locationHandler.GetLastKnownLocationAsync();
 
             // Get map and listen when it's ready
-            var mapFragment = (SupportMapFragment)SupportFragmentManager.FindFragmentById(Resource.Id.map);
+            var mapFragment = (SupportMapFragment) SupportFragmentManager.FindFragmentById(Resource.Id.map);
             mapFragment.GetMapAsync(this);
 
             var textDebugLocation = FindViewById<TextView>(Resource.Id.text_debug_location);
@@ -271,7 +258,7 @@ namespace CubeQuest.Layout
 
             // Show profile when clicking on button
             fabUser = FindViewById<FloatingActionButton>(Resource.Id.fabUser);
-            fabMap = FindViewById<FloatingActionButton>(Resource.Id.fabGame);
+            fabMap  = FindViewById<FloatingActionButton>(Resource.Id.fabGame);
 
             fabUser.Click += (sender, args) => ToggleProfile(true);
             fabMap.Click  += (sender, args) => ToggleProfile(false);
@@ -283,8 +270,6 @@ namespace CubeQuest.Layout
             profileView.Visibility = ViewStates.Invisible;
 
             // Set values on profile
-            profileView.FindViewById<TextView>(Resource.Id.textProfileName).Text = AccountManager.Name;
-
             profileView.FindViewById<ImageButton>(Resource.Id.button_settings).Click += (sender, args) => 
 	            StartActivity(new Intent(this, typeof(SettingsActivity)));
 
@@ -293,11 +278,7 @@ namespace CubeQuest.Layout
             equippedCubes[0] = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_1);
             equippedCubes[1] = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_2);
             equippedCubes[2] = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_3);
-
-            equippedCubes[0].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
-            equippedCubes[1].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
-            equippedCubes[2].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
-
+			
             // Avoid clicking through profile view
             profileView.Touch += (sender, args) =>
                 args.Handled = true;
@@ -354,23 +335,58 @@ namespace CubeQuest.Layout
             if (!MainActivity.DebugMode)
 	            FindViewById<LinearLayout>(Resource.Id.layout_debug_tools).Visibility = ViewStates.Gone;
 
-            //Create recyclerView for companions.
-
-            companionRecycler = (RecyclerView)FindViewById(Resource.Id.companion_list);
-            //var companionsList = new List<ICompanion>(AccountManager.CurrentUser.companions);
-            /*companionsList.Add(new Chick());
-            companionsList.Add(new Bear());
-            companionsList.Add(new Chick());
-            companionsList.Add(new Parrot());*/
-            companionAdapter = new CompanionViewAdapter(AccountManager.CurrentUser.Companions, this);
-            var companionLayoutManager = new LinearLayoutManager(this);
-
-            companionRecycler.SetAdapter(companionAdapter);
-            companionRecycler.SetLayoutManager(companionLayoutManager);
-
-            companionAdapter.EquippedCompanionChanged += a_companionChanged;
-
+			SetUser();
         }
+
+		/// <summary>
+		/// Set everything up that has to do with the user
+		/// </summary>
+		private async void SetUser()
+		{
+			// Try to get our user
+			await AccountManager.LoadCurrentUser();
+
+			// Get health bar and heart
+			var healthBar = FindViewById<ProgressBar>(Resource.Id.barHealth);
+			var healthBarHeart = FindViewById<ImageView>(Resource.Id.barHeart);
+
+			// Initial health bar progress
+			healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
+
+			// Update health bar when changing health
+			AccountManager.CurrentUser.OnHealthChange += health =>
+				healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
+
+			// When you die the health bar and heart is set.
+			AccountManager.CurrentUser.OnDeadChange += isAlive => healthBar.Alpha = healthBarHeart.Alpha = isAlive ? 1f : 0.5f;
+
+			// Set name on profile
+			profileView.FindViewById<TextView>(Resource.Id.textProfileName).Text = AccountManager.Name;
+
+			// Set equipped companion icons
+			equippedCubes[0].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
+			equippedCubes[1].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
+			equippedCubes[2].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
+
+			// Create recyclerView for companions
+			companionRecycler = FindViewById<RecyclerView>(Resource.Id.companion_list);
+			companionAdapter = new CompanionViewAdapter(AccountManager.CurrentUser.Companions, this);
+			var companionLayoutManager = new LinearLayoutManager(this);
+
+			companionRecycler.SetAdapter(companionAdapter);
+			companionRecycler.SetLayoutManager(companionLayoutManager);
+
+			companionAdapter.EquippedCompanionChanged += a_companionChanged;
+			
+			/*
+			 * Load chunk loader
+			 * (This is needed here since the monsters are based on the user level)
+			 */
+			chunkHandler = new ChunkHandler();
+
+			if (userLocation != null)
+				chunkHandler.UpdateCoord(userLocation.Latitude, userLocation.Longitude);
+		}
 
         public override void OnEnterAnimationComplete()
         {
@@ -399,8 +415,7 @@ namespace CubeQuest.Layout
             // Get last known location or 0,0 if not known
             // TODO: If not known, show loading dialog
             var location = userLocation == null ? new LatLng(0, 0) : userLocation.ToLatLng();
-            chunkHandler.UpdateCoord(location.Latitude, location.Longitude);
-
+            
             // Create player marker
             AddPlayer(location, 0);
 
