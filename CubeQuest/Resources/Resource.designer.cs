@@ -5262,20 +5262,68 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0b004c
 			public const int action_settings = 2131427404;
 			
+			// aapt resource value: 0x7f0b004f
+			public const int alien_beige_info = 2131427407;
+			
+			// aapt resource value: 0x7f0b004e
+			public const int alien_beige_name = 2131427406;
+			
+			// aapt resource value: 0x7f0b0051
+			public const int alien_blue_info = 2131427409;
+			
+			// aapt resource value: 0x7f0b0050
+			public const int alien_blue_name = 2131427408;
+			
+			// aapt resource value: 0x7f0b0053
+			public const int alien_green_info = 2131427411;
+			
+			// aapt resource value: 0x7f0b0052
+			public const int alien_green_name = 2131427410;
+			
+			// aapt resource value: 0x7f0b0057
+			public const int alien_pink_info = 2131427415;
+			
+			// aapt resource value: 0x7f0b0056
+			public const int alien_pink_name = 2131427414;
+			
+			// aapt resource value: 0x7f0b0055
+			public const int alien_yellow_info = 2131427413;
+			
+			// aapt resource value: 0x7f0b0054
+			public const int alien_yellow_name = 2131427412;
+			
 			// aapt resource value: 0x7f0b004b
 			public const int app_name = 2131427403;
 			
 			// aapt resource value: 0x7f0b003d
 			public const int appbar_scrolling_view_behavior = 2131427389;
 			
+			// aapt resource value: 0x7f0b0059
+			public const int bear_info = 2131427417;
+			
+			// aapt resource value: 0x7f0b0058
+			public const int bear_name = 2131427416;
+			
 			// aapt resource value: 0x7f0b003e
 			public const int bottom_sheet_behavior = 2131427390;
+			
+			// aapt resource value: 0x7f0b005b
+			public const int buffalo_info = 2131427419;
+			
+			// aapt resource value: 0x7f0b005a
+			public const int buffalo_name = 2131427418;
 			
 			// aapt resource value: 0x7f0b003f
 			public const int character_counter_content_description = 2131427391;
 			
 			// aapt resource value: 0x7f0b0040
 			public const int character_counter_pattern = 2131427392;
+			
+			// aapt resource value: 0x7f0b005d
+			public const int chick_info = 2131427421;
+			
+			// aapt resource value: 0x7f0b005c
+			public const int chick_name = 2131427420;
 			
 			// aapt resource value: 0x7f0b0001
 			public const int common_google_play_services_enable_button = 2131427329;
@@ -5340,11 +5388,35 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0b0043
 			public const int hide_bottom_view_on_scroll_behavior = 2131427395;
 			
+			// aapt resource value: 0x7f0b005f
+			public const int horse_info = 2131427423;
+			
+			// aapt resource value: 0x7f0b005e
+			public const int horse_name = 2131427422;
+			
 			// aapt resource value: 0x7f0b004d
 			public const int login_notice = 2131427405;
 			
 			// aapt resource value: 0x7f0b0044
 			public const int mtrl_chip_close_icon_content_description = 2131427396;
+			
+			// aapt resource value: 0x7f0b0061
+			public const int narwhal_info = 2131427425;
+			
+			// aapt resource value: 0x7f0b0060
+			public const int narwhal_name = 2131427424;
+			
+			// aapt resource value: 0x7f0b0063
+			public const int owl_info = 2131427427;
+			
+			// aapt resource value: 0x7f0b0062
+			public const int owl_name = 2131427426;
+			
+			// aapt resource value: 0x7f0b0065
+			public const int parrot_info = 2131427429;
+			
+			// aapt resource value: 0x7f0b0064
+			public const int parrot_name = 2131427428;
 			
 			// aapt resource value: 0x7f0b0045
 			public const int password_toggle_content_description = 2131427397;
@@ -5361,8 +5433,32 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0b0049
 			public const int path_password_strike_through = 2131427401;
 			
+			// aapt resource value: 0x7f0b0067
+			public const int penguin_info = 2131427431;
+			
+			// aapt resource value: 0x7f0b0066
+			public const int penguin_name = 2131427430;
+			
+			// aapt resource value: 0x7f0b0069
+			public const int rabbit_info = 2131427433;
+			
+			// aapt resource value: 0x7f0b0068
+			public const int rabbit_name = 2131427432;
+			
 			// aapt resource value: 0x7f0b0030
 			public const int search_menu_title = 2131427376;
+			
+			// aapt resource value: 0x7f0b006b
+			public const int sloth_info = 2131427435;
+			
+			// aapt resource value: 0x7f0b006a
+			public const int sloth_name = 2131427434;
+			
+			// aapt resource value: 0x7f0b006d
+			public const int snake_info = 2131427437;
+			
+			// aapt resource value: 0x7f0b006c
+			public const int snake_name = 2131427436;
 			
 			// aapt resource value: 0x7f0b004a
 			public const int status_bar_notification_info_overflow = 2131427402;
@@ -5375,6 +5471,18 @@ namespace CubeQuest
 			
 			// aapt resource value: 0x7f0b0014
 			public const int v7_preference_on = 2131427348;
+			
+			// aapt resource value: 0x7f0b006f
+			public const int walrus_info = 2131427439;
+			
+			// aapt resource value: 0x7f0b006e
+			public const int walrus_name = 2131427438;
+			
+			// aapt resource value: 0x7f0b0071
+			public const int wolf_info = 2131427441;
+			
+			// aapt resource value: 0x7f0b0070
+			public const int wolf_name = 2131427440;
 			
 			static String()
 			{
