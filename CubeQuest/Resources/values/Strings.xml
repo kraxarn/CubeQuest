@@ -27,7 +27,6 @@
 	</string-array>
 
 	<string name="special_thanks">Special thanks to everyone who helped testing!</string>
-	<string name="progress">Progress</string>
 	<string name="reset_progress_notice">All your progress and companions collected will be lost!</string>
 
 	<!-- Inventory -->

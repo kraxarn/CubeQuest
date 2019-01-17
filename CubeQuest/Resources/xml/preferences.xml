@@ -70,11 +70,6 @@
 			app:title="Version"
 			app:summary="v1.0-development"/>
 
-		<Preference
-			app:key="debug_preferences"
-			app:title="Show preferences"
-			app:summary="DEBUG: Show current shared preferences"/>
-
 	</PreferenceCategory>
 
 	<PreferenceCategory
@@ -89,21 +84,6 @@
 			app:key="reset_progress"
 			app:title="Reset progress"
 			app:summary="Delete your save and create a new one"/>
-
-		<Preference
-			app:key="view_progress"
-			app:title="View progress"
-			app:summary="Show the cloud save UI"/>
-
-		<Preference
-			app:key="load_progress"
-			app:title="Load progress"
-			app:summary="Show data for your most recent save"/>
-
-		<Preference
-			app:key="save_progress"
-			app:title="Save progress"
-			app:summary="Save your progress to the cloud"/>
 
 	</PreferenceCategory>
 </PreferenceScreen>

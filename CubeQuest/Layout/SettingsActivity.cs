@@ -71,16 +71,7 @@ namespace CubeQuest.Layout
 
 			FindPreference("licenses").PreferenceClick += (sender, args) =>
 				OpenLicenses();
-
-			FindPreference("save_progress").PreferenceClick += (sender, args) => 
-                AccountManager.SaveUserProgress();
-
-			FindPreference("view_progress").PreferenceClick += (sender, args) => 
-				StartActivityForResult(AccountManager.SelectSaveIntent, 9003);
-
-            FindPreference("load_progress").PreferenceClick += (sender, args) => 
-	            Alert.ShowSimple(context, Resource.String.progress, AccountManager.CurrentUser.ToString().Replace(',', '\n'));
-
+            
             FindPreference("reset_progress").PreferenceClick += (sender, args) =>
             {
                 Alert.Build(context)
@@ -96,9 +87,6 @@ namespace CubeQuest.Layout
                     .SetNegativeButton("No", (IDialogInterfaceOnClickListener) null)
                     .Show();
             };
-
-            FindPreference("debug_preferences").PreferenceClick += (sender, args) => 
-	            Alert.ShowSimple(context, "Preferences", $"{Preferences}");
 
             FindPreference("sign_out").PreferenceClick += (sender, args) =>
             {
