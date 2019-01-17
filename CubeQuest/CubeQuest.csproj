@@ -172,6 +172,7 @@
     <AndroidResource Include="Resources\raw\map_theme_midnight.json">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
+    <AndroidResource Include="Resources\drawable\backgrnd_rounded_corners.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_main.axml">
