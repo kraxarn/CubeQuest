@@ -141,10 +141,10 @@ namespace CubeQuest.Layout
 			var view = LayoutInflater.Inflate(Resource.Layout.view_dialog_credits, null, false);
 			var adapter = BuildUserEntriesAdapter(view, new List<UserEntry>
 			{
-				new UserEntry("developer/dennizlund.webp", "dennizlund", "Designer"),
+				new UserEntry("developer/dennizlund.webp", "dennizlund", "Designer and battle system"),
 				new UserEntry("developer/kraxarn.webp",    "kraxarn",    "Developer and designer"),
 				new UserEntry("developer/tacmotor.webp",   "tacmotor",   "Inventory designer"),
-				new UserEntry("developer/timnnyman.webp",  "TimNNyman",  "Enemy placement and battle system")
+				new UserEntry("developer/timnnyman.webp",  "TimNNyman",  "Enemy placement")
 			});
 			
 			adapter.OnItemClick += itemView =>
