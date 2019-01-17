@@ -282,9 +282,9 @@ namespace CubeQuest.Layout
             equippedCubes[1] = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_2);
             equippedCubes[2] = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_3);
 
-            equippedCubeNames[0] = profileView.FindViewById<TextView>(Resource.Id.companion_1_name);
-            equippedCubeNames[1] = profileView.FindViewById<TextView>(Resource.Id.companion_2_name);
-            equippedCubeNames[2] = profileView.FindViewById<TextView>(Resource.Id.companion_3_name);
+            equippedCubeNames[0] = profileView.FindViewById<TextView>(Resource.Id.text_companion_name_1);
+            equippedCubeNames[1] = profileView.FindViewById<TextView>(Resource.Id.text_companion_name_2);
+            equippedCubeNames[2] = profileView.FindViewById<TextView>(Resource.Id.text_companion_name_3);
 
             // Avoid clicking through profile view
             profileView.Touch += (sender, args) =>
