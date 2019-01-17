@@ -13,7 +13,7 @@ namespace CubeQuest.Handler
 			typeof(Buffalo),
 			typeof(Chick),
 			typeof(Horse),
-            typeof(Narwhale),
+            typeof(Narwhal),
 			typeof(Owl),
 			typeof(Parrot),
 			typeof(Penguin),
