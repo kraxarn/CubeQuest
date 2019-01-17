@@ -126,6 +126,7 @@
 				android:background="?android:selectableItemBackground"
 				android:src="@drawable/ic_companion"/>
 			<TextView
+                android:id="@+id/companion_1_name"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_vertical"
@@ -147,6 +148,7 @@
 				android:background="?android:selectableItemBackground"
 				android:src="@drawable/ic_companion"/>
 			<TextView
+                android:id="@+id/companion_2_name"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_vertical"
@@ -168,6 +170,7 @@
 				android:background="?android:selectableItemBackground"
 				android:src="@drawable/ic_companion"/>
 			<TextView
+                android:id="@+id/companion_3_name"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_vertical"
