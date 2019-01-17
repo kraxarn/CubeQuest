@@ -70,6 +70,10 @@ namespace CubeQuest.Handler
 			set => PutInt("sound_volume", value);
 		}
 
+		// Dev
+		public int DevBattleRange => 
+			GetInt("dev_battle_range", 50);
+
 		private readonly ISharedPreferences prefs;
 
 		private ISharedPreferencesEditor editor;
