@@ -24,8 +24,6 @@ namespace CubeQuest.ListView.Companions
         public CompanionViewAdapter(List<ICompanion> companions, Context parent)
         {
             this.companions = companions;
-            companions.Add(new Bear());
-            companions.Add(new Parrot());
             parentGroup = parent;
             createInsertView();
 
