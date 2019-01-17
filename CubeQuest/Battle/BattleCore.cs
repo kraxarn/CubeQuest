@@ -74,10 +74,10 @@ namespace CubeQuest.Battle
             };
 
             // Animations
-            flashAnimation      = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
-            var enemyAttackAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.enemy_attack);
+            flashAnimation            = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
+            var enemyAttackAnimation  = AnimationUtils.LoadAnimation(context, Resource.Animation.enemy_attack);
             var playerAttackAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.player_attack);
-            var shakeAnimation  = AnimationUtils.LoadAnimation(context, Resource.Animation.shake);
+            var shakeAnimation        = AnimationUtils.LoadAnimation(context, Resource.Animation.shake);
 
             // Load enemy sprite(s)
             var enemySprite = AssetLoader.GetEnemyBitmap(enemy);
@@ -124,9 +124,8 @@ namespace CubeQuest.Battle
             void OnAttackClickEvent(object sender, EventArgs arg)
             {
                 if (enemyHealthBars[selectedEnemyIndex].Progress <= 0)
-                {
-                    return;
-                }
+	                return;
+
                 ButtonsController(mainView, false);
                 battleHandler.StartAction(selectedEnemyIndex, BattleHandler.EActionType.Attack);
             }
@@ -147,8 +146,8 @@ namespace CubeQuest.Battle
                 }
 
                 view.FindViewById<Button>(Resource.Id.button_battle_attack).Click -= OnAttackClickEvent;
-                view.FindViewById<Button>(Resource.Id.button_battle_run).Click -= OnRunClickEvent;
-                view.FindViewById<Button>(Resource.Id.button_battle_spare).Click -= OnSpareClickEvent;
+                view.FindViewById<Button>(Resource.Id.button_battle_run).Click    -= OnRunClickEvent;
+                view.FindViewById<Button>(Resource.Id.button_battle_spare).Click  -= OnSpareClickEvent;
             };
             
             // Player attacks animation in battle
@@ -190,17 +189,15 @@ namespace CubeQuest.Battle
 
             void OnSpareClickEvent(object sender, EventArgs arg)
             {
-                var enemyTotalHealth = enemyHealthBars.Average(e => e.Progress);
+                var enemyAverageHp = enemyHealthBars.Average(e => e.Progress);
                 var enemyLevel = enemy.Level;
                 var playerLevel = AccountManager.CurrentUser.Level;
                 var success = playerLevel > enemyLevel ? 0.2f : -0.2f;
 
-                success += enemyTotalHealth < 0.25f ? 0.8f : enemyTotalHealth < 0.5f ? 0.4f : 0f;
+                success += enemyAverageHp < 25 ? 0.8f : enemyAverageHp < 50 ? 0.4f : 0f;
 
                 if (success >= new Random().NextDouble())
-                {
-                    End?.Invoke(EBattleEndType.Won);
-                }
+	                End?.Invoke(EBattleEndType.Won);
                 else
                 {
                     ButtonsController(mainView, false);
