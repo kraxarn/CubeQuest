@@ -1,8 +1,9 @@
-﻿using CubeQuest.Account.Interface;
+﻿using Android.Gms.Maps.Model;
+using Android.Util;
+using CubeQuest.Account.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Android.Util;
 
 namespace CubeQuest.Account
 {
@@ -17,6 +18,9 @@ namespace CubeQuest.Account
 		 * 1:	Experience
 		 * 2:	Comma separated EquippedCompanions
 		 * 3:	Comma separated Companions
+		 *
+		 * 4:	LastSeed
+		 * 5:	Space separated coordinates (Lat_Lng)
 		 */
 
 		public int Health { get; set; }
@@ -26,6 +30,10 @@ namespace CubeQuest.Account
 		public List<Type> EquippedCompanions { get; set; }
 
 		public List<Type> Companions { get; set; }
+
+		public int LastSeed { get; set; }
+
+		public List<LatLng> DefeatedEnemies { get; set; }
 
 		public SaveData()
 		{
@@ -56,6 +64,22 @@ namespace CubeQuest.Account
 			// All companions
 			// This value can be empty
 			Companions = string.IsNullOrEmpty(data[3]) ? new List<Type>() : data[3].FormatCompanions().ToList();
+
+			// Version 2 with defeated enemies (6 lines)
+			/*
+			if (data.Length > 5)
+			{
+				if (int.TryParse(data[4], out var lastSeed))
+					LastSeed = lastSeed;
+
+				DefeatedEnemies = data[5].FormatCoordinates().ToList();
+			}
+			else
+			{
+				LastSeed = 0;
+				DefeatedEnemies = new List<LatLng>();
+			}
+			*/
 		}
 
 		public override string ToString() => 
@@ -64,16 +88,37 @@ namespace CubeQuest.Account
 
 	public static class SaveDataExtensions
 	{
-		public static List<Type> ToTypeList(this IEnumerable<ICompanion> companions) => 
+		// -- Saving -- //
+
+		public static List<Type> ToTypeList(this IEnumerable<ICompanion> companions) =>
 			new List<Type>(companions.Select(companion => companion.GetType()));
 
-		public static List<ICompanion> ToCompanions(this IEnumerable<Type> types) => 
+		public static string ToSaveString(this IEnumerable<LatLng> coordinates) => 
+			string.Join(' ', coordinates.Select(c => c.ToSaveString()));
+
+		// -- Loading -- //
+
+		public static List<ICompanion> ToCompanions(this IEnumerable<Type> types) =>
 			new List<ICompanion>(types.Select(t => Activator.CreateInstance(t) as ICompanion));
 
-		public static IEnumerable<Type> FormatCompanions(this string text) => 
+		public static IEnumerable<Type> FormatCompanions(this string text) =>
 			text.Split(',').Select(c => c.ToType());
 
-		private static Type ToType(this string value) => 
+		public static IEnumerable<LatLng> FormatCoordinates(this string text) =>
+			text.Split(' ').Select(l => l.ToLatLng());
+
+		// -- Private helpers -- //
+
+		private static Type ToType(this string value) =>
 			Type.GetType(value);
+		
+		private static LatLng ToLatLng(this string value)
+		{
+			var v = value.Split('_');
+			return new LatLng(double.Parse(v[0]), double.Parse(v[1]));
+		}
+
+		private static string ToSaveString(this LatLng coordinate) => 
+			$"{coordinate.Latitude}_{coordinate.Longitude}";
 	}
 }
