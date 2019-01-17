@@ -15,6 +15,8 @@ namespace CubeQuest.Account.Companions
         public string Name => "Sloth";
         public string Info => "Provides health and armor at the cost of attack and evasion";
 
+        public ECompanionType Type => ECompanionType.Defensive;
+
         public void BeforeBattle()
         {
         }

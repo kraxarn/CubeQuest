@@ -15,6 +15,8 @@ namespace CubeQuest.Account.Companions
         public string Name => "Parrot";
         public string Info => "Provides armor";
 
+        public ECompanionType Type => ECompanionType.Defensive;
+
         public void BeforeBattle()
         {
         }

@@ -15,6 +15,8 @@ namespace CubeQuest.Account.Companions
         public string Name => "Example Companion";
         public string Info => "Does nothing, for testing only";
 
+        public ECompanionType Type => ECompanionType.Passive;
+
         public void BeforeBattle()
         {
         }

@@ -15,6 +15,8 @@ namespace CubeQuest.Account.Companions
         public string Name => "Walrus";
         public string Info => "Provides health, armor and attack at the cost of evasion";
 
+        public ECompanionType Type => ECompanionType.Defensive;
+
         public void BeforeBattle()
         {
         }

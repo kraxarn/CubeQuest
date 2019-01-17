@@ -15,6 +15,8 @@ namespace CubeQuest.Account.Companions
         public string Name => "Rabbit";
         public string Info => "Provides a lot of evasion at the cost of reduced stats";
 
+        public ECompanionType Type => ECompanionType.Passive;
+
         public void BeforeBattle()
         {
         }

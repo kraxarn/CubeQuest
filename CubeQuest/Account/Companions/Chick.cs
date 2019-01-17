@@ -15,6 +15,8 @@ namespace CubeQuest.Account.Companions
         public string Name => "Chicken";
         public string Info => "Provides a lot of evasion at the cost of health and attack";
 
+        public ECompanionType Type => ECompanionType.Passive;
+
         public void BeforeBattle()
         {
         }

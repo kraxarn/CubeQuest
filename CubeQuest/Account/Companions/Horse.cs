@@ -15,6 +15,8 @@ namespace CubeQuest.Account.Companions
         public string Name => "Horse";
         public string Info => "Provides health and armor";
 
+        public ECompanionType Type => ECompanionType.Defensive;
+
         public void BeforeBattle()
         {
         }
