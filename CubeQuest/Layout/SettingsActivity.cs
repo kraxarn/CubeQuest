@@ -79,14 +79,14 @@ namespace CubeQuest.Layout
 				StartActivityForResult(AccountManager.SelectSaveIntent, 9003);
 
             FindPreference("load_progress").PreferenceClick += (sender, args) => 
-	            Alert.ShowSimple(context, "Progress", AccountManager.CurrentUser.ToString().Replace(',', '\n'));
+	            Alert.ShowSimple(context, Resource.String.progress, AccountManager.CurrentUser.ToString().Replace(',', '\n'));
 
             FindPreference("reset_progress").PreferenceClick += (sender, args) =>
             {
                 Alert.Build(context)
-                    .SetTitle("Are you sure?")
-                    .SetMessage("All your progress and companions collected will be lost!")
-                    .SetPositiveButton("Yes", (s, a) =>
+                    .SetTitle(Resource.String.are_you_sure)
+                    .SetMessage(Resource.String.reset_progress_notice)
+                    .SetPositiveButton(Resource.String.yes, (s, a) =>
                     {
                         AccountManager.ResetUserProgress();
                         Alert.ShowSimple(context, 

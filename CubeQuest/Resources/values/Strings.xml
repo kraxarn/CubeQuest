@@ -3,6 +3,11 @@
 	<string name="app_name">Cube Quest</string>
 	<string name="action_settings">Settings</string>
 
+	<!-- Generic text -->
+	<string name="are_you_sure">Are you sure?</string>
+	<string name="yes">Yes</string>
+	<string name="ok">OK</string>
+
 	<!-- Login screen -->
 	<string name="login_notice">By logging in you agree that you\'re 13 years or older and that you agree with Google\'s privacy policy (which you probably already did by starting your device anyway).</string>
 
@@ -21,18 +26,20 @@
 		<item>Midnight</item>
 	</string-array>
 
-	<string name="special_thanks_text">Special thanks to everyone who helped testing!</string>
+	<string name="special_thanks">Special thanks to everyone who helped testing!</string>
+	<string name="progress">Progress</string>
+	<string name="reset_progress_notice">All your progress and companions collected will be lost!</string>
 
 	<!-- Inventory -->
-	<string name="slot_1_text">Slot 1</string>
-	<string name="slot_2_text">Slot 2</string>
-	<string name="slot_3_text">Slot 3</string>
+	<string name="slot_1">Slot 1</string>
+	<string name="slot_2">Slot 2</string>
+	<string name="slot_3">Slot 3</string>
 
 	<!-- Battle system -->
-	<string name="spare_message_text">We will not be spared, continue to fight!</string>
-	<string name="attack_button_text">Attack</string>
-	<string name="spare_button_text">Spare</string>
-	<string name="run_button_text">Run</string>
+	<string name="spare_message">We will not be spared, continue to fight!</string>
+	<string name="attack_button">Attack</string>
+	<string name="spare_button">Spare</string>
+	<string name="run_button">Run</string>
 
 	<!-- Enemies -->
 	<string name="alien_beige_name">Beige Alien</string>
