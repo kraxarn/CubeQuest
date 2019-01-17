@@ -321,6 +321,9 @@ namespace CubeQuest.Layout
             FindViewById<Button>(Resource.Id.button_debug_focus_player).Click += (sender, args) => 
                 googleMap.AnimateCamera(CameraUpdateFactory.NewLatLng(userLocation.ToLatLng()));
 
+            FindViewById<Button>(Resource.Id.button_debug_respawn).Click += (sender, args) => 
+	            AccountManager.CurrentUser.HealthPercentage = 100;
+
             battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
             battleInfo = BottomSheetBehavior.From(battleInfoView);
             battleInfo.State = BottomSheetBehavior.StateHidden;
