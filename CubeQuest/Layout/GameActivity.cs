@@ -322,6 +322,9 @@ namespace CubeQuest.Layout
             FindViewById<Button>(Resource.Id.button_debug_focus_player).Click += (sender, args) => 
                 googleMap.AnimateCamera(CameraUpdateFactory.NewLatLng(userLocation.ToLatLng()));
 
+            FindViewById<Button>(Resource.Id.button_debug_respawn).Click += (sender, args) => 
+	            AccountManager.CurrentUser.HealthPercentage = 100;
+
             battleInfoView = FindViewById<LinearLayout>(Resource.Id.layout_battle_info);
             battleInfo = BottomSheetBehavior.From(battleInfoView);
             battleInfo.State = BottomSheetBehavior.StateHidden;
@@ -577,19 +580,21 @@ namespace CubeQuest.Layout
 
 					profileStats = new Dictionary<string, TextView>
 					{
-						{"hp",     FindTextView(Resource.Id.text_profile_hp)},
-						{"attack", FindTextView(Resource.Id.text_profile_attack)},
-						{"level",  FindTextView(Resource.Id.text_profile_level)},
-						{"armor",  FindTextView(Resource.Id.text_profile_armor)}
+						{"hp",      FindTextView(Resource.Id.text_profile_hp)},
+						{"attack",  FindTextView(Resource.Id.text_profile_attack)},
+						{"evasion", FindTextView(Resource.Id.text_profile_evasion)},
+						{"level",   FindTextView(Resource.Id.text_profile_level_info)},
+						{"armor",   FindTextView(Resource.Id.text_profile_armor)}
 					};
 				}
 
 				var user = AccountManager.CurrentUser;
 
-				profileStats["hp"].Text     = $"{user.HealthPercentage}%";
-				profileStats["attack"].Text = $"{user.Attack}";
-				profileStats["level"].Text  = $"{user.Level}";
-				profileStats["armor"].Text  = $"{user.Armor}";
+				profileStats["hp"].Text      = $"{user.HealthPercentage}%";
+				profileStats["attack"].Text  = $"{user.Attack}";
+				profileStats["evasion"].Text = $"{user.Evasion * 100}%";
+				profileStats["level"].Text   = $"Level {user.Level} ({user.ExperienceToNextLevel} xp to next level)";
+				profileStats["armor"].Text   = $"{user.Armor}";
 			}
 
             animator.Start();

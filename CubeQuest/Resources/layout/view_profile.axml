@@ -51,7 +51,7 @@
 			<TextView
                 android:id="@+id/text_profile_hp"
 				android:textSize="20sp"
-				android:text="0 / 0"/>
+				android:text="0%"/>
 
 			<!-- Damage -->
 			<ImageView
@@ -69,13 +69,13 @@
 			android:layout_marginTop="8dp"
 			android:gravity="center_vertical">
 
-			<!-- Level -->
+			<!-- Evasion -->
 			<ImageView
-				android:src="@drawable/ic_level"/>
+				android:src="@drawable/ic_missed"/>
 			<TextView
-                android:id="@+id/text_profile_level"
+                android:id="@+id/text_profile_evasion"
 				android:textSize="20sp"
-				android:text="1"/>
+				android:text="0%"/>
 
 			<!-- Armor -->
 			<ImageView
@@ -90,6 +90,16 @@
 		</TableRow>
 
 	</TableLayout>
+
+    <!-- Level text -->
+    <TextView
+        android:id="@+id/text_profile_level_info"
+        android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:textSize="16sp"
+        android:paddingVertical="8dp"
+        android:textAlignment="center"
+		android:text="Level 0 (0 xp to next level)"/>
 
 	<!-- Equipment layout -->
 	<FrameLayout

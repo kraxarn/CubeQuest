@@ -70,6 +70,14 @@
             android:text="Auto camera"/>
 
         <Button
+            android:id="@+id/button_debug_respawn"
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:fontFamily="monospace"
+			style="@android:style/Widget.Material.Button.Borderless"
+			android:text="Respawn"/>
+
+        <Button
             android:id="@+id/button_debug_focus_player"
             android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
