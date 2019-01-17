@@ -17,5 +17,41 @@
 		<item>Night</item>
 		<item>Midnight</item>
 	</string-array>
+  <string name ="alien_beige_name">Beige Alien</string>
+  <string name ="alien_beige_info">An alien that's beige</string>
+  <string name ="alien_blue_name">Blue Alien</string>
+  <string name ="alien_blue_info">An alien that's blue</string>
+  <string name ="alien_green_name">Green Alien</string>
+  <string name ="alien_green_info">An alien that's green</string>
+  <string name ="alien_yellow_name">Yellow Alien</string>
+  <string name ="alien_yellow_info">An alien that's yellow</string>
+  <string name ="alien_pink_name">Pink Alien</string>
+  <string name ="alien_pink_info">An alien that's pink</string>
+  <string name ="bear_name">Bear</string>
+  <string name ="bear_info">Provides a lot of strength at the cost of evasion</string>
+  <string name ="buffalo_name">Buffalo</string>
+  <string name ="buffalo_info">Provides a lot of attack at the cost of some evasion</string>
+  <string name ="chick_name">Chicken</string>
+  <string name ="chick_info">Provides a lot of evasion at the cost of health and attack</string>
+  <string name ="horse_name">Horse</string>
+  <string name ="horse_info">Provides health and armor</string>
+  <string name ="narwhal_name">Narwhal</string>
+  <string name ="narwhal_info">Provides attack</string>
+  <string name ="owl_name">Owl</string>
+  <string name ="owl_info">Provides attack and evasion</string>
+  <string name ="parrot_name">Parrot</string>
+  <string name ="parrot_info">Provides armor</string>
+  <string name ="penguin_name">Penguin</string>
+  <string name ="penguin_info">Provides attack</string>
+  <string name ="rabbit_name">Rabbit</string>
+  <string name ="rabbit_info">Provides a lot of evasion at the cost of reduced stats</string>
+  <string name ="sloth_name">Sloth</string>
+  <string name ="sloth_info">Provides health and armor at the cost of attack and evasion</string>
+  <string name ="snake_name">Snake</string>
+  <string name ="snake_info">Provides attack and evasion</string>
+  <string name ="walrus_name">Walrus</string>
+  <string name ="walrus_info">Provides health, armor and attack at the cost of evasion</string>
+  <string name ="wolf_name">Wolf</string>
+  <string name ="wolf_info">Provides attack and evasion</string>
 
 </resources>
