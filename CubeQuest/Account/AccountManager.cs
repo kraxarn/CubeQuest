@@ -10,6 +10,7 @@ using Android.Views;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Android.OS;
 
 namespace CubeQuest.Account
 {
@@ -37,12 +38,30 @@ namespace CubeQuest.Account
 
 	    public static bool IsConnected => googleClient.IsConnected;
 
-        /// <summary>
-        /// Current user signed in
-        /// </summary>
-        public static User CurrentUser { get; private set; }
+	    private static User user;
 
-        /// <summary>
+	    /// <summary>
+	    /// Current user signed in
+	    /// </summary>
+	    public static User CurrentUser
+	    {
+		    private set => user = value;
+		    get
+		    {
+			    if (user == null)
+			    {
+					var handler = new Android.OS.Handler(Looper.MainLooper);
+					handler.Post(async () => user = await CreateUser());
+			    }
+
+			    if (user == null)
+					throw new InvalidOperationException("User is null");
+
+			    return user;
+		    }
+	    }
+
+	    /// <summary>
         /// Google Play display name
         /// </summary>
 	    public static string Name => 
@@ -86,21 +105,27 @@ namespace CubeQuest.Account
             // Wait until we connected and attempt to sign in silently when we do
             connectionListener.Connected += async hint =>
 	        {
-                CurrentUser = await GetUserProgressOrDefaultAsync() ?? new User();
-
                 var silentSignIn = await Auth.GoogleSignInApi.SilentSignIn(googleClient);
-
-	            if (silentSignIn.Status.IsSuccess)
+				
+				if (silentSignIn.Status.IsSuccess)
 	                OnSuccess?.Invoke(silentSignIn.Status);
 	            else
 	                OnFailure?.Invoke(silentSignIn.Status);
 
 				snapshotManager = new SnapshotManager(googleClient);
+
+				// Try to load from save file, otherwise, create new user
+				//var user = await AccountManager.GetUserProgressOrDefaultAsync();
+				//CurrentUser = new User();
+				//CurrentUser = await GetUserProgressOrDefaultAsync() ?? new User();
 	        };
 
             // Register callback to our connection listener
             googleClient.RegisterConnectionCallbacks(connectionListener);
         }
+
+        private static async Task<User> CreateUser() => 
+	        await GetUserProgressOrDefaultAsync() ?? new User();
 
         /// <summary>
 		/// Get intent used to sign in with Google
@@ -150,7 +175,7 @@ namespace CubeQuest.Account
         public static async Task<User> GetUserProgressOrDefaultAsync() => 
 	        User.FromBytes((await snapshotManager.LoadSnapshotAsync()).SnapshotContents.ReadFully());
 
-        public static void ResetUserProgress() => 
+		public static void ResetUserProgress() => 
             CurrentUser = new User();
     }
 
