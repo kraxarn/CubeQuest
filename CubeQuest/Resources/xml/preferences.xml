@@ -81,9 +81,9 @@
 		app:title="Account">
 
 		<Preference
-			app:key="log_out"
-			app:title="Log out"
-			app:summary="Log out and close the app"/>
+			app:key="sign_out"
+			app:title="Sign out"
+			app:summary="Sign out and close the app"/>
 		
 		<Preference
 			app:key="reset_progress"

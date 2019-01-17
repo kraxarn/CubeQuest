@@ -11,6 +11,7 @@ using CubeQuest.Account;
 using CubeQuest.Handler;
 using CubeQuest.ListView.Users;
 using System.Collections.Generic;
+using Environment = System.Environment;
 using Uri = Android.Net.Uri;
 
 namespace CubeQuest.Layout
@@ -98,6 +99,26 @@ namespace CubeQuest.Layout
 
             FindPreference("debug_preferences").PreferenceClick += (sender, args) => 
 	            Alert.ShowSimple(context, "Preferences", $"{Preferences}");
+
+            FindPreference("sign_out").PreferenceClick += (sender, args) =>
+            {
+	            Alert.Build(context)
+		            .SetTitle("Are you sure?")
+		            .SetMessage("You'll need to re-authenticate again next time and your progress may be lost")
+		            .SetPositiveButton("Yes", async (s, a) =>
+		            {
+			            var ok = await AccountManager.SignOut();
+
+			            if (ok)
+				            Environment.Exit(Environment.ExitCode);
+			            else
+				            Alert.ShowSimple(context,
+					            "Couldn't sign out",
+					            "There was an unknown error signing you out, maybe you already signed out?");
+		            })
+		            .SetNegativeButton("No", (IDialogInterfaceOnClickListener)null)
+		            .Show();
+            };
         }
 
         public override void OnStart()
