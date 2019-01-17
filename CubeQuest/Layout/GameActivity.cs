@@ -202,13 +202,13 @@ namespace CubeQuest.Layout
 				}
 			}
 		}
-
+		
 		protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_game);
 
-            firstTime = true;
+			firstTime = true;
 
             // By default, enable auto camera
             autoCamera = true;
@@ -737,7 +737,13 @@ namespace CubeQuest.Layout
             googleMap?.SetMapStyle(MapStyleOptions.LoadRawResourceStyle(this, MapTheme));
 
 			// Enable or disable fullscreen
-            mainView.SystemUiVisibility = (StatusBarVisibility) (preferences.Fullscreen ? SystemUiFlags.HideNavigation | SystemUiFlags.ImmersiveSticky | SystemUiFlags.Fullscreen : 0);
+			mainView.SystemUiVisibility = (StatusBarVisibility) (preferences.Fullscreen ? SystemUiFlags.HideNavigation | SystemUiFlags.ImmersiveSticky | SystemUiFlags.Fullscreen : 0);
+        }
+
+        protected override void OnStop()
+        {
+	        base.OnStop();
+			AccountManager.SaveUserProgress();
         }
 
         protected void a_companionChanged(object sender, EventArgs e)

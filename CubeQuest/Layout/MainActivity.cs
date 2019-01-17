@@ -128,7 +128,7 @@ namespace CubeQuest.Layout
             // Set up asset loader
             AssetLoader.Create(FindViewById(Android.Resource.Id.Content).Width, Assets);
 
-            StartActivity(new Intent(this, typeof(GameActivity)),
+			StartActivity(new Intent(this, typeof(GameActivity)),
 		        ActivityOptions.MakeCustomAnimation(this, Android.Resource.Animation.FadeIn,
 			        Android.Resource.Animation.FadeOut).ToBundle());
 		}

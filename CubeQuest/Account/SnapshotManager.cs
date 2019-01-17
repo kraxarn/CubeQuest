@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CubeQuest.Account
 {
-    public class SnapshotManager
+	public class SnapshotManager
     {
         private readonly GoogleApiClient googleClient;
 
@@ -18,7 +18,7 @@ namespace CubeQuest.Account
 
         public SnapshotManager(GoogleApiClient client) => 
 	        googleClient = client;
-        
+
         public async Task<ISnapshot> LoadSnapshotAsync()
         {
             var result = await OpenSnapshotAsync();
@@ -37,8 +37,8 @@ namespace CubeQuest.Account
         
         private async Task<ISnapshotsOpenSnapshotResult> OpenSnapshotAsync() => 
 	        await GamesClass.Snapshots.OpenAsync(googleClient, CurrentSaveName, true);
-        
-        public async void SaveSnapshotAsync(byte[] data)
+
+		public async void SaveSnapshotAsync(byte[] data)
         {
 	        // Try to open snapshot
 	        var result = await OpenSnapshotAsync();
