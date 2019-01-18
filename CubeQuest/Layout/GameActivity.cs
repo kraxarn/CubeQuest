@@ -137,6 +137,8 @@ namespace CubeQuest.Layout
 		/// </summary>
         private Dictionary<string, TextView> profileStats;
 
+		private TextView[] companionInfos;
+
         private ImageButton[] equippedCubes;
 
         private TextView[] equippedCubeNames;
@@ -590,6 +592,7 @@ namespace CubeQuest.Layout
 			// Update values on opening profile
 			if (enabled)
 			{
+				// Check profile stat views
 				if (profileStats == null)
 				{
 					TextView FindTextView(int id) => 
@@ -605,13 +608,32 @@ namespace CubeQuest.Layout
 					};
 				}
 
+				// Check companion info views
+				if (companionInfos == null)
+				{
+					TextView FindTextView(int id) =>
+						profileView.FindViewById<TextView>(id);
+
+					companionInfos = new[]
+					{
+						FindTextView(Resource.Id.text_companion_info_1),
+						FindTextView(Resource.Id.text_companion_info_2),
+						FindTextView(Resource.Id.text_companion_info_3)
+					};
+				}
+
 				var user = AccountManager.CurrentUser;
 
+				// Set stats
 				profileStats["hp"].Text      = $"{user.HealthPercentage}%";
 				profileStats["attack"].Text  = $"{user.Attack}";
 				profileStats["evasion"].Text = $"{user.Evasion * 100}%";
 				profileStats["level"].Text   = $"Level {user.Level} ({user.ExperienceToNextLevel} xp to next level)";
 				profileStats["armor"].Text   = $"{user.Armor}";
+
+				// Set companion info
+				for (var i = 0; i < companionInfos.Length; i++)
+					companionInfos[i].Text = user.EquippedCompanions[i].Type.ToString();
 			}
 
             animator.Start();
