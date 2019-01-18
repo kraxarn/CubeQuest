@@ -157,6 +157,11 @@
     <AndroidAsset Include="Assets\enemy\alien_pink.webp" />
     <AndroidAsset Include="Assets\enemy\alien_yellow.webp" />
     <AndroidAsset Include="Assets\companion\narwhal.webp" />
+    <AndroidAsset Include="Assets\music\battle.opus" />
+    <AndroidAsset Include="Assets\music\dead.opus" />
+    <AndroidAsset Include="Assets\music\map0.opus" />
+    <AndroidAsset Include="Assets\music\map1.opus" />
+    <AndroidAsset Include="Assets\music\map2.opus" />
     <None Include="Keystore\CubeQuest.jks" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml">
@@ -323,9 +328,7 @@
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\music\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <AndroidResource Include="Resources\layout\view_battle.axml">
       <SubType>Designer</SubType>
