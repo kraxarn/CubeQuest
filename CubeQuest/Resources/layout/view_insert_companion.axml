@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
-              android:orientation="vertical" 
-              android:layout_width="match_parent" 
-              android:layout_height="match_parent"
-              android:background="@color/colorPrimary">
-    
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
     <LinearLayout
         android:id="@+id/companion_slot_1"
         android:layout_width="match_parent"
@@ -13,21 +14,21 @@
         android:gravity="center"
         android:clickable="true"
         android:layout_marginTop="@dimen/fab_margin">
-        
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="@string/slot_1_text"
-                  android:textSize="42sp"/>
-        
-        <ImageView android:id="@+id/slot_1_occupant"
-                   android:layout_height="wrap_content"
-                   android:layout_width="wrap_content"
-                   android:layout_marginStart="@dimen/fab_margin"/>
-        
-        
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/slot_1"
+            android:textSize="42sp"/>
+
+        <ImageView
+            android:id="@+id/slot_1_occupant"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="@dimen/fab_margin"/>
     </LinearLayout>
-    
-        <LinearLayout
+
+    <LinearLayout
         android:id="@+id/companion_slot_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,21 +36,21 @@
         android:orientation="horizontal"
         android:clickable="true"
         android:layout_marginTop="@dimen/fab_margin">
-        
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="@string/slot_2_text"
-                  android:textSize="42sp"/>
-        
-        <ImageView android:id="@+id/slot_2_occupant"
-                   android:layout_height="wrap_content"
-                   android:layout_width="wrap_content"
-                   android:layout_marginStart="@dimen/fab_margin"/>
-        
-        
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/slot_2"
+            android:textSize="42sp"/>
+
+        <ImageView
+            android:id="@+id/slot_2_occupant"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="@dimen/fab_margin"/>
     </LinearLayout>
-    
-        <LinearLayout
+
+    <LinearLayout
         android:id="@+id/companion_slot_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,21 +58,18 @@
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin"
-        android:clickable="true"
-        >
-        
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="@string/slot_3_text"
-                  android:textSize="42sp"/>
-        
-        <ImageView android:id="@+id/slot_3_occupant"
-                   android:layout_height="wrap_content"
-                   android:layout_width="wrap_content"
-                   android:layout_marginStart="@dimen/fab_margin"/>
-        
-        
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/slot_3"
+            android:textSize="42sp"/>
+
+        <ImageView
+            android:id="@+id/slot_3_occupant"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="@dimen/fab_margin"/>
     </LinearLayout>
-    
-    
 </LinearLayout>

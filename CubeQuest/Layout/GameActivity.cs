@@ -1,8 +1,10 @@
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Gms.Location;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
+using Android.Graphics;
 using Android.Locations;
 using Android.OS;
 using Android.Support.Design.Widget;
@@ -20,8 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Android.Content.PM;
-using Android.Graphics;
 
 namespace CubeQuest.Layout
 {
@@ -137,14 +137,21 @@ namespace CubeQuest.Layout
 		/// </summary>
         private Dictionary<string, TextView> profileStats;
 
+		private TextView[] companionInfos;
+
         private ImageButton[] equippedCubes;
 
         private TextView[] equippedCubeNames;
 
         /// <summary>
-        /// If it's day (8-17)
+        /// The range in which we can start a battle (in meters)
         /// </summary>
-        private bool IsDay
+        private int battleRange;
+
+		/// <summary>
+		/// If it's day (8-17)
+		/// </summary>
+		private bool IsDay
         {
 	        get
 	        {
@@ -345,6 +352,9 @@ namespace CubeQuest.Layout
             if (!MainActivity.DebugMode)
 	            FindViewById<LinearLayout>(Resource.Id.layout_debug_tools).Visibility = ViewStates.Gone;
 
+			// So we can manually set a battle range
+			battleRange = preferences.DevBattleRange;
+
 			SetUser();
         }
 
@@ -487,9 +497,8 @@ namespace CubeQuest.Layout
             selectedMarker = marker;
 
             battleInfo.State = BottomSheetBehavior.StateCollapsed;
-
-            int range = 50; //in meters
-            bool isWithinRange = LocationHandler.GetDistance(userLocation.ToLatLng(), marker.Position) < range;
+			
+            var isWithinRange = LocationHandler.GetDistance(userLocation.ToLatLng(), marker.Position) < battleRange;
 			
             battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Enabled = isWithinRange && AccountManager.CurrentUser.IsAlive;
             battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Alpha = isWithinRange && AccountManager.CurrentUser.IsAlive ? 1 : 0.5f;
@@ -583,6 +592,7 @@ namespace CubeQuest.Layout
 			// Update values on opening profile
 			if (enabled)
 			{
+				// Check profile stat views
 				if (profileStats == null)
 				{
 					TextView FindTextView(int id) => 
@@ -598,13 +608,32 @@ namespace CubeQuest.Layout
 					};
 				}
 
+				// Check companion info views
+				if (companionInfos == null)
+				{
+					TextView FindTextView(int id) =>
+						profileView.FindViewById<TextView>(id);
+
+					companionInfos = new[]
+					{
+						FindTextView(Resource.Id.text_companion_info_1),
+						FindTextView(Resource.Id.text_companion_info_2),
+						FindTextView(Resource.Id.text_companion_info_3)
+					};
+				}
+
 				var user = AccountManager.CurrentUser;
 
+				// Set stats
 				profileStats["hp"].Text      = $"{user.HealthPercentage}%";
 				profileStats["attack"].Text  = $"{user.Attack}";
 				profileStats["evasion"].Text = $"{user.Evasion * 100}%";
 				profileStats["level"].Text   = $"Level {user.Level} ({user.ExperienceToNextLevel} xp to next level)";
 				profileStats["armor"].Text   = $"{user.Armor}";
+
+				// Set companion info
+				for (var i = 0; i < companionInfos.Length; i++)
+					companionInfos[i].Text = user.EquippedCompanions[i].Type.ToString();
 			}
 
             animator.Start();

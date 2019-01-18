@@ -11,6 +11,7 @@ using CubeQuest.Account;
 using CubeQuest.Handler;
 using CubeQuest.ListView.Users;
 using System.Collections.Generic;
+using Environment = System.Environment;
 using Uri = Android.Net.Uri;
 
 namespace CubeQuest.Layout
@@ -70,34 +71,43 @@ namespace CubeQuest.Layout
 
 			FindPreference("licenses").PreferenceClick += (sender, args) =>
 				OpenLicenses();
-
-			FindPreference("save_progress").PreferenceClick += (sender, args) => 
-                AccountManager.SaveUserProgress();
-
-			FindPreference("view_progress").PreferenceClick += (sender, args) => 
-				StartActivityForResult(AccountManager.SelectSaveIntent, 9003);
-
-            FindPreference("load_progress").PreferenceClick += (sender, args) => 
-	            Alert.ShowSimple(context, "Progress", AccountManager.CurrentUser.ToString().Replace(',', '\n'));
-
+            
             FindPreference("reset_progress").PreferenceClick += (sender, args) =>
             {
                 Alert.Build(context)
-                    .SetTitle("Are you sure?")
-                    .SetMessage("All your progress and companions collected will be lost!")
-                    .SetPositiveButton("Yes", (s, a) =>
+                    .SetTitle(Resource.String.are_you_sure)
+                    .SetMessage(Resource.String.reset_progress_notice)
+                    .SetPositiveButton(Resource.String.yes, (s, a) =>
                     {
                         AccountManager.ResetUserProgress();
                         Alert.ShowSimple(context, 
-	                        "Progress reset", 
-	                        "It's recommended to restart the app to avoid issues");
-                    })
+	                        GetString(Resource.String.reset_progress_title),
+							GetString(Resource.String.reset_progress_message));
+
+					})
                     .SetNegativeButton("No", (IDialogInterfaceOnClickListener) null)
                     .Show();
             };
 
-            FindPreference("debug_preferences").PreferenceClick += (sender, args) => 
-	            Alert.ShowSimple(context, "Preferences", $"{Preferences}");
+            FindPreference("sign_out").PreferenceClick += (sender, args) =>
+            {
+	            Alert.Build(context)
+		            .SetTitle(Resource.String.are_you_sure)
+		            .SetMessage("You'll need to re-authenticate again next time and your progress may be lost")
+		            .SetPositiveButton("Yes", async (s, a) =>
+		            {
+			            var ok = await AccountManager.SignOut();
+
+			            if (ok)
+				            Environment.Exit(Environment.ExitCode);
+			            else
+				            Alert.ShowSimple(context,
+					            "Couldn't sign out",
+					            "There was an unknown error signing you out, maybe you already signed out?");
+		            })
+		            .SetNegativeButton("No", (IDialogInterfaceOnClickListener)null)
+		            .Show();
+            };
         }
 
         public override void OnStart()
@@ -141,10 +151,10 @@ namespace CubeQuest.Layout
 			var view = LayoutInflater.Inflate(Resource.Layout.view_dialog_credits, null, false);
 			var adapter = BuildUserEntriesAdapter(view, new List<UserEntry>
 			{
-				new UserEntry("developer/dennizlund.webp", "dennizlund", "Designer"),
+				new UserEntry("developer/dennizlund.webp", "dennizlund", "Designer and battle system"),
 				new UserEntry("developer/kraxarn.webp",    "kraxarn",    "Developer and designer"),
 				new UserEntry("developer/tacmotor.webp",   "tacmotor",   "Inventory designer"),
-				new UserEntry("developer/timnnyman.webp",  "TimNNyman",  "Enemy placement and battle system")
+				new UserEntry("developer/timnnyman.webp",  "TimNNyman",  "Enemy placement")
 			});
 			
 			adapter.OnItemClick += itemView =>

@@ -107,6 +107,9 @@ namespace CubeQuest.Account
 			return userProgress != null;
         }
 
+        public static async Task<bool> SignOut() => 
+	        (await Auth.GoogleSignInApi.SignOut(googleClient) as Statuses)?.IsSuccess ?? false;
+
         /// <summary>
 		/// Get intent used to sign in with Google
 		/// </summary>

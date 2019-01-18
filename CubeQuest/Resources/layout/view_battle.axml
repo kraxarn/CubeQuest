@@ -72,10 +72,9 @@
             android:layout_height="wrap_content"
             android:autoSizeTextType="uniform"
             android:gravity="center"
-            android:text="@string/spare_message_text"
+            android:text="@string/spare_message"
             android:textSize="18sp"
-            android:visibility="invisible"
-            />
+            android:visibility="invisible"/>
 
     </LinearLayout>
 
@@ -163,7 +162,7 @@
             android:drawableLeft="@drawable/ic_sword"
             android:backgroundTint="@color/colorPrimaryDark"
             android:padding="16dp"
-            android:text="@string/attack_button_text"/>
+            android:text="@string/attack_button"/>
 
         <Button
             android:id="@+id/button_battle_spare"
@@ -171,7 +170,7 @@
             android:drawableLeft="@drawable/ic_hp"
             android:backgroundTint="@color/colorPrimaryDark"
             android:padding="16dp"
-            android:text="@string/spare_button_text"/>
+            android:text="@string/spare_button"/>
 
         <Button
             android:id="@+id/button_battle_run"
@@ -180,7 +179,7 @@
             android:drawableLeft="@drawable/ic_run"
             android:backgroundTint="@color/colorPrimaryDark"
             android:padding="16dp"
-            android:text="@string/run_button_text"/>
+            android:text="@string/run_button"/>
 
     </GridLayout>
 
