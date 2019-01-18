@@ -768,6 +768,8 @@ namespace CubeQuest.Layout
         {
             base.OnPause();
 
+			MusicManager.Pause();
+
             // Balanced power accuracy wi-fi and cell information to determine location and very rarely gps
             if (locationHandler != null)
             {
@@ -784,6 +786,8 @@ namespace CubeQuest.Layout
         protected override void OnResume()
         {
             base.OnResume();
+
+			MusicManager.Resume();
 
             if (locationHandler != null)
             {
