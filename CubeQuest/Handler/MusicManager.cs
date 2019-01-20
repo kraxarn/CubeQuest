@@ -1,12 +1,13 @@
-﻿using System;
-using Android.Content;
+﻿using Android.Content;
 using Android.Content.Res;
 using Android.Media;
+using Android.OS;
 using Java.IO;
+using System;
 
 namespace CubeQuest.Handler
 {
-    public static class MusicManager
+	public static class MusicManager
     {
         public enum EMusicTrack
         {
@@ -90,12 +91,17 @@ namespace CubeQuest.Handler
                 track += $"{new Random().Next(2)}";
 
             // Try loading the music file
-            if (!TryLoadAsset($"music/{track.ToLower()}.opus", out var file))
+            var filePath = $"music/{track.ToLower()}.opus";
+			if (!TryLoadAsset(filePath, out var file))
                 return;
 
-            // Set file, prepare and play
-            player.SetDataSource(file);
-            player.SetVolume(volume, volume);
+			// Set file, prepare and play
+			if (Build.VERSION.SdkInt >= BuildVersionCodes.M)
+				player.SetDataSource(file);
+			else
+				player.SetDataSource(file.FileDescriptor, file.StartOffset, file.Length);
+
+			player.SetVolume(volume, volume);
             player.PrepareAsync();
             player.Prepared += (sender, args) => player.Start();
         }
@@ -114,9 +120,9 @@ namespace CubeQuest.Handler
                 return;
             }
 
-            CreateMediaPlayer(track.ToString());
+			CreateMediaPlayer(track.ToString());
 
-            playing = track;
+			playing = track;
         }
 
         /// <summary>
