@@ -57,7 +57,7 @@ namespace CubeQuest.Layout
             // If successful, launch game
             AccountManager.OnSuccess += status =>
             {
-				if (CheckSelfPermission(Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
+				if (Build.VERSION.SdkInt >= BuildVersionCodes.M && CheckSelfPermission(Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
 					RequestPermissions(new[]
 					{
 						Manifest.Permission.AccessFineLocation
