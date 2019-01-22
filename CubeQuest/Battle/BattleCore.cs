@@ -26,7 +26,14 @@ namespace CubeQuest.Battle
             Won,
             Lost,
             Ran
-        };
+        }
+
+        private enum EBattleAction
+        {
+			Attack,
+			Spare,
+			Run
+        }
 
         /// <summary>
         /// When the battle ends
@@ -67,6 +74,11 @@ namespace CubeQuest.Battle
 		/// Buttons for all enemies
 		/// </summary>
         private readonly ImageButton[] enemyButtons;
+
+		/// <summary>
+		/// Buttons for different actions
+		/// </summary>
+		private readonly Dictionary<EBattleAction, Button> actionButtons;
 
         public BattleCore(Context context, View view, IEnemy enemy)
         {
@@ -131,9 +143,16 @@ namespace CubeQuest.Battle
             // Load image animators
             EnemyOverlayDrawable = selectedAnimations;
             
+			// Load action buttons
+			actionButtons = new Dictionary<EBattleAction, Button>
+			{
+				{EBattleAction.Attack, view.FindViewById<Button>(Resource.Id.button_battle_attack) },
+				{EBattleAction.Spare,  view.FindViewById<Button>(Resource.Id.button_battle_spare)  },
+				{EBattleAction.Run,    view.FindViewById<Button>(Resource.Id.button_battle_run)    }
+			};
 
             // When clicking attack
-            view.FindViewById<Button>(Resource.Id.button_battle_attack).Click += OnAttackClickEvent;
+            actionButtons[EBattleAction.Attack].Click += OnAttackClickEvent;
 
             void OnAttackClickEvent(object sender, EventArgs arg)
             {
@@ -159,9 +178,9 @@ namespace CubeQuest.Battle
                         break;
                 }
 
-                view.FindViewById<Button>(Resource.Id.button_battle_attack).Click -= OnAttackClickEvent;
-                view.FindViewById<Button>(Resource.Id.button_battle_run).Click    -= OnRunClickEvent;
-                view.FindViewById<Button>(Resource.Id.button_battle_spare).Click  -= OnSpareClickEvent;
+                actionButtons[EBattleAction.Attack].Click -= OnAttackClickEvent;
+                actionButtons[EBattleAction.Spare].Click  -= OnSpareClickEvent;
+				actionButtons[EBattleAction.Run].Click    -= OnRunClickEvent;
             };
             
             // Player attacks animation in battle
@@ -188,7 +207,7 @@ namespace CubeQuest.Battle
             };
 
             // When clicking 'run'
-            view.FindViewById<Button>(Resource.Id.button_battle_run).Click += OnRunClickEvent;
+            actionButtons[EBattleAction.Run].Click += OnRunClickEvent;
 
             void OnRunClickEvent(object sender, EventArgs arg)
             {
@@ -196,8 +215,8 @@ namespace CubeQuest.Battle
                 battleHandler.RunAway();
             }
 
-            // When clicking 'win'
-            view.FindViewById<Button>(Resource.Id.button_battle_spare).Click += OnSpareClickEvent;
+            // When clicking 'spare'
+            actionButtons[EBattleAction.Spare].Click += OnSpareClickEvent;
 
             void OnSpareClickEvent(object sender, EventArgs arg)
             {
@@ -252,9 +271,8 @@ namespace CubeQuest.Battle
 		
         private void ToggleButtons(bool enable)
         {
-            mainView.FindViewById<Button>(Resource.Id.button_battle_attack).Enabled = enable;
-            mainView.FindViewById<Button>(Resource.Id.button_battle_run).Enabled    = enable;
-            mainView.FindViewById<Button>(Resource.Id.button_battle_spare).Enabled  = enable;
+            foreach (var button in actionButtons)
+	            button.Value.Enabled = enable;
 
             foreach (var enemy in EnemyButtons)
                 enemy.Enabled = enable;
