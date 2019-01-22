@@ -119,7 +119,7 @@ namespace CubeQuest.Battle
             ResetEnemies();
 
             // Spare timer
-            Timer timer = new Timer(1200);
+            var timer = new Timer(1200);
 
             // Load 'selected enemy' frames
 			var selectedAnimations = new Drawable[enemyOverlays.Length];
@@ -140,7 +140,7 @@ namespace CubeQuest.Battle
                 if (enemyHealthBars[selectedEnemyIndex].Progress <= 0)
 	                return;
 
-                ButtonsController(mainView, false);
+                ToggleButtons(false);
                 battleHandler.StartAction(selectedEnemyIndex, BattleHandler.EActionType.Attack);
             }
 
@@ -192,8 +192,6 @@ namespace CubeQuest.Battle
 
             void OnRunClickEvent(object sender, EventArgs arg)
             {
-                // Invoke end event
-                //End?.Invoke(EBattleEndType.Ran);
                 AccountManager.CurrentUser.HealthPercentage -= 2;
                 battleHandler.RunAway();
             }
@@ -214,16 +212,14 @@ namespace CubeQuest.Battle
 	                End?.Invoke(EBattleEndType.Won);
                 else
                 {
-                    ButtonsController(mainView, false);
+                    ToggleButtons(false);
                     timer.Start();
                     view.FindViewById<TextView>(Resource.Id.progress_battle_spare_message_text_view).Visibility =
                         ViewStates.Visible;
 
-                    timer.Elapsed += (o, args) =>
-                    {
-                        view.FindViewById<TextView>(Resource.Id.progress_battle_spare_message_text_view).Visibility =
-                            ViewStates.Invisible;
-                    };
+                    timer.Elapsed += (o, args) => 
+	                    view.FindViewById<TextView>(Resource.Id.progress_battle_spare_message_text_view).Visibility = 
+		                    ViewStates.Invisible;
 
                     battleHandler.StartAction(selectedEnemyIndex, BattleHandler.EActionType.Spare);
                 }
@@ -247,22 +243,21 @@ namespace CubeQuest.Battle
 
         private void OnCompanionAnimationEnd(object sender, Animation.AnimationEndEventArgs args)
         {
-	        ButtonsController(mainView, true);
+	        ToggleButtons(true);
 			
 			companionButtons.Select(c => c.Animation).ClearAnimationEndListeners(OnCompanionAnimationEnd);
 
 			enemyButtons.Select(c => c.Animation).ClearAnimationEndListeners(OnCompanionAnimationEnd);
 		}
 		
-        private void ButtonsController(View view, bool turnOn)
+        private void ToggleButtons(bool enable)
         {
-            view.FindViewById<Button>(Resource.Id.button_battle_attack).Enabled = turnOn;
-            view.FindViewById<Button>(Resource.Id.button_battle_run).Enabled    = turnOn;
-            view.FindViewById<Button>(Resource.Id.button_battle_spare).Enabled  = turnOn;
+            mainView.FindViewById<Button>(Resource.Id.button_battle_attack).Enabled = enable;
+            mainView.FindViewById<Button>(Resource.Id.button_battle_run).Enabled    = enable;
+            mainView.FindViewById<Button>(Resource.Id.button_battle_spare).Enabled  = enable;
 
             foreach (var enemy in EnemyButtons)
-                enemy.Enabled = turnOn;
-
+                enemy.Enabled = enable;
         }
 
         private void ResetEnemies()
