@@ -258,10 +258,8 @@ namespace CubeQuest.Battle
             battleHandler.OnEnemyKilled += index => enemyButtons[index].Enabled = enemyButtons[index].Clickable = false;
 
             // Set companion images
-			// TODO: Use companionButtons
-            view.FindViewById<ImageButton>(Resource.Id.image_battle_companion_0).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
-            view.FindViewById<ImageButton>(Resource.Id.image_battle_companion_1).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
-            view.FindViewById<ImageButton>(Resource.Id.image_battle_companion_2).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
+            for (var i = 0; i < companionButtons.Length; i++)
+	            companionButtons[i].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[i]));
 
             AccountManager.CurrentUser.OnHealthChange += health =>
                 playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
