@@ -10,7 +10,8 @@ using CubeQuest.Handler;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Timer = System.Timers.Timer;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CubeQuest.Battle
 {
@@ -135,9 +136,6 @@ namespace CubeQuest.Battle
 
             ResetEnemies();
 
-            // Spare timer
-            var timer = new Timer(1200);
-
             // Load 'selected enemy' frames
 			var selectedAnimations = new Drawable[enemyOverlays.Length];
 
@@ -230,8 +228,8 @@ namespace CubeQuest.Battle
 
             // When clicking 'spare'
             actionButtons[EBattleAction.Spare].Click += OnSpareClickEvent;
-
-            void OnSpareClickEvent(object sender, EventArgs arg)
+			
+			void OnSpareClickEvent(object sender, EventArgs arg)
             {
                 var enemyAverageHp = enemyHealthBars.Average(e => e.Progress);
                 var enemyLevel = enemy.Level;
@@ -244,17 +242,21 @@ namespace CubeQuest.Battle
 	                End?.Invoke(EBattleEndType.Won);
                 else
                 {
+					// Disable buttons
                     ToggleButtons(false);
 
-					// TODO: Use Thread.Sleep
-                    timer.Start();
-                    view.FindViewById<TextView>(Resource.Id.progress_battle_spare_message_text_view).Visibility =
-                        ViewStates.Visible;
+					// Show text
+                    var spareText = view.FindViewById<TextView>(Resource.Id.progress_battle_spare_message_text_view);
+					spareText.Visibility = ViewStates.Visible;
 
-                    timer.Elapsed += (o, args) => 
-	                    view.FindViewById<TextView>(Resource.Id.progress_battle_spare_message_text_view).Visibility = 
-		                    ViewStates.Invisible;
+					// Hide after 2 seconds
+					Task.Run(() =>
+					{
+						Thread.Sleep(2000);
+						spareText.Visibility = ViewStates.Invisible;
+					});
 
+					// Do the rest of the spare stuff (enemy attacking you)
                     battleHandler.StartAction(selectedEnemyIndex, BattleHandler.EActionType.Spare);
                 }
             }
