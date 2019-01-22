@@ -704,7 +704,9 @@ namespace CubeQuest.Layout
 	                                    switch (value[0])
 	                                    {
 											case 'e':
+											case 'E':
 											case 'o':
+											case 'O':
 												return "an";
 
 											default:
