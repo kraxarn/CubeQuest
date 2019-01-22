@@ -18,7 +18,7 @@
         <ProgressBar
             android:id="@+id/battle_health_enemy0"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_weight="1"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginHorizontal="4dp"
@@ -32,7 +32,7 @@
         <ProgressBar
             android:id="@+id/battle_health_enemy1"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_weight="1"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginHorizontal="4dp"
@@ -46,7 +46,7 @@
         <ProgressBar
             android:id="@+id/battle_health_enemy2"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_weight="1"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginHorizontal="4dp"
@@ -159,6 +159,7 @@
         <Button
             android:id="@+id/button_battle_attack"
             android:layout_columnWeight="1"
+            android:layout_gravity="fill"
             android:drawableLeft="@drawable/ic_sword"
             android:backgroundTint="@color/colorPrimaryDark"
             android:padding="16dp"
@@ -167,6 +168,7 @@
         <Button
             android:id="@+id/button_battle_spare"
             android:layout_columnWeight="1"
+            android:layout_gravity="fill"
             android:drawableLeft="@drawable/ic_hp"
             android:backgroundTint="@color/colorPrimaryDark"
             android:padding="16dp"
@@ -176,6 +178,7 @@
             android:id="@+id/button_battle_run"
             android:layout_columnWeight="1"
             android:layout_columnSpan="2"
+            android:layout_gravity="fill"
             android:drawableLeft="@drawable/ic_run"
             android:backgroundTint="@color/colorPrimaryDark"
             android:padding="16dp"
