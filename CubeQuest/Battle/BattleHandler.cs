@@ -1,4 +1,5 @@
-﻿using Android.Widget;
+﻿using System;
+using Android.Widget;
 using CubeQuest.Account;
 using System.Linq;
 using System.Threading;
@@ -31,6 +32,11 @@ namespace CubeQuest.Battle
 
         public event OnAnimationEvent OnAnimation;
 
+		// TODO: This can be removed if passing context as parameter (in constructor)
+        public delegate void OnRunOnUiThreadEvent(Action action);
+
+        public event OnRunOnUiThreadEvent RunOnUiThread;
+
         public delegate void OnEnemyKilledEvent(int index);
 
         public event OnEnemyKilledEvent OnEnemyKilled;
@@ -57,6 +63,7 @@ namespace CubeQuest.Battle
         {
             if (action == EActionType.Spare)
             {
+				// If spare action was called, it failed and enemy attacks
                 battleQueue.Add(new QueueAction(() =>
                 {
                     EnemyAttack(index);
@@ -64,18 +71,17 @@ namespace CubeQuest.Battle
                 }, true));
 
                 battleQueue.Execute();
-
                 return;
             }
 
-            var action1 = new QueueAction(() =>
+			// First the player attacks
+            battleQueue.Add(new QueueAction(() =>
             {
-                PlayerAttack(index);
-                Thread.Sleep(1000);
-            }, true);
+	            PlayerAttack(index);
+	            Thread.Sleep(1000);
+            }, true));
 
-            battleQueue.Add(action1);
-
+			// Then the enemy attacks
             battleQueue.Add(new QueueAction(() =>
             {
                 if (enemyHealthBars[index].Progress <= 0)
@@ -86,13 +92,12 @@ namespace CubeQuest.Battle
             }, true));
 
             battleQueue.Execute();
-            
         }
 
         private void PlayerAttack(int index)
         {
-            enemyHealthBars[index].Progress -= (int)((AccountManager.CurrentUser.Attack / (float)enemy.Health)*100);
-
+            enemyHealthBars[index].Progress -= (int) (AccountManager.CurrentUser.Attack / (float) enemy.Health * 100);
+			
             OnAnimation?.Invoke(EAnimationTarget.Player, index);
 
             if (enemyHealthBars[index].Progress <= 0)
@@ -107,8 +112,13 @@ namespace CubeQuest.Battle
 
         private void KillEnemy(int index)
         {
-            enemies[index].Drawable.SetAlpha(127);
-            enemies[index].Enabled = false;
+			void SetAlpha()
+			{
+				enemies[index].Drawable.SetAlpha(127);
+				enemies[index].Enabled = false;
+			}
+
+			RunOnUiThread?.Invoke(SetAlpha);
         }
 
         private void EnemyAttack(int index)
@@ -117,6 +127,7 @@ namespace CubeQuest.Battle
 
             //if (!AccountManager.CurrentUser.ShouldHit)
             //    return;
+
             var damage = enemy.Attack;
             damage = AccountManager.CurrentUser.GetDamage(damage);
 

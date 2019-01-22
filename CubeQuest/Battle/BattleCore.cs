@@ -1,4 +1,4 @@
-﻿using Android.Content;
+﻿using Android.App;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Views;
@@ -10,11 +10,12 @@ using CubeQuest.Handler;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Timers;
+using System.Threading;
+using Timer = System.Timers.Timer;
 
 namespace CubeQuest.Battle
 {
-    public class BattleCore
+	public class BattleCore
     {
         /// <summary>
         /// Event for when battle ends, used by <see cref="End"/>
@@ -80,13 +81,18 @@ namespace CubeQuest.Battle
 		/// </summary>
 		private readonly Dictionary<EBattleAction, Button> actionButtons;
 
-        public BattleCore(Context context, View view, IEnemy enemy)
+		private readonly Activity context;
+
+        public BattleCore(Activity context, View view, IEnemy enemy)
         {
             // Start battle music
             MusicManager.Play(MusicManager.EMusicTrack.Battle);
 
             // Set view
             mainView = view;
+
+			// Set context
+            this.context = context;
 
             // Companions
             companionButtons = new []
@@ -192,18 +198,18 @@ namespace CubeQuest.Battle
                 switch (target)
                 {
                     case BattleHandler.EAnimationTarget.Player:
+						// TODO: Android 7 and older gets stuck here (enemy shake never happens)!
                         companionButtons[index].StartAnimation(playerAttackAnimation);
-                        enemyButtons[index].StartAnimation(shakeAnimation);
-                        enemyButtons[index].Animation.AnimationEnd += OnCompanionAnimationEnd;
+						enemyButtons[index].StartAnimation(shakeAnimation);
+						enemyButtons[index].Animation.AnimationEnd += OnCompanionAnimationEnd;
 						break;
 
                     case BattleHandler.EAnimationTarget.Enemy:
-                        enemyButtons[index].StartAnimation(enemyAttackAnimation);
-                        companionButtons[index].StartAnimation(shakeAnimation);
-                        companionButtons[index].Animation.AnimationEnd += OnCompanionAnimationEnd;
-                        break;
+	                    enemyButtons[index].StartAnimation(enemyAttackAnimation);
+	                    companionButtons[index].StartAnimation(shakeAnimation);
+						companionButtons[index].Animation.AnimationEnd += OnCompanionAnimationEnd;
+						break;
                 }
-
             };
 
             // When clicking 'run'
@@ -252,12 +258,17 @@ namespace CubeQuest.Battle
             battleHandler.OnEnemyKilled += index => enemyButtons[index].Enabled = enemyButtons[index].Clickable = false;
 
             // Set companion images
+			// TODO: Use companionButtons
             view.FindViewById<ImageButton>(Resource.Id.image_battle_companion_0).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
             view.FindViewById<ImageButton>(Resource.Id.image_battle_companion_1).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
             view.FindViewById<ImageButton>(Resource.Id.image_battle_companion_2).SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
 
             AccountManager.CurrentUser.OnHealthChange += health =>
                 playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
+
+			// Run on ui thread stuff
+			battleHandler.RunOnUiThread += action => 
+				new Thread(() => context.RunOnUiThread(action)).Start();
         }
 
         private void OnCompanionAnimationEnd(object sender, Animation.AnimationEndEventArgs args)
@@ -265,18 +276,22 @@ namespace CubeQuest.Battle
 	        ToggleButtons(true);
 			
 			companionButtons.Select(c => c.Animation).ClearAnimationEndListeners(OnCompanionAnimationEnd);
-
-			enemyButtons.Select(c => c.Animation).ClearAnimationEndListeners(OnCompanionAnimationEnd);
+			enemyButtons.Select(c     => c.Animation).ClearAnimationEndListeners(OnCompanionAnimationEnd);
 		}
 		
         private void ToggleButtons(bool enable)
         {
-            foreach (var button in actionButtons)
-	            button.Value.Enabled = enable;
+	        void SetEnabled()
+	        {
+		        foreach (var button in actionButtons)
+			        button.Value.Enabled = enable;
 
-            foreach (var enemy in EnemyButtons)
-                enemy.Enabled = enable;
-        }
+		        foreach (var enemy in EnemyButtons)
+			        enemy.Enabled = enable;
+			}
+
+	        new Thread(() => context.RunOnUiThread(SetEnabled)).Start();
+		}
 
         private void ResetEnemies()
         {
