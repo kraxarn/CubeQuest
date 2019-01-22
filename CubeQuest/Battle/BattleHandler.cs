@@ -12,8 +12,6 @@ namespace CubeQuest.Battle
 
         private readonly ProgressBar[] enemyHealthBars;
 
-        private ProgressBar playerHealthBar;
-
         private readonly BattleQueue battleQueue;
 
         private IEnemy enemy;
@@ -40,11 +38,10 @@ namespace CubeQuest.Battle
         public void RunAway() => 
             BattleEnd?.Invoke(BattleCore.EBattleEndType.Ran);
 
-        public BattleHandler(ImageButton[] enemies, ProgressBar[] enemyHealthBars, ProgressBar playerHealthBar, IEnemy enemyInfo)
+        public BattleHandler(ImageButton[] enemies, ProgressBar[] enemyHealthBars, IEnemy enemyInfo)
         {
             this.enemies = enemies;
             this.enemyHealthBars = enemyHealthBars;
-            this.playerHealthBar = playerHealthBar;
             this.enemy = enemyInfo;
 
             battleQueue = new BattleQueue();
