@@ -683,65 +683,61 @@ namespace CubeQuest.Layout
             {
                 MusicManager.Play(MusicManager.EMusicTrack.Map);
 
-                new Thread(() =>
+                RunOnUiThread(() =>
                 {
-                    RunOnUiThread(() =>
-                        {
-                            switch (type)
+                    switch (type)
+                    {
+                        case BattleCore.EBattleEndType.Won:
+                            if (selectedMarker != null)
                             {
-                                case BattleCore.EBattleEndType.Won:
-                                    if (selectedMarker != null)
-                                    {
-                                        // TODO: Two different locations and get the same hash code
-                                        MapHandler.Visited.Add(selectedMarker.Position.GetHashCode(), selectedMarker.Position);
-                                        selectedMarker.Remove();
-                                    }
-
-                                    var dialogView = LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
-
-                                    string GetStringPrefix(string value)
-                                    {
-	                                    switch (value[0])
-	                                    {
-											case 'e':
-											case 'E':
-											case 'o':
-											case 'O':
-												return "an";
-
-											default:
-												return "a";
-	                                    }
-                                    }
-
-                                    var companion = CompanionManager.Random;
-                                    dialogView.FindViewById<TextView>(Resource.Id.text_loot_title).Text = 
-	                                    $"You have found {GetStringPrefix(companion.Name)} {companion.Name}!";
-                                    dialogView.FindViewById<ImageView>(Resource.Id.image_loot).SetImageBitmap(AssetLoader.GetCompanionBitmap(companion));
-                                    AccountManager.CurrentUser.AddCompanion(companion);
-
-                                    companionAdapter.NotifyDataSetChanged();
-
-									Alert.ShowSimple(this, $"{companion.Name}!", dialogView);
-
-                                    AccountManager.CurrentUser.AddExperience(10);
-                                    break;
-
-                                case BattleCore.EBattleEndType.Lost:
-									Alert.ShowSimple(this, 
-										"You died!",
-										"You won't be able to attack enemies until you get at least 25% health by walking");
-                                    break;
-
-                                case BattleCore.EBattleEndType.Ran:
-									Alert.ShowSimple(this, 
-										"You ran away!", 
-										"You successfully ran away from the alien, but took some damage");
-                                    break;
+                                // TODO: Two different locations and get the same hash code
+                                MapHandler.Visited.Add(selectedMarker.Position.GetHashCode(), selectedMarker.Position);
+                                selectedMarker.Remove();
                             }
-                        }
-                    );
-                }).Start();
+
+                            var dialogView = LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
+
+                            string GetStringPrefix(string value)
+                            {
+                                switch (value[0])
+                                {
+									case 'e':
+									case 'E':
+									case 'o':
+									case 'O':
+										return "an";
+
+									default:
+										return "a";
+                                }
+                            }
+
+                            var companion = CompanionManager.Random;
+                            dialogView.FindViewById<TextView>(Resource.Id.text_loot_title).Text = 
+                                $"You have found {GetStringPrefix(companion.Name)} {companion.Name}!";
+                            dialogView.FindViewById<ImageView>(Resource.Id.image_loot).SetImageBitmap(AssetLoader.GetCompanionBitmap(companion));
+                            AccountManager.CurrentUser.AddCompanion(companion);
+
+                            companionAdapter.NotifyDataSetChanged();
+
+							Alert.ShowSimple(this, $"{companion.Name}!", dialogView);
+
+                            AccountManager.CurrentUser.AddExperience(10);
+                            break;
+
+                        case BattleCore.EBattleEndType.Lost:
+							Alert.ShowSimple(this, 
+								"You died!",
+								"You won't be able to attack enemies until you get at least 25% health by walking");
+                            break;
+
+                        case BattleCore.EBattleEndType.Ran:
+							Alert.ShowSimple(this, 
+								"You ran away!", 
+								"You successfully ran away from the alien, but took some damage");
+                            break;
+                    }
+                });
 
                 var animator2 = ViewAnimationUtils.CreateCircularReveal(battleView, centerX, centerY, radius, 0f);
                 animator2.AnimationEnd += (o, eventArgs) =>
