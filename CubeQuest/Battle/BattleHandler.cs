@@ -23,7 +23,7 @@ namespace CubeQuest.Battle
         public enum EAnimationTarget { Player, Enemy }
 		
         private bool EnemiesAreDead => 
-            !enemyHealthBars.Any(enemy => enemy.Progress > 0);
+            !enemyHealthBars.Any(e => e.Progress > 0);
 
         public delegate void BattleEndEvent(BattleCore.EBattleEndType type);
 
