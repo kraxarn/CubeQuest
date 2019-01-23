@@ -72,7 +72,7 @@ namespace CubeQuest.Handler
 
 		// Dev
 		public int DevBattleRange => 
-			GetInt("dev_battle_range", 50);
+			GetInt("dev_battle_range", 60);
 
 		private readonly ISharedPreferences prefs;
 
