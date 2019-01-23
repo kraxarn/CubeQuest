@@ -390,7 +390,7 @@ namespace CubeQuest.Battle
     public static class BattleCoreExtensions
     {
         /// <summary>
-        /// Set bitmaps for all specified image buttons
+        /// Set bitmaps for all specified images
         /// </summary>
         public static void SetBitmaps(this IEnumerable<ImageView> buttons, Bitmap bitmap)
         {
@@ -399,7 +399,7 @@ namespace CubeQuest.Battle
         }
 
         /// <summary>
-        /// Set bitmaps for all specified image buttons
+        /// Set drawable for all specified images
         /// </summary>
         public static void SetDrawable(this ImageView[] buttons, Drawable[] drawable)
         {
