@@ -168,11 +168,11 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Assets\AboutAssets.txt" />
+    <AndroidResource Include="Resources\layout\view_item_card.axml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
     <AndroidResource Include="Resources\raw\map_theme_night.json" />
-    <AndroidResource Include="Resources\layout\inventory_layout.axml" />
-    <AndroidResource Include="Resources\layout\view_item_card.axml" />
-    <AndroidResource Include="Resources\layout\view_popup_item.axml" />
-    <AndroidResource Include="Resources\layout\view_popup_layout.axml" />
     <AndroidResource Include="Resources\layout\view_insert_companion.axml" />
     <AndroidResource Include="Resources\raw\map_theme_midnight.json">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
