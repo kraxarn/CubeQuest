@@ -15,7 +15,7 @@ namespace CubeQuest.Battle
 
         private readonly BattleQueue battleQueue;
 
-        private IEnemy enemy;
+        private readonly IEnemy enemy;
         
         public enum EActionType { Attack, Spare }
 
@@ -34,7 +34,7 @@ namespace CubeQuest.Battle
 
 		// TODO: This can be removed if passing context as parameter (in constructor)
         public delegate void OnRunOnUiThreadEvent(Action action);
-
+		
         public event OnRunOnUiThreadEvent RunOnUiThread;
 
         public delegate void OnEnemyKilledEvent(int index);
@@ -44,18 +44,18 @@ namespace CubeQuest.Battle
         public void RunAway() => 
             BattleEnd?.Invoke(BattleCore.EBattleEndType.Ran);
 
-        public BattleHandler(ImageButton[] enemies, ProgressBar[] enemyHealthBars, IEnemy enemyInfo)
+        public BattleHandler(ImageButton[] enemies, ProgressBar[] enemyHealthBars, IEnemy enemy)
         {
             this.enemies = enemies;
             this.enemyHealthBars = enemyHealthBars;
-            this.enemy = enemyInfo;
+            this.enemy = enemy;
 
             battleQueue = new BattleQueue();
 
             battleQueue.OnQueueEnd += () =>
             {
-                foreach (var enemy in enemies)
-                    enemy.Enabled = true;
+                foreach (var e in enemies)
+                    e.Enabled = true;
             };
         }
         
@@ -117,7 +117,7 @@ namespace CubeQuest.Battle
 				enemies[index].Drawable.SetAlpha(127);
 				enemies[index].Enabled = false;
 			}
-
+			
 			RunOnUiThread?.Invoke(SetAlpha);
         }
 

@@ -78,7 +78,7 @@ namespace CubeQuest.Handler
             await client.GetLastLocationAsync();
 
         public bool IsLocationServicesEnabled => 
-            locationManager.IsProviderEnabled(Android.Locations.LocationManager.GpsProvider);
+            locationManager.IsProviderEnabled(LocationManager.GpsProvider);
 
         private static double DegreesToRadians(double degrees) => degrees * Math.PI / 180;
         

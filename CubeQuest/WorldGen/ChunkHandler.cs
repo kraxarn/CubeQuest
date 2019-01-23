@@ -6,46 +6,36 @@ namespace CubeQuest.WorldGen
 {
 	internal class ChunkHandler
     {
-        //(Math.Pow(x1-x2,2)+Math.Pow(y1-y2,2)) < (d*d);
+        // (Math.Pow(x1-x2,2)+Math.Pow(y1-y2,2)) < (d*d);
 
-        public List<PointSpot> WorldPoints { get; private set; }
-        public List<Chunk> WorldChunks { get; private set; }
+        private List<Chunk> WorldChunks { get; }
 
-        public ChunkHandler()
+        public ChunkHandler() => 
+	        WorldChunks = new List<Chunk>();
+
+        private List<PointSpot> LoadChunk(int x, int y) => 
+	        WorldGen.GenerateArea(x * Vars.ChunkXWidth, (x + 1) * Vars.ChunkXWidth, y * Vars.ChunkYHeight, (y + 1) * Vars.ChunkYHeight);
+
+        public void UpdateCoordinate(double lat, double lon)
         {
-            WorldPoints = new List<PointSpot>();
-            WorldChunks = new List<Chunk>();
-        }
+            var chunkXCoordinate = MapCoordinateToLonLat.ConvertLatToChunkX(lat);
+            var chunkYCoordinate = MapCoordinateToLonLat.ConvertLonToChunkY(lon);
 
-        private List<PointSpot> LoadChunk(int x, int y)
-        {
-            return WorldGen.GenerateArea(x * Vars.ChunkXWidth, (x + 1) * Vars.ChunkXWidth, y * Vars.ChunkYHeight, (y + 1) * Vars.ChunkYHeight);
-        }
-
-        public void UpdateCoord(double lat, double lon)
-        {
-            int chunkXCoord = MapCoordToLonLat.ConvertLatToChunkX(lat);
-            int chunkYCoord = MapCoordToLonLat.ConvertLonToChunkY(lon);
-
-
-            int xDis;
-            int yDis;
-
-            for (int i = 0; i < 9; i++)
+            for (var i = 0; i < 9; i++)
             {
-                xDis = -1 + (i % 3);
-                yDis = -1 + (i / 3);
-                int x = chunkXCoord + xDis;
-                int y = chunkYCoord + yDis;
+                var xDis = -1 + i % 3;
+                var yDis = -1 + i / 3;
+
+                var x = chunkXCoordinate + xDis;
+                var y = chunkYCoordinate + yDis;
+
                 if (!WorldChunks.Any(c => c.X == x && c.Y == y))
-                {
-                    WorldChunks.Add(new Chunk(x, y));
-                }
+	                WorldChunks.Add(new Chunk(x, y));
             }
 
-            for (int i = WorldChunks.Count - 1; i >= 0; i--)
+            for (var i = WorldChunks.Count - 1; i >= 0; i--)
             {
-                if (Math.Abs(chunkXCoord - WorldChunks[i].X) > 1 || Math.Abs(chunkYCoord - WorldChunks[i].Y) > 1)
+                if (Math.Abs(chunkXCoordinate - WorldChunks[i].X) > 1 || Math.Abs(chunkYCoordinate - WorldChunks[i].Y) > 1)
                 {
                     WorldChunks[i].Unload();
                     WorldChunks.Remove(WorldChunks[i]);

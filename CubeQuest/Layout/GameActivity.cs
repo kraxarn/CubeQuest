@@ -63,19 +63,10 @@ namespace CubeQuest.Layout
         /// </summary>
         private View mainView;
 
-        /// <summary>
-        /// All markers except the player
-        /// </summary>
-        private Dictionary<LatLng, Marker> markers;
-
 		/// <summary>
 		/// Handles loading chunks for the map
 		/// </summary>
         private ChunkHandler chunkHandler;
-
-		/// <summary>
-		/// TODO
-		/// </summary>
 
 		/// <summary>
 		/// TODO
@@ -126,11 +117,6 @@ namespace CubeQuest.Layout
         /// If the camera should automatically focus on the player on location updates
         /// </summary>
         private bool autoCamera;
-
-        /// <summary>
-        /// Value returned from the achievements intent
-        /// </summary>
-        private const int RcAchievementUi = 9003;
 
 		/// <summary>
 		/// Dictionary with text views for our profile stats
@@ -221,8 +207,6 @@ namespace CubeQuest.Layout
 
             // By default, enable auto camera
             autoCamera = true;
-
-            markers = new Dictionary<LatLng, Marker>();
             
 			preferences = new AppPreferences(this);
             
@@ -316,7 +300,7 @@ namespace CubeQuest.Layout
 
 					Task.Run(() =>
 					{
-						while (true)
+						while (preferences.Fullscreen)
 						{
 							var time = DateTime.Now.ToString("HH:mm");
 							var battery = batteryManager.GetIntProperty((int) BatteryProperty.Capacity);
@@ -400,7 +384,7 @@ namespace CubeQuest.Layout
 			companionRecycler.SetAdapter(companionAdapter);
 			companionRecycler.SetLayoutManager(companionLayoutManager);
 
-			companionAdapter.EquippedCompanionChanged += a_companionChanged;
+			companionAdapter.EquippedCompanionChanged += OnCompanionChanged;
 			
 			/*
 			 * Load chunk loader
@@ -409,7 +393,7 @@ namespace CubeQuest.Layout
 			chunkHandler = new ChunkHandler();
 
 			if (userLocation != null)
-				chunkHandler.UpdateCoord(userLocation.Latitude, userLocation.Longitude);
+				chunkHandler.UpdateCoordinate(userLocation.Latitude, userLocation.Longitude);
 		}
 
         public override void OnEnterAnimationComplete()
@@ -458,7 +442,7 @@ namespace CubeQuest.Layout
         private void Map_CameraChange(object sender, GoogleMap.CameraChangeEventArgs e)
         {
             if (e?.Position?.Target != null)
-                chunkHandler?.UpdateCoord(e.Position.Target.Latitude, e.Position.Target.Longitude);
+                chunkHandler?.UpdateCoordinate(e.Position.Target.Latitude, e.Position.Target.Longitude);
         }
 
         public void SetText(Dictionary<TextView, string> views)
@@ -504,23 +488,6 @@ namespace CubeQuest.Layout
             battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Alpha = isWithinRange && AccountManager.CurrentUser.IsAlive ? 1 : 0.5f;
             
             return true;
-        }
-
-        /// <summary>
-        /// Creates a marker at the specified position
-        /// </summary>
-        private void AddMarker(LatLng latLng, string title, BitmapDescriptor icon)
-        {
-            // Check if marker was already added
-            // TODO: Don't know how slow this will be
-            if (markers.ContainsKey(latLng))
-                return;
-
-            markers.Add(latLng, googleMap.AddMarker(new MarkerOptions()
-                .SetPosition(latLng)
-                .SetTitle(title)
-                .Anchor(0.5f, 0.5f)
-                .SetIcon(icon)));
         }
 
         /// <summary>
@@ -808,16 +775,13 @@ namespace CubeQuest.Layout
 			AccountManager.SaveUserProgress();
         }
 
-        protected void a_companionChanged(object sender, EventArgs e)
+        private void OnCompanionChanged(object sender, EventArgs e)
         {
-            equippedCubes[0].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
-            equippedCubes[1].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
-            equippedCubes[2].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
-
-            equippedCubeNames[0].Text = AccountManager.CurrentUser.EquippedCompanions[0].Name;
-            equippedCubeNames[1].Text = AccountManager.CurrentUser.EquippedCompanions[1].Name;
-            equippedCubeNames[2].Text = AccountManager.CurrentUser.EquippedCompanions[2].Name;
-
+	        for (var i = 0; i < equippedCubes.Length; i++)
+	        {
+		        equippedCubes[i].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[i]));
+		        equippedCubeNames[i].Text = AccountManager.CurrentUser.EquippedCompanions[i].Name;
+			}
         }
     }
 }

@@ -376,15 +376,6 @@ namespace CubeQuest.Battle
             mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy2)
         };
 
-        private Drawable[] EnemyOverlayDrawable
-        {
-	        set
-	        {
-		        for (var i = 0; i < enemyOverlays.Length; i++)
-			        enemyOverlays[i].SetImageDrawable(value[i]);
-			}
-        }
-
         /// <summary>
         /// Set <see cref="SelectedEnemyIndex"/> depending on what enemy is pressed
         /// </summary>
