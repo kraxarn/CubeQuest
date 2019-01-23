@@ -125,22 +125,22 @@
         <ImageView
             android:id="@+id/image_battle_enemy0"
             android:layout_margin="8dp"
-            android:layout_width="256px"
-            android:layout_height="256px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/image_battle_enemy1"
             android:layout_margin="8dp"
-            android:layout_width="256px"
-            android:layout_height="256px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/image_battle_enemy2"
             android:layout_margin="8dp"
-            android:layout_width="256px"
-            android:layout_height="256px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
     </LinearLayout>
