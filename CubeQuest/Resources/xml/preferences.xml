@@ -68,7 +68,7 @@
 		<Preference
 			app:key="version"
 			app:title="Version"
-			app:summary="v1.0-development"/>
+			app:summary=""/>
 
 	</PreferenceCategory>
 

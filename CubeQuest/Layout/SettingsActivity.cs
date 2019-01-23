@@ -26,12 +26,22 @@ namespace CubeQuest.Layout
 			
 			var settings = (SettingsFragment) SupportFragmentManager.FindFragmentById(Resource.Id.fragment_settings);
 			settings.AppContext = this;
+			settings.VersionInfo = VersionInfo;
 
 			FindViewById<FloatingActionButton>(Resource.Id.fab_settings_save).Click += (sender, args) =>
 			{
 				settings.Preferences.Save();
 				Finish();
 			};
+		}
+
+		private (int, string) VersionInfo
+		{
+			get
+			{
+				var info = PackageManager.GetPackageInfo(PackageName, 0);
+				return (info.VersionCode, info.VersionName);
+			}
 		}
 	}
 
@@ -45,6 +55,17 @@ namespace CubeQuest.Layout
 			{
 				context = value;
 				Preferences = new AppPreferences(value);
+			}
+		}
+
+		private string versionName;
+		
+		public (int code, string name) VersionInfo
+		{
+			set
+			{
+				FindPreference("version").Summary = $"v{value.name} ({value.code})";
+				versionName = value.name;
 			}
 		}
 
@@ -64,15 +85,16 @@ namespace CubeQuest.Layout
 			foreach (var key in AppPreferences.PreferenceKeys)
 				FindPreference(key).PreferenceDataStore = Preferences;
 
-			// TODO: Set correct preference summaries here!
-
 			FindPreference("credits").PreferenceClick += (sender, args) => 
 				OpenCredits();
 
 			FindPreference("licenses").PreferenceClick += (sender, args) =>
 				OpenLicenses();
-            
-            FindPreference("reset_progress").PreferenceClick += (sender, args) =>
+
+			FindPreference("version").PreferenceClick += (sender, args) =>
+				OpenAbout();
+
+			FindPreference("reset_progress").PreferenceClick += (sender, args) =>
             {
                 Alert.Build(context)
                     .SetTitle(Resource.String.are_you_sure)
@@ -109,7 +131,7 @@ namespace CubeQuest.Layout
 		            .Show();
             };
         }
-
+		
         public override void OnStart()
         {
 	        base.OnStart();
@@ -184,6 +206,34 @@ namespace CubeQuest.Layout
 					.SetData(Uri.Parse("https://github.com/xamarin/xamarin-android")));
 			
 			Alert.ShowSimple(Context, "Open Source Licenses", view);
+		}
+
+		private void OpenAbout()
+		{
+			var view = LayoutInflater.Inflate(Resource.Layout.view_dialog_credits, null, false);
+
+			view.FindViewById<TextView>(Resource.Id.text_special_thanks).Visibility = ViewStates.Gone;
+
+			var adapter = BuildUserEntriesAdapter(view, new List<UserEntry>
+			{
+				new UserEntry(null,  "Open on Google Play",  "View the store entry"),
+				new UserEntry(null,  "Open on GitHub",       "View the source code")
+			});
+
+			adapter.OnItemClick += itemView =>
+			{
+				var isGooglePlay = itemView.Title.Text.Contains("Google Play");
+
+				var intent = new Intent(Intent.ActionView)
+					.SetData(Uri.Parse(isGooglePlay
+						? $"https://play.google.com/store/apps/details?id={context.PackageName}"
+						: "https://github.com/kraxarn/CubeQuest"))
+					.SetPackage(isGooglePlay ? "com.android.vending" : null);
+
+				StartActivity(intent);
+			};
+
+			Alert.ShowSimple(Context, $"Cube Quest {versionName}", view);
 		}
     }
 }
