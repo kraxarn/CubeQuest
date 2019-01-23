@@ -13,9 +13,6 @@ namespace CubeQuest.WorldGen
         public ChunkHandler() => 
 	        WorldChunks = new List<Chunk>();
 
-        private List<PointSpot> LoadChunk(int x, int y) => 
-	        WorldGen.GenerateArea(x * Vars.ChunkXWidth, (x + 1) * Vars.ChunkXWidth, y * Vars.ChunkYHeight, (y + 1) * Vars.ChunkYHeight);
-
         public void UpdateCoordinate(double lat, double lon)
         {
             var chunkXCoordinate = MapCoordinateToLonLat.ConvertLatToChunkX(lat);
