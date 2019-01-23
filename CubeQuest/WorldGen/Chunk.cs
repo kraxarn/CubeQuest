@@ -1,5 +1,4 @@
-﻿
-using Android.Gms.Maps.Model;
+﻿using Android.Gms.Maps.Model;
 using CubeQuest.Account;
 using CubeQuest.Account.Interface;
 using CubeQuest.Handler;
@@ -18,7 +17,7 @@ namespace CubeQuest.WorldGen
             Load();
         }
 
-        public List<Marker> Markers { get; private set; }
+        public List<Marker> Markers { get; }
 
         public int X;
         public int Y;
@@ -71,14 +70,10 @@ namespace CubeQuest.WorldGen
             //Loop all point look for match then hide
         }
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => 
+	        Markers.GetHashCode();
 
-        public override bool Equals(object obj)
-        {
-            return (obj is Chunk) && ((obj as Chunk).X == X && (obj as Chunk).Y == Y);
-        }
+        public override bool Equals(object obj) => 
+	        obj is Chunk chunk && chunk.X == X && chunk.Y == Y;
     }
 }
