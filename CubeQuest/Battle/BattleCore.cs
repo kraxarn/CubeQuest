@@ -392,7 +392,7 @@ namespace CubeQuest.Battle
         /// <summary>
         /// Set bitmaps for all specified image buttons
         /// </summary>
-        public static void SetBitmaps(this IEnumerable<ImageButton> buttons, Bitmap bitmap)
+        public static void SetBitmaps(this IEnumerable<ImageView> buttons, Bitmap bitmap)
         {
             foreach (var button in buttons)
                 button.SetImageBitmap(bitmap);
