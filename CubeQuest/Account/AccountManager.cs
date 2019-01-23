@@ -33,10 +33,6 @@ namespace CubeQuest.Account
 
         private static GoogleSignInOptions signInOptions;
 
-		private static Context context;
-
-	    public static bool IsConnected => googleClient.IsConnected;
-
 	    /// <summary>
 	    /// Current user signed in
 	    /// </summary>
@@ -56,7 +52,6 @@ namespace CubeQuest.Account
         /// <summary>
         /// Creates account manager and attempts to sign in silently (triggers <see cref="OnSuccess"/> or <see cref="OnFailure"/>
         /// </summary>
-        /// <param name="activity"></param>
 	    public static void Create(AppCompatActivity activity)
 	    {
             // Ignore if it has already been created
@@ -65,9 +60,6 @@ namespace CubeQuest.Account
 
             // Setup connection listener
             var connectionListener = new GoogleConnectionListener();
-
-            // Save main activity for context and stuffs
-	        context = activity;
 
             // Setup sign in options
 	        signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultGamesSignIn)
