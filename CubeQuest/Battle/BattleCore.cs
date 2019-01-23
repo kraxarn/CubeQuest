@@ -144,7 +144,7 @@ namespace CubeQuest.Battle
 				selectedAnimations[i] = AssetLoader.GetAnimatedDrawable(context.Resources, "selected", 2, 400, true);
 
             // Load image animators
-            EnemyOverlayDrawable = selectedAnimations;
+			enemyOverlays.SetDrawable(selectedAnimations);
             
 			// Load action buttons
 			actionButtons = new Dictionary<EBattleAction, Button>
@@ -371,15 +371,15 @@ namespace CubeQuest.Battle
         /// </summary>
         private ImageView[] EnemyImages => new[]
         {
-            mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy0),
-            mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy1),
-            mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy2)
+	        mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy0),
+	        mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy1),
+	        mainView.FindViewById<ImageView>(Resource.Id.image_battle_enemy2)
         };
 
-        /// <summary>
-        /// Set <see cref="SelectedEnemyIndex"/> depending on what enemy is pressed
-        /// </summary>
-        private void CreateEnemyEvents(IReadOnlyList<ImageButton> imageButtons)
+		/// <summary>
+		/// Set <see cref="SelectedEnemyIndex"/> depending on what enemy is pressed
+		/// </summary>
+		private void CreateEnemyEvents(IReadOnlyList<ImageButton> imageButtons)
         {
             imageButtons[0].Click += (sender, args) => SelectedEnemyIndex = 0;
             imageButtons[1].Click += (sender, args) => SelectedEnemyIndex = 1;
@@ -398,7 +398,16 @@ namespace CubeQuest.Battle
                 button.SetImageBitmap(bitmap);
         }
 
-        public static void ClearAnimationEndListeners(this IEnumerable<Animation> animations, EventHandler<Animation.AnimationEndEventArgs> eventHandler)
+        /// <summary>
+        /// Set bitmaps for all specified image buttons
+        /// </summary>
+        public static void SetDrawable(this ImageView[] buttons, Drawable[] drawable)
+        {
+	        for (var i = 0; i < buttons.Length; i++)
+		        buttons[i].SetImageDrawable(drawable[i]);
+        }
+
+		public static void ClearAnimationEndListeners(this IEnumerable<Animation> animations, EventHandler<Animation.AnimationEndEventArgs> eventHandler)
         {
 	        foreach (var animation in animations)
 	        {
