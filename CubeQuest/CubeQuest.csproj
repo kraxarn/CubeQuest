@@ -115,7 +115,7 @@
     <Compile Include="ListView\Item\ItemViewHolder.cs" />
     <Compile Include="WorldGen\Chunk.cs" />
     <Compile Include="WorldGen\ChunkHandler.cs" />
-    <Compile Include="WorldGen\MapCoordToLonLat.cs" />
+    <Compile Include="WorldGen\MapCoordinateToLonLat.cs" />
     <Compile Include="WorldGen\MapHandler.cs" />
     <Compile Include="WorldGen\Perlin.cs" />
     <Compile Include="WorldGen\PointSpot.cs" />

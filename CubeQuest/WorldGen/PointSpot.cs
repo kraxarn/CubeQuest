@@ -15,8 +15,8 @@ namespace CubeQuest.WorldGen
         public int Y { get; set; }
         public double Value { get; set; }
 
-        public double Lat => MapCoordToLonLat.CalcLat(X);
-        public double Lon => MapCoordToLonLat.CalcLon(Y);
+        public double Lat => MapCoordinateToLonLat.CalcLat(X);
+        public double Lon => MapCoordinateToLonLat.CalcLon(Y);
 
         public LatLng ToLatLng() => 
 	        new LatLng(Lat, Lon);
