@@ -11,7 +11,7 @@ namespace CubeQuest.WorldGen
 			double amplitude = 1;
 			for (int i = 0; i < octaves; i++)
 			{
-				total += perlin(x * frequency, y * frequency, z * frequency) * amplitude;
+				total += GetPerlin(x * frequency, y * frequency, z * frequency) * amplitude;
 
 				amplitude *= persistence;
 				frequency *= 2;
@@ -21,13 +21,13 @@ namespace CubeQuest.WorldGen
 		}
 
         /*
-		private static readonly int[] permutation =
+		private static readonly int[] PermutationTable =
 		{
 			56, 100, 32, 169, 80, 114, 37, 38, 226, 69, 224, 3, 94, 253, 29, 149, 109, 13, 231, 28, 143, 15, 150, 160, 108, 55, 154, 118, 245, 36, 20, 199, 236, 163, 58, 195, 148, 213, 161, 131, 5, 99, 142, 196, 52, 215, 237, 50, 152, 68, 180, 197, 85, 186, 113, 6, 63, 21, 218, 81, 23, 79, 212, 210, 175, 78, 238, 127, 10, 168, 98, 140, 16, 12, 223, 17, 130, 254, 174, 91, 240, 171, 19, 222, 139, 198, 255, 39, 201, 26, 84, 225, 103, 173, 153, 95, 214, 252, 96, 111, 209, 71, 135, 47, 251, 194, 247, 54, 2, 241, 235, 73, 11, 30, 105, 138, 46, 176, 220, 145, 167, 230, 8, 157, 89, 250, 242, 24, 137, 115, 83, 206, 82, 147, 162, 132, 129, 188, 40, 221, 216, 66, 155, 134, 34, 93, 62, 124, 205, 97, 192, 25, 166, 92, 104, 59, 106, 117, 14, 189, 42, 33, 158, 217, 57, 227, 49, 200, 18, 193, 0, 48, 185, 9, 65, 70, 229, 133, 122, 232, 187, 208, 72, 119, 246, 211, 165, 172, 233, 41, 35, 181, 177, 234, 243, 121, 170, 151, 136, 244, 88, 76, 86, 141, 228, 207, 31, 43, 107, 27, 239, 249, 146, 1, 51, 156, 179, 182, 44, 7, 125, 164, 202, 120, 203, 67, 112, 191, 61, 248, 123, 219, 144, 87, 190, 45, 74, 53, 116, 126, 4, 110, 159, 90, 184, 22, 60, 102, 204, 183, 128, 101, 178, 77, 75, 64
 		};
         */
 
-        private static readonly int[] permutation = { 151,160,137,91,90,15,					// Hash lookup table as defined by Ken Perlin.  This is a randomly
+        private static readonly int[] PermutationTable = { 151,160,137,91,90,15,					// Hash lookup table as defined by Ken Perlin.  This is a randomly
 		    131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,	// arranged array of all numbers from 0-255 inclusive.
 		    190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
             88,237,149,56,87,174,20,125,136,171,168, 68,175,74,165,71,134,139,48,27,166,
@@ -45,18 +45,18 @@ namespace CubeQuest.WorldGen
         public static void UseSeed(int seed)
         {
             Random r = new Random(seed);
-            int n = permutation.Length;
+            int n = PermutationTable.Length;
             while (n > 1)
             {
                 int k = r.Next(n--);
-                int temp = permutation[n];
-                permutation[n] = permutation[k];
-                permutation[k] = temp;
+                int temp = PermutationTable[n];
+                PermutationTable[n] = PermutationTable[k];
+                PermutationTable[k] = temp;
             }
             Permutation();
         }
 
-		private static readonly int[] P;                                                    // Doubled permutation to avoid overflow
+		private static readonly int[] P;                                                    // Doubled PermutationTable to avoid overflow
 
 		static Perlin()
 		{
@@ -68,11 +68,11 @@ namespace CubeQuest.WorldGen
         {
             for (int x = 0; x < 512; x++)
             {
-                P[x] = permutation[x % 256];
+                P[x] = PermutationTable[x % 256];
             }
         }
 
-		public static double perlin(double x, double y, double z)
+		public static double GetPerlin(double x, double y, double z)
 		{
 			int xi = (int)x & 255;                              // Calculate the "unit cube" that the point asked will be located in
 			int yi = (int)y & 255;                              // The left bound is ( |_x_|,|_y_|,|_z_| ) and the right bound is that
