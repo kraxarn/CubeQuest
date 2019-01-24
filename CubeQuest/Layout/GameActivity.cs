@@ -326,7 +326,11 @@ namespace CubeQuest.Layout
             battleInfo = BottomSheetBehavior.From(battleInfoView);
             battleInfo.State = BottomSheetBehavior.StateHidden;
 
-            battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Click +=
+            // Avoid clicking through battle info view
+            battleInfoView.Touch += (sender, args) =>
+	            args.Handled = true;
+
+			battleInfoView.FindViewById<Button>(Resource.Id.button_battle_info_fight).Click +=
                 (sender, args) => StartBattle();
 
 			// Add auto camera toggle
@@ -410,8 +414,12 @@ namespace CubeQuest.Layout
 
             map.CameraChange += Map_CameraChange;
 
-            // Disable scrolling
-            if (!MainActivity.DebugMode)
+			// Hide battle info when clicking on the map
+			map.MapClick += (sender, args) => 
+				battleInfo.State = BottomSheetBehavior.StateHidden;
+
+			// Disable scrolling
+			if (!MainActivity.DebugMode)
             {
                 googleMap.UiSettings.ScrollGesturesEnabled = false;
                 googleMap.UiSettings.ZoomGesturesEnabled = false;
