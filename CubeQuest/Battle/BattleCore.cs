@@ -265,7 +265,15 @@ namespace CubeQuest.Battle
             CreateEnemyEvents(enemyButtons);
 
             // When a enemy dies the button can no longer be clicked.
-            battleHandler.OnEnemyKilled += index => enemyButtons[index].Enabled = enemyButtons[index].Clickable = false;
+            battleHandler.OnEnemyKilled += index =>
+            {
+				// Disable clicking of enemy again
+	            enemyButtons[index].Enabled = enemyButtons[index].Clickable = false;
+
+				// Highlight the next enemy
+				context.RunOnUiThread(() => 
+					SelectedEnemyIndex = (SelectedEnemyIndex + 1) % enemyButtons.Length);
+            };
 
             // Set companion images
             for (var i = 0; i < companionButtons.Length; i++)
