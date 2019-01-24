@@ -1,13 +1,12 @@
-﻿using System;
-using Android.Widget;
+﻿using Android.Widget;
 using CubeQuest.Account;
+using CubeQuest.Account.Interface;
 using System.Linq;
 using System.Threading;
-using CubeQuest.Account.Interface;
 
 namespace CubeQuest.Battle
 {
-    public class BattleHandler
+	public class BattleHandler
     {
         private readonly ImageButton[] enemies;
 
@@ -31,11 +30,6 @@ namespace CubeQuest.Battle
         public delegate void OnAnimationEvent(EAnimationTarget target, int index);
 
         public event OnAnimationEvent OnAnimation;
-
-		// TODO: This can be removed if passing context as parameter (in constructor)
-        public delegate void OnRunOnUiThreadEvent(Action action);
-		
-        public event OnRunOnUiThreadEvent RunOnUiThread;
 
         public delegate void OnEnemyKilledEvent(int index);
 
@@ -110,16 +104,12 @@ namespace CubeQuest.Battle
                 BattleEnd?.Invoke(BattleCore.EBattleEndType.Won);
         }
 
-        private void KillEnemy(int index)
-        {
-			void SetAlpha()
-			{
-				enemies[index].Drawable.SetAlpha(127);
-				enemies[index].Enabled = false;
-			}
-			
-			RunOnUiThread?.Invoke(SetAlpha);
-        }
+        private void KillEnemy(int index) =>
+	        enemies[index].Post(() =>
+	        {
+		        enemies[index].Drawable.SetAlpha(127);
+		        enemies[index].Enabled = false;
+	        });
 
         private void EnemyAttack(int index)
         {

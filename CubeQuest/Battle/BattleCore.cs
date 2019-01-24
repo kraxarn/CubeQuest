@@ -273,9 +273,6 @@ namespace CubeQuest.Battle
 
             AccountManager.CurrentUser.OnHealthChange += health =>
                 playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
-
-			// Run on ui thread stuff
-			battleHandler.RunOnUiThread += context.RunOnUiThread;
         }
 
         private void OnCompanionAnimationEnd(object sender, Animation.AnimationEndEventArgs args)
