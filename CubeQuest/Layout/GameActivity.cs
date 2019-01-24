@@ -544,8 +544,11 @@ namespace CubeQuest.Layout
                 fabUser.Show();
             }
 
-            // Starting/ending point
-            var centerX = fabUser.Left + fabUser.Width / 2;
+            // Hide battle info
+            battleInfo.State = BottomSheetBehavior.StateHidden;
+
+			// Starting/ending point
+			var centerX = fabUser.Left + fabUser.Width / 2;
             var centerY = fabUser.Top + fabUser.Height / 2;
 
             // Button radius
