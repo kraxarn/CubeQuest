@@ -33,18 +33,6 @@ namespace CubeQuest.Account
         public List<ICompanion> EquippedCompanions { get; private set; }
 
         /// <summary>
-        /// Total number of equipped companions (max 3)
-        /// </summary>
-        public int EquippedCompanionCount =>
-            EquippedCompanions.Count;
-
-        /// <summary>
-        /// Total number of companions in our inventory
-        /// </summary>
-        public int CompanionCount =>
-            Companions.Count;
-
-        /// <summary>
         /// Add experience to the user
         /// </summary>
         public void AddExperience(int amount) =>
@@ -143,7 +131,6 @@ namespace CubeQuest.Account
         
         /// <summary>
         /// User's maximum health
-        /// TODO
         /// </summary>
         public int MaxHealth
         {
