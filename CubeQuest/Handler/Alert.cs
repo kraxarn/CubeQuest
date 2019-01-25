@@ -17,6 +17,11 @@ namespace CubeQuest.Handler
 				.SetTitle(title)
 				.SetPositiveButton("OK", (IDialogInterfaceOnClickListener) null);
 
+		private static AlertDialog.Builder BuildSimple(Context context, int titleResource) =>
+			Build(context)
+				.SetTitle(titleResource)
+				.SetPositiveButton("OK", (IDialogInterfaceOnClickListener)null);
+
 		/// <summary>
 		/// Builds a simple alert dialog and shows it to the user
 		/// </summary>
@@ -24,10 +29,17 @@ namespace CubeQuest.Handler
 			BuildSimple(context, title)
 				.SetMessage(message)
 				.Show();
-
+		
 		public static void ShowSimple(Context context, string title, View view) =>
 			BuildSimple(context, title)
 				.SetView(view)
 				.Show();
+
+		public static void ShowSimple(Context context, int titleResource, View view)
+		{
+			BuildSimple(context, titleResource)
+				.SetView(view)
+				.Show();
+		}
 	}
 }
