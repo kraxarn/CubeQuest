@@ -175,6 +175,8 @@ namespace CubeQuest.Account
 
                 if (e > 1f)
                     e = 1f;
+				else if (e < 0)
+	                e = 0f;
 
                 return e;
             }
