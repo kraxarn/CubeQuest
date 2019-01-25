@@ -453,12 +453,6 @@ namespace CubeQuest.Layout
                 chunkHandler?.UpdateCoordinate(e.Position.Target.Latitude, e.Position.Target.Longitude);
         }
 
-        public void SetText(Dictionary<TextView, string> views)
-        {
-	        foreach (var (key, value) in views)
-		        key.Text = value;
-        }
-
         public bool OnMarkerClick(Marker marker)
         {
             // Ignore player
