@@ -222,7 +222,9 @@ namespace CubeQuest.Battle
 
             void OnRunClickEvent(object sender, EventArgs arg)
             {
-                AccountManager.CurrentUser.HealthPercentage -= 2;
+				// Set health to 98% of before
+				AccountManager.CurrentUser.Health = (int) (AccountManager.CurrentUser.Health * 0.98f);
+
                 battleHandler.RunAway();
             }
 
