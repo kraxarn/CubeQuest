@@ -43,6 +43,8 @@
 	<string name="spare_button">Spare</string>
 	<string name="run_button">Run</string>
 
+	<string name="victory">Victory!</string>
+
 	<!-- Enemies -->
 	<string name="alien_beige_name">Beige Alien</string>
 	<string name="alien_beige_info">An alien that\'s beige</string>

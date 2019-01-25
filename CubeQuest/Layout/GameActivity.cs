@@ -699,7 +699,7 @@ namespace CubeQuest.Layout
 							companionAdapter.NotifyDataSetChanged();
 
 							RunOnUiThread(() => 
-								Alert.ShowSimple(this, $"{companion.Name}!", dialogView));
+								Alert.ShowSimple(this, Resource.String.victory, dialogView));
 
 							AccountManager.CurrentUser.AddExperience(10);
 							break;
