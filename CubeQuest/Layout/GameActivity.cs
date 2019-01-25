@@ -663,62 +663,61 @@ namespace CubeQuest.Layout
                 {
                     battleView.Visibility = ViewStates.Invisible;
                     fabUser.Show();
-
-					RunOnUiThread(() =>
+					
+					switch (type)
 					{
-						switch (type)
-						{
-							case BattleCore.EBattleEndType.Won:
-								if (selectedMarker != null)
+						case BattleCore.EBattleEndType.Won:
+							if (selectedMarker != null)
+							{
+								MapHandler.Visited.Add(selectedMarker.Position.GetHashCode(), selectedMarker.Position);
+								selectedMarker.Remove();
+							}
+
+							var dialogView = LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
+
+							string GetStringPrefix(string value)
+							{
+								switch (value[0])
 								{
-									// TODO: Two different locations and get the same hash code
-									MapHandler.Visited.Add(selectedMarker.Position.GetHashCode(), selectedMarker.Position);
-									selectedMarker.Remove();
+									case 'e':
+									case 'E':
+									case 'o':
+									case 'O':
+										return "an";
+
+									default:
+										return "a";
 								}
+							}
 
-								var dialogView = LayoutInflater.Inflate(Resource.Layout.view_dialog_loot, null);
+							var companion = CompanionManager.Random;
+							dialogView.FindViewById<TextView>(Resource.Id.text_loot_title).Text =
+								$"You have found {GetStringPrefix(companion.Name)} {companion.Name}!";
+							dialogView.FindViewById<ImageView>(Resource.Id.image_loot).SetImageBitmap(AssetLoader.GetCompanionBitmap(companion));
+							AccountManager.CurrentUser.AddCompanion(companion);
 
-								string GetStringPrefix(string value)
-								{
-									switch (value[0])
-									{
-										case 'e':
-										case 'E':
-										case 'o':
-										case 'O':
-											return "an";
+							companionAdapter.NotifyDataSetChanged();
 
-										default:
-											return "a";
-									}
-								}
+							RunOnUiThread(() => 
+								Alert.ShowSimple(this, $"{companion.Name}!", dialogView));
 
-								var companion = CompanionManager.Random;
-								dialogView.FindViewById<TextView>(Resource.Id.text_loot_title).Text =
-									$"You have found {GetStringPrefix(companion.Name)} {companion.Name}!";
-								dialogView.FindViewById<ImageView>(Resource.Id.image_loot).SetImageBitmap(AssetLoader.GetCompanionBitmap(companion));
-								AccountManager.CurrentUser.AddCompanion(companion);
+							AccountManager.CurrentUser.AddExperience(10);
+							break;
 
-								companionAdapter.NotifyDataSetChanged();
-
-								Alert.ShowSimple(this, $"{companion.Name}!", dialogView);
-
-								AccountManager.CurrentUser.AddExperience(10);
-								break;
-
-							case BattleCore.EBattleEndType.Lost:
+						case BattleCore.EBattleEndType.Lost:
+							RunOnUiThread(() =>
 								Alert.ShowSimple(this,
 									"You died!",
-									"You won't be able to attack enemies until you get at least 25% health by walking");
-								break;
+									"You won't be able to attack enemies until you get at least 25% health by walking"));
+							break;
 
-							case BattleCore.EBattleEndType.Ran:
+						case BattleCore.EBattleEndType.Ran:
+							RunOnUiThread(() => 
 								Alert.ShowSimple(this,
 									"You ran away!",
-									"You successfully ran away from the alien, but took some damage");
-								break;
-						}
-					});
+									"You successfully ran away from the alien, but took some damage"));
+							break;
+					}
 				};
                 animator2.Start();
             };
