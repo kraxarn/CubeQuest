@@ -395,7 +395,7 @@ namespace CubeQuest.Layout
 			companionRecycler.SetAdapter(companionAdapter);
 			companionRecycler.SetLayoutManager(companionLayoutManager);
 
-			companionAdapter.EquippedCompanionChanged += OnCompanionChanged;
+			companionAdapter.EquippedCompanionChanged += CompanionChanged;
 			
 			/*
 			 * Load chunk loader
@@ -789,7 +789,7 @@ namespace CubeQuest.Layout
 			AccountManager.SaveUserProgress();
         }
 
-        private void OnCompanionChanged(object sender, EventArgs e)
+        private void CompanionChanged(object sender, EventArgs e)
         {
 	        for (var i = 0; i < equippedCubes.Length; i++)
 	        {
