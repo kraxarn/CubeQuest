@@ -45,11 +45,6 @@
 			app:title="Music Volume"
 			app:defaultValue="25"/>
 
-		<SeekBarPreference
-			app:key="sound_volume"
-			app:title="Sound Volume"
-			app:defaultValue="25"/>
-
 	</PreferenceCategory>
 
 	<PreferenceCategory
