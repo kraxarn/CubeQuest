@@ -27,8 +27,7 @@ namespace CubeQuest.Handler
 				"background_updates",
 				"gps_enabled",
 				// Audio
-				"music_volume",
-				"sound_volume"
+				"music_volume"
 			};
 
 		// Appearance
