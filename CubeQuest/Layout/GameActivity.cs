@@ -213,9 +213,9 @@ namespace CubeQuest.Layout
             // Get main view
             mainView = FindViewById<CoordinatorLayout>(Resource.Id.layout_game);
             mainView.Visibility = ViewStates.Invisible;
-            
-            // Get last known location
-            locationHandler = new LocationHandler(this);
+
+			// Get last known location
+			locationHandler = new LocationHandler(this);
             userLocation = await locationHandler.GetLastKnownLocationAsync();
 
             // Get map and listen when it's ready
@@ -365,8 +365,15 @@ namespace CubeQuest.Layout
 			AccountManager.CurrentUser.OnHealthChange += health =>
 				healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
 
-			// When you die the health bar and heart is set.
-			AccountManager.CurrentUser.OnDeadChange += isAlive => healthBar.Alpha = healthBarHeart.Alpha = isAlive ? 1f : 0.5f;
+			// When the player died
+			AccountManager.CurrentUser.OnDeadChange += isAlive =>
+			{
+				// Update health bar alpha
+				healthBar.Alpha = healthBarHeart.Alpha = isAlive ? 1f : 0.5f;
+
+				// Play map or dead music depending on if we died or not
+				MusicManager.Play(isAlive ? MusicManager.EMusicTrack.Map : MusicManager.EMusicTrack.Dead);
+			};
 
 			// Set name on profile
 			profileView.FindViewById<TextView>(Resource.Id.textProfileName).Text = AccountManager.Name;
@@ -761,7 +768,7 @@ namespace CubeQuest.Layout
 
 			MusicManager.Resume();
 
-            if (locationHandler != null)
+			if (locationHandler != null)
             {
 	            locationHandler.LocationPriority = LocationRequest.PriorityHighAccuracy;
 
