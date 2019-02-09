@@ -766,6 +766,7 @@ namespace CubeQuest.Layout
         {
             base.OnResume();
 
+            MusicManager.Volume = preferences.MusicVolume / 100f;
 			MusicManager.Resume();
 
 			if (locationHandler != null)
