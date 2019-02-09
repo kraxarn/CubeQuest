@@ -90,8 +90,8 @@ namespace CubeQuest.Handler
 		{
 			var builder = new StringBuilder();
 
-			foreach (var pair in KeyValuePairs)
-				builder.AppendLine($"{pair.Key}={pair.Value}");
+			foreach (var (key, value) in KeyValuePairs)
+				builder.AppendLine($"{key}={value}");
 
 			return builder.ToString();
 		}
