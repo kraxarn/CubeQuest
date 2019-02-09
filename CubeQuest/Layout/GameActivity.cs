@@ -351,11 +351,11 @@ namespace CubeQuest.Layout
 		/// </summary>
 		private async void SetUser()
 		{
-			// Update music (if we're dead for example)
-			PlayMusic();
-
 			// Try to get our user
 			await AccountManager.LoadCurrentUser();
+
+			// Update music (if we're dead for example)
+			PlayMusic();
 
 			// Get health bar and heart
 			var healthBar = FindViewById<ProgressBar>(Resource.Id.barHealth);
