@@ -351,6 +351,9 @@ namespace CubeQuest.Layout
 		/// </summary>
 		private async void SetUser()
 		{
+			// Update music (if we're dead for example)
+			PlayMusic();
+
 			// Try to get our user
 			await AccountManager.LoadCurrentUser();
 
@@ -372,7 +375,7 @@ namespace CubeQuest.Layout
 				healthBar.Alpha = healthBarHeart.Alpha = isAlive ? 1f : 0.5f;
 
 				// Play map or dead music depending on if we died or not
-				MusicManager.Play(isAlive ? MusicManager.EMusicTrack.Map : MusicManager.EMusicTrack.Dead);
+				PlayMusic();
 			};
 
 			// Set name on profile
@@ -663,9 +666,9 @@ namespace CubeQuest.Layout
 
             battle.End += type =>
             {
-                MusicManager.Play(MusicManager.EMusicTrack.Map);
-				
-                var animator2 = ViewAnimationUtils.CreateCircularReveal(battleView, centerX, centerY, radius, 0f);
+				PlayMusic();
+
+				var animator2 = ViewAnimationUtils.CreateCircularReveal(battleView, centerX, centerY, radius, 0f);
                 animator2.AnimationEnd += (o, eventArgs) =>
                 {
                     battleView.Visibility = ViewStates.Invisible;
@@ -733,7 +736,13 @@ namespace CubeQuest.Layout
             animator.Start();
         }
 
-        public override void OnBackPressed()
+		/// <summary>
+		/// Plays the correct music depending on if we're dead or not
+		/// </summary>
+        private void PlayMusic() => 
+			MusicManager.Play(AccountManager.CurrentUser.IsAlive ? MusicManager.EMusicTrack.Map : MusicManager.EMusicTrack.Dead);
+
+		public override void OnBackPressed()
         {
             // Hide battle info
             battleInfo.State = BottomSheetBehavior.StateHidden;
