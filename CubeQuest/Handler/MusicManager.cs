@@ -96,7 +96,7 @@ namespace CubeQuest.Handler
                 return;
 
 			// Set file, prepare and play
-			if (Build.VERSION.SdkInt >= BuildVersionCodes.M)
+			if (Build.VERSION.SdkInt >= BuildVersionCodes.N)
 				player.SetDataSource(file);
 			else
 				player.SetDataSource(file.FileDescriptor, file.StartOffset, file.Length);
