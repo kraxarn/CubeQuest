@@ -666,6 +666,7 @@ namespace CubeQuest.Layout
 
             battle.End += type =>
             {
+				AccountManager.SaveUserProgress();
 				PlayMusic();
 
 				var animator2 = ViewAnimationUtils.CreateCircularReveal(battleView, centerX, centerY, radius, 0f);
