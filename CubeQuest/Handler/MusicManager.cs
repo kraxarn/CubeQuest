@@ -88,7 +88,7 @@ namespace CubeQuest.Handler
 
             // Randomize map theme
             if (track == "Map")
-                track += $"{new Random().Next(2)}";
+                track += $"{new Random().Next(3)}";
 
             // Try loading the music file
             var filePath = $"music/{track.ToLower()}.opus";
