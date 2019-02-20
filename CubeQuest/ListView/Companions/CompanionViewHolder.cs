@@ -44,10 +44,8 @@ namespace CubeQuest.ListView.Companions
             };
 
 			// Clicking on item
-            SelectablePart.Click += (sender, args) =>
-            {
+            SelectablePart.Click += (sender, args) => 
 	            Click?.Invoke(companionView);
-            };
 		}
 	}
 }
