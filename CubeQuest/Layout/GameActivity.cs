@@ -268,7 +268,7 @@ namespace CubeQuest.Layout
             profileView.FindViewById<ImageButton>(Resource.Id.button_settings).Click += (sender, args) => 
 	            StartActivity(new Intent(this, typeof(SettingsActivity)));
 
-            equippedCubes = new ImageButton[3];
+            equippedCubes     = new ImageButton[3];
             equippedCubeNames = new TextView[3];
 
             equippedCubes[0] = profileView.FindViewById<ImageButton>(Resource.Id.inventory_companion_1);
