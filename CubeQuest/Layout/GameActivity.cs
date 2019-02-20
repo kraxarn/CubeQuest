@@ -467,10 +467,7 @@ namespace CubeQuest.Layout
         {
             // Ignore player
             if (marker.Tag?.ToString() == "player")
-            {
-				ToggleProfile(true);
 	            return true;
-            }
 
             if (marker.Tag is EnemyTag tag)
             {
