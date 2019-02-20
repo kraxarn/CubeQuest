@@ -37,8 +37,6 @@ namespace CubeQuest.ListView.Companions
 
         private CompanionViewHolder companionHolder;
 
-        private AlertDialog itemPopupDialog;
-
         public event EventHandler EquippedCompanionChanged;
 
 		public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
@@ -71,39 +69,34 @@ namespace CubeQuest.ListView.Companions
             };
             viewHolder.SelectablePart.Click += (sender, e) =>
             {
-                if (itemPopupDialog == null)
-                {
-                    itemPopupDialog = new AlertDialog.Builder(parentGroup)
-                        .SetView(companionInsertView)
-                        .SetPositiveButton("Apply", (o, ee) =>
+                new AlertDialog.Builder(parentGroup, Resource.Style.AlertDialogStyle)
+                    .SetView(companionInsertView)
+                    .SetPositiveButton("Apply", (o, ee) =>
+                    {
+                        /*
+                         Insert code that makes the users choice of item from the
+                         list become their selected equipment
+                        */
+                        if (selectedSlot >= 0 && selectedSlot < 3)
                         {
-                            /*
-                             Insert code that makes the users choice of item from the
-                             list become their selected equipment
-                            */
-                            if (selectedSlot >= 0 && selectedSlot < 3)
-                            {
-                                ICompanion tempEquip = AccountManager.CurrentUser.EquippedCompanions[selectedSlot];
-                                AccountManager.CurrentUser.EquippedCompanions[selectedSlot] = GetCompanion(position);
-                                companions[position] = tempEquip;
+                            var tempEquip = AccountManager.CurrentUser.EquippedCompanions[selectedSlot];
+                            AccountManager.CurrentUser.EquippedCompanions[selectedSlot] = GetCompanion(position);
+                            companions[position] = tempEquip;
 
-                                slot1Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
-                                slot2Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
-                                slot3Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
-                                NotifyItemChanged(position);
+                            slot1Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[0]));
+                            slot2Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[1]));
+                            slot3Occupant.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[2]));
+                            NotifyItemChanged(position);
 
-                                EquippedCompanionChanged?.Invoke(this, null);
-                            }
-                        })
-                        .SetNegativeButton("Cancel", (o, ee) =>
-                        {
-                            //Insert code for closing dialog without any updates to chosen equipment
-                            selectedSlot = 5;
-                        })
-                        .Create();
-                }
-
-                itemPopupDialog.Show();
+                            EquippedCompanionChanged?.Invoke(this, null);
+                        }
+                    })
+                    .SetNegativeButton("Cancel", (o, ee) =>
+                    {
+                        //Insert code for closing dialog without any updates to chosen equipment
+                        selectedSlot = 5;
+                    })
+                    .Show();
             };
         }
 
