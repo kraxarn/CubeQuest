@@ -189,26 +189,21 @@
 
 		</GridLayout>
 	</FrameLayout>
-    
-    <LinearLayout
-        android:layout_marginTop="16dp"
+        
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:text="Companions"/>
         
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:textSize="20sp"
-            android:text="Companions"/>
-        
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/companion_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        
-    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/companion_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"/>
     
 </LinearLayout>
