@@ -122,6 +122,7 @@
                 android:id="@+id/inventory_companion_1"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
 				android:layout_margin="8dp"
 				android:background="?android:selectableItemBackground"
 				android:src="@drawable/ic_companion"/>
@@ -129,14 +130,14 @@
                 android:id="@+id/text_companion_name_1"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
+				android:layout_gravity="center_horizontal"
 				android:layout_margin="8dp"
 				android:text="cube1"/>
             <ImageView
                 android:id="@+id/text_companion_type_1"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
+				android:layout_gravity="center_horizontal"
 				android:layout_margin="8dp"/>
 
 			<!-- Companion 2 -->
@@ -144,6 +145,7 @@
                 android:id="@+id/inventory_companion_2"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
 				android:layout_margin="8dp"
 				android:background="?android:selectableItemBackground"
 				android:src="@drawable/ic_companion"/>
@@ -151,14 +153,14 @@
                 android:id="@+id/text_companion_name_2"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
+				android:layout_gravity="center_horizontal"
 				android:layout_margin="8dp"
 				android:text="cube2"/>
             <ImageView
                 android:id="@+id/text_companion_type_2"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
 				android:layout_margin="8dp"/>
 
 			<!-- Companion 3 -->
@@ -166,6 +168,7 @@
                 android:id="@+id/inventory_companion_3"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
 				android:layout_margin="8dp"
 				android:background="?android:selectableItemBackground"
 				android:src="@drawable/ic_companion"/>
@@ -173,15 +176,14 @@
                 android:id="@+id/text_companion_name_3"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
 				android:layout_margin="8dp"
-                android:gravity="center_horizontal"
 				android:text="cube3"/>
             <ImageView
                 android:id="@+id/text_companion_type_3"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
+				android:layout_gravity="center_horizontal"
 				android:layout_margin="8dp"/>
 
 		</GridLayout>
