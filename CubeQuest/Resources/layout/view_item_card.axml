@@ -12,8 +12,7 @@
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/colorPrimaryDark"
         app:cardCornerRadius="4dp"
-        android:layout_marginTop="8dp"
-        >
+        android:layout_marginTop="8dp">
         
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,41 +26,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
-                >
+                android:gravity="center_vertical">
                 
                 <LinearLayout
                     android:id="@+id/selector_part"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    >
+                    android:clickable="true">
                 
                     <ImageView
                         android:id="@+id/item_icon"
-                        android:src="@drawable/ic_cube"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/fab_margin"
-                    />
+                        android:layout_marginEnd="@dimen/fab_margin"/>
                     
                     <TextView
                         android:id="@+id/item_name_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sample name"
                         android:textSize="26sp"
-                        android:layout_marginEnd="@dimen/fab_margin"
-                    />
-                    
+                        android:layout_marginEnd="@dimen/fab_margin"/>
                     
                 </LinearLayout>
+
                 <ImageButton
                     android:id="@+id/item_expand_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_heart"
-                />
+                    style="@android:style/Widget.Material.Button.Borderless"/>
                 
             </LinearLayout>
             
@@ -69,9 +61,7 @@
                 android:id="@+id/item_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="lorum ipsum dolor and all that stuff. Let us see how this piece of text looks like."
-            />
+                android:textSize="15sp"/>
             
         </LinearLayout>
         
