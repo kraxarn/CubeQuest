@@ -100,7 +100,7 @@ namespace CubeQuest.ListView.Companions
         {
             // Set up companionInsertView 
             var inflater = LayoutInflater.From(parentGroup);
-            companionInsertView = inflater.Inflate(Resource.Layout.view_insert_companion, null);
+            companionInsertView = inflater.Inflate(Resource.Layout.view_dialog_companion, null);
 
             var itemSlot1 = companionInsertView.FindViewById<LinearLayout>(Resource.Id.companion_slot_1);
             var itemSlot2 = companionInsertView.FindViewById<LinearLayout>(Resource.Id.companion_slot_2);
