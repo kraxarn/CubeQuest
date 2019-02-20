@@ -53,20 +53,6 @@ namespace CubeQuest.ListView.Companions
             viewHolder.Info.Text = companions[position].Info;
             viewHolder.Info.Visibility = ViewStates.Gone;
 
-            //Makes info text disappear or appear on the click
-            viewHolder.ExpandCollapse.Click += (sender, args) =>
-            {
-                if (viewHolder.Info.Visibility == ViewStates.Gone)
-                {
-                    viewHolder.Info.Visibility = ViewStates.Visible;
-                    viewHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_chevron_up);
-                }
-                else
-                {
-                    viewHolder.Info.Visibility = ViewStates.Gone;
-                    viewHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_chevron_down);
-                }
-            };
             viewHolder.SelectablePart.Click += (sender, e) =>
             {
                 new AlertDialog.Builder(parentGroup, Resource.Style.AlertDialogStyle)
