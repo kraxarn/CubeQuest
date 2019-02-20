@@ -22,6 +22,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Android.Graphics.Drawables;
+using Android.Support.V4.Content;
+using Android.Support.V4.Content.Res;
 
 namespace CubeQuest.Layout
 {
@@ -123,7 +126,7 @@ namespace CubeQuest.Layout
 		/// </summary>
         private Dictionary<string, TextView> profileStats;
 
-		private TextView[] companionInfos;
+		private ImageView[] companionInfos;
 
         private ImageButton[] equippedCubes;
 
@@ -593,14 +596,14 @@ namespace CubeQuest.Layout
 				// Check companion info views
 				if (companionInfos == null)
 				{
-					TextView FindTextView(int id) =>
-						profileView.FindViewById<TextView>(id);
+					ImageView FindImageView(int id) =>
+						profileView.FindViewById<ImageView>(id);
 
 					companionInfos = new[]
 					{
-						FindTextView(Resource.Id.text_companion_info_1),
-						FindTextView(Resource.Id.text_companion_info_2),
-						FindTextView(Resource.Id.text_companion_info_3)
+						FindImageView(Resource.Id.text_companion_type_1),
+						FindImageView(Resource.Id.text_companion_type_2),
+						FindImageView(Resource.Id.text_companion_type_3)
 					};
 				}
 
@@ -613,9 +616,23 @@ namespace CubeQuest.Layout
 				profileStats["level"].Text   = $"Level {user.Level} ({user.ExperienceToNextLevel} xp to next level)";
 				profileStats["armor"].Text   = $"{user.Armor}";
 
+				Drawable GetDrawable(string name)
+				{
+					int id;
+
+					switch (name)
+					{
+						case "Offensive": id = Resource.Drawable.ic_sword;  break;
+						case "Defensive": id = Resource.Drawable.ic_shield; break;
+						default:          id = Resource.Drawable.ic_missed; break;
+					}
+
+					return ResourcesCompat.GetDrawable(Resources, id, null);
+				}
+
 				// Set companion info
 				for (var i = 0; i < companionInfos.Length; i++)
-					companionInfos[i].Text = user.EquippedCompanions[i].Type.ToString();
+					companionInfos[i].SetImageDrawable(GetDrawable(user.EquippedCompanions[i].Type.ToString()));
 			}
 
             animator.Start();

@@ -4527,15 +4527,6 @@ namespace CubeQuest
 			// aapt resource value: 0x7f0e010b
 			public const int text_battle_info_title = 2131624203;
 			
-			// aapt resource value: 0x7f0e012b
-			public const int text_companion_info_1 = 2131624235;
-			
-			// aapt resource value: 0x7f0e012e
-			public const int text_companion_info_2 = 2131624238;
-			
-			// aapt resource value: 0x7f0e0131
-			public const int text_companion_info_3 = 2131624241;
-			
 			// aapt resource value: 0x7f0e012a
 			public const int text_companion_name_1 = 2131624234;
 			
@@ -4544,6 +4535,15 @@ namespace CubeQuest
 			
 			// aapt resource value: 0x7f0e0130
 			public const int text_companion_name_3 = 2131624240;
+			
+			// aapt resource value: 0x7f0e012b
+			public const int text_companion_type_1 = 2131624235;
+			
+			// aapt resource value: 0x7f0e012e
+			public const int text_companion_type_2 = 2131624238;
+			
+			// aapt resource value: 0x7f0e0131
+			public const int text_companion_type_3 = 2131624241;
 			
 			// aapt resource value: 0x7f0e00bc
 			public const int text_debug_location = 2131624124;

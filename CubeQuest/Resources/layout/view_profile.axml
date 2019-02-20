@@ -132,13 +132,12 @@
 				android:layout_gravity="center_vertical"
 				android:layout_margin="8dp"
 				android:text="cube1"/>
-            <TextView
-                android:id="@+id/text_companion_info_1"
+            <ImageView
+                android:id="@+id/text_companion_type_1"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_vertical"
-				android:layout_margin="8dp"
-				android:text="cube1_info"/>
+				android:layout_margin="8dp"/>
 
 			<!-- Companion 2 -->
 			<ImageButton
@@ -155,13 +154,12 @@
 				android:layout_gravity="center_vertical"
 				android:layout_margin="8dp"
 				android:text="cube2"/>
-            <TextView
-                android:id="@+id/text_companion_info_2"
+            <ImageView
+                android:id="@+id/text_companion_type_2"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_vertical"
-				android:layout_margin="8dp"
-				android:text="cube2_info"/>
+				android:layout_margin="8dp"/>
 
 			<!-- Companion 3 -->
 			<ImageButton
@@ -179,13 +177,12 @@
 				android:layout_margin="8dp"
                 android:gravity="center_horizontal"
 				android:text="cube3"/>
-            <TextView
-                android:id="@+id/text_companion_info_3"
+            <ImageView
+                android:id="@+id/text_companion_type_3"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_vertical"
-				android:layout_margin="8dp"
-				android:text="cube3_info"/>
+				android:layout_margin="8dp"/>
 
 		</GridLayout>
 	</FrameLayout>
