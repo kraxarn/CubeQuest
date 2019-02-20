@@ -51,7 +51,7 @@ namespace CubeQuest.ListView.Companions
             //Replace below line with something that gets the real icon
             viewHolder.Icon.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.Companions[position]));
 
-            viewHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_numbered_list);
+            viewHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_chevron_down);
             viewHolder.Info.Text = companions[position].Info;
             viewHolder.Info.Visibility = ViewStates.Gone;
 
@@ -61,12 +61,12 @@ namespace CubeQuest.ListView.Companions
                 if (viewHolder.Info.Visibility == ViewStates.Gone)
                 {
                     viewHolder.Info.Visibility = ViewStates.Visible;
-                    viewHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_shield);
+                    viewHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_chevron_up);
                 }
                 else
                 {
                     viewHolder.Info.Visibility = ViewStates.Gone;
-                    viewHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_numbered_list);
+                    viewHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_chevron_down);
                 }
             };
             viewHolder.SelectablePart.Click += (sender, e) =>
