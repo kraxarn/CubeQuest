@@ -6,12 +6,12 @@ namespace CubeQuest.Battle
 {
 	public class BattleQueue
 	{
-		public delegate void OnQueueEndEvent();
+		public delegate void QueueEndEvent();
 
 		/// <summary>
 		/// When the queue is done executing
 		/// </summary>
-		public event OnQueueEndEvent OnQueueEnd;
+		public event QueueEndEvent QueueEnd;
 
 		/// <summary>
 		/// Queue of all items
@@ -67,25 +67,25 @@ namespace CubeQuest.Battle
 
 			// Start queue
 			var action = queue.Dequeue();
-			action.OnEnd += OnEnd;
+			action.OnEnd += End;
 			action.Execute();
 
 			return true;
 		}
 
-		private void OnEnd(object sender, EventArgs e)
+		private void End(object sender, EventArgs e)
 		{
 			if (queue.TryDequeue(out var action))
 			{
 				// Next item in the queue
-				action.OnEnd += OnEnd;
+				action.OnEnd += End;
 				action.Execute();
 			}
 			else
 			{
 				// Done with the queue
 				executing = false;
-				OnQueueEnd?.Invoke();
+				QueueEnd?.Invoke();
 			}
 		}
 	}

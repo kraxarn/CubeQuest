@@ -7,9 +7,9 @@ namespace CubeQuest.ListView.Users
 {
     public class UserEntriesAdapter : RecyclerView.Adapter
 	{
-		public delegate void OnItemClickEvent(UserEntryViewHolder viewHolder);
+		public delegate void ItemClickEvent(UserEntryViewHolder viewHolder);
 
-		public event OnItemClickEvent OnItemClick;
+		public event ItemClickEvent ItemClick;
 
 		private readonly List<UserEntry> userEntries;
 
@@ -23,7 +23,7 @@ namespace CubeQuest.ListView.Users
 			var entry = inflater.Inflate(Resource.Layout.view_user_entry, parent, false);
 
 			var viewHolder = new UserEntryViewHolder(entry);
-			viewHolder.Click += view => OnItemClick?.Invoke(viewHolder);
+			viewHolder.Click += view => ItemClick?.Invoke(viewHolder);
 
 			return viewHolder;
 		}

@@ -179,7 +179,7 @@ namespace CubeQuest.Layout
 				new UserEntry("developer/timnnyman.webp",  "TimNNyman",  "Enemy placement")
 			});
 			
-			adapter.OnItemClick += itemView =>
+			adapter.ItemClick += itemView =>
 				StartActivity(new Intent(Intent.ActionView)
 					.SetData(Uri.Parse($"https://github.com/{itemView.Title.Text}")));
 
@@ -201,7 +201,7 @@ namespace CubeQuest.Layout
 				new UserEntry(null,  "Xamarin",  "By Xamarin Inc. (MIT license)")
 			});
 
-			adapter.OnItemClick += itemView =>
+			adapter.ItemClick += itemView =>
 				StartActivity(new Intent(Intent.ActionView)
 					.SetData(Uri.Parse("https://github.com/xamarin/xamarin-android")));
 			
@@ -220,7 +220,7 @@ namespace CubeQuest.Layout
 				new UserEntry(null,  "Open on GitHub",       "View the source code")
 			});
 
-			adapter.OnItemClick += itemView =>
+			adapter.ItemClick += itemView =>
 			{
 				var isGooglePlay = itemView.Title.Text.Contains("Google Play");
 

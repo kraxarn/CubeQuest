@@ -27,13 +27,13 @@ namespace CubeQuest.Battle
 
         public event BattleEndEvent BattleEnd;
 
-        public delegate void OnAnimationEvent(EAnimationTarget target, int index);
+        public delegate void AnimationEvent(EAnimationTarget target, int index);
 
-        public event OnAnimationEvent OnAnimation;
+        public event AnimationEvent Animation;
 
-        public delegate void OnEnemyKilledEvent(int index);
+        public delegate void EnemyKilledEvent(int index);
 
-        public event OnEnemyKilledEvent OnEnemyKilled;
+        public event EnemyKilledEvent EnemyKilled;
 
         public void RunAway() => 
             BattleEnd?.Invoke(BattleCore.EBattleEndType.Ran);
@@ -46,7 +46,7 @@ namespace CubeQuest.Battle
 
             battleQueue = new BattleQueue();
 
-            battleQueue.OnQueueEnd += () =>
+            battleQueue.QueueEnd += () =>
             {
                 foreach (var e in enemies)
                     e.Enabled = true;
@@ -92,12 +92,12 @@ namespace CubeQuest.Battle
         {
             enemyHealthBars[index].Progress -= (int) (AccountManager.CurrentUser.Attack / (float) enemy.Health * 100);
 			
-            OnAnimation?.Invoke(EAnimationTarget.Player, index);
+            Animation?.Invoke(EAnimationTarget.Player, index);
 
             if (enemyHealthBars[index].Progress <= 0)
             {
                 KillEnemy(index);
-                OnEnemyKilled?.Invoke(index);
+                EnemyKilled?.Invoke(index);
             }
             
             if (EnemiesAreDead)
@@ -113,7 +113,7 @@ namespace CubeQuest.Battle
 
         private void EnemyAttack(int index)
         {
-            OnAnimation?.Invoke(EAnimationTarget.Enemy, index);
+            Animation?.Invoke(EAnimationTarget.Enemy, index);
 
             //if (!AccountManager.CurrentUser.ShouldHit)
             //    return;

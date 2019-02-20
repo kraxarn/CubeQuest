@@ -5,9 +5,11 @@ using Android.Gms.Location;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.Locations;
 using Android.OS;
 using Android.Support.Design.Widget;
+using Android.Support.V4.Content.Res;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Util;
@@ -22,9 +24,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Android.Graphics.Drawables;
-using Android.Support.V4.Content;
-using Android.Support.V4.Content.Res;
 
 namespace CubeQuest.Layout
 {
@@ -368,11 +367,11 @@ namespace CubeQuest.Layout
 			healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
 
 			// Update health bar when changing health
-			AccountManager.CurrentUser.OnHealthChange += health =>
+			AccountManager.CurrentUser.HealthChange += health =>
 				healthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
 
 			// When the player died
-			AccountManager.CurrentUser.OnDeadChange += isAlive =>
+			AccountManager.CurrentUser.DeadChange += isAlive =>
 			{
 				// Update health bar alpha
 				healthBar.Alpha = healthBarHeart.Alpha = isAlive ? 1f : 0.5f;

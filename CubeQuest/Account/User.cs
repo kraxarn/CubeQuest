@@ -9,13 +9,13 @@ namespace CubeQuest.Account
 {
 	public class User
     {
-        public delegate void OnHealthChangeEvent(int newHealth);
+        public delegate void HealthChangeEvent(int newHealth);
 
-        public event OnHealthChangeEvent OnHealthChange;
+        public event HealthChangeEvent HealthChange;
 
-        public delegate void OnDeadChangeEvent(bool isAlive);
+        public delegate void DeadChangeEvent(bool isAlive);
 
-        public event OnDeadChangeEvent OnDeadChange;
+        public event DeadChangeEvent DeadChange;
 
         private Random random;
 
@@ -72,7 +72,7 @@ namespace CubeQuest.Account
                 if (isAlive == false && HealthPercentage >= 25)
                 {
                     isAlive = true;
-                    OnDeadChange?.Invoke(isAlive);
+                    DeadChange?.Invoke(isAlive);
                 }
 
                 return isAlive;
@@ -105,17 +105,17 @@ namespace CubeQuest.Account
                 {
                     health = 0;
                     isAlive = false;
-                    OnDeadChange?.Invoke(isAlive);
+                    DeadChange?.Invoke(isAlive);
                 }
                 else if (!isAlive && HealthPercentage >= 25)
                 {
                     isAlive = true;
-                    OnDeadChange?.Invoke(isAlive);
+                    DeadChange?.Invoke(isAlive);
                 }
                 else if (health > MaxHealth)
                     health = MaxHealth;
 
-                OnHealthChange?.Invoke(health);
+                HealthChange?.Invoke(health);
             }
         }
 

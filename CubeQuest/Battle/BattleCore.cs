@@ -155,9 +155,9 @@ namespace CubeQuest.Battle
 			};
 
             // When clicking attack
-            actionButtons[EBattleAction.Attack].Click += OnAttackClickEvent;
+            actionButtons[EBattleAction.Attack].Click += AttackClickEvent;
 
-            void OnAttackClickEvent(object sender, EventArgs arg)
+            void AttackClickEvent(object sender, EventArgs arg)
             {
                 if (enemyHealthBars[selectedEnemyIndex].Progress <= 0)
 	                return;
@@ -181,13 +181,13 @@ namespace CubeQuest.Battle
                         break;
                 }
 
-                actionButtons[EBattleAction.Attack].Click -= OnAttackClickEvent;
-                actionButtons[EBattleAction.Spare].Click  -= OnSpareClickEvent;
-				actionButtons[EBattleAction.Run].Click    -= OnRunClickEvent;
+                actionButtons[EBattleAction.Attack].Click -= AttackClickEvent;
+                actionButtons[EBattleAction.Spare].Click  -= SpareClickEvent;
+				actionButtons[EBattleAction.Run].Click    -= RunClickEvent;
             };
             
             // Player attacks animation in battle
-            battleHandler.OnAnimation += (target, index) =>
+            battleHandler.Animation += (target, index) =>
             {
 	            context.RunOnUiThread(() =>
 	            {
@@ -202,7 +202,7 @@ namespace CubeQuest.Battle
 						{
 							companionButtons[index].StartAnimation(playerAttackAnimation);
 							enemyButtons[index].StartAnimation(shakeAnimation);
-							enemyButtons[index].Animation.AnimationEnd += OnCompanionAnimationEnd;
+							enemyButtons[index].Animation.AnimationEnd += CompanionAnimationEnd;
 						});
 						break;
 
@@ -211,16 +211,16 @@ namespace CubeQuest.Battle
 	                    {
 							enemyButtons[index].StartAnimation(enemyAttackAnimation);
 		                    companionButtons[index].StartAnimation(shakeAnimation);
-							companionButtons[index].Animation.AnimationEnd += OnCompanionAnimationEnd;
+							companionButtons[index].Animation.AnimationEnd += CompanionAnimationEnd;
 	                    });
 						break;
                 }
             };
 
             // When clicking 'run'
-            actionButtons[EBattleAction.Run].Click += OnRunClickEvent;
+            actionButtons[EBattleAction.Run].Click += RunClickEvent;
 
-            void OnRunClickEvent(object sender, EventArgs arg)
+            void RunClickEvent(object sender, EventArgs arg)
             {
 				// Set health to 98% of before
 				AccountManager.CurrentUser.Health = (int) (AccountManager.CurrentUser.Health * 0.98f);
@@ -229,9 +229,9 @@ namespace CubeQuest.Battle
             }
 
             // When clicking 'spare'
-            actionButtons[EBattleAction.Spare].Click += OnSpareClickEvent;
+            actionButtons[EBattleAction.Spare].Click += SpareClickEvent;
 			
-			void OnSpareClickEvent(object sender, EventArgs arg)
+			void SpareClickEvent(object sender, EventArgs arg)
             {
                 var enemyAverageHp = enemyHealthBars.Average(e => e.Progress);
                 var enemyLevel = enemy.Level;
@@ -267,7 +267,7 @@ namespace CubeQuest.Battle
             CreateEnemyEvents(enemyButtons);
 
             // When a enemy dies the button can no longer be clicked.
-            battleHandler.OnEnemyKilled += index =>
+            battleHandler.EnemyKilled += index =>
             {
 				// Disable clicking of enemy again
 	            enemyButtons[index].Enabled = enemyButtons[index].Clickable = false;
@@ -281,16 +281,16 @@ namespace CubeQuest.Battle
             for (var i = 0; i < companionButtons.Length; i++)
 	            companionButtons[i].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[i]));
 
-            AccountManager.CurrentUser.OnHealthChange += health =>
+            AccountManager.CurrentUser.HealthChange += health =>
                 playerHealthBar.Progress = AccountManager.CurrentUser.HealthPercentage;
         }
 
-        private void OnCompanionAnimationEnd(object sender, Animation.AnimationEndEventArgs args)
+        private void CompanionAnimationEnd(object sender, Animation.AnimationEndEventArgs args)
         {
 	        ToggleButtons(true);
 			
-			companionButtons.Select(c => c.Animation).ClearAnimationEndListeners(OnCompanionAnimationEnd);
-			enemyButtons.Select(c     => c.Animation).ClearAnimationEndListeners(OnCompanionAnimationEnd);
+			companionButtons.Select(c => c.Animation).ClearAnimationEndListeners(CompanionAnimationEnd);
+			enemyButtons.Select(c     => c.Animation).ClearAnimationEndListeners(CompanionAnimationEnd);
 		}
 		
         private void ToggleButtons(bool enable) =>
