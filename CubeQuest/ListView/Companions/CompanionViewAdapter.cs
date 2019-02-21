@@ -67,11 +67,13 @@ namespace CubeQuest.ListView.Companions
 		/// </summary>
 		private AlertDialog dialog;
 
-		public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
+		public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int viewType)
         {
 			// Cast holder
             if (!(holder is CompanionViewHolder viewHolder))
                 return;
+
+            var position = viewHolder.AdapterPosition;
 
 			// Set companion name
             viewHolder.Name.Text = companions[position].Name;
@@ -89,21 +91,21 @@ namespace CubeQuest.ListView.Companions
             viewHolder.Info.Visibility = ViewStates.Gone;
 
 			// We clicked the item
-            viewHolder.Click += args =>
+            viewHolder.Click += (args, pos) =>
             {
 				// Fix for opening multiple dialogs
 				if (dialog?.IsShowing ?? false)
 					return;
 
 				// Create dialog
-	            var dialogView = CreateDialogView(position);
+	            var dialogView = CreateDialogView(pos);
 
 				// Show it
-                dialog = new AlertDialog.Builder(context, Resource.Style.AlertDialogStyle)
+				dialog = new AlertDialog.Builder(context, Resource.Style.AlertDialogStyle)
 	                .SetTitle("Select Companion to Replace")
                     .SetView(dialogView)
                     .SetPositiveButton("Apply", (o, ee) =>
-                    {
+	                {
 						// Change item if valid
 						if (SelectedIndex < 0 || SelectedIndex > 2)
 							return;
@@ -112,13 +114,13 @@ namespace CubeQuest.ListView.Companions
                         var temp = AccountManager.CurrentUser.EquippedCompanions[SelectedIndex];
 
                         // Replace with the one we wanted
-                        AccountManager.CurrentUser.EquippedCompanions[SelectedIndex] = companions[position];
+                        AccountManager.CurrentUser.EquippedCompanions[SelectedIndex] = companions[pos];
 
                         // Take equipped one back to inventory
-                        companions[position] = temp;
+                        companions[pos] = temp;
 
                         // Notify recycler dialogView we updated an item
-                        NotifyItemChanged(position);
+                        NotifyItemChanged(pos);
 
                         // Trigger event
                         EquippedCompanionChanged?.Invoke(this, null);

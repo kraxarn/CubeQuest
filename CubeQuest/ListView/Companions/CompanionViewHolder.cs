@@ -6,7 +6,7 @@ namespace CubeQuest.ListView.Companions
 {
 	public class CompanionViewHolder : RecyclerView.ViewHolder
     {
-	    public delegate void ClickEvent(View itemView);
+	    public delegate void ClickEvent(View itemView, int position);
 
 	    public event ClickEvent Click;
 
@@ -45,7 +45,7 @@ namespace CubeQuest.ListView.Companions
 
 			// Clicking on item
             SelectablePart.Click += (sender, args) => 
-	            Click?.Invoke(companionView);
+	            Click?.Invoke(companionView, AdapterPosition);
 		}
 	}
 }
