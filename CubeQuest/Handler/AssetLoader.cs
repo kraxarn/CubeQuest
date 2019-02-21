@@ -3,6 +3,7 @@ using Android.Gms.Maps.Model;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.OS;
+using Android.Support.V4.Content.Res;
 using CubeQuest.Account.Interface;
 using System.Collections.Generic;
 
@@ -54,10 +55,24 @@ namespace CubeQuest.Handler
         private static Bitmap GetAnimationFrameBitmap(string name, int frame) =>
 	        GetBitmapFromPath($"animations/{name}/{frame}.webp");
 
-        /// <summary>
-        /// Create an animated bitmap
-        /// </summary>
-        public static Drawable GetAnimatedDrawable(Resources res, string name, int frames, int duration, bool loop)
+        public static Drawable GetCompanionTypeDrawable(Resources res, ECompanionType type)
+        {
+	        int id;
+
+	        switch (type)
+	        {
+		        case ECompanionType.Offensive: id = Resource.Drawable.ic_sword; break;
+		        case ECompanionType.Defensive: id = Resource.Drawable.ic_shield; break;
+		        default: id = Resource.Drawable.ic_missed; break;
+	        }
+
+	        return ResourcesCompat.GetDrawable(res, id, null);
+        }
+
+		/// <summary>
+		/// Create an animated bitmap
+		/// </summary>
+		public static Drawable GetAnimatedDrawable(Resources res, string name, int frames, int duration, bool loop)
         {
 	        var animation = new AnimationDrawable();
 			var bitmapFrames = new List<Bitmap>(frames);

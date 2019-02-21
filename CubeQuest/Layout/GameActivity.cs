@@ -5,11 +5,9 @@ using Android.Gms.Location;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Graphics;
-using Android.Graphics.Drawables;
 using Android.Locations;
 using Android.OS;
 using Android.Support.Design.Widget;
-using Android.Support.V4.Content.Res;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Util;
@@ -615,23 +613,9 @@ namespace CubeQuest.Layout
 				profileStats["level"].Text   = $"Level {user.Level} ({user.ExperienceToNextLevel} xp to next level)";
 				profileStats["armor"].Text   = $"{user.Armor}";
 
-				Drawable GetDrawable(string name)
-				{
-					int id;
-
-					switch (name)
-					{
-						case "Offensive": id = Resource.Drawable.ic_sword;  break;
-						case "Defensive": id = Resource.Drawable.ic_shield; break;
-						default:          id = Resource.Drawable.ic_missed; break;
-					}
-
-					return ResourcesCompat.GetDrawable(Resources, id, null);
-				}
-
 				// Set companion info
 				for (var i = 0; i < companionInfos.Length; i++)
-					companionInfos[i].SetImageDrawable(GetDrawable(user.EquippedCompanions[i].Type.ToString()));
+					companionInfos[i].SetImageDrawable(AssetLoader.GetCompanionTypeDrawable(Resources, user.EquippedCompanions[i].Type));
 
 				// Update collected companions count
 				profileView.FindViewById<TextView>(Resource.Id.text_companions_collected).Text =
