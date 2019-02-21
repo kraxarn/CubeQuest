@@ -563,7 +563,7 @@ namespace CubeQuest.Layout
             var centerY = fabUser.Top + fabUser.Height / 2;
 
             // Button radius
-            var radius = (float)Math.Sqrt(centerX * centerX + centerY * centerY);
+            var radius = (float) Math.Sqrt(centerX * centerX + centerY * centerY);
 
             var animator = ViewAnimationUtils.CreateCircularReveal(profileView, centerX, centerY, enabled ? 0f : radius, enabled ? radius : 0f);
 
@@ -632,6 +632,10 @@ namespace CubeQuest.Layout
 				// Set companion info
 				for (var i = 0; i < companionInfos.Length; i++)
 					companionInfos[i].SetImageDrawable(GetDrawable(user.EquippedCompanions[i].Type.ToString()));
+
+				// Update collected companions count
+				profileView.FindViewById<TextView>(Resource.Id.text_companions_collected).Text =
+					$"{AccountManager.CurrentUser.UniqueCompanionCount}/{CompanionManager.CompanionCount} collected";
 			}
 
             animator.Start();

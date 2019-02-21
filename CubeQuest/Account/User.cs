@@ -32,6 +32,22 @@ namespace CubeQuest.Account
         /// </summary>
         public List<ICompanion> EquippedCompanions { get; private set; }
 
+		/// <summary>
+		/// Number of uniquely collected companions
+		/// </summary>
+        public int UniqueCompanionCount
+        {
+	        get
+	        {
+				// All our companions
+		        var companions = new List<ICompanion>(Companions);
+		        companions.AddRange(EquippedCompanions);
+
+				// Select the amount of distinct types
+				return (from companion in companions select companion.GetType()).Distinct().Count();
+	        }
+        }
+
         /// <summary>
         /// Add experience to the user
         /// </summary>

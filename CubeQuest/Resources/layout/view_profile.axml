@@ -193,10 +193,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
         android:textSize="20sp"
         android:textAlignment="center"
         android:text="Companions"/>
+
+    <TextView
+        android:id="@+id/text_companions_collected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:textAlignment="center"
+        android:text="100/100 collected"/>
         
     <android.support.v7.widget.RecyclerView
         android:id="@+id/companion_list"

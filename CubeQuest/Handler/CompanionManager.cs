@@ -25,6 +25,12 @@ namespace CubeQuest.Handler
 		};
 
 		/// <summary>
+		/// Total number of companions
+		/// </summary>
+		public static int CompanionCount => 
+			CompanionTypes.Length;
+
+		/// <summary>
 		/// Get a random companion
 		/// </summary>
 		public static ICompanion Random => 
