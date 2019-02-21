@@ -20,6 +20,8 @@ namespace CubeQuest.ListView.Companions
 
         public LinearLayout SelectablePart { get; }
 
+		public ImageView TypeIcon { get; }
+
         public CompanionViewHolder(View companionView) : base(companionView)
         {
             Name           = companionView.FindViewById<TextView>(Resource.Id.item_name_text);
@@ -27,6 +29,7 @@ namespace CubeQuest.ListView.Companions
             ExpandCollapse = companionView.FindViewById<ImageButton>(Resource.Id.item_expand_button);
             Info           = companionView.FindViewById<TextView>(Resource.Id.item_info);
             SelectablePart = companionView.FindViewById<LinearLayout>(Resource.Id.selector_part);
+            TypeIcon       = companionView.FindViewById<ImageView>(Resource.Id.image_companion_card_type);
 
 			// Show or hide text on click
 			ExpandCollapse.Click += (sender, args) =>

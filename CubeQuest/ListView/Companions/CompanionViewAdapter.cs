@@ -78,6 +78,9 @@ namespace CubeQuest.ListView.Companions
 			// Set companion name
             viewHolder.Name.Text = companions[position].Name;
 
+			// Set companion type icon
+			viewHolder.TypeIcon.SetImageDrawable(AssetLoader.GetCompanionTypeDrawable(context.Resources, companions[position].Type));
+
             // Set companion icon
             viewHolder.Icon.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.Companions[position]));
 
