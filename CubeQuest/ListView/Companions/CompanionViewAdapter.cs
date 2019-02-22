@@ -84,14 +84,20 @@ namespace CubeQuest.ListView.Companions
             // Set companion icon
             viewHolder.Icon.SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.Companions[position]));
 
+			// Set companion stats
+			viewHolder.Health.Text  = $"{companions[position].Health}";
+			viewHolder.Armor.Text   = $"{companions[position].Armor}";
+			viewHolder.Attack.Text  = $"{companions[position].Attack}";
+			viewHolder.Evasion.Text = $"{companions[position].Evasion * 100}%";
+
 			// Default to down arrow
-            viewHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_chevron_down);
+			viewHolder.ExpandCollapse.SetImageResource(Resource.Drawable.ic_chevron_down);
 
 			// Set companion info
             viewHolder.Info.Text = companions[position].Info;
 
 			// Hide info by default
-            viewHolder.Info.Visibility = ViewStates.Gone;
+            viewHolder.Info.Visibility = viewHolder.Stats.Visibility = ViewStates.Gone;
 
 			// We clicked the item
             viewHolder.Click += (args, pos) =>

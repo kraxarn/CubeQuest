@@ -70,6 +70,73 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"/>
+
+            <GridLayout
+                android:id="@+id/layout_companion_info_stats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:rowCount="2"
+                android:columnCount="4">
+
+                <!-- Health -->
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginBottom="16dp"
+                    android:src="@drawable/ic_hp"/>
+
+                <TextView
+                    android:id="@+id/text_companion_info_health"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="4dp"
+                    android:text="0"/>
+
+                <!-- Armor -->
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_shield"/>
+
+                <TextView
+                    android:id="@+id/text_companion_info_armor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="4dp"
+                    android:text="0"/>
+
+                <!-- Attack -->
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_sword"/>
+
+                <TextView
+                    android:id="@+id/text_companion_info_attack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="4dp"
+                    android:text="0"/>
+
+                <!-- Evasion -->
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_missed"/>
+
+                <TextView
+                    android:id="@+id/text_companion_info_evasion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="4dp"
+                    android:text="0"/>
+
+            </GridLayout>
             
         </LinearLayout>
         
