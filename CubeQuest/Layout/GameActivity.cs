@@ -123,10 +123,19 @@ namespace CubeQuest.Layout
 		/// </summary>
         private Dictionary<string, TextView> profileStats;
 
+		/// <summary>
+		/// Images for each companion type
+		/// </summary>
 		private ImageView[] companionInfos;
 
+		/// <summary>
+		/// Icons for equipped companions in inventory
+		/// </summary>
         private ImageButton[] equippedCubes;
 
+		/// <summary>
+		/// Names for our equipped companions in inventory
+		/// </summary>
         private TextView[] equippedCubeNames;
 
         /// <summary>
