@@ -1,6 +1,8 @@
-﻿using Android.Content;
+﻿using Android.App;
+using Android.Content;
 using Android.Views;
-using Android.Support.V7.App;
+using Android.Widget;
+using CubeQuest.Account.Interface;
 
 namespace CubeQuest.Handler
 {
@@ -40,6 +42,28 @@ namespace CubeQuest.Handler
 			BuildSimple(context, titleResource)
 				.SetView(view)
 				.Show();
+		}
+
+		public static void ShowCompanionInfo(Activity context, ICompanion companion)
+		{
+			var view = context.LayoutInflater.Inflate(Resource.Layout.view_dialog_companion_info, null);
+
+			// Set companion icon
+			view.FindViewById<ImageView>(Resource.Id.image_companion_dialog_icon)
+				.SetImageBitmap(AssetLoader.GetCompanionBitmap(companion));
+
+			// Set companion type icon
+			view.FindViewById<ImageView>(Resource.Id.image_companion_dialog_type)
+				.SetImageDrawable(AssetLoader.GetCompanionTypeDrawable(context.Resources, companion.Type));
+
+			// Set stats
+			view.FindViewById<TextView>(Resource.Id.text_companion_dialog_health).Text  = $"{companion.Health}";
+			view.FindViewById<TextView>(Resource.Id.text_companion_dialog_armor).Text   = $"{companion.Armor}";
+			view.FindViewById<TextView>(Resource.Id.text_companion_dialog_attack).Text  = $"{companion.Attack}";
+			view.FindViewById<TextView>(Resource.Id.text_companion_dialog_evasion).Text = $"{companion.Evasion * 100}%";
+
+			// Show it
+			ShowSimple(context, companion.Name, view);
 		}
 	}
 }
