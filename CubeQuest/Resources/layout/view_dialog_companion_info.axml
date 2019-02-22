@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp">
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -15,15 +15,13 @@
         <ImageView
             android:id="@+id/image_companion_dialog_icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_heart"/>
+            android:layout_height="wrap_content"/>
 
         <ImageView
             android:id="@+id/image_companion_dialog_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/ic_sword"/>
+            android:layout_marginStart="16dp"/>
 
     </LinearLayout>
 
@@ -31,14 +29,13 @@
         android:id="@+id/text_companion_dialog_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Lorem Ipsum"/>
+        android:layout_marginTop="16dp"/>
 
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:rowCount="2"
         android:columnCount="4">
 
