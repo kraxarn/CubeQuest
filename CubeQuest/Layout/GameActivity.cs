@@ -640,6 +640,8 @@ namespace CubeQuest.Layout
 				profileView.FindViewById<TextView>(Resource.Id.text_companions_collected).Text =
 					$"{AccountManager.CurrentUser.UniqueCompanionCount}/{CompanionManager.CompanionCount} collected";
 			}
+			else
+			AccountManager.SaveUserProgress();
 
             animator.Start();
         }
