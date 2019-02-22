@@ -56,6 +56,9 @@ namespace CubeQuest.Handler
 			view.FindViewById<ImageView>(Resource.Id.image_companion_dialog_type)
 				.SetImageDrawable(AssetLoader.GetCompanionTypeDrawable(context.Resources, companion.Type));
 
+			// Set companion info
+			view.FindViewById<TextView>(Resource.Id.text_companion_dialog_info).Text = companion.Info;
+
 			// Set stats
 			view.FindViewById<TextView>(Resource.Id.text_companion_dialog_health).Text  = $"{companion.Health}";
 			view.FindViewById<TextView>(Resource.Id.text_companion_dialog_armor).Text   = $"{companion.Armor}";
