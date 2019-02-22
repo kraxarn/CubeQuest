@@ -102,8 +102,19 @@ namespace CubeQuest.Battle
                 mainView.FindViewById<ImageButton>(Resource.Id.image_battle_companion_2)
             };
 
-            // Animations
-            flashAnimation            = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
+            // Show companion info on click
+            for (var i = 0; i < companionButtons.Length; i++)
+            {
+	            // Local copies
+	            var i2 = i;
+	            var c = context;
+
+	            companionButtons[i].Click += (sender, args) =>
+		            Alert.ShowCompanionInfo(c, AccountManager.CurrentUser.EquippedCompanions[i2]);
+            }
+
+			// Animations
+			flashAnimation            = AnimationUtils.LoadAnimation(context, Resource.Animation.flash);
             var enemyAttackAnimation  = AnimationUtils.LoadAnimation(context, Resource.Animation.enemy_attack);
             var playerAttackAnimation = AnimationUtils.LoadAnimation(context, Resource.Animation.player_attack);
             var shakeAnimation        = AnimationUtils.LoadAnimation(context, Resource.Animation.shake);
