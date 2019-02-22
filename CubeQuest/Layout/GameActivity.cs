@@ -817,7 +817,8 @@ namespace CubeQuest.Layout
 	        {
 		        equippedCubes[i].SetImageBitmap(AssetLoader.GetCompanionBitmap(AccountManager.CurrentUser.EquippedCompanions[i]));
 		        equippedCubeNames[i].Text = AccountManager.CurrentUser.EquippedCompanions[i].Name;
-			}
+		        companionInfos[i].SetImageDrawable(AssetLoader.GetCompanionTypeDrawable(Resources, AccountManager.CurrentUser.EquippedCompanions[i].Type));
+	        }
         }
     }
 }
