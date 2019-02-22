@@ -209,7 +209,7 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
+            style="@android:style/Widget.Material.Button.Borderless"
             android:src="@drawable/ic_companion"/>
 
         <ImageButton
@@ -218,7 +218,7 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
+            style="@android:style/Widget.Material.Button.Borderless"
             android:src="@drawable/ic_companion"/>
 
         <ImageButton
@@ -227,7 +227,7 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
+            style="@android:style/Widget.Material.Button.Borderless"
             android:src="@drawable/ic_companion"/>
 
     </LinearLayout>
